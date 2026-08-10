@@ -61,3 +61,6 @@ venv/
 
 # generated Prisma client (produced by `prisma generate` on postinstall)
 /src/generated/
+
+# locally-stored photos (dev backend; Vercel Blob is used in deployment)
+/public/uploads/

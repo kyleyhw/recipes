@@ -1,7 +1,11 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { PhotoControls } from "@/components/photo-controls";
 import { getRecipeBySlug } from "@/lib/recipes";
 import { placeholderStyle } from "@/lib/photos/placeholder";
+import { attachUploadedPhoto, clearPhoto, type PhotoCredit } from "@/lib/photos/attach";
+import { INGEST_FAILURE_MESSAGES } from "@/lib/photos/ingest";
 
 /**
  * Recipe detail.
@@ -11,14 +15,40 @@ import { placeholderStyle } from "@/lib/photos/placeholder";
  */
 export default async function RecipePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ photoError?: string }>;
 }) {
   const { slug } = await params;
+  const { photoError } = await searchParams;
   const recipe = await getRecipeBySlug(slug);
   if (!recipe) notFound();
 
   const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
+  const recipeId = recipe.id;
+
+  async function uploadPhoto(formData: FormData): Promise<void> {
+    "use server";
+    const file = formData.get("photo");
+    if (!(file instanceof File) || file.size === 0) redirect(`/recipes/${slug}`);
+
+    const failure = await attachUploadedPhoto(
+      recipeId,
+      Buffer.from(await file.arrayBuffer()),
+    );
+    revalidatePath("/");
+    revalidatePath(`/recipes/${slug}`);
+    redirect(failure ? `/recipes/${slug}?photoError=${failure}` : `/recipes/${slug}`);
+  }
+
+  async function removePhoto(): Promise<void> {
+    "use server";
+    await clearPhoto(recipeId);
+    revalidatePath("/");
+    revalidatePath(`/recipes/${slug}`);
+    redirect(`/recipes/${slug}`);
+  }
 
   return (
     <article className="mx-auto max-w-2xl">
@@ -44,7 +74,20 @@ export default async function RecipePage({
         )}
       </div>
 
-      <header className="mb-6">
+      <PhotoControls
+        photoUrl={recipe.photoUrl}
+        photoSource={recipe.photoSource}
+        photoCredit={recipe.photoCredit as PhotoCredit | null}
+        uploadAction={uploadPhoto}
+        clearAction={removePhoto}
+        error={
+          photoError && photoError in INGEST_FAILURE_MESSAGES
+            ? INGEST_FAILURE_MESSAGES[photoError as keyof typeof INGEST_FAILURE_MESSAGES]
+            : undefined
+        }
+      />
+
+      <header className="mt-6 mb-6">
         <div className="flex items-baseline gap-3">
           <Link
             href="/"

@@ -1,10 +1,11 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { db } from "@/lib/db";
 import { features } from "@/lib/env";
 import { extractRecipeFromHtml } from "@/lib/import/jsonld";
 import { parseIngredientBlock } from "@/lib/ingredient-parser";
 import { createRecipe } from "@/lib/recipes";
+import { attachPhotoFromSourcePage } from "@/lib/photos/attach";
+import { db } from "@/lib/db";
 
 /**
  * Import a recipe from a URL or pasted text.
@@ -96,6 +97,25 @@ export default async function ImportPage({
       stepsText: extracted.stepsText,
       tagsText: "",
     });
+
+    // Photo layer 1: the source page's own image. Attempted inline rather than
+    // in the background because the import already took a network round trip,
+    // and arriving in the editor with the photo already attached is the point.
+    // A failure is deliberately silent: the recipe imported successfully, and
+    // the placeholder is a working fallback.
+    if (extracted.imageUrl) {
+      const recipe = await db.recipe.findUnique({
+        where: { slug },
+        select: { id: true },
+      });
+      if (recipe) {
+        await attachPhotoFromSourcePage(
+          recipe.id,
+          extracted.imageUrl,
+          parsedUrl.toString(),
+        );
+      }
+    }
 
     revalidatePath("/");
     redirect(`/recipes/${slug}/edit`);
