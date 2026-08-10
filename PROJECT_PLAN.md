@@ -32,10 +32,18 @@ derivations underpinning scaling and nutrition are in
 
 ## Phase 2: Recipe management
 
-8. [pending] Recipe CRUD with free-text ingredient parsing.
-9. [pending] Category browse shelves and full-text search.
-10. [pending] Tags.
-11. [pending] Paste/URL import.
+8. [completed] Recipe CRUD with free-text ingredient parsing.
+   - [completed] Deterministic parser: mixed numbers, vulgar fractions, ranges, units
+   - [completed] Unscalable-line detection ("to taste", "for frying")
+   - [completed] Editor round-trips ingredients and steps as plain text
+9. [completed] Category browse shelves and full-text search.
+   - [completed] `websearch_to_tsquery` over recipe prose and ingredient lines
+   - [completed] Relevance ranking, title weighted above ingredients
+10. [completed] Tags, created on demand and matched case-insensitively.
+11. [completed] Paste/URL import.
+    - [completed] schema.org JSON-LD extraction — deterministic, needs no API key
+    - [completed] Handles `@graph` envelopes, `HowToSection` nesting, HTML blobs
+    - [completed] Imports land in the editor as drafts for review
 
 ## Phase 3: Photos
 
