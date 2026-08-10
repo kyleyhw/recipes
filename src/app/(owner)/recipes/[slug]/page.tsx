@@ -7,13 +7,34 @@ import { ServingsStepper } from "@/components/servings-stepper";
 import { ExportLinks } from "@/components/export-links";
 import { nutritionFor } from "@/lib/nutrition/recipe-nutrition";
 import { shareRecipe, unshareRecipe } from "@/lib/sharing/exchange";
-import { appUrl } from "@/lib/env";
+import { appUrl, features } from "@/lib/env";
+import { sourcePhotoByWebSearch } from "@/lib/ai/photo";
 import { resolveRecipeIngredients } from "@/lib/nutrition/resolve";
 import { getRecipeBySlug } from "@/lib/recipes";
 import { scaleRecipe } from "@/lib/scaling";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 import { attachUploadedPhoto, clearPhoto, type PhotoCredit } from "@/lib/photos/attach";
 import { INGEST_FAILURE_MESSAGES } from "@/lib/photos/ingest";
+
+/**
+ * Turns the `photoError` query parameter into a sentence.
+ *
+ * The parameter carries three kinds of value: an ingest failure code, the
+ * literal `search-empty`, and — for a failed Claude call — the failure message
+ * itself, which is already written for a reader. Passing the last through
+ * unchanged is what lets "the monthly ceiling has been reached" reach the
+ * owner instead of a generic "photo failed".
+ */
+function photoErrorMessage(code: string | undefined): string | undefined {
+  if (!code) return undefined;
+  if (code in INGEST_FAILURE_MESSAGES) {
+    return INGEST_FAILURE_MESSAGES[code as keyof typeof INGEST_FAILURE_MESSAGES];
+  }
+  if (code === "search-empty") {
+    return "Claude found no photograph of this dish that was usable. Upload one, or try again later.";
+  }
+  return code;
+}
 
 /**
  * Recipe detail.
@@ -37,7 +58,12 @@ export default async function RecipePage({
   if (!recipe) notFound();
 
   const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
+  // Captured as values rather than read off `recipe` inside the Server Actions
+  // below: those are function declarations, which are hoisted above the
+  // not-found narrowing, so `recipe` is nullable from inside them.
   const recipeId = recipe.id;
+  const recipeTitle = recipe.title;
+  const recipeDescription = recipe.description;
 
   // An absent, malformed, or non-positive `servings` falls back to the base,
   // so a hand-edited URL cannot produce a negative scaling factor.
@@ -70,6 +96,33 @@ export default async function RecipePage({
     revalidatePath("/");
     revalidatePath(`/recipes/${slug}`);
     redirect(failure ? `/recipes/${slug}?photoError=${failure}` : `/recipes/${slug}`);
+  }
+
+  /**
+   * Photo layer 2, on demand.
+   *
+   * Offered as an explicit action rather than run automatically on every
+   * recipe, because it is the only billable operation the recipe page can
+   * perform and the owner should be the one who decides to spend it.
+   */
+  async function findPhoto(): Promise<void> {
+    "use server";
+    const result = await sourcePhotoByWebSearch(recipeId, {
+      title: recipeTitle,
+      description: recipeDescription,
+      query: null,
+    });
+    revalidatePath("/");
+    revalidatePath(`/recipes/${slug}`);
+    // A search that found nothing usable and a search that could not run are
+    // different failures, and the message distinguishes them.
+    redirect(
+      result.ok
+        ? result.attached
+          ? `/recipes/${slug}`
+          : `/recipes/${slug}?photoError=search-empty`
+        : `/recipes/${slug}?photoError=${encodeURIComponent(result.message)}`,
+    );
   }
 
   async function removePhoto(): Promise<void> {
@@ -124,11 +177,8 @@ export default async function RecipePage({
         photoCredit={recipe.photoCredit as PhotoCredit | null}
         uploadAction={uploadPhoto}
         clearAction={removePhoto}
-        error={
-          photoError && photoError in INGEST_FAILURE_MESSAGES
-            ? INGEST_FAILURE_MESSAGES[photoError as keyof typeof INGEST_FAILURE_MESSAGES]
-            : undefined
-        }
+        {...(features.ai ? { findAction: findPhoto } : {})}
+        error={photoErrorMessage(photoError)}
       />
 
       <header className="mt-6 mb-6">
@@ -185,6 +235,14 @@ export default async function RecipePage({
           >
             Edit
           </Link>
+          {features.ai ? (
+            <Link
+              href={`/recipes/${recipe.slug}/substitute`}
+              className="text-accent hover:underline"
+            >
+              Substitute
+            </Link>
+          ) : null}
           {recipe.sourceUrl ? (
             <a
               href={recipe.sourceUrl}

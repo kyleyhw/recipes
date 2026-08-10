@@ -1,5 +1,11 @@
 import "server-only";
+import {
+  chooseUsdaCandidate,
+  estimateMacros,
+  type EstimatedFood,
+} from "@/lib/ai/macro-match";
 import { db } from "@/lib/db";
+import { features } from "@/lib/env";
 import { searchUsda } from "@/lib/nutrition/usda";
 
 /**
@@ -11,12 +17,22 @@ import { searchUsda } from "@/lib/nutrition/usda";
  *   2. Trigram similarity against the local library, using the GIN index from
  *      the initial migration. Catches plurals, spelling variants, and word
  *      order — "butter, unsalted" against "unsalted butter".
- *   3. USDA FoodData Central, whose top match is adopted and cached locally.
+ *   3. USDA FoodData Central. With no Anthropic key the top hit is adopted;
+ *      with one, Claude chooses among the candidates and supplies rho and mu.
+ *   4. Claude's own estimate, when FoodData Central has no record or no USDA
+ *      key is configured. Stored as `source: CLAUDE` so it is visibly an
+ *      estimate wherever it is displayed.
  *
- * Step 3 is the only one that costs a network call, and its result is written
- * into the local library, so the same ingredient is never looked up twice. That
- * is the payoff of a shared canonical table: resolving "unsalted butter" once
- * makes every recipe using it accurate at once.
+ * Only steps 3 and 4 leave the machine, and their results are written into the
+ * local library, so the same ingredient is never looked up twice. That is the
+ * payoff of a shared canonical table: resolving "unsalted butter" once makes
+ * every recipe using it accurate at once — and means the billable step of the
+ * chain runs once per new ingredient, not once per recipe.
+ *
+ * Every step after the first two is optional. With neither key set, resolution
+ * stops after the trigram search and unmatched ingredients are reported as
+ * coverage gaps, which is the honest degradation: a gap is visible, a
+ * fabricated figure is not.
  *
  * A `MANUAL` ingredient is never overwritten by an automatic pass. An owner who
  * has corrected a figure has more authority than any database.
@@ -94,7 +110,7 @@ const TRIGRAM_THRESHOLD = 0.45;
 export interface ResolvedIngredient {
   id: string;
   name: string;
-  source: "exact" | "trigram" | "usda";
+  source: "exact" | "trigram" | "usda" | "claude";
 }
 
 /** Exact match on the canonical library, case-insensitive. */
@@ -144,33 +160,90 @@ export async function resolveIngredient(
   const similar = await findSimilar(normalised);
   if (similar) return { ...similar, source: "trigram" };
 
-  const candidates = await searchUsda(normalised, 1);
-  const best = candidates[0];
-  if (!best) return null;
+  // A wider candidate list is only worth fetching when something can judge it.
+  // Without an Anthropic key the top hit is all that will be used anyway.
+  const candidates = await searchUsda(normalised, features.ai ? 8 : 1);
 
-  // Cache the USDA result into the canonical library. `upsert` on the
-  // normalised name rather than `create`, because two ingredients resolving
-  // concurrently would otherwise race on the unique constraint.
+  if (candidates.length > 0) {
+    const chosen =
+      candidates.length > 1 ? await chooseUsdaCandidate(normalised, candidates) : null;
+
+    // `chosen === null` covers three cases that all mean the same thing here:
+    // no Anthropic key, a failed call, and an explicit "none of these". The
+    // first two should fall back to the top hit, which is what happened before
+    // Claude was involved at all. The third must not — the model has said the
+    // ingredient is absent from the candidate list, and adopting the top hit
+    // anyway would override the only judgement that was asked for.
+    if (chosen === null && features.ai && candidates.length > 1) {
+      const estimated = await estimateMacros(normalised);
+      if (estimated) return storeEstimate(normalised, estimated);
+    }
+
+    const best = chosen?.candidate ?? candidates[0];
+    if (best) {
+      // Cache the USDA result into the canonical library. `upsert` on the
+      // normalised name rather than `create`, because two ingredients resolving
+      // concurrently would otherwise race on the unique constraint.
+      const created = await db.ingredient.upsert({
+        where: { name: normalised },
+        update: {},
+        create: {
+          name: normalised,
+          usdaFdcId: best.fdcId,
+          kcal100g: best.macro.kcal,
+          protein100g: best.macro.protein,
+          carbs100g: best.macro.carbs,
+          fat100g: best.macro.fat,
+          fiber100g: best.macro.fiber,
+          sugar100g: best.macro.sugar,
+          sodiumMg100g: best.macro.sodiumMg,
+          // rho and mu come from the model, because FoodData Central does not
+          // record either, and a volume or a count is unconvertible without them.
+          densityGPerMl: chosen?.densityGPerMl ?? null,
+          gramsPerUnit: chosen?.gramsPerUnit ?? null,
+          source: "USDA",
+          sourceNote: chosen
+            ? `USDA FoodData Central ${best.fdcId}: ${best.description}. ` +
+              `Chosen by Claude (${chosen.confidence} confidence): ${chosen.reason}`
+            : `USDA FoodData Central ${best.fdcId}: ${best.description}`,
+        },
+        select: { id: true, name: true },
+      });
+
+      return { ...created, source: "usda" };
+    }
+  }
+
+  // Nothing in FoodData Central, or no USDA key at all.
+  const estimated = await estimateMacros(normalised);
+  return estimated ? storeEstimate(normalised, estimated) : null;
+}
+
+/** Writes a model estimate into the canonical library, marked as an estimate. */
+async function storeEstimate(
+  name: string,
+  estimate: EstimatedFood,
+): Promise<ResolvedIngredient> {
   const created = await db.ingredient.upsert({
-    where: { name: normalised },
+    where: { name },
     update: {},
     create: {
-      name: normalised,
-      usdaFdcId: best.fdcId,
-      kcal100g: best.macro.kcal,
-      protein100g: best.macro.protein,
-      carbs100g: best.macro.carbs,
-      fat100g: best.macro.fat,
-      fiber100g: best.macro.fiber,
-      sugar100g: best.macro.sugar,
-      sodiumMg100g: best.macro.sodiumMg,
-      source: "USDA",
-      sourceNote: `USDA FoodData Central ${best.fdcId}: ${best.description}`,
+      name,
+      kcal100g: estimate.kcal100g,
+      protein100g: estimate.protein100g,
+      carbs100g: estimate.carbs100g,
+      fat100g: estimate.fat100g,
+      fiber100g: estimate.fiber100g,
+      sugar100g: estimate.sugar100g,
+      sodiumMg100g: estimate.sodiumMg100g,
+      densityGPerMl: estimate.densityGPerMl,
+      gramsPerUnit: estimate.gramsPerUnit,
+      source: "CLAUDE",
+      sourceNote: `Estimated by Claude: ${estimate.basis}`,
     },
     select: { id: true, name: true },
   });
-
-  return { ...created, source: "usda" };
+  return { ...created, source: "claude" };
 }
 
 /**

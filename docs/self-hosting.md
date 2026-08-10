@@ -64,9 +64,24 @@ box.
 | `ANTHROPIC_API_KEY` | no | Claude features hide themselves; photos fall back to `og:image` and upload |
 | `USDA_API_KEY` | no | Macro lookup falls back to manual entry ([free key](https://fdc.nal.usda.gov/api-key-signup.html)) |
 | `BLOB_READ_WRITE_TOKEN` | no | Photos fall back to the generated placeholder |
-| `AI_MONTHLY_BUDGET_USD` | no | Defaults to 10 |
+| `AI_MONTHLY_BUDGET_USD` | no | Defaults to 10 — see below |
 | `DB_POOL_MAX` | no | Defaults to 5; set to 1 for PGlite |
 | `APP_URL` | no | Inferred from Vercel; set to override |
+
+### The spend ceiling
+
+A deployed instance holds a live API key, so `AI_MONTHLY_BUDGET_USD` bounds what
+it can spend in a calendar month (UTC). The figure is compared against this
+deployment's own record of what it has spent — every call is priced at call time
+and stored — so it needs no billing credentials and costs no network round trip.
+Reaching it disables the Claude features with an explicit message and leaves
+everything else working.
+
+The default of 10 comfortably covers personal use: the expensive operation is
+photo search at roughly two cents a recipe, and everything else is fractions of
+a cent. It is a backstop against a runaway loop rather than a meaningful limit.
+Current spend is displayed next to every button that can spend it.
+[docs/claude-integration.md](claude-integration.md) has the pricing table.
 
 ### One trap worth knowing about
 

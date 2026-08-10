@@ -107,8 +107,38 @@ derivations underpinning scaling and nutrition are in
 
 ## Phase 7: Claude integration
 
-30. [pending] Client, schemas, usage logging, and monthly spend ceiling.
-31. [pending] Layer 2 photo sourcing via web search.
-32. [pending] Ingredient substitution with preview diff.
-33. [pending] Recipe generation saved as drafts.
-34. [pending] Claude-assisted USDA matching and text/URL import.
+30. [completed] Client, schemas, usage logging, and monthly spend ceiling.
+    - [completed] One entry point (`callWithTool`) owning the ceiling, logging, validation, and failure
+    - [completed] Tool definitions generated from zod schemas, in the strict subset
+    - [completed] One correction attempt on a malformed or missing answer
+    - [completed] Every response priced and recorded, including unusable ones
+    - [completed] Ceiling checked from recorded spend before any request is made
+    - [completed] Failure returned as data; nothing throws
+31. [completed] Layer 2 photo sourcing via web search.
+    - [completed] Search capped at two uses; candidates validated by the phase-3 ingest pipeline
+    - [completed] Runner-up candidates stored, so replacing a photo costs nothing
+32. [completed] Ingredient substitution with preview diff.
+    - [completed] Edits matched against the stored recipe; an unmatched edit is reported, never applied
+    - [completed] Preview is editable before it is applied; applying marks the recipe a draft
+33. [completed] Recipe generation saved as drafts.
+    - [completed] From a brief, from ingredients on hand, or against a per-serving energy target
+    - [completed] Memories injected into every recipe-writing prompt
+    - [completed] Photograph sourced in the same request
+34. [completed] Claude-assisted USDA matching and text/URL import.
+    - [completed] Choice among USDA candidates, plus the rho and mu that FDC does not record
+    - [completed] Model estimate when FoodData Central has no record, stored as `source: CLAUDE`
+    - [completed] Extraction from prose for pages with no structured data
+35. [completed] Verification: 63 new unit tests, 37 browser assertions across three flows.
+    - [completed] Degradation with no key: every AI control absent, everything else working
+    - [completed] Failure paths exercised against the real API with an invalid key
+    - [completed] Spend ceiling proven to refuse *before* spending, in 167 ms
+    - [completed] Untested surface recorded explicitly in the phase-7 report
+
+---
+
+## Status
+
+All seven phases are complete. The one substantial gap in verification is
+recorded in [`tests/reports/phase-7-claude.md`](tests/reports/phase-7-claude.md)
+§6: no Anthropic API key was available, so nothing downstream of a successful
+model response has been exercised against the live service.

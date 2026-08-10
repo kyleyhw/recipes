@@ -83,6 +83,78 @@ export async function attachPhotoFromSourcePage(
   return null;
 }
 
+/** A photograph proposed by Claude's web search (`lib/ai/photo.ts`). */
+export interface WebPhotoCandidate {
+  imageUrl: string;
+  pageUrl: string;
+  siteName: string;
+  why: string;
+}
+
+export interface WebSearchPhotoOutcome {
+  /** The candidate actually attached, or null if every one failed validation. */
+  attached: WebPhotoCandidate | null;
+  /** Why each rejected candidate was rejected, in the order tried. */
+  rejected: Array<{ candidate: WebPhotoCandidate; reason: IngestFailure }>;
+}
+
+/**
+ * Layer 2 — a photograph found by Claude's web search.
+ *
+ * Candidates are tried in order until one survives ingest, which is a real
+ * filter: a search result may be unreachable, may not decode, may be a 200 px
+ * thumbnail, or may be a banner. Trying only the first would waste the search
+ * whenever the best-described candidate happens to be the least usable file.
+ *
+ * The unused candidates are kept on the recipe. Replacing a photo afterwards is
+ * then free, where re-running the search would cost another billable call for a
+ * result already paid for.
+ */
+export async function attachPhotoFromWebSearch(
+  recipeId: string,
+  candidates: readonly WebPhotoCandidate[],
+): Promise<WebSearchPhotoOutcome> {
+  const rejected: WebSearchPhotoOutcome["rejected"] = [];
+
+  for (const [index, candidate] of candidates.entries()) {
+    const result = await ingestImageUrl(candidate.imageUrl);
+    if (!result.ok) {
+      rejected.push({ candidate, reason: result.reason });
+      continue;
+    }
+
+    await replacePhoto(recipeId, result.hero.url, "WEB_SEARCH", {
+      siteName: candidate.siteName || null,
+      pageUrl: candidate.pageUrl || null,
+      originalUrl: candidate.imageUrl,
+      fetchedAt: new Date().toISOString(),
+    });
+
+    const remaining = candidates.slice(index + 1);
+    await db.recipe.update({
+      where: { id: recipeId },
+      data: {
+        // Spread into object literals rather than passed through: Prisma's JSON
+        // input type requires an index signature, which a declared interface
+        // does not have and an anonymous object literal does.
+        photoCandidates:
+          remaining.length > 0
+            ? remaining.map((c) => ({
+                imageUrl: c.imageUrl,
+                pageUrl: c.pageUrl,
+                siteName: c.siteName,
+                why: c.why,
+              }))
+            : Prisma.DbNull,
+      },
+    });
+
+    return { attached: candidate, rejected };
+  }
+
+  return { attached: null, rejected };
+}
+
 /**
  * Layer 3 — manual upload.
  *

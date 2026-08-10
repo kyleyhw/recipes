@@ -1,5 +1,9 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { AiBudgetNote } from "@/components/ai-budget-note";
+import { extractRecipe } from "@/lib/ai/extract";
+import { htmlToText } from "@/lib/import/html-text";
+import { saveDraft } from "@/lib/ai/drafts";
 import { features } from "@/lib/env";
 import { extractRecipeFromHtml } from "@/lib/import/jsonld";
 import { parseIngredientBlock } from "@/lib/ingredient-parser";
@@ -180,6 +184,61 @@ export default async function ImportPage({
    * The recipe arrives with its ingredient nutrition already resolved, so it is
    * accurate here immediately with no USDA key and no lookup.
    */
+  /**
+   * The Claude path, for what the deterministic readers cannot handle.
+   *
+   * Offered as a separate button rather than as an automatic fallback: it costs
+   * money, and a fallback that spends silently whenever a parse fails is a
+   * fallback the owner cannot budget for. The error message on a failed
+   * structured-data import points here, so the escalation is one click.
+   */
+  async function importWithClaude(formData: FormData): Promise<void> {
+    "use server";
+    const url = String(formData.get("url") ?? "").trim();
+    const pasted = String(formData.get("text") ?? "").trim();
+    if (!url && !pasted) redirect("/import?error=empty");
+
+    let text = pasted;
+    let sourceUrl: string | null = null;
+
+    if (url) {
+      let parsedUrl: URL;
+      try {
+        parsedUrl = new URL(url);
+      } catch {
+        redirect("/import?error=badurl");
+      }
+      if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+        redirect("/import?error=badurl");
+      }
+      try {
+        const response = await fetch(parsedUrl, {
+          headers: {
+            "User-Agent": "recipes-app/0.1 (personal recipe importer)",
+            Accept: "text/html,application/xhtml+xml",
+          },
+          signal: AbortSignal.timeout(15_000),
+        });
+        if (!response.ok) redirect("/import?error=fetch");
+        // Stripped to text before it reaches the model: markup is most of the
+        // document and none of the recipe, and tokens are charged for both.
+        text = htmlToText(await response.text());
+        sourceUrl = parsedUrl.toString();
+      } catch {
+        redirect("/import?error=fetch");
+      }
+    }
+
+    const result = await extractRecipe(text, { sourceUrl });
+    if (!result.ok) {
+      redirect(`/import?error=ai&detail=${encodeURIComponent(result.message)}`);
+    }
+
+    const saved = await saveDraft(result.data, { sourceUrl });
+    revalidatePath("/");
+    redirect(`/recipes/${saved.slug}/edit`);
+  }
+
   async function importFromShareLink(formData: FormData): Promise<void> {
     "use server";
     const link = String(formData.get("shareUrl") ?? "").trim();
@@ -246,11 +305,11 @@ export default async function ImportPage({
     nostructure:
       "That page publishes no structured recipe data. Paste the recipe text below instead.",
     "nostructure-ai":
-      "That page publishes no structured recipe data. Paste the text below, or use Generate to have Claude read it.",
+      "That page publishes no structured recipe data. Try “Read it with Claude” below, or paste the recipe text.",
   };
   const message = params.error
-    ? params.error === "bundle"
-      ? (params.detail ?? "That bundle could not be read.")
+    ? params.error === "bundle" || params.error === "ai"
+      ? (params.detail ?? "That import could not be completed.")
       : messages[params.error]
     : undefined;
 
@@ -296,6 +355,21 @@ export default async function ImportPage({
             Import
           </button>
         </div>
+        {features.ai ? (
+          <>
+            <button
+              type="submit"
+              formAction={importWithClaude}
+              className="self-start text-xs text-accent hover:underline"
+            >
+              Read it with Claude instead
+            </button>
+            <p className="text-xs text-text-muted">
+              For pages with no structured data. Costs a model call, so it is a separate
+              button rather than an automatic fallback.
+            </p>
+          </>
+        ) : null}
       </form>
 
       <form action={importFromShareLink} className="mt-10 flex flex-col gap-2">
@@ -360,12 +434,32 @@ export default async function ImportPage({
           rows={12}
           className={`${inputClass} font-mono text-sm`}
         />
-        <button
-          type="submit"
-          className="self-start rounded-card border border-border bg-surface-2 px-4 py-2 font-medium"
-        >
-          Import text
-        </button>
+        <div className="flex flex-wrap items-center gap-4">
+          <button
+            type="submit"
+            className="rounded-card border border-border bg-surface-2 px-4 py-2 font-medium"
+          >
+            Import text
+          </button>
+          {features.ai ? (
+            <button
+              type="submit"
+              formAction={importWithClaude}
+              className="text-xs text-accent hover:underline"
+            >
+              Read it with Claude instead
+            </button>
+          ) : null}
+        </div>
+        {features.ai ? (
+          <>
+            <p className="text-xs text-text-muted">
+              Claude handles text that does not separate cleanly — a paragraph, an OCR
+              scan, a message from a friend.
+            </p>
+            <AiBudgetNote />
+          </>
+        ) : null}
       </form>
     </div>
   );

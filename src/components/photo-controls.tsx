@@ -20,6 +20,7 @@ export function PhotoControls({
   photoCredit,
   uploadAction,
   clearAction,
+  findAction,
   error,
 }: {
   photoUrl: string | null;
@@ -27,6 +28,8 @@ export function PhotoControls({
   photoCredit: PhotoCredit | null;
   uploadAction: (formData: FormData) => Promise<void>;
   clearAction: () => Promise<void>;
+  /** Absent when no Anthropic key is configured, which hides the control. */
+  findAction?: (() => Promise<void>) | undefined;
   error?: string | undefined;
 }) {
   return (
@@ -61,6 +64,14 @@ export function PhotoControls({
           />
         </label>
       </form>
+
+      {findAction ? (
+        <form action={findAction}>
+          <button type="submit" className="underline hover:text-text">
+            {photoUrl ? "Find another with Claude" : "Find one with Claude"}
+          </button>
+        </form>
+      ) : null}
 
       {photoUrl ? (
         <form action={clearAction}>

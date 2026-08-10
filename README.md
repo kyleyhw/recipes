@@ -24,6 +24,7 @@ variables, and you have your own — see [docs/self-hosting.md](docs/self-hostin
 | [docs/self-hosting.md](docs/self-hosting.md) | Running your own instance |
 | [docs/nutrition-pipeline.md](docs/nutrition-pipeline.md) | Ingredient resolution and reading the macro panel |
 | [docs/sharing-format.md](docs/sharing-format.md) | The portable bundle and cross-instance import |
+| [docs/claude-integration.md](docs/claude-integration.md) | The model features, the spend ceiling, and every failure mode |
 | [PROJECT_PLAN.md](PROJECT_PLAN.md) | Phase breakdown and current status |
 | [tests/reports/](tests/reports/) | Test reports, with runtimes and input justifications |
 
@@ -61,7 +62,12 @@ recipes/
 │       ├── nutrition/         USDA client, resolution, aggregation  [phase 5]
 │       ├── sharing/           portable bundle format                [phase 6]
 │       ├── photos/            sourcing, storage, placeholder        [phase 3]
+│       ├── memories.ts        standing preferences, injected into prompts
 │       └── ai/                Claude client, schemas, features      [phase 7]
+│           ├── client.ts      the one entry point: ceiling, logging, validation
+│           ├── pricing.ts     model prices; pure, so the ceiling is testable
+│           ├── schemas.ts     zod schemas -> tool definitions -> validation
+│           └── diff.ts        applying a substitution; unmatched edits reported
 ├── tests/
 │   ├── unit/                  pure-module tests
 │   └── reports/               markdown test reports
