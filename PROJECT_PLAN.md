@@ -66,10 +66,18 @@ derivations underpinning scaling and nutrition are in
 
 ## Phase 4: Portion scaling
 
-17. [pending] `units.ts` — conversion factor table and dimension handling.
-18. [pending] `quantity.ts` — constrained rational approximation and unit selection.
-19. [pending] `scaling.ts` — pure scaling with `scalable: false` passthrough.
-20. [pending] Servings stepper and non-linearity advisories.
+17. [completed] `units.ts` — conversion factors, dimensions, and measurement systems.
+    - [completed] Star-shaped lookup rather than a conversion graph
+    - [completed] Cross-dimension conversion returns null, never a default
+18. [completed] `quantity.ts` — constrained rational approximation and unit selection.
+    - [completed] Search over D = {1,2,3,4,6,8}; continued fractions rejected with reason
+    - [completed] Never crosses measurement systems; metric renders decimals
+    - [completed] Comfortable range, then simplest denominator, ties to the larger unit
+19. [completed] `scaling.ts` — pure scaling with `scalable: false` passthrough.
+20. [completed] Servings stepper (URL-driven) and non-linearity advisories.
+    - [completed] Threshold on |ln alpha|, so halving and doubling are treated alike
+    - [completed] Leavening, yeast, salt, setting agents, chilli; pan size; cook time
+    - [completed] Fractional egg counts explained rather than rounded
 
 ## Phase 5: Macros and export
 

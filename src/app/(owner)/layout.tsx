@@ -23,7 +23,9 @@ export default async function OwnerLayout({
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 sm:px-6">
-      <header className="flex items-center gap-4 border-b border-border py-4">
+      {/* nowrap + horizontal scroll: at phone width the link set is wider than
+          the viewport, and wrapping pushed "Sign out" onto its own line. */}
+      <header className="flex items-center gap-4 overflow-x-auto border-b border-border py-4 whitespace-nowrap">
         <Link href="/" className="text-lg font-semibold tracking-tight">
           Recipes
         </Link>

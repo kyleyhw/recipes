@@ -126,19 +126,45 @@ the correct dimension. The displayed unit is the largest for which the count is
 at least one:
 
 $$u^\* = \operatorname*{arg\,max}_{u \in C}
-\left\{ \lambda_u \;:\; \tilde q / \lambda_u \ge 1 \right\},$$
+\left\{ \lambda_u \;:\; \tilde q / \lambda_u \ge 1 \right\}.$$
 
-so $887\ \mathrm{ml}$ renders as $3\tfrac34$ cups rather than as $887\
-\mathrm{ml}$ or $59$ tbsp.
+That rule alone turns out to be wrong in three ways, each found by testing the
+implementation against what a cook would actually want to read. The rule the
+code implements is the corrected one below.
 
-Selection and fraction-snapping interact, and neither dominates: a unit
-admitting an exact fraction is preferable to a marginally larger one that does
-not. The implementation therefore scores each $(u, p/q)$ pair by relative error
+**Correction 1 — never cross measurement systems.** $500\ \mathrm{g}$ is
+$1.102\ \mathrm{lb}$, which snaps to $1\tfrac18$ lb within tolerance. The
+arithmetic is right and the answer is wrong: the cook is following a metric
+recipe with a metric scale out. Candidate units are therefore filtered to the
+system of the unit the recipe was written in. Crossing systems is a conversion
+the user asks for, not something scaling does behind their back.
+
+**Correction 2 — metric does not take fractions.** $\tfrac23\ \mathrm{kg}$ is
+not something anyone writes; metric measurement exists precisely to avoid
+fractions. Metric quantities climb the unit ladder only to keep the number in
+$[1, 1000)$ and are then rendered as decimals.
+
+**Correction 3 — simplicity beats size.** The largest-unit rule prefers
+$\tfrac13$ tbsp to $1$ tsp for $5\ \mathrm{ml}$, and $6\tfrac18$ fl oz to
+$\tfrac34$ cup for $180\ \mathrm{ml}$. Both are backwards: a whole number in a
+smaller unit is easier to measure than a fraction in a larger one, and twelve
+scoops is not a measurement at all. Imperial selection therefore admits only
+units placing the value in a *comfortable range* $[\tfrac14, 4]$ — a quarter cup
+is a real measuring cup, a twentieth of one is not, and nobody counts twelve
+tablespoons — and among those chooses the **simplest denominator**, breaking
+ties toward the larger unit.
+
+With those corrections, $887\ \mathrm{ml}$ in an imperial recipe renders as
+$3\tfrac23$ cups. (An earlier draft of this document asserted $3\tfrac34$;
+that was simply wrong. $887/240 = 3.696$, whose nearest member of $D$ is
+$3\tfrac23$ at $0.79\%$ error, against $1.46\%$ for $3\tfrac34$.)
+
+Every candidate is scored by relative error
 
 $$\varepsilon_\text{rel} = \frac{|x - p/q|}{x}$$
 
-against a tolerance $\varepsilon$, and falls back to one decimal place when no
-candidate satisfies it.
+against a tolerance $\varepsilon$, and the renderer falls back to one decimal
+place when no candidate satisfies it.
 
 $\varepsilon = 0.05$ is used. The justification is physical rather than
 mathematical: a 5% error on a one-cup measure is about one teaspoon, which is

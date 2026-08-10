@@ -2,7 +2,9 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { PhotoControls } from "@/components/photo-controls";
+import { ServingsStepper } from "@/components/servings-stepper";
 import { getRecipeBySlug } from "@/lib/recipes";
+import { scaleRecipe } from "@/lib/scaling";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 import { attachUploadedPhoto, clearPhoto, type PhotoCredit } from "@/lib/photos/attach";
 import { INGEST_FAILURE_MESSAGES } from "@/lib/photos/ingest";
@@ -10,23 +12,37 @@ import { INGEST_FAILURE_MESSAGES } from "@/lib/photos/ingest";
 /**
  * Recipe detail.
  *
- * Phase 2 renders the stored recipe as entered. The servings stepper (phase 4)
- * and macro panel (phase 5) attach here.
+ * The serving count is read from the URL, so a scaled recipe is a shareable
+ * link and the back button restores the previous size. Scaling is a view: the
+ * stored recipe keeps its base servings and is never mutated by it.
+ *
+ * The macro panel (phase 5) attaches here.
  */
 export default async function RecipePage({
   params,
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ photoError?: string }>;
+  searchParams: Promise<{ photoError?: string; servings?: string }>;
 }) {
   const { slug } = await params;
-  const { photoError } = await searchParams;
+  const { photoError, servings } = await searchParams;
   const recipe = await getRecipeBySlug(slug);
   if (!recipe) notFound();
 
   const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
   const recipeId = recipe.id;
+
+  // An absent, malformed, or non-positive `servings` falls back to the base,
+  // so a hand-edited URL cannot produce a negative scaling factor.
+  const requested = Number.parseFloat(servings ?? "");
+  const targetServings =
+    Number.isFinite(requested) && requested > 0 ? requested : recipe.baseServings;
+
+  const scaled = scaleRecipe(recipe.ingredients, recipe.baseServings, targetServings, {
+    cookMinutes: recipe.cookMinutes,
+  });
+  const isScaled = Math.abs(scaled.factor - 1) > 1e-9;
 
   async function uploadPhoto(formData: FormData): Promise<void> {
     "use server";
@@ -109,10 +125,17 @@ export default async function RecipePage({
         ) : null}
 
         <p className="numeric mt-3 text-sm text-text-muted">
-          Makes {recipe.baseServings} {recipe.servingLabel}
-          {recipe.baseServings === 1 ? "" : "s"}
-          {totalMinutes > 0 ? ` · ${totalMinutes} min total` : ""}
+          {totalMinutes > 0 ? `${totalMinutes} min total` : null}
         </p>
+
+        <div className="mt-4">
+          <ServingsStepper
+            slug={recipe.slug}
+            baseServings={recipe.baseServings}
+            servingLabel={recipe.servingLabel}
+            current={targetServings}
+          />
+        </div>
 
         {recipe.tags.length > 0 ? (
           <ul className="mt-3 flex flex-wrap gap-1.5">
@@ -152,25 +175,46 @@ export default async function RecipePage({
           Ingredients
         </h2>
         <ul className="flex flex-col gap-1.5">
-          {recipe.ingredients.map((ingredient) => (
-            <li key={ingredient.id} className="flex items-baseline gap-2 text-sm">
-              {/* rawText, not the reconstructed parse: the line the cook wrote
-                  is authoritative, and the parse exists only to drive scaling
-                  and macros. */}
-              <span>{ingredient.rawText}</span>
-              {!ingredient.scalable ? (
-                <span
-                  className="text-xs text-text-muted"
-                  title="Excluded from scaling — multiplying it would produce a wrong amount"
-                >
-                  (not scaled)
-                </span>
+          {scaled.ingredients.map((ingredient) => (
+            <li key={ingredient.id} className="text-sm">
+              <div className="flex items-baseline gap-2">
+                {/* At the base size the line the cook wrote is authoritative and
+                    is shown verbatim. The reconstructed parse appears only once
+                    scaled, which is the only case where the stored text would be
+                    wrong. */}
+                <span>{isScaled ? ingredient.display : ingredient.rawText}</span>
+                {ingredient.passedThrough && isScaled ? (
+                  <span
+                    className="shrink-0 text-xs text-text-muted"
+                    title="Excluded from scaling — multiplying it would produce a wrong amount"
+                  >
+                    (not scaled)
+                  </span>
+                ) : null}
+              </div>
+              {ingredient.advisory ? (
+                <p className="mt-1 rounded-card bg-warn-soft px-2 py-1 text-xs text-warn">
+                  {ingredient.advisory}
+                </p>
               ) : null}
             </li>
           ))}
         </ul>
         {recipe.ingredients.length === 0 ? (
           <p className="text-sm text-text-muted">No ingredients recorded.</p>
+        ) : null}
+
+        {scaled.advisories.length > 0 ? (
+          <div className="mt-4 flex flex-col gap-2">
+            {scaled.advisories.map((advisory) => (
+              <p
+                key={advisory.kind}
+                className="rounded-card bg-warn-soft px-3 py-2 text-xs text-warn"
+              >
+                {advisory.text}
+              </p>
+            ))}
+          </div>
         ) : null}
       </section>
 
