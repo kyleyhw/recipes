@@ -1,0 +1,103 @@
+# Data model
+
+The full schema is in [`prisma/schema.prisma`](../prisma/schema.prisma). This
+document records the reasoning behind the choices that are not self-evident.
+
+## Whole schema, one migration
+
+Every model — including `Tag` and `AiInteraction`, which no code uses until
+phases 2 and 7 — is declared in the initial migration. Adding two unused tables
+costs nothing; a destructive migration halfway through the build costs real
+work, and a self-hoster who deployed early would inherit it.
+
+## `Recipe`
+
+`baseServings` is the serving count the stored quantities correspond to — the
+$S$ of [mathematics.md](mathematics.md#23-macronutrient-aggregation-and-coverage).
+Scaling never mutates it: scaling is a *view*, and a recipe scaled to eight
+servings and back to four must be bit-identical to where it started. Saving a
+scaled copy is an explicit, separate action.
+
+`servingLabel` exists because "4 servings" is wrong for a batch of cookies. It
+affects display only.
+
+`shareId` is null until the recipe is shared, and nulling it revokes every
+circulated link at once. It is separate from `id` so that sharing one recipe
+never exposes an internal identifier that could be used to probe for others.
+
+`photoCandidates` stores the runner-up results from the last photo search so
+that "replace photo" costs nothing. Without it, rejecting a bad automatic pick
+would trigger a second billable model call.
+
+## `RecipeIngredient`
+
+**`rawText` is never discarded.** It holds the line exactly as typed or
+imported — `"1 large onion, finely diced"`. Everything else on the row
+(`quantity`, `unit`, `name`, `prepNote`) is a *parse* of it, and the resolved
+`ingredientId` is a further inference on top of that parse. Both can be wrong.
+Keeping the original means a bad parse degrades the macro estimate but never
+the recipe: the cook still reads the line they wrote. The cost is one text
+column per ingredient, which is nothing against the alternative of a recipe
+that has been silently corrupted by a parser.
+
+**`scalable`** marks quantities that must not be multiplied by $\alpha$: "salt
+to taste", "oil for frying". Multiplying them produces confident nonsense.
+
+**`gramsOverride`** bypasses unit conversion entirely, for cases where the
+density $\rho$ or per-item mass $\mu$ is unknown or wrong for this particular
+use.
+
+**`ingredientId` may be null**, and null is meaningful: the ingredient is
+*unresolved*, contributing nothing to the macro totals *and* being reported as
+a coverage gap. It is never treated as nutritionally zero. The distinction
+between "contains no fat" and "we do not know its fat content" is the whole
+point of the coverage metric.
+
+## `Ingredient`
+
+Canonical and shared across every recipe that references it. This is the
+load-bearing decision of the nutrition design:
+
+- Resolving "unsalted butter" against USDA once makes every recipe using it
+  accurate at once.
+- A manual correction propagates everywhere, rather than needing to be repeated
+  per recipe.
+- Mass coverage becomes comparable across recipes, because the same ingredient
+  means the same thing everywhere.
+
+The alternative — per-recipe nutrition rows — would require correcting the same
+error repeatedly and would make coverage figures incommensurable.
+
+Macros are stored **per 100 g**, which is the USDA convention and makes
+aggregation a plain linear combination with no per-row unit handling.
+
+`densityGPerMl` ($\rho$) and `gramsPerUnit` ($\mu$) live here rather than in
+`units.ts` because they are properties of the *substance*, not of the unit: a
+millilitre of flour and a millilitre of honey differ, and no table keyed on
+"ml" can express that. Where either is unknown, the conversion is undefined and
+the ingredient is reported as a coverage gap rather than being assigned a
+plausible default — a default here would be indistinguishable from real data in
+the totals.
+
+`sourceNote` records where a number came from, satisfying the magic-number
+standard for values like flour's $\rho \approx 0.53\ \mathrm{g\,ml^{-1}}$.
+
+## `AiInteraction`
+
+Records token counts *and* a `costUsd` snapshot priced at call time. The
+snapshot is stored rather than recomputed because published prices change, and
+recomputing would silently rewrite historical spend. `webSearchRequests` is
+separate because server-side web search is billed per search, not per token.
+
+## Indexes not expressible in Prisma
+
+Three are appended to the initial migration by hand:
+
+- `Recipe_fts_idx` and `RecipeIngredient_fts_idx` — GIN indexes over
+  `to_tsvector('english', ...)`. The two-argument form with a literal
+  regconfig is `IMMUTABLE` and therefore indexable; the one-argument form
+  depends on a session GUC and is not.
+- `Ingredient_name_trgm_idx` — a trigram index for fuzzy matching free-text
+  ingredient names against the canonical library. Exact and prefix matching
+  alone miss plurals, spelling variants, and word order (`"butter, unsalted"`
+  against `"unsalted butter"`).

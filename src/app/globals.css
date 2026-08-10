@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens.
+ *
+ * Defined on bare `:root` so the light palette is the unconditional default,
+ * then redefined under `prefers-color-scheme: dark`. Every colour has a value
+ * outside any media query, so no surface is left unpainted if the query does
+ * not match.
+ *
+ * The palette is warm and low-contrast by intent: this application is read in
+ * a kitchen, often at arm's length, and a stark white field under bright
+ * lights is harder to scan than a paper-toned one.
+ */
+:root {
+  --bg: #faf7f2;
+  --surface: #ffffff;
+  --surface-2: #f3ede4;
+  --border: #e4dace;
+  --text: #241f1a;
+  --text-muted: #6b6157;
+  --accent: #a8481f;
+  --accent-soft: #f6e5dc;
+  --ok: #2f6b45;
+  --warn: #8a5a00;
+  --warn-soft: #fbf0d8;
+  --danger: #a32c22;
+  --radius: 0.625rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17140f;
+    --surface: #211d17;
+    --surface-2: #2b251d;
+    --border: #3a3229;
+    --text: #f1e9df;
+    --text-muted: #a99c8d;
+    --accent: #e08a5c;
+    --accent-soft: #38251c;
+    --ok: #7fbf95;
+    --warn: #e0b567;
+    --warn-soft: #33280f;
+    --danger: #e58a7f;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --radius-card: var(--radius);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tabular figures for quantities and macros, so scaled numbers do not jitter
+   in width as the servings stepper changes them. */
+.numeric {
+  font-variant-numeric: tabular-nums;
+}

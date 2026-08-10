@@ -1,0 +1,74 @@
+# Pre-commit hooks.
+#
+# The global standards specify ruff / ty / detect-secrets for Python projects.
+# This project is TypeScript, so the intent of each rule is preserved with its
+# TypeScript equivalent (see docs/architecture.md, "Toolchain mapping"):
+#
+#   ruff lint + format  ->  eslint + prettier
+#   ty (type checking)  ->  tsc --noEmit
+#   detect-secrets      ->  unchanged; it is language-agnostic
+#
+# Install once per clone:
+#     uvx pre-commit install
+# or, if pre-commit is on PATH:
+#     pre-commit install
+#
+# Run against everything without committing:
+#     uvx pre-commit run --all-files
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        # Recipe photos are resized before storage and never committed; a large
+        # file in a commit is almost always an accident.
+        args: ["--maxkb=512"]
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-json
+        exclude: ^tsconfig\.json$ # contains comments (JSONC), which Next accepts
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: detect-private-key
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+        # The lockfile is large, machine-generated, and full of base64 integrity
+        # hashes that trip the high-entropy detectors.
+        exclude: ^(package-lock\.json|\.secrets\.baseline)$
+
+  # Local hooks: these run the project's own toolchain rather than a pinned
+  # mirror, so the versions used here are exactly those in package-lock.json.
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: npx prettier --write
+        language: system
+        types_or: [ts, tsx, css, json, yaml]
+        exclude: ^(package-lock\.json|prisma/migrations/)
+
+      - id: eslint
+        name: eslint
+        entry: npx eslint --fix
+        language: system
+        types_or: [ts, tsx]
+        pass_filenames: false
+
+      - id: typecheck
+        name: tsc --noEmit
+        entry: npx tsc --noEmit
+        language: system
+        types_or: [ts, tsx]
+        pass_filenames: false
+
+      - id: vitest
+        name: vitest
+        entry: npx vitest run
+        language: system
+        types_or: [ts, tsx]
+        pass_filenames: false

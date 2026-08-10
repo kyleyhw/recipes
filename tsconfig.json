@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+
+    // --- Strictness (global standards §4, §9 "error-on-warning" analogue) ---
+    // `strict` subsumes noImplicitAny, strictNullChecks, strictFunctionTypes,
+    // strictBindCallApply, strictPropertyInitialization, noImplicitThis,
+    // useUnknownInCatchVariables, and alwaysStrict.
+    "strict": true,
+    // Indexing an array or Record yields `T | undefined`. This is the single most
+    // valuable non-default flag here: ingredient lists and unit lookup tables are
+    // indexed throughout, and without it `units[u]` is silently typed `Unit` even
+    // when `u` is absent from the table.
+    "noUncheckedIndexedAccess": true,
+    // Reject unreachable and unused code paths rather than warning.
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    // Optional properties are `T | undefined`, not "may be assigned undefined".
+    // Matters for Prisma inputs, where `{ x: undefined }` and `{}` differ.
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
