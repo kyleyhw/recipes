@@ -92,6 +92,14 @@ export default async function BrowsePage({
         </div>
       ) : (
         <div className="flex flex-col gap-8">
+          {/* The application holds recipes that exist nowhere else, so the
+              backup is offered where the collection is, not buried. */}
+          <p className="text-xs text-text-muted">
+            <a href="/api/collection" download className="underline hover:text-text">
+              Export the whole collection
+            </a>{" "}
+            as a single file. The import page reads it back.
+          </p>
           {shelves
             // Categories with nothing in them are noise on the browse page;
             // they remain selectable in the editor.

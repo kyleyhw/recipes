@@ -9,12 +9,13 @@ import Link from "next/link";
  * stored recipe keeps its base servings.
  */
 export function ServingsStepper({
-  slug,
+  basePath,
   baseServings,
   servingLabel,
   current,
 }: {
-  slug: string;
+  /** Path the links point at, without a query string: "/recipes/lemon-cake". */
+  basePath: string;
   baseServings: number;
   servingLabel: string;
   current: number;
@@ -28,8 +29,10 @@ export function ServingsStepper({
   const up = Math.round((current + step) * 100) / 100;
   const scaled = Math.abs(current - baseServings) > 1e-9;
 
+  // At the base size the query parameter is dropped entirely, so the canonical
+  // URL of an unscaled recipe has no scaling state in it.
   const href = (value: number) =>
-    value === baseServings ? `/recipes/${slug}` : `/recipes/${slug}?servings=${value}`;
+    value === baseServings ? basePath : `${basePath}?servings=${value}`;
 
   const buttonClass =
     "flex h-9 w-9 items-center justify-center rounded-card border border-border bg-surface text-lg leading-none hover:border-accent";

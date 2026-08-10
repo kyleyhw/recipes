@@ -94,10 +94,16 @@ derivations underpinning scaling and nutrition are in
 
 ## Phase 6: Sharing
 
-26. [pending] Versioned portable bundle format with migration support.
-27. [pending] Share links and the public read-only page.
-28. [pending] Cross-instance import over the public API.
-29. [pending] File bundle import/export and whole-collection backup.
+26. [completed] Versioned portable bundle format with migration support.
+    - [completed] Carries resolved USDA ids and macro snapshots, so import is instant
+    - [completed] Categories and tags travel as names, not identifiers
+    - [completed] Newer bundles import with unknown fields ignored
+27. [completed] Share links and the public read-only page.
+    - [completed] 128-bit unguessable share ids, separate from the primary key
+    - [completed] Full working recipe: scaling, advisories, macro panel
+    - [completed] Revocation invalidates every circulated link immediately
+28. [completed] Cross-instance import over the CORS-enabled public API.
+29. [completed] File bundle import/export and whole-collection backup.
 
 ## Phase 7: Claude integration
 

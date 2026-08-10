@@ -6,6 +6,8 @@ import { PhotoControls } from "@/components/photo-controls";
 import { ServingsStepper } from "@/components/servings-stepper";
 import { ExportLinks } from "@/components/export-links";
 import { nutritionFor } from "@/lib/nutrition/recipe-nutrition";
+import { shareRecipe, unshareRecipe } from "@/lib/sharing/exchange";
+import { appUrl } from "@/lib/env";
 import { resolveRecipeIngredients } from "@/lib/nutrition/resolve";
 import { getRecipeBySlug } from "@/lib/recipes";
 import { scaleRecipe } from "@/lib/scaling";
@@ -78,6 +80,20 @@ export default async function RecipePage({
     redirect(`/recipes/${slug}`);
   }
 
+  async function startSharing(): Promise<void> {
+    "use server";
+    await shareRecipe(recipeId);
+    revalidatePath(`/recipes/${slug}`);
+    redirect(`/recipes/${slug}`);
+  }
+
+  async function stopSharing(): Promise<void> {
+    "use server";
+    await unshareRecipe(recipeId);
+    revalidatePath(`/recipes/${slug}`);
+    redirect(`/recipes/${slug}`);
+  }
+
   return (
     <article className="mx-auto max-w-2xl">
       <div className="relative mb-5 aspect-16/9 w-full overflow-hidden rounded-card">
@@ -142,7 +158,7 @@ export default async function RecipePage({
 
         <div className="mt-4">
           <ServingsStepper
-            slug={recipe.slug}
+            basePath={`/recipes/${recipe.slug}`}
             baseServings={recipe.baseServings}
             servingLabel={recipe.servingLabel}
             current={targetServings}
@@ -257,6 +273,55 @@ export default async function RecipePage({
         {recipe.steps.length === 0 ? (
           <p className="text-sm text-text-muted">No method recorded.</p>
         ) : null}
+      </section>
+
+      <section className="mb-8 rounded-card border border-border bg-surface p-4">
+        <h2 className="text-sm font-semibold tracking-wide uppercase">Sharing</h2>
+        {recipe.shareId ? (
+          <>
+            <p className="mt-2 text-xs text-text-muted">
+              Anyone with this link can read the recipe without signing in. It carries the
+              ingredient nutrition data, so another instance can import it directly.
+            </p>
+            <code className="mt-2 block overflow-x-auto rounded bg-surface-2 px-2 py-1 text-xs">
+              {appUrl() ? `${appUrl()}/r/${recipe.shareId}` : `/r/${recipe.shareId}`}
+            </code>
+            <div className="mt-3 flex flex-wrap items-center gap-4 text-xs">
+              <a
+                href={`/r/${recipe.shareId}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-accent hover:underline"
+              >
+                Open the public page
+              </a>
+              <a
+                href={`/api/public/recipes/${recipe.shareId}`}
+                download
+                className="text-accent hover:underline"
+              >
+                Download as a file
+              </a>
+              <form action={stopSharing}>
+                <button type="submit" className="text-danger hover:underline">
+                  Stop sharing
+                </button>
+              </form>
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="mt-2 text-xs text-text-muted">
+              Not shared. Sharing mints an unguessable link that works without a sign-in;
+              revoking it invalidates the link immediately.
+            </p>
+            <form action={startSharing} className="mt-3">
+              <button type="submit" className="text-xs text-accent hover:underline">
+                Create a share link
+              </button>
+            </form>
+          </>
+        )}
       </section>
 
       {recipe.notes ? (

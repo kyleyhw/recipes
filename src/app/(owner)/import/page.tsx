@@ -6,6 +6,8 @@ import { parseIngredientBlock } from "@/lib/ingredient-parser";
 import { createRecipe } from "@/lib/recipes";
 import { attachPhotoFromSourcePage } from "@/lib/photos/attach";
 import { db } from "@/lib/db";
+import { parseBundle, parseCollection } from "@/lib/sharing/bundle";
+import { fetchBundleFromUrl, importBundle } from "@/lib/sharing/exchange";
 
 /**
  * Import a recipe from a URL or pasted text.
@@ -29,7 +31,7 @@ import { db } from "@/lib/db";
 export default async function ImportPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; detail?: string }>;
 }) {
   const params = await searchParams;
   const categories = await db.category.findMany({
@@ -172,6 +174,71 @@ export default async function ImportPage({
     redirect(`/recipes/${slug}/edit`);
   }
 
+  /**
+   * Import from another instance's share link.
+   *
+   * The recipe arrives with its ingredient nutrition already resolved, so it is
+   * accurate here immediately with no USDA key and no lookup.
+   */
+  async function importFromShareLink(formData: FormData): Promise<void> {
+    "use server";
+    const link = String(formData.get("shareUrl") ?? "").trim();
+    if (!link) redirect("/import?error=empty");
+
+    const fetched = await fetchBundleFromUrl(link);
+    if (!fetched.ok) {
+      redirect(`/import?error=bundle&detail=${encodeURIComponent(fetched.error)}`);
+    }
+
+    const outcome = await importBundle(fetched.bundle);
+    revalidatePath("/");
+    redirect(`/recipes/${outcome.slug}`);
+  }
+
+  /**
+   * Import from an uploaded bundle file.
+   *
+   * Works when the source instance is private, offline, or gone — and is the
+   * other half of the backup story, since the whole-collection export is read
+   * by the same path.
+   */
+  async function importFromFile(formData: FormData): Promise<void> {
+    "use server";
+    const file = formData.get("bundle");
+    if (!(file instanceof File) || file.size === 0) redirect("/import?error=empty");
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(await file.text());
+    } catch {
+      redirect("/import?error=bundle&detail=That+file+is+not+valid+JSON.");
+    }
+
+    // A collection export is many bundles; a share download is one. Both arrive
+    // through this control, so both are accepted.
+    const collection = parseCollection(parsed);
+    if (collection.ok) {
+      let last = "";
+      for (const bundle of collection.collection.recipes) {
+        const outcome = await importBundle(bundle);
+        last = outcome.slug;
+      }
+      revalidatePath("/");
+      redirect(
+        collection.collection.recipes.length === 1 && last ? `/recipes/${last}` : "/",
+      );
+    }
+
+    const single = parseBundle(parsed);
+    if (!single.ok) {
+      redirect(`/import?error=bundle&detail=${encodeURIComponent(single.error)}`);
+    }
+
+    const outcome = await importBundle(single.bundle);
+    revalidatePath("/");
+    redirect(`/recipes/${outcome.slug}`);
+  }
+
   const messages: Record<string, string> = {
     empty: "Nothing to import.",
     badurl: "That does not look like a web address.",
@@ -181,7 +248,11 @@ export default async function ImportPage({
     "nostructure-ai":
       "That page publishes no structured recipe data. Paste the text below, or use Generate to have Claude read it.",
   };
-  const message = params.error ? messages[params.error] : undefined;
+  const message = params.error
+    ? params.error === "bundle"
+      ? (params.detail ?? "That bundle could not be read.")
+      : messages[params.error]
+    : undefined;
 
   const inputClass =
     "w-full rounded-card border border-border bg-surface px-3 py-2 text-base outline-none focus:border-accent";
@@ -225,6 +296,54 @@ export default async function ImportPage({
             Import
           </button>
         </div>
+      </form>
+
+      <form action={importFromShareLink} className="mt-10 flex flex-col gap-2">
+        <label htmlFor="shareUrl" className="text-sm font-medium">
+          From a share link
+        </label>
+        <p className="text-xs text-text-muted">
+          A <code>/r/…</code> link from another copy of this application. The recipe
+          arrives with its ingredient nutrition already resolved.
+        </p>
+        <div className="flex gap-2">
+          <input
+            id="shareUrl"
+            name="shareUrl"
+            type="url"
+            placeholder="https://their-recipes.example.com/r/…"
+            className={inputClass}
+          />
+          <button
+            type="submit"
+            className="shrink-0 rounded-card border border-border bg-surface-2 px-4 py-2 font-medium"
+          >
+            Import
+          </button>
+        </div>
+      </form>
+
+      <form action={importFromFile} className="mt-10 flex flex-col gap-2">
+        <label htmlFor="bundle" className="text-sm font-medium">
+          From a file
+        </label>
+        <p className="text-xs text-text-muted">
+          A downloaded <code>.recipe.json</code> bundle, or a whole-collection backup.
+          Works when the other instance is private or offline.
+        </p>
+        <input
+          id="bundle"
+          name="bundle"
+          type="file"
+          accept="application/json,.json"
+          className={inputClass}
+        />
+        <button
+          type="submit"
+          className="self-start rounded-card border border-border bg-surface-2 px-4 py-2 font-medium"
+        >
+          Import file
+        </button>
       </form>
 
       <form action={importFromText} className="mt-10 flex flex-col gap-2">
