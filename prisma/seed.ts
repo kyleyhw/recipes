@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma";
+import { BUILT_IN_MEMORIES } from "../src/lib/memories-data";
 
 if (existsSync(".env")) process.loadEnvFile(".env");
 
@@ -46,7 +47,21 @@ async function main(): Promise<void> {
         create: { ...category, position: index },
       });
     }
-    console.log(`Seeded ${CATEGORIES.length} categories.`);
+    // Built-in memories are upserted by position so that re-seeding refreshes
+    // their wording without duplicating them or discarding the owner's edits to
+    // any memory they have since added.
+    for (const memory of BUILT_IN_MEMORIES) {
+      const existing = await db.memory.findFirst({
+        where: { builtIn: true, position: memory.position },
+        select: { id: true },
+      });
+      if (existing) continue;
+      await db.memory.create({ data: { ...memory, builtIn: true } });
+    }
+
+    console.log(
+      `Seeded ${CATEGORIES.length} categories and ensured ${BUILT_IN_MEMORIES.length} built-in memories.`,
+    );
   } finally {
     await db.$disconnect();
   }

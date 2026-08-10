@@ -47,11 +47,22 @@ derivations underpinning scaling and nutrition are in
 
 ## Phase 3: Photos
 
-12. [pending] Blob storage pipeline: fetch, resize, WebP, store.
-13. [pending] Layer 1 — `og:image` extraction from the source page.
-14. [pending] Layer 3 — manual upload.
-15. [pending] Layer 4 — deterministic generated placeholder.
-16. [pending] Card and hero rendering.
+12. [completed] Storage pipeline: fetch, validate, resize, WebP, store.
+    - [completed] Two backends — Vercel Blob when configured, local filesystem otherwise
+    - [completed] Validation: size ceiling, 600px short edge, aspect band
+    - [completed] Content-addressed keys, so a repeated image is stored once
+13. [completed] Layer 1 — `og:image` ingested during URL import, with attribution.
+14. [completed] Layer 3 — manual upload, overriding any automatic result.
+15. [completed] Layer 4 — deterministic gradient placeholder keyed by slug.
+16. [completed] Card and hero rendering at two stored sizes.
+
+## Phase 3a: Memories
+
+16a. [completed] Standing owner preferences injected into every Claude prompt.
+    - [completed] `Memory` model and second migration
+    - [completed] Seeded built-ins: strong flavours; unambiguous, direct steps
+    - [completed] Editable list at `/memories`; built-ins editable but not deletable
+    - [completed] `memoriesPromptFragment()` ready for the phase-7 prompts
 
 ## Phase 4: Portion scaling
 

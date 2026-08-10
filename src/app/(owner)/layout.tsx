@@ -42,6 +42,9 @@ export default async function OwnerLayout({
           <Link href="/ingredients" className="hover:text-text">
             Ingredients
           </Link>
+          <Link href="/memories" className="hover:text-text">
+            Memories
+          </Link>
         </nav>
         <form action={endSession}>
           <button

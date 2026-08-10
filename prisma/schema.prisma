@@ -196,7 +196,7 @@ model Ingredient {
   /// mu — grams per countable item ("1 egg" = 50 g). Same rationale as rho.
   gramsPerUnit  Float?
 
-  source MacroSource @default(USDA)
+  source     MacroSource @default(USDA)
   /// Free text recording where rho/mu/macros came from, so a suspicious number
   /// can be traced. Required by the magic-number standard (§4).
   sourceNote String?
@@ -212,6 +212,34 @@ model Ingredient {
 // ---------------------------------------------------------------------------
 // Operational
 // ---------------------------------------------------------------------------
+
+/// A standing instruction the owner wants applied to every generated or
+/// adjusted recipe.
+///
+/// These are *preferences*, not recipe data: "I like strong flavours", "steps
+/// must be unambiguous and direct". They are injected into every Claude prompt
+/// (generation, substitution, import), so a preference is stated once and then
+/// respected everywhere, rather than being retyped into each request.
+///
+/// Free text rather than structured fields, because the useful preferences are
+/// not enumerable in advance and the consumer is a language model.
+model Memory {
+  id   String @id @default(cuid())
+  text String
+
+  /// Display and prompt order. Earlier memories appear first in the prompt.
+  position Int @default(0)
+
+  /// Built-in memories are seeded and cannot be deleted, only edited: they
+  /// encode requirements the application depends on (unambiguous steps) rather
+  /// than mere taste.
+  builtIn Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([position])
+}
 
 /// Audit trail and cost visibility for billable model calls. Exists so the
 /// monthly spend ceiling can be enforced from recorded usage rather than from
