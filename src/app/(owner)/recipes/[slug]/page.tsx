@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { MacroPanel } from "@/components/macro-panel";
 import { PhotoControls } from "@/components/photo-controls";
 import { ServingsStepper } from "@/components/servings-stepper";
+import { ExportLinks } from "@/components/export-links";
+import { nutritionFor } from "@/lib/nutrition/recipe-nutrition";
+import { resolveRecipeIngredients } from "@/lib/nutrition/resolve";
 import { getRecipeBySlug } from "@/lib/recipes";
 import { scaleRecipe } from "@/lib/scaling";
 import { placeholderStyle } from "@/lib/photos/placeholder";
@@ -43,6 +47,14 @@ export default async function RecipePage({
     cookMinutes: recipe.cookMinutes,
   });
   const isScaled = Math.abs(scaled.factor - 1) > 1e-9;
+  const nutrition = nutritionFor(recipe, targetServings);
+
+  async function resolveIngredients(): Promise<void> {
+    "use server";
+    await resolveRecipeIngredients(recipeId);
+    revalidatePath(`/recipes/${slug}`);
+    redirect(`/recipes/${slug}`);
+  }
 
   async function uploadPhoto(formData: FormData): Promise<void> {
     "use server";
@@ -216,6 +228,20 @@ export default async function RecipePage({
             ))}
           </div>
         ) : null}
+      </section>
+
+      <section className="mb-8">
+        <MacroPanel nutrition={nutrition} servingLabel={recipe.servingLabel} />
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <ExportLinks slug={recipe.slug} servings={targetServings} />
+          {nutrition.contributions.some((c) => c.gap === "unresolved") ? (
+            <form action={resolveIngredients}>
+              <button type="submit" className="text-xs text-accent hover:underline">
+                Match unresolved ingredients
+              </button>
+            </form>
+          ) : null}
+        </div>
       </section>
 
       <section className="mb-8">

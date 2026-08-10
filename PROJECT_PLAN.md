@@ -81,11 +81,16 @@ derivations underpinning scaling and nutrition are in
 
 ## Phase 5: Macros and export
 
-21. [pending] USDA FoodData Central client.
-22. [pending] Ingredient resolution against the canonical library.
-23. [pending] Aggregation and mass coverage.
-24. [pending] Ingredient library UI with permanent manual override.
-25. [pending] Exports: JSON, Schema.org JSON-LD, CSV, tracker clipboard format.
+21. [completed] USDA FoodData Central client (unexercised — no key available).
+22. [completed] Ingredient resolution: exact, then trigram, then USDA, cached locally.
+23. [completed] Aggregation and mass coverage.
+    - [completed] Scaling invariant asserted at four factors and in the running system
+    - [completed] Coverage mass-weighted; undeterminable mass reported separately
+    - [completed] Unresolved ingredients never presented as nutritionally zero
+24. [completed] Ingredient library UI with permanent manual override.
+    - [completed] 22 seeded ingredients so macros work with no USDA key
+    - [completed] Edits marked MANUAL and never overwritten automatically
+25. [completed] Exports: JSON, schema.org JSON-LD, CSV, tracker text — all honour ?servings=N.
 
 ## Phase 6: Sharing
 

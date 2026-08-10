@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma";
 import { BUILT_IN_MEMORIES } from "../src/lib/memories-data";
+import { STARTER_INGREDIENTS } from "../src/lib/nutrition/starter-ingredients";
 
 if (existsSync(".env")) process.loadEnvFile(".env");
 
@@ -59,8 +60,20 @@ async function main(): Promise<void> {
       await db.memory.create({ data: { ...memory, builtIn: true } });
     }
 
+    // Starter ingredients make macros work with no USDA key configured, and
+    // save a lookup for the commonest items. `update: {}` means a re-seed never
+    // overwrites a figure the owner has corrected by hand.
+    for (const ingredient of STARTER_INGREDIENTS) {
+      await db.ingredient.upsert({
+        where: { name: ingredient.name },
+        update: {},
+        create: { ...ingredient, source: "USDA" },
+      });
+    }
+
     console.log(
-      `Seeded ${CATEGORIES.length} categories and ensured ${BUILT_IN_MEMORIES.length} built-in memories.`,
+      `Seeded ${CATEGORIES.length} categories, ${STARTER_INGREDIENTS.length} ingredients, ` +
+        `and ensured ${BUILT_IN_MEMORIES.length} built-in memories.`,
     );
   } finally {
     await db.$disconnect();
