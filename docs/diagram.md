@@ -168,8 +168,15 @@ ingredients and a twelve-leaf diagram looks entirely reasonable, and the two
 that are missing are missing from the reader's understanding of the dish. The
 loader reports it, so it shows on the site rather than waiting to be noticed.
 
-Rules 6 and 7 cannot be checked by a program — they are claims about the method,
-which only a reader can compare against. They are the two to check by hand.
+Rules 6 and 7 cannot be checked by a program — they are claims about the
+method, which only a reader can compare against. Neither can "chain, not fan",
+nor "keep the labels short".
+
+**Check those four by rendering the page and looking at it**, not by reading the
+outline. The outline shows nesting; the table shows geometry, and a nesting that
+looks obviously right is regularly a table that is obviously wrong. Every
+diagram that has gone wrong in this repository read fine as an outline and read
+wrong as a picture, in about a second.
 
 ## The geometry
 

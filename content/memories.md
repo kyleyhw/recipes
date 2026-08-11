@@ -71,9 +71,28 @@ not be fine on a noticeboard.
 
   Leaves that name an ingredient pick up its scaled quantity and translated
   name automatically, so write them as the ingredient is written. Where an
-  ingredient is split across two uses, name it in full both times — "half the
-  unsalted butter", not "half the butter" — or the check that every ingredient
-  appears in the diagram will not find it.
+  ingredient is split across two uses, write it as a fraction — `1/3 peanut
+  oil` — and the diagram shows what that fraction comes to and rescales it.
+
+- **Look at a diagram before calling it good.** Build the site, open the recipe
+  and read the rendered table against the method. Do not judge it from the
+  outline: an outline that is obviously right on the page is regularly wrong in
+  the table, because indentation reads as grouping and the table reads as
+  geometry, and those are not the same picture.
+
+  `npm test` catches a missing diagram, a forgotten ingredient and shares that
+  do not add up. It cannot catch the three that matter most, and those are
+  exactly the ones that need eyes on the rendered page:
+
+  - **the row order** — does the left column, read downward, match the order
+    the method introduces things?
+  - **chain or fan** — is a sequence drawn as a sequence, or collapsed into
+    one node with four inputs?
+  - **the labels** — is anything long enough to force a wide column, and has a
+    scrollbar appeared as a result?
+
+  Screenshot it. Every diagram that has gone wrong here has looked fine as an
+  outline and looked wrong immediately as a picture.
 
 - **Baked goods must state their tin**, and scale it. A cake batter doubled into
   the same tin is twice as deep and bakes wrongly: the outside sets before the
