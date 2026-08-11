@@ -55,7 +55,11 @@ export function SortMenu({
         onClick={() => setOpen((wasOpen) => !wasOpen)}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="rounded-card border border-border bg-surface px-3 py-2 text-sm text-text-muted hover:text-text"
+        // Plain text, like the language menu in the footer. A bordered box here
+        // read as a second input sitting beside the search field, which is what
+        // it looked like and is not what it is: the search field takes typing,
+        // this one only opens a list.
+        className="px-2 py-2 text-sm text-text-muted hover:text-text"
       >
         {t("sort")}
       </button>
