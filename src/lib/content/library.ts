@@ -6,6 +6,8 @@ import {
   parseTranslationFile,
   type RecipeFile,
 } from "@/lib/content/format";
+import { buildDiagram, validateDiagram } from "@/lib/content/diagram";
+import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { LANGUAGE_CODES } from "@/lib/i18n/strings";
 
 /**
@@ -146,6 +148,17 @@ export function loadCollection(): Collection {
         );
         if (translated.ok) parsed.recipe.translations[code] = translated.translation;
         else problems.push({ file: path, error: translated.error });
+      }
+
+      // A diagram that has forgotten an ingredient looks entirely reasonable,
+      // which is exactly why it is checked here and reported on the site
+      // rather than left to be noticed.
+      const names = parsed.recipe.ingredients.map((line) => parseIngredientLine(line).name);
+      const diagram = buildDiagram(parsed.recipe.diagram, names);
+      if (diagram) {
+        for (const problem of validateDiagram(diagram, names)) {
+          problems.push({ file: join(RECIPES_DIR, name), error: problem });
+        }
       }
 
       recipes.push(parsed.recipe);

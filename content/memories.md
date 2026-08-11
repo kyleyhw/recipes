@@ -7,6 +7,25 @@ time.
 They are a file like everything else, so changing one is a commit, and the
 history says when a preference changed and why.
 
+## This repository is public
+
+Everything committed here is world-readable, and git makes it permanent: a file
+deleted in the next commit is still in the history. Nothing goes in that would
+not be fine on a noticeboard.
+
+- **No keys, ever.** The site needs none to build or to read; `ANTHROPIC_API_KEY`
+  is used only by `npm run translate`, on the machine that runs it. It belongs
+  in `.env`, which is ignored.
+- **The Log is public.** It is a cook's log — what needed more salt, what
+  burned — not a diary.
+- **Credit what came from elsewhere.** A recipe taken off a website records its
+  `source`, and one taken from a person records who.
+- **Photographs are the open question.** Sourcing them automatically was
+  decided when this was a private collection for personal use. A public
+  repository redistributes whatever it holds, and that is a different question
+  from looking at a picture at home. Anything added now should be a photo taken
+  here or one whose licence permits redistribution.
+
 ## Taste
 
 - **Strong, assertive flavours.** Season properly. Where a recipe suggests a
@@ -36,12 +55,23 @@ history says when a preference changed and why.
   later as a coverage gap on the recipe page. The gap is always a missing row,
   never a limit of the arithmetic.
 
-- **Every recipe needs a diagram.** A `## Diagram` section holding the method as
-  an indented tree: ingredients as leaves, operations as the lines above them.
-  The method says what to do in order; the diagram says what meets what, which
-  is the thing prose is worst at. Leaves that name an ingredient pick up its
-  scaled quantity and translated name automatically, so write them as the
-  ingredient is written. See [docs/diagram.md](../docs/diagram.md).
+- **Every recipe needs a diagram**, and it must obey the eight rules in
+  [docs/diagram.md](../docs/diagram.md). Four are worth remembering while
+  writing one:
+
+  - an operation's box spans **exactly** the ingredients it consumes;
+  - those ingredients must be a **contiguous** block of rows;
+  - so the left column, read downward, is the order things **enter** the
+    recipe — not the order the ingredient list happens to use;
+  - and a **sequence is a chain, not a fan**. "Whisk in the sugar, then the
+    eggs, then the bananas" is three operations. Drawing it as one node with
+    four inputs loses the ordering the instruction exists to convey.
+
+  Leaves that name an ingredient pick up its scaled quantity and translated
+  name automatically, so write them as the ingredient is written. Where an
+  ingredient is split across two uses, name it in full both times — "half the
+  unsalted butter", not "half the butter" — or the check that every ingredient
+  appears in the diagram will not find it.
 
 - **Baked goods must state their tin**, and scale it. A cake batter doubled into
   the same tin is twice as deep and bakes wrongly: the outside sets before the

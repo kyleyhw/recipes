@@ -62,24 +62,24 @@ If there is some left, pick the meat out of the shells before it goes in the fri
 - toss twice, serve at once
   - toss off the heat, 30 s
     - toss over high heat, 2 min
-      - boil 2 min under the packet time
-        - spaghetti
+      - boil 2 min under the packet
         - salt
-      - lift out the shellfish, keep every drop
+        - spaghetti
+      - lift out, keep every drop
         - steam covered, 3 min then 3 min
           - reduce hard, 90 s
             - soften, 3 min
               - foam, 2 min
                 - olive oil
-                - half the butter
+                - half the unsalted butter
               - shallots
-            - 60 s, gold at the rim only
+            - 60 s, gold at the rim
               - garlic
               - chilli flakes
             - dry white wine
           - clams in the shell
           - mussels in the shell
-    - the rest of the butter
+    - the rest of the unsalted butter
   - lemon juice
   - flat-leaf parsley
   - lemon

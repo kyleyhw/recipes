@@ -48,12 +48,28 @@ export interface DiagramNode {
 export interface PlacedNode extends DiagramNode {
   /** Rows this cell spans: the number of leaves beneath it. */
   rowSpan: number;
-  /** Columns this cell spans, filling the gap to its parent. */
-  colSpan: number;
   /** The row this cell starts on. */
   row: number;
   /** Distance from the leaf column. Leaves are 0. */
   column: number;
+}
+
+/**
+ * A gap between an ingredient and the operation it feeds.
+ *
+ * Rendered as an empty, borderless cell. **Not** as a stretched ingredient:
+ * widening the ingredient's own box to fill the gap makes the left column
+ * ragged and makes the ingredient read as though it were itself an operation.
+ * The gap is nothing, and it should look like nothing.
+ */
+export interface BlankCell {
+  blank: true;
+}
+
+export type Cell = PlacedNode | BlankCell;
+
+export function isBlank(cell: Cell): cell is BlankCell {
+  return "blank" in cell;
 }
 
 export interface Diagram {
@@ -64,6 +80,13 @@ export interface Diagram {
   rows: number;
   /** Every node, in the order cells should be emitted. */
   cells: PlacedNode[];
+  /**
+   * The table, row by row, ready to emit.
+   *
+   * Every entry is either a node's cell or a blank filler. A renderer walks
+   * this and needs to know nothing about the tree.
+   */
+  grid: Cell[][];
 }
 
 /**
@@ -191,33 +214,93 @@ export function placeDiagram(root: DiagramNode): Diagram {
   const rootColumn = columnOf(root);
   const cells: PlacedNode[] = [];
 
-  const walk = (node: DiagramNode, row: number, parentColumn: number): void => {
+  const walk = (node: DiagramNode, row: number): void => {
     const column = columnOf(node);
-    cells.push({
-      ...node,
-      row,
-      column,
-      rowSpan: leafCount(node),
-      // The root has no parent to reach, so it spans one column.
-      colSpan: Math.max(1, parentColumn - column),
-    });
+    cells.push({ ...node, row, column, rowSpan: leafCount(node) });
 
     let next = row;
     for (const child of node.children) {
-      walk(child, next, column);
+      walk(child, next);
       next += leafCount(child);
     }
   };
 
-  walk(root, 0, rootColumn + 1);
+  walk(root, 0);
 
-  // Row-major, so the cells can be emitted straight into <tr>s: everything on
-  // row 0 first, and within a row, leftmost first — which is *ascending*
-  // column, because column 0 is the leaves. Ingredients read down the left edge
-  // and the operations flow right, ending at the dish.
+  // Row-major: everything on row 0 first, and within a row, leftmost first —
+  // which is *ascending* column, because column 0 is the leaves. Ingredients
+  // read down the left edge and the operations flow right, ending at the dish.
   cells.sort((a, b) => a.row - b.row || a.column - b.column);
 
-  return { root, columns: rootColumn + 1, rows: leafCount(root), cells };
+  const columns = rootColumn + 1;
+  const rows = leafCount(root);
+
+  // Which (row, column) squares a cell already covers, so the gaps can be
+  // found rather than guessed at.
+  const covered: boolean[][] = Array.from({ length: rows }, () =>
+    Array.from({ length: columns }, () => false),
+  );
+  for (const cell of cells) {
+    for (let r = cell.row; r < cell.row + cell.rowSpan; r += 1) {
+      const line = covered[r];
+      if (line) line[cell.column] = true;
+    }
+  }
+
+  const starts = new Map<string, PlacedNode>();
+  for (const cell of cells) starts.set(`${cell.row}:${cell.column}`, cell);
+
+  const grid: Cell[][] = [];
+  for (let r = 0; r < rows; r += 1) {
+    const line: Cell[] = [];
+    for (let c = 0; c < columns; c += 1) {
+      const start = starts.get(`${r}:${c}`);
+      if (start) line.push(start);
+      else if (!covered[r]?.[c]) line.push({ blank: true });
+      // Otherwise this square belongs to a cell that started on an earlier row,
+      // and there is nothing to emit for it.
+    }
+    grid.push(line);
+  }
+
+  return { root, columns, rows, cells, grid };
+}
+
+/**
+ * Checks a diagram against the rules that can be checked.
+ *
+ * Three of the rules in docs/diagram.md hold by construction — an operation is
+ * always right of its inputs, its inputs are always a contiguous block, and its
+ * height is always its leaf count — because the tree makes them true. Two are
+ * matters of judgement no program can settle: whether the row order matches the
+ * method, and whether an operation is named usefully.
+ *
+ * What is left is the one failure that is both mechanical and invisible: an
+ * ingredient the diagram forgot. A recipe with fourteen ingredients and twelve
+ * leaves looks entirely reasonable, and the two that are missing are missing
+ * from the reader's understanding of the dish, not merely from a table.
+ */
+export function validateDiagram(
+  diagram: Diagram,
+  ingredientNames: readonly string[],
+): string[] {
+  const problems: string[] = [];
+  const leaves = diagram.cells.filter((cell) => cell.children.length === 0);
+  const linked = new Set(
+    leaves.map((leaf) => leaf.ingredientIndex).filter((index) => index !== null),
+  );
+
+  for (const [index, name] of ingredientNames.entries()) {
+    if (linked.has(index)) continue;
+    // An ingredient split across two uses is written in words — "half the
+    // butter" — so it links to nothing. It still has to be *mentioned*.
+    const mentioned = leaves.some((leaf) =>
+      leaf.text.toLowerCase().includes(name.toLowerCase()),
+    );
+    if (!mentioned) problems.push(`ingredient missing from the diagram: ${name}`);
+  }
+
+  return problems;
 }
 
 /** Everything, from an outline and a recipe's ingredients. */

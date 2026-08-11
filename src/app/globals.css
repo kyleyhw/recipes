@@ -25,6 +25,16 @@
   --surface: #faf9f5;
   --surface-2: #e7e4d8;
   --border: #dcd8c9;
+  /*
+   * A stronger rule, for the diagram grid.
+   *
+   * `--border` is right for dividing a panel from the page — it should barely
+   * register. The diagram is different: there the grid *is* the information,
+   * because a cell's height is what says which ingredients are in the bowl. At
+   * --border on --surface the lines came out around 1.1:1 against their fill,
+   * which is to say invisible.
+   */
+  --rule: #a8a08b;
   --text: #141413;
   --text-muted: #6b6759;
   --accent: #c8613f;
@@ -41,6 +51,7 @@
   --surface: #221f1c;
   --surface-2: #2b2723;
   --border: #38332d;
+  --rule: #6b6355;
   --text: #f0eee6;
   --text-muted: #a09a8c;
   --accent: #e08a63;
@@ -56,6 +67,7 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
+  --color-rule: var(--rule);
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
   --color-accent: var(--accent);

@@ -63,7 +63,7 @@ Reheat gently in a covered pan over low heat for 12 minutes, stirring once. A ha
 
 ## Diagram
 
-- simmer covered, medium-low, 60–90 min, lid never lifted
+- simmer covered, 60–90 min, lid never lifted
   - pour over, then seal
     - layer 3: the meat and aromatics
       - layer 2: the sweets

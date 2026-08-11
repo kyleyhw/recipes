@@ -1,7 +1,7 @@
 "use client";
 
 import { useT } from "@/components/language";
-import type { Diagram } from "@/lib/content/diagram";
+import { isBlank, type Diagram } from "@/lib/content/diagram";
 
 /**
  * The recipe as a table of ingredients and operations.
@@ -35,22 +35,27 @@ export function RecipeDiagram({
 }) {
   const t = useT();
 
-  const rows: Array<typeof diagram.cells> = Array.from({ length: diagram.rows }, () => []);
-  for (const cell of diagram.cells) rows[cell.row]?.push(cell);
-
   return (
     <section className="mt-8">
       <h2 className="mb-3 text-sm font-semibold tracking-wide uppercase">
         {t("diagram")}
       </h2>
 
-      <div className="overflow-x-auto rounded-card border border-border bg-surface">
-        <table className="w-full border-collapse text-xs">
+      <div className="overflow-x-auto py-1">
+        <table className="border-separate border-spacing-0.5 text-xs">
           <caption className="sr-only">{t("diagramCaption")}</caption>
           <tbody>
-            {rows.map((cells, index) => (
+            {diagram.grid.map((row, index) => (
               <tr key={index}>
-                {cells.map((cell) => {
+                {row.map((cell, at) => {
+                  // A gap between an ingredient and the operation it feeds.
+                  // Empty and unbordered: the gap is nothing and should look
+                  // like nothing. Hidden from assistive technology, which would
+                  // otherwise announce a blank cell per gap per row.
+                  if (isBlank(cell)) {
+                    return <td key={`blank-${at}`} aria-hidden="true" />;
+                  }
+
                   const isLeaf = cell.children.length === 0;
                   const text =
                     cell.ingredientIndex !== null
@@ -61,16 +66,19 @@ export function RecipeDiagram({
                     <td
                       key={`${cell.row}-${cell.column}-${cell.text}`}
                       rowSpan={cell.rowSpan}
-                      colSpan={cell.colSpan}
                       className={[
-                        "border border-border px-2 py-1.5 align-middle",
+                        "border border-rule px-2.5 py-1.5 align-middle",
                         // Ingredients read as data and operations as
                         // instructions, so they are weighted differently: the
-                        // eye should be able to find the left edge of the tree
-                        // without reading any of it.
+                        // eye should find the left edge of the tree without
+                        // reading any of it.
                         isLeaf
-                          ? "min-w-40 text-text"
-                          : "min-w-24 bg-surface-2 text-center font-medium text-text-muted",
+                          ? "min-w-36 max-w-56 rounded-sm bg-surface text-text"
+                          // Wide enough that a two-word operation stays on one
+                          // line. Narrower and every label stacks into a
+                          // column of single words, which is unreadable at the
+                          // heights a rowspan of nine produces.
+                          : "min-w-28 max-w-44 rounded-sm bg-surface-2 text-center font-medium text-text-muted",
                       ].join(" ")}
                     >
                       {text}

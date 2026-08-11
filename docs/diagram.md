@@ -58,6 +58,80 @@ recipe using butter twice does not have both leaves point at the first. A leaf
 that matches nothing is shown as written — which is what you want for "1 graham
 cracker crust" in a recipe that never listed one.
 
+## The rules
+
+Eight, in the order they constrain each other. Rules 3–6 are the ones that make
+the form work; break any of them and the table still renders, still looks
+plausible, and no longer means anything.
+
+1. **One row per ingredient, always.** Rows never split, merge or disappear. The
+   table's height is the ingredient count. An ingredient split across two uses
+   adds a row; it never removes one.
+
+2. **Column 0 holds ingredients and nothing else**, all the same width. This is
+   what makes the left edge scannable — you should be able to read the shopping
+   list down it without reading anything else.
+
+3. **An operation is strictly to the right of every input it consumes.** Time
+   runs left to right. No operation may sit level with, or left of, something
+   feeding it.
+
+4. **An operation's box spans exactly the rows of its inputs.** That vertical
+   extent *is* the information the diagram carries: it says "these, and only
+   these, are in the bowl now". A box one row too tall is a lie about the dish.
+
+5. **An operation's inputs must be a contiguous block of rows.** You cannot
+   have one operation take rows 1, 2 and 5. This is the load-bearing
+   constraint, and everything below follows from it.
+
+6. **Chronological monotonicity.** Reading the left column downward gives the
+   order ingredients enter the recipe. An ingredient used later can never sit
+   above one used earlier. This is a *consequence* of 3 and 5 rather than a
+   separate rule — if every operation spans a contiguous block and time runs
+   rightward, no other order is possible — but it is the one worth checking by
+   hand, because it is the one a careless edit breaks.
+
+7. **Ingredients are ordered by use, not by the recipe's ingredient list.**
+   Those two orders differ, and the diagram follows use. Banana bread lists the
+   bananas second and uses them fourth; the diagram puts them fourth.
+
+8. **Gaps are blank.** If an ingredient goes straight into an operation three
+   columns away, the cells between it are empty and borderless. The ingredient's
+   own box does **not** stretch to fill them — a stretched box makes the left
+   column ragged and makes the ingredient read as though it were an operation.
+
+### A chain is not a fan
+
+The commonest way to get a diagram wrong while obeying every rule above is to
+collapse a sequence into a single node. "Whisk the sugar into the butter, then
+the eggs one at a time, then the bananas" is three operations, and drawing it
+as one `whisk` taking four inputs loses the ordering that the instruction
+exists to convey. Chu's cheesecake is the model: `mix until smooth` → `mix` →
+`mix in thirds` → `mix`, each adding the next thing.
+
+The test is whether the recipe would still work if the inputs to a node arrived
+in any order. If it would not, the node is a chain and should be drawn as one.
+
+### What is checked, and what is not
+
+Rules 3, 4 and 5 hold **by construction** — the outline is a tree, and a tree
+laid out this way cannot violate them.
+
+Rule 8 holds by construction too, since the renderer emits blank cells rather
+than stretching anything.
+
+Rules 1 and 2 are asserted in `tests/unit/diagram.test.ts` against every recipe
+in the collection, not against a fixture.
+
+`validateDiagram` catches the one mechanical failure that is otherwise
+invisible: **an ingredient the diagram forgot**. A recipe with fourteen
+ingredients and a twelve-leaf diagram looks entirely reasonable, and the two
+that are missing are missing from the reader's understanding of the dish. The
+loader reports it, so it shows on the site rather than waiting to be noticed.
+
+Rules 6 and 7 cannot be checked by a program — they are claims about the method,
+which only a reader can compare against. They are the two to check by hand.
+
 ## The geometry
 
 Two numbers place every cell.
