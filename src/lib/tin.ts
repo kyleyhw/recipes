@@ -72,6 +72,33 @@ export interface Tin {
  * to this list is that "use a 26.5 cm tin" is not an instruction anybody can
  * follow, whereas "use a 28 cm tin, and the layer will be a fifth shallower" is.
  */
+/**
+ * Which measurements each shape actually needs.
+ *
+ * A round tin has a diameter and no sides; a rectangular one has two sides and
+ * no diameter. Asking for all four and letting the irrelevant ones sit empty
+ * invites someone to fill them in, and a rectangular tin with a diameter is not
+ * a thing. The form asks for the shape first and then for exactly what that
+ * shape has.
+ *
+ * Depth is on every shape and is deliberately last: it is not used to work out
+ * how much batter fits — that is area — but to warn when the tin you have is a
+ * different *depth* from the one the recipe was written for, which changes how
+ * it bakes rather than how much of it there is.
+ */
+export const DIMENSIONS_FOR_SHAPE: Record<
+  TinShape,
+  ReadonlyArray<"diameter" | "length" | "width" | "depth">
+> = {
+  round: ["diameter", "depth"],
+  square: ["length", "depth"],
+  rectangular: ["length", "width", "depth"],
+  loaf: ["length", "width", "depth"],
+};
+
+/** The shapes, in the order the picker offers them. */
+export const TIN_SHAPES: readonly TinShape[] = ["round", "square", "rectangular", "loaf"];
+
 export const STANDARD_ROUND = [15, 18, 20, 23, 25, 28, 30] as const;
 export const STANDARD_SQUARE = [15, 18, 20, 23, 25, 28] as const;
 /** Loaf tins, by the weight they are sold as: [length, width] in cm. */

@@ -8,13 +8,16 @@ import { MacroPanel } from "@/components/macro-panel";
 import { RecipeDiagram } from "@/components/recipe-diagram";
 import type { Diagram } from "@/lib/content/diagram";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
+import { renderQuantity } from "@/lib/quantity";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
 import {
-  ALL_STANDARD_TINS,
   describeTin,
+  DIMENSIONS_FOR_SHAPE,
   scaleForTin,
   tinAdviceText,
+  TIN_SHAPES,
   type Tin,
+  type TinShape,
 } from "@/lib/tin";
 
 /**
@@ -62,31 +65,65 @@ export function RecipeView({
   diagram?: Diagram | null;
 }) {
   const [servings, setServings] = useState(baseServings);
-  const [chosenTinLabel, setChosenTinLabel] = useState("");
+  /**
+   * The tin you have, as you are filling it in.
+   *
+   * Held as strings rather than numbers because a half-typed "2" on the way to
+   * "23" is a number, and coercing as you type would rescale the recipe to a
+   * 2 cm tin between keystrokes. It is read as a number only when it is
+   * complete enough to mean something.
+   */
+  const [yourTin, setYourTin] = useState<{
+    shape: TinShape | "";
+    diameter: string;
+    length: string;
+    width: string;
+    depth: string;
+  }>({ shape: "", diameter: "", length: "", width: "", depth: "" });
   const t = useT();
   const language = useLanguage();
   const translated = translations[language] ?? null;
 
   /**
-   * Choosing a tin sets the serving count, rather than being a separate scale.
+   * Rescales to the tin you have, as soon as it has enough to go on.
    *
-   * One quantity governs the page — alpha — and both controls write to it. Two
+   * Setting the serving count rather than holding a second scale of its own:
+   * one quantity governs the page — alpha — and both controls write to it. Two
    * independent scales would let the tin and the servings disagree, and a
    * recipe that says "12 slices" while sized for a tin holding eight is worse
    * than either control alone.
+   *
+   * Depth is asked for but does not enter alpha. Area is what decides how much
+   * batter fits; depth decides how it *bakes*, and feeds the advisory instead.
    */
-  function chooseTin(label: string): void {
-    setChosenTinLabel(label);
-    if (!tin || label === "") {
+  function updateTin(next: typeof yourTin): void {
+    setYourTin(next);
+
+    const number = (value: string): number | null => {
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+    };
+
+    if (!tin || next.shape === "") {
       setServings(baseServings);
       return;
     }
-    const option = ALL_STANDARD_TINS.find((entry) => entry.label === label);
-    const alpha = option ? scaleForTin(tin, option.tin) : null;
-    if (alpha !== null) {
-      // One decimal: 10.5 slices is honest, 10.4736 is noise.
-      setServings(Math.round(baseServings * alpha * 10) / 10);
-    }
+
+    // Square tins are entered as one side, so the width is the length.
+    const length = number(next.length);
+    const candidate: Tin = {
+      shape: next.shape,
+      diameter: number(next.diameter) ?? undefined,
+      length: length ?? undefined,
+      width: (next.shape === "square" ? length : number(next.width)) ?? undefined,
+      depth: number(next.depth) ?? undefined,
+    };
+
+    const alpha = scaleForTin(tin, candidate);
+    // Null while the dimensions that matter are still blank or half-typed.
+    if (alpha === null) return;
+    // One decimal: 10.5 slices is honest, 10.4736 is noise.
+    setServings(Math.round(baseServings * alpha * 10) / 10);
   }
 
   const scaled = useMemo(
@@ -123,9 +160,22 @@ export function RecipeView({
   function ingredientLine(
     ingredient: (typeof scaled.ingredients)[number],
     index: number,
+    share: number | null = null,
   ): string {
-    const name = translated?.ingredientNames[index];
-    if (!translated || !name) {
+    const name = translated?.ingredientNames[index] ?? ingredient.name;
+
+    // A share is a *part* of the line — "1/3 peanut oil" — so it is rendered
+    // as the amount that part actually comes to: 3 tbsp becomes 1 tbsp, and
+    // stays a third of whatever 3 tbsp becomes when the recipe is scaled.
+    if (share !== null && ingredient.scaledQuantity !== null) {
+      const part = renderQuantity(ingredient.scaledQuantity * share, ingredient.unit);
+      const partUnit = part.unitKey
+        ? translate(language, `unit.${part.unitKey}` as StringKey)
+        : "";
+      return [part.amount, partUnit, name].filter(Boolean).join(" ");
+    }
+
+    if (!translated || !translated.ingredientNames[index]) {
       return isScaled ? ingredient.display : ingredient.rawText;
     }
     if (ingredient.passedThrough || !ingredient.rendered) return name;
@@ -134,6 +184,10 @@ export function RecipeView({
       ? translate(language, `unit.${ingredient.rendered.unitKey}` as StringKey)
       : "";
     return [ingredient.rendered.amount, unit, name].filter(Boolean).join(" ");
+  }
+
+  function clearTin(): void {
+    setYourTin({ shape: "", diameter: "", length: "", width: "", depth: "" });
   }
 
   const shownSteps = translated?.steps.length ? translated.steps : steps;
@@ -150,7 +204,7 @@ export function RecipeView({
         <button
           type="button"
           onClick={() => {
-            setChosenTinLabel("");
+            clearTin();
             setServings((n) => Math.max(step, n - step));
           }}
           className="h-9 w-9 rounded-card border border-border bg-surface text-lg leading-none"
@@ -168,7 +222,7 @@ export function RecipeView({
         <button
           type="button"
           onClick={() => {
-            setChosenTinLabel("");
+            clearTin();
             setServings((n) => n + step);
           }}
           className="h-9 w-9 rounded-card border border-border bg-surface text-lg leading-none"
@@ -176,18 +230,21 @@ export function RecipeView({
         >
           +
         </button>
-        {isScaled ? (
-          <button
-            type="button"
-            onClick={() => {
-              setChosenTinLabel("");
-              setServings(baseServings);
-            }}
-            className="ml-1 text-xs text-text-muted hover:text-text"
-          >
-            {t("reset")}
-          </button>
-        ) : null}
+        {/* Always here, not only once the count has moved. A control that
+            appears when you have already changed something is one you find by
+            accident; this one says what the recipe's own size is and puts it
+            back. */}
+        <button
+          type="button"
+          onClick={() => {
+            clearTin();
+            setServings(baseServings);
+          }}
+          disabled={!isScaled}
+          className="ml-1 text-xs text-text-muted hover:text-text disabled:opacity-40 disabled:hover:text-text-muted"
+        >
+          {t("reset")}
+        </button>
       </div>
 
       {tin ? (
@@ -196,27 +253,71 @@ export function RecipeView({
             {t("writtenForTin", { tin: describeTin(tin) })}
             {tin.depth ? t("tinDepth", { n: tin.depth }) : ""}.
           </span>
-          {/* The question a cook actually has is not "what tin does this want?"
-              but "I have this tin — how much do I make?". Choosing a tin sets
-              the serving count from the ratio of the areas, so the quantities
-              and the macros follow. It is the same alpha as the stepper, driven
-              from the other end. */}
-          <label className="flex items-center gap-2">
-            <span>{t("iHaveA")}</span>
-            <select
-              value={chosenTinLabel}
-              onChange={(event) => chooseTin(event.target.value)}
-              aria-label={t("tinSelectLabel")}
-              className="rounded-card border border-border bg-surface px-2 py-1 text-sm outline-none focus:border-accent"
-            >
-              <option value="">{t("asWritten", { tin: describeTin(tin) })}</option>
-              {ALL_STANDARD_TINS.map((option) => (
-                <option key={option.label} value={option.label}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          {/* The question a cook actually has is not "what tin does this
+              want?" but "I have this tin — how much do I make?". The shape is
+              asked first because the shape decides what there is to measure: a
+              round tin has a diameter and no sides, a rectangular one has two
+              sides and no diameter. Asking for all four at once and greying
+              three of them out invites someone to fill in a diameter for a
+              loaf tin. */}
+          <div className="flex flex-wrap items-center gap-2">
+            <label className="flex items-center gap-2">
+              <span>{t("yourTin")}</span>
+              <select
+                value={yourTin.shape}
+                onChange={(event) =>
+                  updateTin({
+                    ...yourTin,
+                    shape: event.target.value as TinShape | "",
+                  })
+                }
+                aria-label={t("tinShape")}
+                className="rounded-card border border-border bg-surface px-2 py-1 text-sm outline-none focus:border-accent"
+              >
+                <option value="">{t("tinAsWritten")}</option>
+                {TIN_SHAPES.map((shape) => (
+                  <option key={shape} value={shape}>
+                    {t(
+                      `tin${shape[0]!.toUpperCase()}${shape.slice(1)}` as StringKey,
+                    )}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {yourTin.shape === ""
+              ? null
+              : DIMENSIONS_FOR_SHAPE[yourTin.shape].map((dimension) => {
+                  // A square is entered as one side rather than as two equal
+                  // ones, so its `length` field is labelled "side".
+                  const label =
+                    dimension === "length" && yourTin.shape === "square"
+                      ? t("tinSide")
+                      : t(
+                          `tin${dimension[0]!.toUpperCase()}${dimension.slice(1)}${
+                            dimension === "depth" ? "Label" : ""
+                          }` as StringKey,
+                        );
+
+                  return (
+                    <label key={dimension} className="flex items-center gap-1.5">
+                      <span>{label}</span>
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        min="1"
+                        step="0.5"
+                        value={yourTin[dimension]}
+                        onChange={(event) =>
+                          updateTin({ ...yourTin, [dimension]: event.target.value })
+                        }
+                        className="numeric w-16 rounded-card border border-border bg-surface px-2 py-1 text-sm outline-none focus:border-accent"
+                      />
+                      <span className="text-text-muted">{t("tinCm")}</span>
+                    </label>
+                  );
+                })}
+          </div>
         </div>
       ) : null}
 
@@ -281,12 +382,10 @@ export function RecipeView({
       {diagram ? (
         <RecipeDiagram
           diagram={diagram}
-          lines={Object.fromEntries(
-            scaled.ingredients.map((ingredient, index) => [
-              index,
-              ingredientLine(ingredient, index),
-            ]),
-          )}
+          line={(index, share) => {
+            const ingredient = scaled.ingredients[index];
+            return ingredient ? ingredientLine(ingredient, index, share) : null;
+          }}
         />
       ) : null}
 

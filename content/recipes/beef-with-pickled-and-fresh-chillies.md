@@ -63,22 +63,22 @@ Keeps two days in the fridge. Bring it back in a hot dry wok for 60 seconds — 
         - stir in
           - stir 60 s in one direction
             - beef sirloin
-            - half the salt
-            - half the light soy sauce
+            - 1/2 salt
+            - 1/2 light soy sauce
             - oyster sauce
             - cornflour
-          - a third of the peanut oil
-      - another third of the peanut oil
+          - 1/3 peanut oil
+      - 1/3 peanut oil
     - 60 s, then soy down the side
       - fry 30 s, gold at the edges
-        - the last third of the peanut oil
+        - 1/3 peanut oil
         - ginger
         - garlic
       - bird's eye chillies
       - pickled chillies
       - coriander stems
-      - the rest of the light soy sauce
-    - the rest of the salt
+      - 1/2 light soy sauce
+    - 1/2 salt
     - chicken bouillon powder
   - coriander leaves
 

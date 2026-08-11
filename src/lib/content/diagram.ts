@@ -37,11 +37,47 @@
  */
 
 export interface DiagramNode {
-  /** The line as written. */
+  /** The line as written, with any leading fraction removed. */
   text: string;
   /** Index into the recipe's ingredients, or null when it matched none. */
   ingredientIndex: number | null;
+  /**
+   * The share of that ingredient this leaf takes, where the recipe splits one
+   * ingredient across two uses. Null means the whole of it.
+   *
+   * Written as a leading fraction — `- 1/3 peanut oil` — and it is a *fraction*
+   * rather than an amount on purpose. The recipe's line already says how much
+   * oil there is, and that figure moves when the serving count does; a third of
+   * it moves with it. Writing "1 tbsp" here instead would be correct at four
+   * servings and wrong at eight, silently.
+   */
+  share: number | null;
   children: DiagramNode[];
+}
+
+/** `1/3 `, `½ `, `2/3 ` at the head of a leaf. */
+const SHARE = /^(?:(\d+)\s*\/\s*(\d+)|([½⅓⅔¼¾⅛]))\s+/;
+
+const GLYPH_SHARES: Record<string, number> = {
+  "½": 1 / 2,
+  "⅓": 1 / 3,
+  "⅔": 2 / 3,
+  "¼": 1 / 4,
+  "¾": 3 / 4,
+  "⅛": 1 / 8,
+};
+
+function splitShare(text: string): { share: number | null; rest: string } {
+  const match = SHARE.exec(text);
+  if (!match) return { share: null, rest: text };
+
+  const glyph = match[3];
+  if (glyph) return { share: GLYPH_SHARES[glyph] ?? null, rest: text.slice(match[0].length) };
+
+  const numerator = Number(match[1]);
+  const denominator = Number(match[2]);
+  if (!denominator) return { share: null, rest: text };
+  return { share: numerator / denominator, rest: text.slice(match[0].length) };
 }
 
 /** A node with its position in the rendered table. */
@@ -120,7 +156,13 @@ export function parseDiagram(lines: readonly string[]): DiagramNode | null {
   const first = entries[0];
   if (!first) return null;
 
-  const root: DiagramNode = { text: first.text, ingredientIndex: null, children: [] };
+  const rootSplit = splitShare(first.text);
+  const root: DiagramNode = {
+    text: rootSplit.rest,
+    ingredientIndex: null,
+    share: rootSplit.share,
+    children: [],
+  };
   const stack: Array<{ indent: number; node: DiagramNode }> = [
     { indent: first.indent, node: root },
   ];
@@ -131,7 +173,13 @@ export function parseDiagram(lines: readonly string[]): DiagramNode | null {
     }
     const parent = stack[stack.length - 1];
     if (!parent) continue;
-    const node: DiagramNode = { text: entry.text, ingredientIndex: null, children: [] };
+    const split = splitShare(entry.text);
+    const node: DiagramNode = {
+      text: split.rest,
+      ingredientIndex: null,
+      share: split.share,
+      children: [],
+    };
     parent.node.children.push(node);
     stack.push({ indent: entry.indent, node });
   }
@@ -143,11 +191,26 @@ export function parseDiagram(lines: readonly string[]): DiagramNode | null {
 export function serialiseDiagram(root: DiagramNode): string[] {
   const lines: string[] = [];
   const walk = (node: DiagramNode, depth: number): void => {
-    lines.push(`${"  ".repeat(depth)}- ${node.text}`);
+    const share = node.share === null ? "" : `${fractionText(node.share)} `;
+    lines.push(`${"  ".repeat(depth)}- ${share}${node.text}`);
     for (const child of node.children) walk(child, depth + 1);
   };
   walk(root, 0);
   return lines;
+}
+
+/** The fraction a share was written as, for a byte-stable round trip. */
+function fractionText(share: number): string {
+  for (const [glyph, value] of Object.entries(GLYPH_SHARES)) {
+    if (Math.abs(value - share) < 1e-9) return glyph;
+  }
+  for (let denominator = 2; denominator <= 8; denominator += 1) {
+    const numerator = share * denominator;
+    if (Math.abs(numerator - Math.round(numerator)) < 1e-9) {
+      return `${Math.round(numerator)}/${denominator}`;
+    }
+  }
+  return String(share);
 }
 
 /**
@@ -178,8 +241,15 @@ export function linkIngredients(
       return { ...node, ingredientIndex: null, children: node.children.map(walk) };
     }
     const wanted = normalise(node.text);
+    // A leaf carrying a share is explicitly *part* of an ingredient, so it may
+    // point at one another leaf has already taken. Without a share, the
+    // claim-once rule stands: a recipe using butter twice must not have both
+    // leaves silently show the whole amount.
+    const reusable = node.share !== null;
     const index = available.findIndex(
-      (name, at) => !claimed.has(at) && (name === wanted || name.startsWith(`${wanted} `)),
+      (name, at) =>
+        (reusable || !claimed.has(at)) &&
+        (name === wanted || name.startsWith(`${wanted} `)),
     );
     if (index >= 0) claimed.add(index);
     return { ...node, ingredientIndex: index >= 0 ? index : null, children: [] };
@@ -289,6 +359,22 @@ export function validateDiagram(
   const linked = new Set(
     leaves.map((leaf) => leaf.ingredientIndex).filter((index) => index !== null),
   );
+
+  // Shares of one ingredient must add up to that ingredient. 1/3 + 1/3 is two
+  // thirds of the oil going into the pan and one third going nowhere — which
+  // reads as a complete diagram and is a missing tablespoon.
+  const shares = new Map<number, number>();
+  for (const leaf of leaves) {
+    if (leaf.ingredientIndex === null || leaf.share === null) continue;
+    shares.set(leaf.ingredientIndex, (shares.get(leaf.ingredientIndex) ?? 0) + leaf.share);
+  }
+  for (const [index, total] of shares) {
+    if (Math.abs(total - 1) > 1e-6) {
+      problems.push(
+        `shares of ${ingredientNames[index]} add up to ${total.toFixed(2)}, not 1`,
+      );
+    }
+  }
 
   for (const [index, name] of ingredientNames.entries()) {
     if (linked.has(index)) continue;

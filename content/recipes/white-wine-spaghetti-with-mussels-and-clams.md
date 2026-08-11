@@ -71,7 +71,7 @@ If there is some left, pick the meat out of the shells before it goes in the fri
             - soften, 3 min
               - foam, 2 min
                 - olive oil
-                - half the unsalted butter
+                - 1/2 unsalted butter
               - shallots
             - 60 s, gold at the rim
               - garlic
@@ -79,7 +79,7 @@ If there is some left, pick the meat out of the shells before it goes in the fri
             - dry white wine
           - clams in the shell
           - mussels in the shell
-    - the rest of the unsalted butter
+    - 1/2 unsalted butter
   - lemon juice
   - flat-leaf parsley
   - lemon

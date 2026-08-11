@@ -27,11 +27,14 @@ import { isBlank, type Diagram } from "@/lib/content/diagram";
  */
 export function RecipeDiagram({
   diagram,
-  lines,
+  line,
 }: {
   diagram: Diagram;
-  /** Text for each leaf, by ingredient index. Falls back to the leaf's own text. */
-  lines: Record<number, string>;
+  /**
+   * The text for a leaf: the ingredient at that index, scaled and translated,
+   * and reduced to `share` of itself where the leaf takes only part of it.
+   */
+  line: (index: number, share: number | null) => string | null;
 }) {
   const t = useT();
 
@@ -41,8 +44,8 @@ export function RecipeDiagram({
         {t("diagram")}
       </h2>
 
-      <div className="overflow-x-auto py-1">
-        <table className="border-separate border-spacing-0.5 text-xs">
+      <div className="overflow-x-auto rounded-card border border-border bg-surface p-2">
+        <table className="border-collapse text-xs">
           <caption className="sr-only">{t("diagramCaption")}</caption>
           <tbody>
             {diagram.grid.map((row, index) => (
@@ -59,7 +62,7 @@ export function RecipeDiagram({
                   const isLeaf = cell.children.length === 0;
                   const text =
                     cell.ingredientIndex !== null
-                      ? (lines[cell.ingredientIndex] ?? cell.text)
+                      ? (line(cell.ingredientIndex, cell.share) ?? cell.text)
                       : cell.text;
 
                   return (
@@ -73,12 +76,12 @@ export function RecipeDiagram({
                         // eye should find the left edge of the tree without
                         // reading any of it.
                         isLeaf
-                          ? "min-w-36 max-w-56 rounded-sm bg-surface text-text"
+                          ? "min-w-36 max-w-56 text-text"
                           // Wide enough that a two-word operation stays on one
                           // line. Narrower and every label stacks into a
                           // column of single words, which is unreadable at the
                           // heights a rowspan of nine produces.
-                          : "min-w-28 max-w-44 rounded-sm bg-surface-2 text-center font-medium text-text-muted",
+                          : "min-w-28 max-w-44 bg-surface-2 text-center font-medium text-text-muted",
                       ].join(" ")}
                     >
                       {text}
