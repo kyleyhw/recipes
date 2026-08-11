@@ -52,3 +52,22 @@ Keeps four days at room temperature, wrapped in foil rather than cling film — 
 Freezes well cut into slices: wrap them individually, and they keep three months. Toast from frozen for 3 minutes, or microwave a slice for 20 seconds.
 
 To bring a day-old loaf back, warm slices in a dry frying pan over medium heat for 90 seconds a side, until the cut faces are crisp. Do not microwave a whole loaf — it steams the crust soft.
+
+## Diagram
+
+- bake 175 °C, 55–65 min
+  - fold 15 turns, then 3 more
+    - whisk
+      - brown, 4–6 min
+        - unsalted butter
+      - brown sugar
+      - eggs
+      - mash to no lump bigger than a pea
+        - bananas
+    - stir 10 s
+      - all-purpose flour
+      - bicarbonate of soda
+      - salt
+      - ground cinnamon
+      - ground cardamom
+    - walnuts

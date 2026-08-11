@@ -54,6 +54,30 @@ Best within the hour: the coriander wilts and the fresh chilli loses its snap.
 
 Keeps two days in the fridge. Bring it back in a hot dry wok for 60 seconds — long enough to heat through, short enough not to cook the beef a second time. Add a handful of fresh coriander at the end, because the original will have gone grey.
 
+## Diagram
+
+- stir 3 times, plate
+  - stir 45 s
+    - stir 60 s, then 5 s
+      - fry 30 s, no further
+        - peanut oil
+        - ginger
+        - garlic
+      - bird's eye chillies
+      - pickled chillies
+      - coriander
+      - light soy sauce
+    - sear 20 s, stir 40 s
+      - peanut oil
+      - marinate 10 min
+        - beef sirloin
+        - salt
+        - light soy sauce
+        - oyster sauce
+        - cornflour
+    - chicken bouillon powder
+  - coriander
+
 ## Log
 
 - 2026-08-11: Added from a Xiaohongshu post by 菠萝精呀. The original gives every amount as 少许 or 适量 — a little, as appropriate — so the quantities here are mine, written for 2 servings, and are the part worth adjusting on a second cook.

@@ -60,6 +60,27 @@ Freezes well for three months. Freeze it in the broth, never drained; the broth 
 
 Reheat gently in a covered pan over low heat for 12 minutes, stirring once. A hard boil shreds the chicken into threads.
 
+## Diagram
+
+- simmer covered 60–90 min
+  - boil uncovered 5 min
+    - layer, lid off
+      - chinese cabbage
+      - carrots
+      - onion
+      - apple
+      - bone-in chicken thighs
+      - ginger
+      - garlic
+      - bay leaves
+      - whisk 20 s
+        - light soy sauce
+        - shaoxing wine
+        - salt
+        - msg
+        - white pepper
+        - granulated sugar
+
 ## Log
 
 - 2026-08-11: Added as given. Cook time recorded as 90 minutes, the long end of the range.

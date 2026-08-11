@@ -117,6 +117,14 @@ export interface RecipeFile {
   notes: string | null;
   /** How to keep it and how to bring it back. */
   storage: string | null;
+  /**
+   * The method as a tree, as an indented outline.
+   *
+   * Kept as raw lines rather than parsed here, because parsing it needs the
+   * ingredient list to link the leaves against, and this function's job is to
+   * read one file rather than to relate its parts. See lib/content/diagram.ts.
+   */
+  diagram: string[];
   /** The cook's log, newest last. Dated lines. */
   log: LogEntry[];
   /**
@@ -192,6 +200,8 @@ const HEADINGS = {
    * paragraph about ripe bananas is how it gets missed.
    */
   storage: /^##\s+(storage|storage and reheating|keeping)\s*$/i,
+  /** The ingredients-and-operations tree. See lib/content/diagram.ts. */
+  diagram: /^##\s+diagram\s*$/i,
   log: /^##\s+log\s*$/i,
 } as const;
 
@@ -352,6 +362,7 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
       steps: sections.steps.map(stripListMarker).filter(Boolean),
       notes: sections.notes.join("\n").trim() || null,
       storage: sections.storage.join("\n").trim() || null,
+      diagram: sections.diagram.map((line) => line.replace(/\s+$/, "")).filter((line, i, all) => line.length > 0 || all.slice(i).some((rest) => rest.length > 0)),
       log: parseLog(sections.log),
       // Filled in by the loader, which is the only thing that can see the
       // sibling files.
@@ -365,6 +376,7 @@ interface Sections {
   steps: string[];
   notes: string[];
   storage: string[];
+  diagram: string[];
   log: string[];
 }
 
@@ -382,6 +394,7 @@ function splitSections(body: string): Sections {
     steps: [],
     notes: [],
     storage: [],
+    diagram: [],
     log: [],
   };
   let current: keyof Sections | null = null;
@@ -401,6 +414,10 @@ function splitSections(body: string): Sections {
     }
     if (HEADINGS.storage.test(line)) {
       current = "storage";
+      continue;
+    }
+    if (HEADINGS.diagram.test(line)) {
+      current = "diagram";
       continue;
     }
     if (HEADINGS.log.test(line)) {
@@ -504,6 +521,11 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
 
   if (recipe.storage) {
     parts.push("", "## Storage", "", recipe.storage.trim());
+  }
+
+  if (recipe.diagram.length > 0) {
+    // Verbatim: the indentation *is* the tree, so it cannot be reflowed.
+    parts.push("", "## Diagram", "", ...recipe.diagram);
   }
 
   if (recipe.log.length > 0) {

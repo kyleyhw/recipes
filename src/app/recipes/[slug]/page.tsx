@@ -5,6 +5,8 @@ import { SourceLine } from "@/components/source-line";
 import { ExportLinks } from "@/components/export-links";
 import { recipeFilename, type RecipeTranslation } from "@/lib/content/format";
 import { loadCollection } from "@/lib/content/library";
+import { buildDiagram } from "@/lib/content/diagram";
+import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { prepareRecipe } from "@/lib/content/prepare";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 import { repoUrl } from "@/lib/site";
@@ -50,6 +52,12 @@ export default async function RecipePage({
       Object.entries(recipe.translations).map(([code, t]) => [code, pick(t)]),
     );
   const titles = field((t) => t.title);
+  // Built here rather than in the browser: it depends only on the file, so it
+  // is the same table on every load and costs the client nothing to derive.
+  const diagram = buildDiagram(
+    recipe.diagram,
+    recipe.ingredients.map((line) => parseIngredientLine(line).name),
+  );
   const cookLabels = field((t) => t.cookLabel);
   // Tags are a list, so they translate as a list: index by index, falling back
   // to the English tag where a translation has fewer.
@@ -162,6 +170,7 @@ export default async function RecipePage({
         steps={recipe.steps}
         tin={recipe.tin}
         translations={recipe.translations}
+        diagram={diagram}
       />
 
       <div className="mt-4">

@@ -142,6 +142,11 @@ const en = {
   proteinUnknown: "protein unknown",
   pctCovered: "({n}% covered)",
 
+  // The diagram
+  diagram: "Diagram",
+  diagramCaption: "The recipe as a tree: ingredients on the left, and the operations that combine them to the right.",
+  diagramNote: "Each operation stands as tall as the ingredients it takes in. Read left to right.",
+
   // The ingredient library
   findIngredient: "Find an ingredient",
   fullPage: "Full page",
@@ -306,6 +311,10 @@ const zhHant: Dict = {
   proteinUnknown: "蛋白質未知",
   pctCovered: "（涵蓋 {n}%）",
 
+  diagram: "流程圖",
+  diagramCaption: "食譜的樹狀圖：左邊是食材，右邊是把它們合併起來的步驟。",
+  diagramNote: "每個步驟的高度，就是它所用到的食材範圍。由左往右讀。",
+
   findIngredient: "尋找食材",
   fullPage: "完整頁面",
   close: "關閉",
@@ -452,6 +461,10 @@ const zhHans: Dict = {
   proteinPerServing: "每份 {n} 克蛋白质",
   proteinUnknown: "蛋白质未知",
   pctCovered: "（涵盖 {n}%）",
+
+  diagram: "流程图",
+  diagramCaption: "食谱的树状图：左边是食材，右边是把它们合并起来的步骤。",
+  diagramNote: "每个步骤的高度，就是它所用到的食材范围。由左往右读。",
 
   findIngredient: "查找食材",
   fullPage: "完整页面",
@@ -607,6 +620,10 @@ const ru: Dict = {
   proteinPerServing: "{n} г белка на порцию",
   proteinUnknown: "белок неизвестен",
   pctCovered: "(охвачено {n}%)",
+
+  diagram: "Схема",
+  diagramCaption: "Рецепт как дерево: слева ингредиенты, справа операции, которые их соединяют.",
+  diagramNote: "Высота каждой операции равна набору ингредиентов, которые в неё входят. Читается слева направо.",
 
   findIngredient: "Найти ингредиент",
   fullPage: "Отдельная страница",

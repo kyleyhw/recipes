@@ -57,6 +57,32 @@ Eat it immediately. Shellfish reheated is shellfish made rubbery, and the sauce 
 
 If there is some left, pick the meat out of the shells before it goes in the fridge — it keeps one day, and no longer. Bring it back in a frying pan over medium heat with 2 tbsp of water, tossing for 2 minutes. Never in a microwave, which cooks the shellfish a second time.
 
+## Diagram
+
+- toss twice, serve
+  - toss 30 s off the heat
+    - toss 2 min over high heat
+      - boil 2 min less than the packet
+        - spaghetti
+        - salt
+      - steam covered, 3 min then 3 min
+        - reduce hard 90 s
+          - soften 3 min
+            - foam 2 min
+              - olive oil
+              - unsalted butter
+            - shallots
+          - 60 s, no further
+            - garlic
+            - chilli flakes
+          - dry white wine
+        - clams in the shell
+        - mussels in the shell
+    - unsalted butter
+  - lemon juice
+  - flat-leaf parsley
+  - lemon
+
 ## Log
 
 - 2026-08-11: Added from the linked recipe, with the butter taken to 4 tbsp. The page could not be reached from the machine this file was written on, so the quantities and method here are the standard version of the dish rather than a transcription — worth checking against the source.

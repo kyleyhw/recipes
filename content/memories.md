@@ -36,6 +36,13 @@ history says when a preference changed and why.
   later as a coverage gap on the recipe page. The gap is always a missing row,
   never a limit of the arithmetic.
 
+- **Every recipe needs a diagram.** A `## Diagram` section holding the method as
+  an indented tree: ingredients as leaves, operations as the lines above them.
+  The method says what to do in order; the diagram says what meets what, which
+  is the thing prose is worst at. Leaves that name an ingredient pick up its
+  scaled quantity and translated name automatically, so write them as the
+  ingredient is written. See [docs/diagram.md](../docs/diagram.md).
+
 - **Baked goods must state their tin**, and scale it. A cake batter doubled into
   the same tin is twice as deep and bakes wrongly: the outside sets before the
   middle is done. See [docs/mathematics.md](../docs/mathematics.md) for how the

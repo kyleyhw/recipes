@@ -5,6 +5,8 @@ import { useLanguage, useT } from "@/components/language";
 import type { RecipeTranslation } from "@/lib/content/format";
 import { translate, type StringKey } from "@/lib/i18n/strings";
 import { MacroPanel } from "@/components/macro-panel";
+import { RecipeDiagram } from "@/components/recipe-diagram";
+import type { Diagram } from "@/lib/content/diagram";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
 import {
@@ -41,6 +43,7 @@ export function RecipeView({
   steps,
   tin = null,
   translations = {},
+  diagram = null,
 }: {
   baseServings: number;
   servingLabel: string;
@@ -55,6 +58,8 @@ export function RecipeView({
    * how to read.
    */
   translations?: Record<string, RecipeTranslation>;
+  /** The method as a tree, already placed. Null where the recipe has none. */
+  diagram?: Diagram | null;
 }) {
   const [servings, setServings] = useState(baseServings);
   const [chosenTinLabel, setChosenTinLabel] = useState("");
@@ -268,6 +273,22 @@ export function RecipeView({
       <section className="mt-8">
         <MacroPanel nutrition={macros} servingLabel={shownServingLabel} />
       </section>
+
+      {/* The diagram lives with the method rather than beside the ingredients,
+          because it is a second reading of the same thing: the list says what
+          to do in order, the table says what meets what. Both are built from
+          the same scaled, translated lines. */}
+      {diagram ? (
+        <RecipeDiagram
+          diagram={diagram}
+          lines={Object.fromEntries(
+            scaled.ingredients.map((ingredient, index) => [
+              index,
+              ingredientLine(ingredient, index),
+            ]),
+          )}
+        />
+      ) : null}
 
       <section className="mt-8">
         <h2 className="mb-3 text-sm font-semibold tracking-wide uppercase">
