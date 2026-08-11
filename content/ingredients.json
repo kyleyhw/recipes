@@ -30,6 +30,36 @@
     "source": "USDA"
   },
   {
+    "name": "banana",
+    "usdaFdcId": "173944",
+    "kcal100g": 89,
+    "protein100g": 1.09,
+    "carbs100g": 22.8,
+    "fat100g": 0.33,
+    "fiber100g": 2.6,
+    "sugar100g": 12.2,
+    "sodiumMg100g": 1,
+    "densityGPerMl": null,
+    "gramsPerUnit": 118,
+    "source": "USDA",
+    "sourceNote": "USDA SR Legacy 173944, raw banana. mu = 118 g, one medium peeled banana (7-8 inches), which is the USDA reference portion."
+  },
+  {
+    "name": "bicarbonate of soda",
+    "usdaFdcId": null,
+    "kcal100g": 0,
+    "protein100g": 0,
+    "carbs100g": 0,
+    "fat100g": 0,
+    "fiber100g": 0,
+    "sugar100g": 0,
+    "sodiumMg100g": 27360,
+    "densityGPerMl": 0.92,
+    "gramsPerUnit": null,
+    "source": "MANUAL",
+    "sourceNote": "Sodium bicarbonate: no energy, and 27.36 g sodium per 100 g by formula mass (Na 22.99 of NaHCO3 84.01). rho 0.92 g/ml as a loose powder."
+  },
+  {
     "name": "bread flour",
     "usdaFdcId": "168894",
     "kcal100g": 361,
@@ -328,6 +358,21 @@
     "gramsPerUnit": null,
     "sourceNote": "USDA SR Legacy 173430; rho from the 227 g (2-stick) US cup",
     "source": "USDA"
+  },
+  {
+    "name": "walnuts",
+    "usdaFdcId": "170187",
+    "kcal100g": 654,
+    "protein100g": 15.2,
+    "carbs100g": 13.7,
+    "fat100g": 65.2,
+    "fiber100g": 6.7,
+    "sugar100g": 2.6,
+    "sodiumMg100g": 2,
+    "densityGPerMl": 0.5,
+    "gramsPerUnit": null,
+    "source": "USDA",
+    "sourceNote": "USDA SR Legacy 170187, English walnuts. rho 0.5 g/ml for roughly chopped halves, 120 g per cup."
   },
   {
     "name": "white rice",
