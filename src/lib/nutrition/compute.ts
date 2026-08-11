@@ -4,18 +4,17 @@
  * Implements §3 of docs/mathematics.md. Pure: no database, no network, no clock.
  */
 
+import {
+  NUTRIENT_KEYS,
+  zeroTotals,
+  type NutrientCoverage,
+  type NutrientTotals,
+  type NutrientVector,
+} from "@/lib/nutrition/nutrients";
 import { toGrams } from "@/lib/units";
 
-/** The per-100 g macro vector m_i. */
-export interface MacroVector {
-  kcal: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  fiber: number | null;
-  sugar: number | null;
-  sodiumMg: number | null;
-}
+/** The per-100 g nutrient vector m_i. */
+export type MacroVector = NutrientVector;
 
 /** An ingredient row as the nutrition pipeline needs it. */
 export interface NutritionInput {
@@ -56,15 +55,7 @@ export interface IngredientContribution {
   gap: GapReason | null;
 }
 
-export interface MacroTotals {
-  kcal: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  fiber: number;
-  sugar: number;
-  sodiumMg: number;
-}
+export type MacroTotals = NutrientTotals;
 
 export interface NutritionResult {
   /** Totals for the whole recipe at the given scale. */
@@ -82,6 +73,20 @@ export interface NutritionResult {
    * is either essentially complete or essentially meaningless.
    */
   coverage: number;
+  /**
+   * The same fraction, computed separately for every nutrient.
+   *
+   * This is the honest version of `coverage` once the table is wider than four
+   * columns. An ingredient library entry carries energy, protein, carbohydrate
+   * and fat for every ingredient, but zinc for only some of them — so a recipe
+   * can be at 100% coverage and still have a zinc figure derived from a third
+   * of its mass. Reporting one number for all twenty nutrients would present
+   * that third as though it were the whole.
+   *
+   * The denominator is the same determinable mass, so `nutrientCoverage.kcal`
+   * is exactly `coverage` and the two are read on the same scale.
+   */
+  nutrientCoverage: NutrientCoverage;
   /** Grams of determinable mass carrying macro data. */
   resolvedGrams: number;
   /** Total determinable mass. */
@@ -97,16 +102,6 @@ export interface NutritionResult {
   /** Ingredients with no stated quantity, e.g. "salt to taste". */
   noQuantityCount: number;
 }
-
-const ZERO: MacroTotals = {
-  kcal: 0,
-  protein: 0,
-  carbs: 0,
-  fat: 0,
-  fiber: 0,
-  sugar: 0,
-  sodiumMg: 0,
-};
 
 /** Mass of one ingredient, or null when it cannot be determined. */
 function ingredientGrams(input: NutritionInput): number | null {
@@ -140,13 +135,17 @@ export function computeNutrition(
   const scale = options.scale ?? 1;
   const includeOptional = options.includeOptional ?? false;
 
-  const total: MacroTotals = { ...ZERO };
+  const total: MacroTotals = zeroTotals();
   const contributions: IngredientContribution[] = [];
 
   let resolvedGrams = 0;
   let determinableGrams = 0;
   let massUnknownCount = 0;
   let noQuantityCount = 0;
+  // Mass carrying a figure, per nutrient. Accumulated alongside the totals
+  // because it is the only thing that makes a total readable: 40 mg of
+  // magnesium from a fifth of the recipe is not a magnesium figure.
+  const gramsWithData: NutrientCoverage = zeroTotals();
 
   for (const input of inputs) {
     if (input.optional && !includeOptional) {
@@ -203,26 +202,20 @@ export function computeNutrition(
 
     // M = sum_i (g_i / 100) * m_i
     const factor = grams / 100;
-    const macros: MacroVector = {
-      kcal: input.macro.kcal * factor,
-      protein: input.macro.protein * factor,
-      carbs: input.macro.carbs * factor,
-      fat: input.macro.fat * factor,
-      fiber: input.macro.fiber === null ? null : input.macro.fiber * factor,
-      sugar: input.macro.sugar === null ? null : input.macro.sugar * factor,
-      sodiumMg: input.macro.sodiumMg === null ? null : input.macro.sodiumMg * factor,
-    };
-
-    total.kcal += macros.kcal;
-    total.protein += macros.protein;
-    total.carbs += macros.carbs;
-    total.fat += macros.fat;
-    // A null micronutrient is unknown, not zero; it simply does not add. The
-    // total is therefore a lower bound for those fields, which is the honest
-    // reading and is stated in the interface.
-    total.fiber += macros.fiber ?? 0;
-    total.sugar += macros.sugar ?? 0;
-    total.sodiumMg += macros.sodiumMg ?? 0;
+    const macros = {} as MacroVector;
+    for (const key of NUTRIENT_KEYS) {
+      const per100g = input.macro[key];
+      if (per100g === null) {
+        // Unknown, not zero. It contributes nothing to the total and nothing
+        // to that nutrient's coverage — so the total stays a lower bound and
+        // the coverage figure says how much of one.
+        macros[key] = null;
+        continue;
+      }
+      macros[key] = per100g * factor;
+      total[key] += per100g * factor;
+      gramsWithData[key] += grams;
+    }
 
     contributions.push({
       id: input.id,
@@ -235,20 +228,21 @@ export function computeNutrition(
   }
 
   const scaledServings = servings > 0 ? servings * scale : 1;
-  const perServing: MacroTotals = {
-    kcal: total.kcal / scaledServings,
-    protein: total.protein / scaledServings,
-    carbs: total.carbs / scaledServings,
-    fat: total.fat / scaledServings,
-    fiber: total.fiber / scaledServings,
-    sugar: total.sugar / scaledServings,
-    sodiumMg: total.sodiumMg / scaledServings,
-  };
+  const perServing = {} as MacroTotals;
+  const nutrientCoverage = {} as NutrientCoverage;
+  for (const key of NUTRIENT_KEYS) {
+    perServing[key] = total[key] / scaledServings;
+    // 1 by the same convention as the overall figure: with no determinable
+    // mass there is nothing to have missed.
+    nutrientCoverage[key] =
+      determinableGrams > 0 ? gramsWithData[key] / determinableGrams : 1;
+  }
 
   return {
     total,
     perServing,
     contributions,
+    nutrientCoverage,
     // Coverage is 1 by convention when there is no determinable mass at all:
     // there is nothing to have missed. The interface distinguishes this from
     // genuine completeness using the counts below.

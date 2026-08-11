@@ -3,10 +3,10 @@
 import { useSyncExternalStore } from "react";
 
 /**
- * Switching between the dark and light palettes.
+ * Switching between the light and dark palettes.
  *
- * Dark is the default: the tokens on bare `:root` are the dark ones, and light
- * is applied by stamping `data-theme="light"` on the root element. A choice is
+ * Light is the default: the tokens on bare `:root` are the light ones, and dark
+ * is applied by stamping `data-theme="dark"` on the root element. A choice is
  * remembered in `localStorage`, so the site opens the way you left it.
  *
  * ## Why `useSyncExternalStore` rather than state in an effect
@@ -18,7 +18,7 @@ import { useSyncExternalStore } from "react";
  * thing `react-hooks/set-state-in-effect` exists to prevent.
  *
  * Reading it as an external store instead is exactly what that hook is for: the
- * server snapshot is "dark" because that is what the markup is generated as,
+ * server snapshot is "light" because that is what the markup is generated as,
  * and the client snapshot reads the attribute the inline script already set. No
  * effect, no flicker, no mismatch.
  */
@@ -36,20 +36,20 @@ function subscribe(listener: () => void): () => void {
 }
 
 function getSnapshot(): Theme {
-  return document.documentElement.getAttribute("data-theme") === "light"
-    ? "light"
-    : "dark";
+  return document.documentElement.getAttribute("data-theme") === "dark"
+    ? "dark"
+    : "light";
 }
 
-/** Dark, because that is the palette the prerendered markup is generated with. */
+/** Light, because that is the palette the prerendered markup is generated with. */
 function getServerSnapshot(): Theme {
-  return "dark";
+  return "light";
 }
 
 function choose(next: Theme): void {
-  // The attribute is the single switch: `globals.css` keys the light palette
+  // The attribute is the single switch: `globals.css` keys the dark palette
   // off it, and nothing else needs to know.
-  if (next === "light") document.documentElement.setAttribute("data-theme", "light");
+  if (next === "dark") document.documentElement.setAttribute("data-theme", "dark");
   else document.documentElement.removeAttribute("data-theme");
 
   try {
@@ -83,11 +83,12 @@ export function ThemeToggle() {
  * Applies the remembered choice before the page paints.
  *
  * Rendered as an inline script in the document head. Without it the page paints
- * dark, then React mounts and switches to light — a flash on every navigation
- * for anyone who chose light, which is exactly the reader most bothered by one.
+ * light, then React mounts and switches to dark — a flash of white on every
+ * navigation for anyone who chose dark, which is exactly the reader most
+ * bothered by one.
  *
  * Deliberately tiny and dependency-free: it runs before anything else on the
  * page, and it swallows its own errors because a failure here would leave the
  * site unstyled rather than merely on the wrong theme.
  */
-export const themeScript = `(function(){try{if(localStorage.getItem("${STORAGE_KEY}")==="light"){document.documentElement.setAttribute("data-theme","light")}}catch(e){}})()`;
+export const themeScript = `(function(){try{if(localStorage.getItem("${STORAGE_KEY}")==="dark"){document.documentElement.setAttribute("data-theme","dark")}}catch(e){}})()`;

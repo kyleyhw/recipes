@@ -3,15 +3,15 @@
 /*
  * Design tokens.
  *
- * **Dark is the default.** The palette on bare `:root` is the dark one, and the
- * light palette is applied only when it is explicitly asked for — by the
- * toggle, which stamps `data-theme="light"` on the root element. Opening the
- * site therefore gives dark regardless of the operating system's setting.
+ * **Light is the default.** The palette on bare `:root` is the light one, and
+ * the dark palette is applied only when it is explicitly asked for — by the
+ * toggle, which stamps `data-theme="dark"` on the root element. Opening the
+ * site therefore gives the bone page regardless of the operating system's
+ * setting.
  *
- * That is a deliberate inversion of the usual arrangement, and the reason it is
- * safe is that no colour is defined *only* inside a selector that might not
- * match: the dark values are unconditional, so a browser that never applies the
- * attribute still renders a complete, painted page.
+ * The reason that is safe is that no colour is defined *only* inside a selector
+ * that might not match: the light values are unconditional, so a browser that
+ * never applies the attribute still renders a complete, painted page.
  *
  * The two palettes are one design rather than two. The bone that is the paper
  * in light mode becomes the ink in dark mode, and the near-black ink becomes
@@ -19,22 +19,6 @@
  * has to be: at its light value it goes muddy against a near-black field.
  */
 :root {
-  --bg: #191816;
-  --surface: #221f1c;
-  --surface-2: #2b2723;
-  --border: #38332d;
-  --text: #f0eee6;
-  --text-muted: #a09a8c;
-  --accent: #e08a63;
-  --accent-soft: #39251d;
-  --ok: #7ab894;
-  --warn: #d8ab5f;
-  --warn-soft: #332a16;
-  --danger: #e2867a;
-  --radius: 0.5rem;
-}
-
-:root[data-theme="light"] {
   /* The bone field. Cards sit *above* it, a shade lighter, so a panel reads as
      laid on the page rather than cut into it. */
   --bg: #f0eee6;
@@ -49,6 +33,22 @@
   --warn: #8a5a00;
   --warn-soft: #f2ead4;
   --danger: #a8392b;
+  --radius: 0.5rem;
+}
+
+:root[data-theme="dark"] {
+  --bg: #191816;
+  --surface: #221f1c;
+  --surface-2: #2b2723;
+  --border: #38332d;
+  --text: #f0eee6;
+  --text-muted: #a09a8c;
+  --accent: #e08a63;
+  --accent-soft: #39251d;
+  --ok: #7ab894;
+  --warn: #d8ab5f;
+  --warn-soft: #332a16;
+  --danger: #e2867a;
 }
 
 @theme inline {

@@ -177,6 +177,50 @@ in a mass-weighted metric without inventing the figure:
 Neither enters the ratio. Both are reported, because a coverage of 100% over
 three of eight ingredients would otherwise read as completeness.
 
+### Coverage, per nutrient
+
+One coverage figure was enough while the table held four columns. It is not
+enough now that it holds twenty.
+
+Every entry in `content/ingredients.json` carries energy, protein, carbohydrate
+and fat — the schema requires them. Only some carry zinc, and fewer carry
+vitamin D. So a recipe can sit at 100% overall coverage and still have a zinc
+figure derived from a third of its mass, because the two ingredients that
+supply the other two thirds have no zinc column.
+
+`computeNutrition` therefore returns `nutrientCoverage`: the same ratio,
+computed separately for each nutrient, over the same denominator. That last
+part matters — because the denominator is the whole determinable mass,
+`nutrientCoverage.kcal` is exactly `coverage`, and the twenty figures are read
+on one scale rather than twenty.
+
+$$c_n = \frac{\sum_{i \in R_n} g_i}{\sum_i g_i},$$
+
+where $R_n$ is the subset carrying a figure for nutrient $n$. Two consequences
+the interface depends on:
+
+- A total is a **lower bound** whenever $c_n < 1$, and $c_n$ says how much of
+  one. The panel prints the mass share next to any nutrient below 90%.
+- $c_n = 0$ with a total of zero means *unknown*; $c_n = 1$ with a total of zero
+  means the recipe genuinely contains none. Without the coverage figure those
+  two are the same number on the screen.
+
+### Reference intakes
+
+A micronutrient in milligrams is unreadable to almost everyone, so each figure
+is shown against a daily reference intake as well. The references are the EU
+values in Regulation (EU) No 1169/2011, Annex XIII — the same schedule used on
+British and European packaging, so a percentage here means what a percentage on
+a packet means.
+
+Two exceptions, both marked in `lib/nutrition/nutrients.ts`: fibre, which Annex
+XIII does not set and which takes the SACN (2015) figure of 30 g, and
+cholesterol, which has no reference anywhere and so shows no percentage rather
+than a fabricated one.
+
+A reference intake is a labelling convention for an average adult. It is used
+here for scale, which is all it is good for.
+
 ### What a gap is not
 
 An unresolved ingredient contributes zero to the totals and is displayed as a
@@ -188,8 +232,21 @@ metric exists at all.
 
 ## 6. Export
 
-The macro figures leave through `lib/export/formats.ts` in four shapes — JSON,
-schema.org JSON-LD, CSV, and a plaintext block for tracker import — each
-honouring `?servings=N`. Unresolved ingredients appear in the CSV with empty
-macro cells rather than being dropped, so the export is a faithful record of
-what is and is not known.
+The figures leave through `lib/export/formats.ts` in four shapes — JSON,
+schema.org JSON-LD, CSV, and a plaintext block for tracker import. Unresolved
+ingredients appear in the CSV with empty cells rather than being dropped, so the
+export is a faithful record of what is and is not known.
+
+Three of the four carry the whole table. The JSON export includes every
+nutrient per serving and in total, plus `nutrientCoverage` and a `units` map so
+a consumer needs no out-of-band knowledge of what `folateUg` is measured in. The
+CSV has one column per nutrient and a final `COVERAGE` row beneath the totals.
+The plaintext block prints only the nutrients with data, noting the mass share
+where it is partial.
+
+JSON-LD is the exception, and deliberately. `NutritionInformation` defines
+properties for energy, the macros, saturates, fibre, sugars, cholesterol and
+sodium, and for nothing else — there is no `zincContent` in the vocabulary.
+Inventing one would produce a document that still validates as a Recipe while
+carrying fields no importer reads, so the vitamins and minerals are simply
+absent from that format.

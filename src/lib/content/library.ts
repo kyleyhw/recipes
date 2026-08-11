@@ -28,13 +28,38 @@ const RECIPES_DIR = join(CONTENT_DIR, "recipes");
  */
 const ingredientSchema = z.object({
   name: z.string(),
+
+  /*
+   * Per 100 g, one field per row of `NUTRIENTS` in lib/nutrition/nutrients.ts.
+   *
+   * Written out rather than generated from that table, deliberately: building
+   * the shape with `Object.fromEntries` would type every field as `unknown` and
+   * lose `LibraryIngredient` as a real type, which is the one thing keeping a
+   * typo in this file from becoming a silently missing nutrient. The four
+   * energy-bearing fields are required; every other one is optional, and its
+   * absence means *unknown* rather than zero.
+   */
   kcal100g: z.number(),
   protein100g: z.number(),
   carbs100g: z.number(),
   fat100g: z.number(),
   fiber100g: z.number().nullish(),
   sugar100g: z.number().nullish(),
+  satFat100g: z.number().nullish(),
+  cholesterolMg100g: z.number().nullish(),
   sodiumMg100g: z.number().nullish(),
+  potassiumMg100g: z.number().nullish(),
+  calciumMg100g: z.number().nullish(),
+  ironMg100g: z.number().nullish(),
+  magnesiumMg100g: z.number().nullish(),
+  zincMg100g: z.number().nullish(),
+  vitaminAUg100g: z.number().nullish(),
+  vitaminCMg100g: z.number().nullish(),
+  vitaminDUg100g: z.number().nullish(),
+  vitaminEMg100g: z.number().nullish(),
+  vitaminB12Ug100g: z.number().nullish(),
+  folateUg100g: z.number().nullish(),
+
   /** rho, g/ml. Null where the ingredient is never measured by volume. */
   densityGPerMl: z.number().nullish(),
   /** mu, grams per countable item. */

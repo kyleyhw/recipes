@@ -28,6 +28,14 @@ history says when a preference changed and why.
   genuinely must be eaten immediately, say that instead — it is the same
   question, answered.
 
+- **Every ingredient a recipe uses must exist in the library.** Adding a recipe
+  means adding any ingredient it introduces to `content/ingredients.json`, with
+  its density or grams-per-item where it is measured by volume or by count, and
+  with a sourced note for every figure. A missing entry does not fail the build;
+  it quietly drops that ingredient out of the nutrition figures and shows up
+  later as a coverage gap on the recipe page. The gap is always a missing row,
+  never a limit of the arithmetic.
+
 - **Baked goods must state their tin**, and scale it. A cake batter doubled into
   the same tin is twice as deep and bakes wrongly: the outside sets before the
   middle is done. See [docs/mathematics.md](../docs/mathematics.md) for how the

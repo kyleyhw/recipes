@@ -9,10 +9,15 @@
  *
  * The site's own name is the visible label because that is what a person
  * remembers; the full address is the link target and the tooltip.
+ *
+ * The caller sets the type size. Baking one in here and then overriding it from
+ * a `className` would leave two Tailwind size classes on the same element, and
+ * which of them wins is decided by the order they happen to appear in the
+ * generated stylesheet rather than by anything visible at the call site.
  */
 export function SourceLine({
   sourceUrl,
-  className = "",
+  className = "text-sm",
 }: {
   sourceUrl: string | null;
   className?: string;
@@ -28,7 +33,7 @@ export function SourceLine({
   }
 
   return (
-    <p className={`text-sm text-text-muted ${className}`}>
+    <p className={`text-text-muted ${className}`}>
       From{" "}
       <a
         href={sourceUrl}

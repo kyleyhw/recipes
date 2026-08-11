@@ -1,4 +1,12 @@
 import { energySplit, type NutritionResult } from "@/lib/nutrition/compute";
+import {
+  formatNutrient,
+  NUTRIENT_KEYS,
+  NUTRIENTS,
+  nutrientDef,
+  type NutrientKey,
+  type NutrientTotals,
+} from "@/lib/nutrition/nutrients";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
 
 /**
@@ -57,6 +65,19 @@ function round(value: number, places = 1): number {
   return Math.round(value * factor) / factor;
 }
 
+/**
+ * Every nutrient as a plain object, rounded to its own precision.
+ *
+ * Driven off the table rather than listed here, so a nutrient added to
+ * `lib/nutrition/nutrients.ts` appears in the export the same day rather than
+ * whenever someone remembers this file exists.
+ */
+function everyNutrient(totals: NutrientTotals): Record<string, number> {
+  return Object.fromEntries(
+    NUTRIENT_KEYS.map((key) => [key, Number(formatNutrient(key, totals[key]))]),
+  );
+}
+
 /** ISO 8601 duration, which is what schema.org requires for times. */
 function isoDuration(minutes: number | null): string | undefined {
   if (!minutes || minutes <= 0) return undefined;
@@ -95,25 +116,21 @@ export function toJson(
     })),
     steps: recipe.steps,
     nutrition: {
-      perServing: {
-        kcal: round(nutrition.perServing.kcal),
-        protein: round(nutrition.perServing.protein),
-        carbs: round(nutrition.perServing.carbs),
-        fat: round(nutrition.perServing.fat),
-        fiber: round(nutrition.perServing.fiber),
-        sugar: round(nutrition.perServing.sugar),
-        sodiumMg: round(nutrition.perServing.sodiumMg),
-      },
-      total: {
-        kcal: round(nutrition.total.kcal),
-        protein: round(nutrition.total.protein),
-        carbs: round(nutrition.total.carbs),
-        fat: round(nutrition.total.fat),
-      },
+      // Every nutrient in the table, per serving and in total, so a consumer
+      // does not have to know which subset this application happened to
+      // consider interesting on the day it was written.
+      perServing: everyNutrient(nutrition.perServing),
+      total: everyNutrient(nutrition.total),
       // Exported alongside the figures rather than omitted, so a consumer can
       // see that a number was computed from part of the recipe. A tracker that
-      // ignores it is no worse off; one that reads it can warn.
+      // ignores it is no worse off; one that reads it can warn. Per nutrient as
+      // well as overall: a zinc figure and a protein figure from the same
+      // recipe are not usually backed by the same share of its mass.
       coverage: round(nutrition.coverage, 3),
+      nutrientCoverage: Object.fromEntries(
+        NUTRIENT_KEYS.map((key) => [key, round(nutrition.nutrientCoverage[key], 3)]),
+      ),
+      units: Object.fromEntries(NUTRIENTS.map((n) => [n.key, n.unit])),
       unresolvedIngredients: nutrition.contributions
         .filter((c) => c.gap === "unresolved")
         .map((c) => c.name),
@@ -165,6 +182,12 @@ export function toJsonLd(
     url: recipe.source ?? (origin ? `${origin}/recipes/${recipe.slug}` : undefined),
     // schema.org NutritionInformation is per serving by definition, and its
     // values are strings with units — not numbers.
+    //
+    // This is every property the vocabulary defines that this application
+    // computes. The vitamins and minerals have no schema.org property at all,
+    // and inventing one would produce a document that validates as Recipe while
+    // carrying fields no consumer reads — so they are simply absent here, and
+    // the JSON and CSV exports are where the full table lives.
     nutrition: {
       "@type": "NutritionInformation",
       servingSize: `1 ${recipe.servingLabel}`,
@@ -172,8 +195,10 @@ export function toJsonLd(
       proteinContent: `${round(nutrition.perServing.protein)} g`,
       carbohydrateContent: `${round(nutrition.perServing.carbs)} g`,
       fatContent: `${round(nutrition.perServing.fat)} g`,
+      saturatedFatContent: `${round(nutrition.perServing.satFat)} g`,
       fiberContent: `${round(nutrition.perServing.fiber)} g`,
       sugarContent: `${round(nutrition.perServing.sugar)} g`,
+      cholesterolContent: `${round(nutrition.perServing.cholesterolMg, 0)} mg`,
       sodiumContent: `${round(nutrition.perServing.sodiumMg, 0)} mg`,
     },
   };
@@ -194,17 +219,22 @@ function csvCell(value: string | number | null): string {
  * misstate the recipe.
  */
 export function toCsv(recipe: ExportRecipe, nutrition: NutritionResult): string {
+  // One column per nutrient, named with its unit so a spreadsheet cell is
+  // unambiguous without a legend. Generated from the table, so the header and
+  // the rows cannot drift apart.
+  const nutrientColumns = NUTRIENT_KEYS.map((key) => {
+    const { unit } = nutrientDef(key);
+    if (unit === "kcal") return "kcal";
+    // "ug" rather than "µg": a header row is a column name, and a non-ASCII
+    // one survives a spreadsheet import less reliably than it reads.
+    return `${csvColumnName(key)}_${unit === "µg" ? "ug" : unit}`;
+  });
+
   const header = [
     "ingredient",
     "as_written",
     "grams",
-    "kcal",
-    "protein_g",
-    "carbs_g",
-    "fat_g",
-    "fiber_g",
-    "sugar_g",
-    "sodium_mg",
+    ...nutrientColumns,
     "status",
   ];
 
@@ -212,13 +242,12 @@ export function toCsv(recipe: ExportRecipe, nutrition: NutritionResult): string 
     csvCell(c.name),
     csvCell(c.rawText),
     csvCell(c.grams === null ? null : round(c.grams)),
-    csvCell(c.macros ? round(c.macros.kcal) : null),
-    csvCell(c.macros ? round(c.macros.protein) : null),
-    csvCell(c.macros ? round(c.macros.carbs) : null),
-    csvCell(c.macros ? round(c.macros.fat) : null),
-    csvCell(c.macros?.fiber != null ? round(c.macros.fiber) : null),
-    csvCell(c.macros?.sugar != null ? round(c.macros.sugar) : null),
-    csvCell(c.macros?.sodiumMg != null ? round(c.macros.sodiumMg) : null),
+    // An empty cell is *unknown*. A resolved ingredient with no zinc figure and
+    // one with genuinely no zinc must not look the same in a spreadsheet.
+    ...NUTRIENT_KEYS.map((key) => {
+      const value = c.macros?.[key];
+      return csvCell(value == null ? null : Number(formatNutrient(key, value)));
+    }),
     csvCell(c.gap ?? "resolved"),
   ]);
 
@@ -226,17 +255,32 @@ export function toCsv(recipe: ExportRecipe, nutrition: NutritionResult): string 
     csvCell("TOTAL"),
     csvCell(recipe.title),
     csvCell(round(nutrition.determinableGrams)),
-    csvCell(round(nutrition.total.kcal)),
-    csvCell(round(nutrition.total.protein)),
-    csvCell(round(nutrition.total.carbs)),
-    csvCell(round(nutrition.total.fat)),
-    csvCell(round(nutrition.total.fiber)),
-    csvCell(round(nutrition.total.sugar)),
-    csvCell(round(nutrition.total.sodiumMg)),
+    ...NUTRIENT_KEYS.map((key) =>
+      csvCell(Number(formatNutrient(key, nutrition.total[key]))),
+    ),
     csvCell(`coverage ${Math.round(nutrition.coverage * 100)}%`),
   ];
 
-  return [header, ...rows, totals].map((row) => row.join(",")).join("\n");
+  // The coverage row is what stops the totals row from being read as complete.
+  const coverageRow = [
+    csvCell("COVERAGE"),
+    csvCell("share of determinable mass carrying a figure"),
+    csvCell(round(nutrition.determinableGrams)),
+    ...NUTRIENT_KEYS.map((key) =>
+      csvCell(round(nutrition.nutrientCoverage[key], 3)),
+    ),
+    csvCell(""),
+  ];
+
+  return [header, ...rows, totals, coverageRow].map((row) => row.join(",")).join("\n");
+}
+
+/** snake_case, so the header is usable as a column name in a spreadsheet. */
+function csvColumnName(key: NutrientKey): string {
+  return key
+    .replace(/Mg$|Ug$/, "")
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .toLowerCase();
 }
 
 /**
@@ -269,10 +313,28 @@ export function toTrackerText(
     `Protein: ${round(nutrition.perServing.protein)} g (${round(split.proteinPct, 0)}% of energy)`,
     `Carbohydrate: ${round(nutrition.perServing.carbs)} g (${round(split.carbsPct, 0)}%)`,
     `Fat: ${round(nutrition.perServing.fat)} g (${round(split.fatPct, 0)}%)`,
-    `Fibre: ${round(nutrition.perServing.fiber)} g`,
-    `Sugar: ${round(nutrition.perServing.sugar)} g`,
-    `Sodium: ${round(nutrition.perServing.sodiumMg, 0)} mg`,
   ];
+
+  // Everything else the table knows, minus the four already printed above and
+  // anything with no data at all — a block of "Zinc: 0 mg" would be a list of
+  // things this recipe does not contain, which is not what a zero means here.
+  const printed = new Set<NutrientKey>(["kcal", "protein", "carbs", "fat"]);
+  for (const key of NUTRIENT_KEYS) {
+    const def = nutrientDef(key);
+    if (printed.has(key)) continue;
+    if (nutrition.nutrientCoverage[key] <= 0) continue;
+    const label = def.subordinate ? def.label.replace(/^of which /, "") : def.label;
+    const share =
+      nutrition.nutrientCoverage[key] < 1
+        ? ` (from ${Math.round(nutrition.nutrientCoverage[key] * 100)}% of the mass)`
+        : "";
+    lines.push(
+      `${label[0]?.toUpperCase()}${label.slice(1)}: ${formatNutrient(
+        key,
+        nutrition.perServing[key],
+      )} ${def.unit}${share}`,
+    );
+  }
 
   if (nutrition.coverage < 1) {
     lines.push(

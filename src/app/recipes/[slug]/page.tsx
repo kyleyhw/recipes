@@ -95,8 +95,6 @@ export default async function RecipePage({
           <p className="mt-2 text-text-muted">{recipe.description}</p>
         ) : null}
 
-        <SourceLine sourceUrl={recipe.source} className="mt-2" />
-
         {totalMinutes > 0 ? (
           <p className="numeric mt-3 text-sm text-text-muted">
             {[
@@ -172,8 +170,14 @@ export default async function RecipePage({
         </section>
       ) : null}
 
-      {repo ? (
-        <section className="mt-10 border-t border-border pt-4">
+      {/* Provenance, at the bottom.
+          Where a recipe came from and where the file lives are the same kind of
+          fact — they answer "is this trustworthy?" rather than "how do I cook
+          it?" — so they sit together, below the cooking, out of the way of it. */}
+      {recipe.source || repo ? (
+        <section className="mt-10 flex flex-col gap-1 border-t border-border pt-4">
+          <SourceLine sourceUrl={recipe.source} className="text-xs" />
+          {repo ? (
           <p className="text-xs text-text-muted">
             This recipe is one file.{" "}
             <a
@@ -204,6 +208,7 @@ export default async function RecipePage({
             </a>
             .
           </p>
+          ) : null}
         </section>
       ) : null}
     </article>

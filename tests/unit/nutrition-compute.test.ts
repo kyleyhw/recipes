@@ -6,6 +6,13 @@ import {
   type MacroVector,
   type NutritionInput,
 } from "@/lib/nutrition/compute";
+import {
+  NUTRIENT_KEYS,
+  nutrientVector,
+  zeroTotals,
+  type KnownNutrients,
+  type NutrientTotals,
+} from "@/lib/nutrition/nutrients";
 
 /**
  * Tests for macro aggregation and coverage (docs/mathematics.md §3).
@@ -16,8 +23,8 @@ import {
  * much as the code; this one cannot.
  */
 
-function macro(overrides: Partial<MacroVector> = {}): MacroVector {
-  return {
+function macro(overrides: KnownNutrients = {}): MacroVector {
+  return nutrientVector({
     kcal: 100,
     protein: 10,
     carbs: 10,
@@ -25,8 +32,14 @@ function macro(overrides: Partial<MacroVector> = {}): MacroVector {
     fiber: 2,
     sugar: 1,
     sodiumMg: 50,
+    zincMg: 1,
     ...overrides,
-  };
+  });
+}
+
+/** An aggregate with only the named fields set; everything else is zero. */
+function totals(known: Partial<NutrientTotals>): NutrientTotals {
+  return { ...zeroTotals(), ...known };
 }
 
 function input(overrides: Partial<NutritionInput> & { id: string }): NutritionInput {
@@ -163,6 +176,92 @@ describe("the scaling invariant", () => {
   });
 });
 
+/**
+ * Coverage, per nutrient.
+ *
+ * The overall figure answers "how much of this recipe has *any* nutrition
+ * data?". Once the table is twenty columns wide that is no longer enough: the
+ * library carries energy for every ingredient and magnesium for some of them,
+ * so a recipe can be fully covered and still have a magnesium figure derived
+ * from a third of its mass. These tests pin down the distinction.
+ */
+describe("per-nutrient coverage", () => {
+  it("is the overall coverage for a nutrient every ingredient carries", () => {
+    const result = computeNutrition([input({ id: "a" }), input({ id: "b" })], 2);
+    expect(result.nutrientCoverage.kcal).toBe(result.coverage);
+    expect(result.nutrientCoverage.kcal).toBe(1);
+  });
+
+  /**
+   * The case the whole mechanism exists for: an ingredient resolves, so it
+   * counts towards the overall coverage in full, but carries no figure for one
+   * particular nutrient.
+   */
+  it("falls below the overall coverage where a resolved ingredient lacks a figure", () => {
+    const result = computeNutrition(
+      [
+        // 300 g with a zinc figure, 100 g without.
+        input({ id: "with", quantity: 300, macro: macro({ zincMg: 2 }) }),
+        input({ id: "without", quantity: 100, macro: macro({ zincMg: null }) }),
+      ],
+      1,
+    );
+    expect(result.coverage).toBe(1);
+    expect(result.nutrientCoverage.zincMg).toBeCloseTo(0.75, 10);
+    // And the total is the lower bound it claims to be: only the 300 g counted.
+    expect(result.total.zincMg).toBeCloseTo(6, 10);
+  });
+
+  /**
+   * Zero coverage and a zero total are the two halves of "we do not know".
+   * Without the first, the second is indistinguishable from an ingredient that
+   * genuinely contains none of the nutrient.
+   */
+  it("reports zero coverage for a nutrient nothing carries", () => {
+    const result = computeNutrition([input({ id: "a", macro: macro({ folateUg: null }) })], 1);
+    expect(result.nutrientCoverage.folateUg).toBe(0);
+    expect(result.total.folateUg).toBe(0);
+  });
+
+  it("distinguishes an unknown from a stated zero", () => {
+    const unknown = computeNutrition([input({ id: "a", macro: macro({ folateUg: null }) })], 1);
+    const stated = computeNutrition([input({ id: "a", macro: macro({ folateUg: 0 }) })], 1);
+    expect(unknown.total.folateUg).toBe(stated.total.folateUg);
+    // The totals agree; the coverage is what tells them apart.
+    expect(unknown.nutrientCoverage.folateUg).toBe(0);
+    expect(stated.nutrientCoverage.folateUg).toBe(1);
+  });
+
+  /**
+   * The scaling invariant of docs/mathematics.md §3 is a statement about the
+   * whole vector, not just about energy. It has to hold for a micronutrient
+   * drawn from part of the recipe too.
+   */
+  it("holds the per-serving invariant across the whole table", () => {
+    const rows = [
+      input({ id: "a", quantity: 250, macro: macro({ zincMg: 3 }) }),
+      input({ id: "b", quantity: 90, macro: macro({ zincMg: null }) }),
+    ];
+    const base = computeNutrition(rows, 4);
+    for (const scale of [0.5, 2, 3.7]) {
+      const scaled = computeNutrition(rows, 4, { scale });
+      for (const key of NUTRIENT_KEYS) {
+        expect(scaled.perServing[key]).toBeCloseTo(base.perServing[key], 10);
+      }
+      // Coverage is a ratio of masses, so it is invariant too.
+      expect(scaled.nutrientCoverage.zincMg).toBeCloseTo(
+        base.nutrientCoverage.zincMg,
+        10,
+      );
+    }
+  });
+
+  it("reports full coverage for an empty recipe rather than NaN", () => {
+    const result = computeNutrition([], 4);
+    for (const key of NUTRIENT_KEYS) expect(result.nutrientCoverage[key]).toBe(1);
+  });
+});
+
 describe("coverage", () => {
   /**
    * The reason coverage is mass-weighted. Counting would report 1 of 2 matched
@@ -254,15 +353,7 @@ describe("coverage", () => {
 describe("energy split", () => {
   it("uses the Atwater factors", () => {
     expect(ATWATER).toEqual({ protein: 4, carbs: 4, fat: 9 });
-    const split = energySplit({
-      kcal: 0,
-      protein: 10,
-      carbs: 10,
-      fat: 10,
-      fiber: 0,
-      sugar: 0,
-      sodiumMg: 0,
-    });
+    const split = energySplit(totals({ protein: 10, carbs: 10, fat: 10 }));
     expect(split.proteinKcal).toBe(40);
     expect(split.carbsKcal).toBe(40);
     expect(split.fatKcal).toBe(90);
@@ -276,42 +367,20 @@ describe("energy split", () => {
    * fat by a factor of more than two.
    */
   it("shows fat's disproportionate energy contribution", () => {
-    const split = energySplit({
-      kcal: 0,
-      protein: 10,
-      carbs: 10,
-      fat: 10,
-      fiber: 0,
-      sugar: 0,
-      sodiumMg: 0,
-    });
+    const split = energySplit(totals({ protein: 10, carbs: 10, fat: 10 }));
     expect(split.fatPct).toBeCloseTo((90 / 170) * 100, 10);
     expect(split.fatPct).toBeGreaterThan(50);
   });
 
   it("produces percentages summing to 100", () => {
-    const split = energySplit({
-      kcal: 500,
-      protein: 30,
-      carbs: 45,
-      fat: 20,
-      fiber: 5,
-      sugar: 10,
-      sodiumMg: 400,
-    });
+    const split = energySplit(
+      totals({ kcal: 500, protein: 30, carbs: 45, fat: 20, fiber: 5, sugar: 10, sodiumMg: 400 }),
+    );
     expect(split.proteinPct + split.carbsPct + split.fatPct).toBeCloseTo(100, 10);
   });
 
   it("returns zeroes rather than NaN for an empty total", () => {
-    const split = energySplit({
-      kcal: 0,
-      protein: 0,
-      carbs: 0,
-      fat: 0,
-      fiber: 0,
-      sugar: 0,
-      sodiumMg: 0,
-    });
+    const split = energySplit(totals({}));
     expect(split.proteinPct).toBe(0);
     expect(Number.isNaN(split.fatPct)).toBe(false);
   });

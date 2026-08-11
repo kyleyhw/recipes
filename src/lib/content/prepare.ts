@@ -2,6 +2,7 @@ import type { RecipeFile } from "@/lib/content/format";
 import type { LibraryIngredient } from "@/lib/content/library";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
+import { nutrientVector, type NutrientVector } from "@/lib/nutrition/nutrients";
 import type { ScalableIngredient } from "@/lib/scaling";
 
 /**
@@ -99,6 +100,39 @@ export function matchIngredient(
   return null;
 }
 
+/**
+ * A library entry's per-100 g figures, as the nutrition pipeline's vector.
+ *
+ * Written out one field at a time on purpose: `NutrientVector` requires every
+ * key, so leaving a nutrient out of this mapping is a compile error rather than
+ * a column that quietly reads as unknown on every recipe in the collection.
+ * `nutrientVector` supplies null for anything the entry does not carry.
+ */
+function vectorFor(entry: LibraryIngredient): NutrientVector {
+  return nutrientVector({
+    kcal: entry.kcal100g,
+    protein: entry.protein100g,
+    carbs: entry.carbs100g,
+    fat: entry.fat100g,
+    fiber: entry.fiber100g,
+    sugar: entry.sugar100g,
+    satFat: entry.satFat100g,
+    cholesterolMg: entry.cholesterolMg100g,
+    sodiumMg: entry.sodiumMg100g,
+    potassiumMg: entry.potassiumMg100g,
+    calciumMg: entry.calciumMg100g,
+    ironMg: entry.ironMg100g,
+    magnesiumMg: entry.magnesiumMg100g,
+    zincMg: entry.zincMg100g,
+    vitaminAUg: entry.vitaminAUg100g,
+    vitaminCMg: entry.vitaminCMg100g,
+    vitaminDUg: entry.vitaminDUg100g,
+    vitaminEMg: entry.vitaminEMg100g,
+    vitaminB12Ug: entry.vitaminB12Ug100g,
+    folateUg: entry.folateUg100g,
+  });
+}
+
 export interface PreparedRecipe {
   /** Ingredients in the shape `scaleRecipe` takes. */
   scalable: ScalableIngredient[];
@@ -146,17 +180,7 @@ export function prepareRecipe(
       unit: parsed.unit,
       optional: parsed.optional,
       gramsOverride: null,
-      macro: match
-        ? {
-            kcal: match.kcal100g,
-            protein: match.protein100g,
-            carbs: match.carbs100g,
-            fat: match.fat100g,
-            fiber: match.fiber100g ?? null,
-            sugar: match.sugar100g ?? null,
-            sodiumMg: match.sodiumMg100g ?? null,
-          }
-        : null,
+      macro: match ? vectorFor(match) : null,
       densityGPerMl: match?.densityGPerMl ?? null,
       gramsPerUnit: match?.gramsPerUnit ?? null,
     });
