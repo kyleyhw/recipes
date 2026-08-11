@@ -66,19 +66,34 @@
   --color-danger: var(--danger);
   --radius-card: var(--radius);
 
-  --font-serif:
-    "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Charter, Georgia,
-    serif;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* The fallbacks matter for the moment before the woff2 arrives, and for
+     anyone who blocks web fonts. Georgia last, because it exists nearly
+     everywhere and is the closest widely-installed relative. */
+  /*
+   * Source Serif 4 (SIL Open Font License), self-hosted from this repository as
+   * two 50 KB variable woff2 files. Nothing is fetched from a third party: the
+   * site is static, so a font on someone else's CDN would be the only thing on
+   * the page that could fail, be slow, or watch the reader.
+   *
+   * Loaded through `next/font/local` in the layout rather than an `@font-face`
+   * here, and that is not a style preference — a static export served from
+   * `/<repo>` needs every asset URL to carry that prefix, and `url()` inside a
+   * stylesheet does not get it. An absolute `/fonts/...` works locally and 404s
+   * on the deployed site. `next/font` rewrites the URL correctly.
+   *
+   * The fallbacks matter for the moment before the woff2 arrives, and for
+   * anyone who blocks web fonts. Georgia last: it exists nearly everywhere and
+   * is the closest widely-installed relative.
+   */
+  --font-serif: var(--font-source-serif), Charter, "Bitstream Charter", Georgia, serif;
 }
 
 /*
- * Serif for the recipe, sans for the controls.
+ * One typeface, everywhere.
  *
- * The split is the point: what you cook from reads as a document, and what you
- * press reads as an interface. Numbers are sans too — a serif's old-style
- * figures are lovely in prose and wrong in a column of quantities, where what
- * matters is that 3 and 8 are instantly distinguishable at arm's length.
+ * Including the nav, the buttons and the numbers. Form controls do not inherit
+ * the body font by default — they take the operating system's UI font unless
+ * told otherwise — so they are named explicitly rather than left to inherit.
  */
 body {
   background: var(--bg);
@@ -87,22 +102,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-header,
-nav,
-footer,
 button,
 input,
 select,
-textarea,
-table,
-.numeric {
-  font-family: var(--font-sans);
+textarea {
+  font-family: inherit;
 }
 
 h1,
 h2,
 h3 {
-  font-family: var(--font-serif);
   letter-spacing: -0.005em;
 }
 

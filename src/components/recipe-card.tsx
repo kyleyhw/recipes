@@ -18,7 +18,7 @@ export function RecipeCard({ recipe, glyph }: { recipe: RecipeFile; glyph: strin
   // the two a 90-minute recipe actually is.
   const times = [
     recipe.prepMinutes ? `${recipe.prepMinutes} min prep` : null,
-    recipe.cookMinutes ? `${recipe.cookMinutes} min cook` : null,
+    recipe.cookMinutes ? `${recipe.cookMinutes} min ${recipe.cookLabel}` : null,
   ].filter(Boolean);
 
   return (

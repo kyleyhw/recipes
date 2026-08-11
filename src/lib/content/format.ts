@@ -43,6 +43,19 @@ const frontMatterSchema = z.object({
   servingLabel: z.string().nullish(),
   prepMinutes: z.number().int().nullish(),
   cookMinutes: z.number().int().nullish(),
+  /**
+   * What the second stretch of time actually is.
+   *
+   * "60 min cook" is wrong for a loaf, a terrine and a sorbet alike — they are
+   * baked, chilled and frozen. The word is part of the information: it says
+   * whether you have to be in the kitchen for it.
+   *
+   * Free text rather than an enum, because the list of things a recipe can
+   * spend an hour doing is not enumerable in advance — proving, curing,
+   * marinating, resting, smoking. Defaulted rather than required, and inferred
+   * where the recipe already implies it.
+   */
+  cookLabel: z.string().nullish(),
   /** The address a web-sourced recipe came from. */
   source: z.string().nullish(),
   photo: z.string().nullish(),
@@ -80,6 +93,8 @@ export interface RecipeFile {
   servingLabel: string;
   prepMinutes: number | null;
   cookMinutes: number | null;
+  /** The verb for `cookMinutes`: "cook", "bake", "chill", "prove", "freeze". */
+  cookLabel: string;
   source: string | null;
   photo: string | null;
   photoCredit: { siteName: string | null; pageUrl: string | null } | null;
@@ -178,6 +193,9 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
       servingLabel: parsed.data.servingLabel ?? "serving",
       prepMinutes: parsed.data.prepMinutes ?? null,
       cookMinutes: parsed.data.cookMinutes ?? null,
+      // A recipe with a tin is baked in it — the tin is a stronger signal than
+      // the category, which someone can file anywhere.
+      cookLabel: parsed.data.cookLabel ?? (parsed.data.tin ? "bake" : "cook"),
       source: parsed.data.source ?? null,
       photo: parsed.data.photo ?? null,
       photoCredit: parsed.data.photoCredit
@@ -304,6 +322,11 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
   }
   if (recipe.prepMinutes !== null) frontMatter["prepMinutes"] = recipe.prepMinutes;
   if (recipe.cookMinutes !== null) frontMatter["cookMinutes"] = recipe.cookMinutes;
+  // Written out only when it is not what would be inferred anyway, so a file
+  // stays as short as its recipe allows.
+  if (recipe.cookLabel !== (recipe.tin ? "bake" : "cook")) {
+    frontMatter["cookLabel"] = recipe.cookLabel;
+  }
   if (recipe.source) frontMatter["source"] = recipe.source;
   if (recipe.photo) frontMatter["photo"] = recipe.photo;
   if (recipe.photoCredit?.pageUrl || recipe.photoCredit?.siteName) {

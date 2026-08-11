@@ -98,7 +98,17 @@ export default async function RecipePage({
         <SourceLine sourceUrl={recipe.source} className="mt-2" />
 
         {totalMinutes > 0 ? (
-          <p className="numeric mt-3 text-sm text-text-muted">{totalMinutes} min total</p>
+          <p className="numeric mt-3 text-sm text-text-muted">
+            {[
+              recipe.prepMinutes ? `${recipe.prepMinutes} min prep` : null,
+              recipe.cookMinutes ? `${recipe.cookMinutes} min ${recipe.cookLabel}` : null,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
+            {recipe.prepMinutes && recipe.cookMinutes
+              ? ` · ${totalMinutes} min total`
+              : null}
+          </p>
         ) : null}
 
         {recipe.tags.length > 0 ? (

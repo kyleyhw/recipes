@@ -1,8 +1,32 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
 import { repoUrl } from "@/lib/site";
 import { ThemeToggle, themeScript } from "@/components/theme-toggle";
+
+/**
+ * Source Serif 4, self-hosted.
+ *
+ * A system font stack does not look the same on two devices — it looks like
+ * whichever of its entries happens to be installed, and on a machine with none
+ * of them it falls back to a generic serif that renders badly. A recipe read
+ * from a phone propped against a jar should look the way it was designed to.
+ *
+ * Source Serif was drawn for screens at text sizes: open counters, sturdy
+ * stems, a large x-height. That is what keeps it legible at arm's length across
+ * a kitchen, which is the only viewing condition this application has.
+ */
+const sourceSerif = localFont({
+  src: [
+    { path: "./fonts/source-serif-4-normal.woff2", weight: "200 900", style: "normal" },
+    { path: "./fonts/source-serif-4-italic.woff2", weight: "200 900", style: "italic" },
+  ],
+  variable: "--font-source-serif",
+  // Show the fallback immediately rather than holding the page blank: a recipe
+  // you can read in the wrong font beats one you cannot read yet.
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Recipes",
@@ -28,7 +52,7 @@ export default function RootLayout({
   const repo = repoUrl();
 
   return (
-    <html lang="en">
+    <html lang="en" className={sourceSerif.variable}>
       <head>
         {/* Applies a remembered light choice before first paint, so nobody who
             chose light sees a dark flash on every navigation. */}
@@ -39,14 +63,23 @@ export default function RootLayout({
           {/* nowrap + scroll: at phone width the link set is wider than the
               viewport, and wrapping pushed the last link onto its own line. */}
           <header className="flex items-center gap-4 overflow-x-auto border-b border-border py-4 whitespace-nowrap">
-            <Link href="/" className="text-lg font-semibold tracking-tight">
-              Recipes
-            </Link>
-            <nav className="flex flex-1 items-center gap-4 text-sm text-text-muted">
-              <Link href="/ingredients" className="hover:text-text">
+            {/* Separated by rules rather than by space alone. Three words in a
+                row read as a heading; three words divided read as a set of
+                choices, which is what they are. */}
+            <nav className="flex flex-1 items-center gap-3 text-sm">
+              <Link href="/" className="font-semibold hover:text-accent">
+                Recipes
+              </Link>
+              <span aria-hidden="true" className="text-border">
+                |
+              </span>
+              <Link href="/ingredients" className="text-text-muted hover:text-accent">
                 Ingredients
               </Link>
-              <Link href="/about" className="hover:text-text">
+              <span aria-hidden="true" className="text-border">
+                |
+              </span>
+              <Link href="/about" className="text-text-muted hover:text-accent">
                 About
               </Link>
             </nav>

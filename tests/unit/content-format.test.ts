@@ -35,6 +35,7 @@ function recipe(overrides: Partial<RecipeFile> = {}): RecipeFile {
     servingLabel: "slice",
     prepMinutes: 20,
     cookMinutes: 40,
+    cookLabel: "cook",
     source: "https://www.bbcgoodfood.com/recipes/butter-loaf",
     photo: null,
     photoCredit: null,
@@ -80,6 +81,7 @@ describe("round trip", () => {
     ["a draft", { draft: true }],
     ["a baking tin", { tin: { shape: "round" as const, diameter: 20, depth: 7 } }],
     ["a loaf tin", { tin: { shape: "loaf" as const, length: 23, width: 13 } }],
+    ["a chilled dish", { cookLabel: "chill" }],
     [
       "a photo with credit",
       {
@@ -251,6 +253,75 @@ describe("reading hand-written files", () => {
     );
     expect(parsed.ok).toBe(true);
     if (parsed.ok) expect(parsed.recipe.ingredients).toEqual(["bread"]);
+  });
+});
+
+describe("what the cooking time is called", () => {
+  const base = ["---", "title: X", "category: Desserts", "servings: 4"];
+
+  /**
+   * "60 min cook" is wrong for a loaf, a terrine and a sorbet alike — they are
+   * baked, chilled and frozen. The word says whether you have to be in the
+   * kitchen for it, which is most of what the number is for.
+   */
+  it("defaults to cook", () => {
+    const parsed = parseRecipeFile("x", [...base, "---"].join("\n"));
+    expect(parsed.ok && parsed.recipe.cookLabel).toBe("cook");
+  });
+
+  /**
+   * A tin is a stronger signal than the category, which someone can file
+   * anywhere: if it goes in a tin, it is baked.
+   */
+  it("infers bake from the presence of a tin", () => {
+    const parsed = parseRecipeFile(
+      "x",
+      [...base, "tin:", "  shape: round", "  diameter: 20", "---"].join("\n"),
+    );
+    expect(parsed.ok && parsed.recipe.cookLabel).toBe("bake");
+  });
+
+  it("lets the recipe say so explicitly, overriding the inference", () => {
+    const parsed = parseRecipeFile(
+      "x",
+      [
+        ...base,
+        "cookLabel: chill",
+        "tin:",
+        "  shape: round",
+        "  diameter: 20",
+        "---",
+      ].join("\n"),
+    );
+    expect(parsed.ok && parsed.recipe.cookLabel).toBe("chill");
+  });
+
+  it.each(["freeze", "prove", "marinate", "rest"])("accepts %s", (label) => {
+    const parsed = parseRecipeFile(
+      "x",
+      [...base, `cookLabel: ${label}`, "---"].join("\n"),
+    );
+    expect(parsed.ok && parsed.recipe.cookLabel).toBe(label);
+  });
+
+  /**
+   * An inferred label is not written back into the file: a recipe with a tin
+   * does not gain a redundant `cookLabel: bake` line just for having been
+   * opened and saved.
+   */
+  it("omits the label when it is what would be inferred anyway", () => {
+    const withTin = serialiseRecipeFile(
+      recipe({ tin: { shape: "round", diameter: 20 }, cookLabel: "bake" }),
+    );
+    expect(withTin).not.toContain("cookLabel");
+
+    const noTin = serialiseRecipeFile(recipe({ tin: null, cookLabel: "cook" }));
+    expect(noTin).not.toContain("cookLabel");
+  });
+
+  it("writes the label when it differs from the inference", () => {
+    const text = serialiseRecipeFile(recipe({ tin: null, cookLabel: "freeze" }));
+    expect(text).toContain("cookLabel: freeze");
   });
 });
 
