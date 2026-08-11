@@ -49,8 +49,14 @@ export function RecipeDiagram({
         {t("diagram")}
       </h2>
 
+      {/* The table takes `--surface`, the same fill as the macro panel, the
+          cards and the ingredient drawer. Not a colour of its own: this page is
+          two neutrals and one clay accent, and a coloured diagram would pull the
+          eye to the table over the recipe it describes. Against `--rule` the
+          grid sits at about 2.4:1 — visible as structure, quiet as decoration —
+          and it inverts with the theme for free. */}
       <div className="overflow-x-auto">
-        <table className="border-collapse border border-rule text-xs">
+        <table className="border-collapse border border-rule bg-surface text-xs">
           <caption className="sr-only">{t("diagramCaption")}</caption>
           <tbody>
             {/* The title bar. Inside the table rather than above it, so it is
