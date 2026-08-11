@@ -85,6 +85,52 @@ export const STANDARD_LOAF: ReadonlyArray<{
   { label: "1.2 kg", length: 26, width: 14 },
 ];
 
+/**
+ * Every tin in the cupboard, in one list.
+ *
+ * Offered across shapes rather than only the recipe's own, because area is what
+ * matters and a cook reaches for what they have: a loaf recipe baked in a 20 cm
+ * round tin is a perfectly ordinary thing to do, and the arithmetic does not
+ * care which shape the area came from.
+ */
+export const ALL_STANDARD_TINS: ReadonlyArray<{ label: string; tin: Tin }> = [
+  ...STANDARD_ROUND.map((diameter) => ({
+    label: `${diameter} cm round`,
+    tin: { shape: "round" as const, diameter },
+  })),
+  ...STANDARD_SQUARE.map((side) => ({
+    label: `${side} cm square`,
+    tin: { shape: "square" as const, length: side, width: side },
+  })),
+  ...STANDARD_LOAF.map((loaf) => ({
+    label: `${loaf.length} × ${loaf.width} cm loaf (${loaf.label})`,
+    tin: { shape: "loaf" as const, length: loaf.length, width: loaf.width },
+  })),
+];
+
+/**
+ * How much recipe the tin you own holds, relative to the one it was written for.
+ *
+ * The inverse of `scaleTin`: instead of asking what tin a scaled recipe wants,
+ * it asks what quantity your tin wants. Same relation, read the other way —
+ * depth is held constant, so
+ *
+ *     alpha = A_yours / A_recipe
+ *
+ * A recipe written for a 19 x 9 loaf, baked in a 23 x 13, wants 299/171 = 1.75
+ * times the batter. Anything less makes a thin, dry, overbaked version of the
+ * same recipe, which is the failure this answers.
+ *
+ * Null when either tin is underspecified: a scale factor invented from a
+ * missing dimension would change every quantity in the recipe.
+ */
+export function scaleForTin(recipeTin: Tin, yours: Tin): number | null {
+  const recipeArea = tinArea(recipeTin);
+  const yourArea = tinArea(yours);
+  if (recipeArea === null || yourArea === null || recipeArea <= 0) return null;
+  return yourArea / recipeArea;
+}
+
 /** Base area in cm², or null when the tin does not state enough to compute it. */
 export function tinArea(tin: Tin): number | null {
   if (tin.shape === "round") {

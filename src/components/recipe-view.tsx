@@ -4,7 +4,13 @@ import { useMemo, useState } from "react";
 import { MacroPanel } from "@/components/macro-panel";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
-import { describeTin, tinAdviceText, type Tin } from "@/lib/tin";
+import {
+  ALL_STANDARD_TINS,
+  describeTin,
+  scaleForTin,
+  tinAdviceText,
+  type Tin,
+} from "@/lib/tin";
 
 /**
  * The ingredients, the method, and the macro panel, at whatever serving count
@@ -40,6 +46,29 @@ export function RecipeView({
   tin?: Tin | null;
 }) {
   const [servings, setServings] = useState(baseServings);
+  const [chosenTinLabel, setChosenTinLabel] = useState("");
+
+  /**
+   * Choosing a tin sets the serving count, rather than being a separate scale.
+   *
+   * One quantity governs the page — alpha — and both controls write to it. Two
+   * independent scales would let the tin and the servings disagree, and a
+   * recipe that says "12 slices" while sized for a tin holding eight is worse
+   * than either control alone.
+   */
+  function chooseTin(label: string): void {
+    setChosenTinLabel(label);
+    if (!tin || label === "") {
+      setServings(baseServings);
+      return;
+    }
+    const option = ALL_STANDARD_TINS.find((entry) => entry.label === label);
+    const alpha = option ? scaleForTin(tin, option.tin) : null;
+    if (alpha !== null) {
+      // One decimal: 10.5 slices is honest, 10.4736 is noise.
+      setServings(Math.round(baseServings * alpha * 10) / 10);
+    }
+  }
 
   const scaled = useMemo(
     () => scaleRecipe(scalable, baseServings, servings),
@@ -70,7 +99,10 @@ export function RecipeView({
       <div className="mt-4 flex items-center gap-2">
         <button
           type="button"
-          onClick={() => setServings((n) => Math.max(step, n - step))}
+          onClick={() => {
+            setChosenTinLabel("");
+            setServings((n) => Math.max(step, n - step));
+          }}
           className="h-9 w-9 rounded-card border border-border bg-surface text-lg leading-none"
           aria-label="Fewer servings"
         >
@@ -82,7 +114,10 @@ export function RecipeView({
         </span>
         <button
           type="button"
-          onClick={() => setServings((n) => n + step)}
+          onClick={() => {
+            setChosenTinLabel("");
+            setServings((n) => n + step);
+          }}
           className="h-9 w-9 rounded-card border border-border bg-surface text-lg leading-none"
           aria-label="More servings"
         >
@@ -91,7 +126,10 @@ export function RecipeView({
         {isScaled ? (
           <button
             type="button"
-            onClick={() => setServings(baseServings)}
+            onClick={() => {
+              setChosenTinLabel("");
+              setServings(baseServings);
+            }}
             className="ml-1 text-xs text-text-muted hover:text-text"
           >
             Reset
@@ -100,10 +138,33 @@ export function RecipeView({
       </div>
 
       {tin ? (
-        <p className="mt-3 text-sm text-text-muted">
-          Baked in a {describeTin(tin)}
-          {tin.depth ? `, ${tin.depth} cm deep` : ""}.
-        </p>
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-muted">
+          <span>
+            Written for a {describeTin(tin)}
+            {tin.depth ? `, ${tin.depth} cm deep` : ""}.
+          </span>
+          {/* The question a cook actually has is not "what tin does this want?"
+              but "I have this tin — how much do I make?". Choosing a tin sets
+              the serving count from the ratio of the areas, so the quantities
+              and the macros follow. It is the same alpha as the stepper, driven
+              from the other end. */}
+          <label className="flex items-center gap-2">
+            <span>I have a</span>
+            <select
+              value={chosenTinLabel}
+              onChange={(event) => chooseTin(event.target.value)}
+              aria-label="The tin you are baking in"
+              className="rounded-card border border-border bg-surface px-2 py-1 text-sm outline-none focus:border-accent"
+            >
+              <option value="">{describeTin(tin)} (as written)</option>
+              {ALL_STANDARD_TINS.map((option) => (
+                <option key={option.label} value={option.label}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
       ) : null}
 
       {tinNote ? (

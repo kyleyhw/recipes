@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+  ALL_STANDARD_TINS,
   describeTin,
+  scaleForTin,
   scaleTin,
   STANDARD_ROUND,
   tinAdviceText,
@@ -201,5 +203,73 @@ describe("describing a tin", () => {
     expect(describeTin({ shape: "round", diameter: 28.2842712 })).toBe(
       "28.3 cm round tin",
     );
+  });
+});
+
+describe("scaling to the tin you own", () => {
+  /**
+   * The inverse of scaleTin, and the question a cook actually asks: not "what
+   * tin does this want?" but "I have this tin — how much do I make?"
+   */
+  it("gives the ratio of the areas", () => {
+    const alpha = scaleForTin(
+      { shape: "loaf", length: 19, width: 9 },
+      {
+        shape: "loaf",
+        length: 23,
+        width: 13,
+      },
+    );
+    expect(alpha).toBeCloseTo(299 / 171, 10);
+    expect(alpha).toBeCloseTo(1.749, 3);
+  });
+
+  it("is 1 for the tin the recipe was written for", () => {
+    const tin: Tin = { shape: "round", diameter: 20 };
+    expect(scaleForTin(tin, tin)).toBeCloseTo(1, 10);
+  });
+
+  /**
+   * Area is all that matters, so a loaf recipe can be baked in a round tin —
+   * which is what a cook does when it is the tin they own.
+   */
+  it("works across shapes", () => {
+    const alpha = scaleForTin(
+      { shape: "loaf", length: 23, width: 13 },
+      {
+        shape: "round",
+        diameter: 20,
+      },
+    );
+    expect(alpha).toBeCloseTo((Math.PI * 100) / 299, 10);
+  });
+
+  /**
+   * Exactly inverse to scaleTin: the tin scaleTin recommends for alpha is the
+   * tin that scaleForTin says wants alpha. An identity, so no hand-computed
+   * value is needed.
+   */
+  it.each([0.5, 1.5, 2, 3.7])("inverts scaleTin exactly (alpha = %f)", (alpha) => {
+    const recipeTin: Tin = { shape: "round", diameter: 20 };
+    const ideal = scaleTin(recipeTin, alpha)!.ideal;
+    expect(scaleForTin(recipeTin, ideal)).toBeCloseTo(alpha, 8);
+  });
+
+  it("returns null when either tin is underspecified", () => {
+    expect(scaleForTin({ shape: "round" }, { shape: "round", diameter: 20 })).toBeNull();
+    expect(scaleForTin({ shape: "round", diameter: 20 }, { shape: "round" })).toBeNull();
+  });
+});
+
+describe("the tins on offer", () => {
+  it("covers every standard shape", () => {
+    const shapes = new Set(ALL_STANDARD_TINS.map((t) => t.tin.shape));
+    expect(shapes).toEqual(new Set(["round", "square", "loaf"]));
+  });
+
+  it("gives every tin a computable area and a distinct label", () => {
+    for (const { tin } of ALL_STANDARD_TINS) expect(tinArea(tin)).toBeGreaterThan(0);
+    const labels = ALL_STANDARD_TINS.map((t) => t.label);
+    expect(new Set(labels).size).toBe(labels.length);
   });
 });

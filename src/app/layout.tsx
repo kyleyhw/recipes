@@ -100,7 +100,6 @@ export default function RootLayout({
               <Link href="/about" className="text-sm text-text-muted hover:text-accent">
                 About
               </Link>
-              <ThemeToggle />
               {repo ? (
                 <a
                   href={repo}
@@ -116,8 +115,14 @@ export default function RootLayout({
 
           <main className="flex-1 py-6">{children}</main>
 
-          <footer className="border-t border-border py-4 text-xs text-text-muted">
-            Macros are computed for export, not tracked here. One file per recipe.
+          {/* The theme lives at the bottom: it is set once and then never
+              touched again, so it does not deserve a place in the header beside
+              the things you use on every visit. */}
+          <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 text-xs text-text-muted">
+            <span>
+              Macros are computed for export, not tracked here. One file per recipe.
+            </span>
+            <ThemeToggle />
           </footer>
         </div>
       </body>
