@@ -111,10 +111,12 @@ export default function RootLayout({
                 </span>
               ))}
             </nav>
-            {/* Divided from the categories by a rule and a wider gap, not by
-                space alone: these two are not another two shelves to browse,
-                and at a glance they were reading as though they were. */}
-            <div className="ml-2 flex items-center gap-3 border-l border-border pl-4 text-sm">
+            {/* One rule closes the categories and opens these two, rather than
+                a pipe and a border sitting side by side looking like a stutter.
+                The wider gap before it is what says these are a different kind
+                of thing from the shelves. */}
+            <div className="ml-3 flex items-center gap-3 text-sm">
+              <Pipe />
               <IngredientSidebar ingredients={ingredients} />
               <Pipe />
               <Link href="/about" className="text-text-muted hover:text-accent">
