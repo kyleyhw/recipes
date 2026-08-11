@@ -42,6 +42,23 @@ export const viewport: Viewport = {
 };
 
 /**
+ * A divider between two links.
+ *
+ * Decoration, so it is hidden from assistive technology: a screen reader
+ * announcing "vertical line" between every navigation item would turn a row of
+ * five links into a row of nine things. The rules are bookends as well as
+ * separators — one before the first link and one after the last — so the set
+ * reads as closed rather than as trailing off into the rest of the header.
+ */
+function Pipe() {
+  return (
+    <span aria-hidden="true" className="text-border">
+      |
+    </span>
+  );
+}
+
+/**
  * The shell.
  *
  * There is no sign-out because there is no session: the site is static and
@@ -78,14 +95,13 @@ export default function RootLayout({
                 Separated by rules rather than by space alone — words in a row
                 read as a heading, words divided read as a set of choices. */}
             <nav className="flex flex-1 items-center gap-3 text-sm">
+              <Pipe />
               <Link href="/" className="font-semibold hover:text-accent">
                 All
               </Link>
               {categories.map((category) => (
                 <span key={category.slug} className="flex items-center gap-3">
-                  <span aria-hidden="true" className="text-border">
-                    |
-                  </span>
+                  <Pipe />
                   <Link
                     href={`/category/${category.slug}`}
                     className="text-text-muted hover:text-accent"
@@ -100,12 +116,11 @@ export default function RootLayout({
                 and at a glance they were reading as though they were. */}
             <div className="ml-2 flex items-center gap-3 border-l border-border pl-4 text-sm">
               <IngredientSidebar ingredients={ingredients} />
-              <span aria-hidden="true" className="text-border">
-                |
-              </span>
+              <Pipe />
               <Link href="/about" className="text-text-muted hover:text-accent">
                 About
               </Link>
+              <Pipe />
             </div>
           </header>
 
