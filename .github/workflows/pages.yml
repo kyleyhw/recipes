@@ -7,7 +7,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # `main` is the intended trunk. The working branch is listed alongside it
+    # because this repository has no `main` yet — the workflow would otherwise
+    # never fire and the site would never deploy. Remove the second entry once
+    # the work is merged.
+    branches:
+      - main
+      - claude/recipe-management-app-0py2zh
   # So a failed or superseded deploy can be re-run without an empty commit.
   workflow_dispatch:
 
