@@ -1,0 +1,68 @@
+name: Deploy to GitHub Pages
+
+# Builds the static site from content/ and publishes it. The repository is the
+# database, so a push that changes a recipe file is a deploy that changes the
+# site — and browser-side edits, which commit through the GitHub API, trigger
+# this workflow exactly as a hand-written commit does.
+
+on:
+  push:
+    branches: [main]
+  # So a failed or superseded deploy can be re-run without an empty commit.
+  workflow_dispatch:
+
+# Read the repository, mint an id-token for the deploy, write to Pages. Nothing
+# broader: the workflow needs no access to anything else in the account.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. `cancel-in-progress: false` because cancelling a
+# half-finished deploy can leave the site serving a partial build; queuing is
+# slower and always lands on a complete one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The content tests run against the real content/ directory, so a recipe
+      # file with broken front matter fails here rather than deploying a site
+      # with a recipe silently missing.
+      - name: Check the collection
+        run: npm run test
+
+      - name: Build the static site
+        env:
+          STATIC_EXPORT: "1"
+          # A project page is served from /<repo>, so every asset URL needs the
+          # prefix. Delete these two lines for a user page or a custom domain.
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

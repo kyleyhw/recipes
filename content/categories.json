@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Mains",
+    "slug": "mains",
+    "glyph": "M"
+  },
+  {
+    "name": "Sides",
+    "slug": "sides",
+    "glyph": "S"
+  },
+  {
+    "name": "Breakfast",
+    "slug": "breakfast",
+    "glyph": "B"
+  },
+  {
+    "name": "Soups & Stews",
+    "slug": "soups-and-stews",
+    "glyph": "U"
+  },
+  {
+    "name": "Baked Goods",
+    "slug": "baked-goods",
+    "glyph": "K"
+  },
+  {
+    "name": "Desserts",
+    "slug": "desserts",
+    "glyph": "D"
+  },
+  {
+    "name": "Sauces & Condiments",
+    "slug": "sauces-and-condiments",
+    "glyph": "C"
+  },
+  {
+    "name": "Snacks",
+    "slug": "snacks",
+    "glyph": "N"
+  },
+  {
+    "name": "Drinks",
+    "slug": "drinks",
+    "glyph": "R"
+  }
+]
