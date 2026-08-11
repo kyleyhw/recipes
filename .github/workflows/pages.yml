@@ -50,6 +50,9 @@ jobs:
           # A project page is served from /<repo>, so every asset URL needs the
           # prefix. Delete these two lines for a user page or a custom domain.
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
+          # Baked in so recipe pages can link to their own file, its history,
+          # and the edit form on GitHub — the site has no server to ask.
+          NEXT_PUBLIC_REPO: ${{ github.repository }}
         run: npm run build
 
       - uses: actions/configure-pages@v5

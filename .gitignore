@@ -64,3 +64,6 @@ venv/
 
 # locally-stored photos (dev backend; Vercel Blob is used in deployment)
 /public/uploads/
+
+# Static export output
+/out/

@@ -1,7 +1,29 @@
-import "server-only";
 import { energySplit, type NutritionResult } from "@/lib/nutrition/compute";
-import type { FullRecipe } from "@/lib/recipes";
-import { scaleRecipe } from "@/lib/scaling";
+import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
+
+/**
+ * Exactly what an export needs, and nothing else.
+ *
+ * Declared here rather than imported from the storage layer so that these
+ * formats depend on no particular way of storing a recipe. That is what let
+ * this module survive the move from a database to files with only its input
+ * type changing.
+ */
+export interface ExportRecipe {
+  slug: string;
+  title: string;
+  description: string | null;
+  category: string;
+  tags: string[];
+  servings: number;
+  servingLabel: string;
+  prepMinutes: number | null;
+  cookMinutes: number | null;
+  source: string | null;
+  photo: string | null;
+  ingredients: ScalableIngredient[];
+  steps: string[];
+}
 
 /**
  * Export formats.
@@ -45,24 +67,24 @@ function isoDuration(minutes: number | null): string | undefined {
 
 /** The canonical machine format. */
 export function toJson(
-  recipe: FullRecipe,
+  recipe: ExportRecipe,
   nutrition: NutritionResult,
   servings: number,
 ): unknown {
-  const scaled = scaleRecipe(recipe.ingredients, recipe.baseServings, servings, {
+  const scaled = scaleRecipe(recipe.ingredients, recipe.servings, servings, {
     cookMinutes: recipe.cookMinutes,
   });
 
   return {
     title: recipe.title,
     description: recipe.description,
-    category: recipe.category.name,
-    tags: recipe.tags.map((t) => t.name),
+    category: recipe.category,
+    tags: recipe.tags,
     servings,
     servingLabel: recipe.servingLabel,
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
-    sourceUrl: recipe.sourceUrl,
+    sourceUrl: recipe.source,
     ingredients: scaled.ingredients.map((row) => ({
       text: row.passedThrough ? row.rawText : row.display,
       name: row.name,
@@ -71,7 +93,7 @@ export function toJson(
       optional: row.optional,
       scaled: !row.passedThrough,
     })),
-    steps: recipe.steps.map((s) => s.text),
+    steps: recipe.steps,
     nutrition: {
       perServing: {
         kcal: round(nutrition.perServing.kcal),
@@ -108,20 +130,20 @@ export function toJson(
  * be imported by another instance, or by any other tool that speaks the format.
  */
 export function toJsonLd(
-  recipe: FullRecipe,
+  recipe: ExportRecipe,
   nutrition: NutritionResult,
   servings: number,
   origin: string | null,
 ): unknown {
-  const scaled = scaleRecipe(recipe.ingredients, recipe.baseServings, servings);
+  const scaled = scaleRecipe(recipe.ingredients, recipe.servings, servings);
 
   return {
     "@context": "https://schema.org",
     "@type": "Recipe",
     name: recipe.title,
     description: recipe.description ?? undefined,
-    recipeCategory: recipe.category.name,
-    keywords: recipe.tags.map((t) => t.name).join(", ") || undefined,
+    recipeCategory: recipe.category,
+    keywords: recipe.tags.join(", ") || undefined,
     recipeYield: `${servings} ${recipe.servingLabel}${servings === 1 ? "" : "s"}`,
     prepTime: isoDuration(recipe.prepMinutes),
     cookTime: isoDuration(recipe.cookMinutes),
@@ -131,16 +153,16 @@ export function toJsonLd(
     ),
     recipeInstructions: recipe.steps.map((step) => ({
       "@type": "HowToStep",
-      text: step.text,
+      text: step,
     })),
-    image: recipe.photoUrl
-      ? recipe.photoUrl.startsWith("http")
-        ? recipe.photoUrl
+    image: recipe.photo
+      ? recipe.photo.startsWith("http")
+        ? recipe.photo
         : origin
-          ? `${origin}${recipe.photoUrl}`
+          ? `${origin}${recipe.photo}`
           : undefined
       : undefined,
-    url: recipe.sourceUrl ?? (origin ? `${origin}/recipes/${recipe.slug}` : undefined),
+    url: recipe.source ?? (origin ? `${origin}/recipes/${recipe.slug}` : undefined),
     // schema.org NutritionInformation is per serving by definition, and its
     // values are strings with units — not numbers.
     nutrition: {
@@ -171,7 +193,7 @@ function csvCell(value: string | number | null): string {
  * being omitted — a spreadsheet showing 8 of 12 ingredients would silently
  * misstate the recipe.
  */
-export function toCsv(recipe: FullRecipe, nutrition: NutritionResult): string {
+export function toCsv(recipe: ExportRecipe, nutrition: NutritionResult): string {
   const header = [
     "ingredient",
     "as_written",
@@ -226,11 +248,11 @@ export function toCsv(recipe: FullRecipe, nutrition: NutritionResult): string {
  * directly where an importer is unavailable.
  */
 export function toTrackerText(
-  recipe: FullRecipe,
+  recipe: ExportRecipe,
   nutrition: NutritionResult,
   servings: number,
 ): string {
-  const scaled = scaleRecipe(recipe.ingredients, recipe.baseServings, servings);
+  const scaled = scaleRecipe(recipe.ingredients, recipe.servings, servings);
   const split = energySplit(nutrition.perServing);
 
   const lines: string[] = [
