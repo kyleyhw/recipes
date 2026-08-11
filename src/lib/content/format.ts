@@ -119,6 +119,57 @@ export interface RecipeFile {
   storage: string | null;
   /** The cook's log, newest last. Dated lines. */
   log: LogEntry[];
+  /**
+   * The same recipe in other languages, keyed by code.
+   *
+   * Absent for a language nobody has generated yet, which is the ordinary case
+   * for a recipe added since the last `npm run translate`. The interface falls
+   * back to English for those, which is visibly incomplete rather than wrong.
+   */
+  translations: Record<string, RecipeTranslation>;
+}
+
+/**
+ * A recipe, said again in another language.
+ *
+ * ## Why the ingredients are names and not lines
+ *
+ * A translation carries the *name* of each ingredient, not the whole line —
+ * `несолёное сливочное масло`, not `115 г несолёного сливочного масла`. The
+ * quantity is not text to be translated: it is a number this application
+ * multiplies when you change the serving count, and a line with the amount
+ * baked into it would be right at ten slices and quietly wrong at fifteen.
+ *
+ * So the arithmetic stays in one place and the display becomes
+ * `<scaled amount> <translated unit> <translated name>`. The cost is that a
+ * translation file does not read as a standalone recipe the way the English
+ * one does. That is the trade, and it is the right way round: a recipe that
+ * scales correctly in three languages beats four files that each read nicely
+ * and two of which lie under scaling.
+ *
+ * The consequence is that the names must line up with the base recipe's
+ * ingredients one for one, in the same order. A file that does not is rejected
+ * with its count reported, rather than attached — a translation off by one
+ * would put the wrong name against every quantity below the mistake, which is
+ * far worse than no translation at all.
+ *
+ * Everything structural — servings, times, the tin, the category, the source —
+ * is deliberately absent. It lives in the base file, and a translation must not
+ * be able to change what the recipe *is*, only what it is called.
+ */
+export interface RecipeTranslation {
+  title: string;
+  description: string | null;
+  /** What one serving is called: "slice", "ломтик", "片". */
+  servingLabel: string | null;
+  /** The verb for the cooking time, in this language. */
+  cookLabel: string | null;
+  tags: string[];
+  /** Ingredient names, aligned one-to-one with the base recipe's. */
+  ingredientNames: string[];
+  steps: string[];
+  notes: string | null;
+  storage: string | null;
 }
 
 export interface LogEntry {
@@ -149,6 +200,80 @@ function stripListMarker(line: string): string {
 }
 
 export type ParseResult = { ok: true; recipe: RecipeFile } | { ok: false; error: string };
+
+export type TranslationParseResult =
+  | { ok: true; translation: RecipeTranslation }
+  | { ok: false; error: string };
+
+/** Front matter a translation may carry. Nothing structural: see the type. */
+const translationFrontMatterSchema = z.object({
+  title: z.string(),
+  description: z.string().nullish(),
+  servingLabel: z.string().nullish(),
+  cookLabel: z.string().nullish(),
+  tags: z.array(z.string()).nullish(),
+  /** Which English content this was made from. See scripts/translate.ts. */
+  sourceHash: z.string().nullish(),
+});
+
+/**
+ * Reads a translation file.
+ *
+ * `expectedIngredients` is not optional and not advisory. A translation with a
+ * different number of ingredient names than the recipe it translates is
+ * rejected here, because attaching it would put the wrong name against every
+ * quantity after the mismatch — and it would look completely plausible while
+ * doing so. A missing translation shows English, which is obvious; a
+ * misaligned one shows confident nonsense.
+ */
+export function parseTranslationFile(
+  raw: string,
+  expectedIngredients: number,
+): TranslationParseResult {
+  const match = FRONT_MATTER.exec(raw);
+  if (!match) return { ok: false, error: "no front matter" };
+
+  let data: unknown;
+  try {
+    data = parseYaml(match[1] ?? "");
+  } catch (error) {
+    return { ok: false, error: `front matter is not valid YAML: ${String(error)}` };
+  }
+
+  const parsed = translationFrontMatterSchema.safeParse(data);
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    return {
+      ok: false,
+      error: issue ? `${issue.path.join(".")}: ${issue.message}` : "invalid front matter",
+    };
+  }
+
+  const sections = splitSections(raw.slice(match[0].length));
+  const ingredientNames = sections.ingredients.map(stripListMarker).filter(Boolean);
+
+  if (ingredientNames.length !== expectedIngredients) {
+    return {
+      ok: false,
+      error: `${ingredientNames.length} ingredient names for ${expectedIngredients} ingredients — a translation must line up one for one`,
+    };
+  }
+
+  return {
+    ok: true,
+    translation: {
+      title: parsed.data.title,
+      description: parsed.data.description ?? null,
+      servingLabel: parsed.data.servingLabel ?? null,
+      cookLabel: parsed.data.cookLabel ?? null,
+      tags: parsed.data.tags ?? [],
+      ingredientNames,
+      steps: sections.steps.map(stripListMarker).filter(Boolean),
+      notes: sections.notes.join("\n").trim() || null,
+      storage: sections.storage.join("\n").trim() || null,
+    },
+  };
+}
 
 /**
  * Reads a recipe file.
@@ -228,6 +353,9 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
       notes: sections.notes.join("\n").trim() || null,
       storage: sections.storage.join("\n").trim() || null,
       log: parseLog(sections.log),
+      // Filled in by the loader, which is the only thing that can see the
+      // sibling files.
+      translations: {},
     },
   };
 }

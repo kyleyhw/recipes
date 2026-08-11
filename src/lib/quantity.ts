@@ -137,6 +137,15 @@ export interface RenderedQuantity {
   amount: string;
   /** Unit label, correctly inflected; empty for a bare count. */
   unit: string;
+  /**
+   * The unit that was chosen, by key rather than by label.
+   *
+   * The label is already inflected and already English. Anything that needs to
+   * say the unit in another language needs to know *which* unit it is, and
+   * "cups" is a word rather than an identifier. Null for a bare count, which
+   * has no unit to name.
+   */
+  unitKey: string | null;
   /** Amount and unit joined for display. */
   text: string;
   /** True when the amount is an exact-enough fraction rather than a decimal. */
@@ -150,7 +159,7 @@ function formatDecimal(value: number): string {
 }
 
 function empty(): RenderedQuantity {
-  return { amount: "0", unit: "", text: "0", exact: false };
+  return { amount: "0", unit: "", unitKey: null, text: "0", exact: false };
 }
 
 /**
@@ -171,7 +180,13 @@ function renderMetric(baseMagnitude: number, dimension: Dimension): RenderedQuan
   // above it, it is noise (487.3 g of flour).
   const amount = value < 10 ? formatDecimal(value) : String(Math.round(value));
   const label = unitLabel(chosen, value);
-  return { amount, unit: label, text: `${amount} ${label}`, exact: false };
+  return {
+    amount,
+    unit: label,
+    unitKey: chosen.key,
+    text: `${amount} ${label}`,
+    exact: false,
+  };
 }
 
 /**
@@ -226,7 +241,13 @@ function renderImperial(baseMagnitude: number, dimension: Dimension): RenderedQu
   if (best) {
     const amount = formatFraction(best.fraction);
     const label = unitLabel(best.unit, best.value);
-    return { amount, unit: label, text: `${amount} ${label}`, exact: true };
+    return {
+      amount,
+      unit: label,
+      unitKey: best.unit.key,
+      text: `${amount} ${label}`,
+      exact: true,
+    };
   }
 
   const fallback =
@@ -235,7 +256,13 @@ function renderImperial(baseMagnitude: number, dimension: Dimension): RenderedQu
   const value = baseMagnitude / fallback.factor;
   const amount = formatDecimal(value);
   const label = unitLabel(fallback, value);
-  return { amount, unit: label, text: `${amount} ${label}`, exact: false };
+  return {
+    amount,
+    unit: label,
+    unitKey: fallback.key,
+    text: `${amount} ${label}`,
+    exact: false,
+  };
 }
 
 /**
@@ -259,9 +286,9 @@ function renderCount(quantity: number, unit: UnitDefinition | null): RenderedQua
   const fraction = bestFraction(quantity);
   const exact = Boolean(fraction && fraction.relativeError <= FRACTION_TOLERANCE);
   const amount = exact && fraction ? formatFraction(fraction) : formatDecimal(quantity);
-  if (!unit) return { amount, unit: "", text: amount, exact };
+  if (!unit) return { amount, unit: "", unitKey: null, text: amount, exact };
   const label = unitLabel(unit, quantity);
-  return { amount, unit: label, text: `${amount} ${label}`, exact };
+  return { amount, unit: label, unitKey: unit.key, text: `${amount} ${label}`, exact };
 }
 
 /**

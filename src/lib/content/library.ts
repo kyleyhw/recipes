@@ -1,7 +1,12 @@
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
-import { parseRecipeFile, type RecipeFile } from "@/lib/content/format";
+import {
+  parseRecipeFile,
+  parseTranslationFile,
+  type RecipeFile,
+} from "@/lib/content/format";
+import { LANGUAGE_CODES } from "@/lib/i18n/strings";
 
 /**
  * Reading the collection off disk, at build time.
@@ -114,14 +119,36 @@ export function loadCollection(): Collection {
   if (existsSync(RECIPES_DIR)) {
     const files = readdirSync(RECIPES_DIR)
       .filter((name) => name.endsWith(".md"))
+      // `banana-bread.ru.md` is a translation of a recipe, not a recipe. It is
+      // picked up below, from the file it belongs to.
+      .filter((name) => !/\.[a-z]{2}(-[A-Za-z]+)?\.md$/.test(name))
       .sort();
 
     for (const name of files) {
       const slug = name.replace(/\.md$/, "");
       const raw = readFileSync(join(RECIPES_DIR, name), "utf8");
       const parsed = parseRecipeFile(slug, raw);
-      if (parsed.ok) recipes.push(parsed.recipe);
-      else problems.push({ file: join(RECIPES_DIR, name), error: parsed.error });
+      if (!parsed.ok) {
+        problems.push({ file: join(RECIPES_DIR, name), error: parsed.error });
+        continue;
+      }
+
+      // Sibling files, one per language: banana-bread.ru.md beside
+      // banana-bread.md. A translation that does not line up with the recipe is
+      // reported and dropped rather than attached — see parseTranslationFile.
+      for (const code of LANGUAGE_CODES) {
+        if (code === "en") continue;
+        const path = join(RECIPES_DIR, `${slug}.${code}.md`);
+        if (!existsSync(path)) continue;
+        const translated = parseTranslationFile(
+          readFileSync(path, "utf8"),
+          parsed.recipe.ingredients.length,
+        );
+        if (translated.ok) parsed.recipe.translations[code] = translated.translation;
+        else problems.push({ file: path, error: translated.error });
+      }
+
+      recipes.push(parsed.recipe);
     }
   }
 

@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useT } from "@/components/language";
+import { useLanguage, useT } from "@/components/language";
+import type { RecipeTranslation } from "@/lib/content/format";
+import { translate, type StringKey } from "@/lib/i18n/strings";
 import { MacroPanel } from "@/components/macro-panel";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
@@ -38,6 +40,7 @@ export function RecipeView({
   nutrition,
   steps,
   tin = null,
+  translations = {},
 }: {
   baseServings: number;
   servingLabel: string;
@@ -45,10 +48,19 @@ export function RecipeView({
   nutrition: NutritionInput[];
   steps: string[];
   tin?: Tin | null;
+  /**
+   * The recipe in other languages, keyed by code. Only the words: every
+   * quantity, every unit and every macro is still computed from the English
+   * recipe, which is the only one the ingredient library and the parser know
+   * how to read.
+   */
+  translations?: Record<string, RecipeTranslation>;
 }) {
   const [servings, setServings] = useState(baseServings);
   const [chosenTinLabel, setChosenTinLabel] = useState("");
   const t = useT();
+  const language = useLanguage();
+  const translated = translations[language] ?? null;
 
   /**
    * Choosing a tin sets the serving count, rather than being a separate scale.
@@ -90,6 +102,37 @@ export function RecipeView({
   );
 
   const isScaled = Math.abs(scaled.factor - 1) > 1e-9;
+
+  /**
+   * One ingredient line, in the reader's language.
+   *
+   * Assembled rather than translated: the amount comes from the arithmetic, the
+   * unit from the string table, and only the name from the translation. That is
+   * why the translation files hold names and not lines — a line with the number
+   * written into it would be correct at ten slices and quietly wrong at
+   * fifteen.
+   *
+   * Falls back to English per line, so a translation short one name degrades to
+   * one English ingredient rather than to none.
+   */
+  function ingredientLine(
+    ingredient: (typeof scaled.ingredients)[number],
+    index: number,
+  ): string {
+    const name = translated?.ingredientNames[index];
+    if (!translated || !name) {
+      return isScaled ? ingredient.display : ingredient.rawText;
+    }
+    if (ingredient.passedThrough || !ingredient.rendered) return name;
+
+    const unit = ingredient.rendered.unitKey
+      ? translate(language, `unit.${ingredient.rendered.unitKey}` as StringKey)
+      : "";
+    return [ingredient.rendered.amount, unit, name].filter(Boolean).join(" ");
+  }
+
+  const shownSteps = translated?.steps.length ? translated.steps : steps;
+  const shownServingLabel = translated?.servingLabel ?? servingLabel;
   // A cake batter doubled into the same tin is twice as deep and bakes wrongly.
   // The tin has to scale with the recipe, and by the square root of alpha.
   const tinNote = tin ? tinAdviceText(tin, scaled.factor) : null;
@@ -111,8 +154,11 @@ export function RecipeView({
           −
         </button>
         <span className="numeric min-w-28 text-center text-sm">
-          {Number.isInteger(servings) ? servings : servings.toFixed(1)} {servingLabel}
-          {servings === 1 ? "" : "s"}
+          {Number.isInteger(servings) ? servings : servings.toFixed(1)}{" "}
+          {shownServingLabel}
+          {/* Only English pluralises with an -s. The other three tables give a
+              serving label that reads correctly for any count. */}
+          {language === "en" && servings !== 1 ? "s" : ""}
         </span>
         <button
           type="button"
@@ -180,13 +226,13 @@ export function RecipeView({
           {t("ingredients")}
         </h2>
         <ul className="flex flex-col gap-1.5">
-          {scaled.ingredients.map((ingredient) => (
+          {scaled.ingredients.map((ingredient, index) => (
             <li key={ingredient.id} className="text-sm">
               <div className="flex items-baseline gap-2">
                 {/* Unscaled, the line as written is authoritative and is shown
                     verbatim. The reconstructed parse appears only once scaled,
                     which is the only case where the stored text would be wrong. */}
-                <span>{isScaled ? ingredient.display : ingredient.rawText}</span>
+                <span>{ingredientLine(ingredient, index)}</span>
                 {ingredient.passedThrough && isScaled ? (
                   <span
                     className="shrink-0 text-xs text-text-muted"
@@ -220,7 +266,7 @@ export function RecipeView({
       </section>
 
       <section className="mt-8">
-        <MacroPanel nutrition={macros} servingLabel={servingLabel} />
+        <MacroPanel nutrition={macros} servingLabel={shownServingLabel} />
       </section>
 
       <section className="mt-8">
@@ -228,7 +274,7 @@ export function RecipeView({
           {t("method")}
         </h2>
         <ol className="flex flex-col gap-3">
-          {steps.map((step_, index) => (
+          {shownSteps.map((step_, index) => (
             <li key={`${index}-${step_.slice(0, 24)}`} className="flex gap-3 text-sm">
               <span className="numeric shrink-0 text-text-muted">{index + 1}</span>
               <span>{step_}</span>

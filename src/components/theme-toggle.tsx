@@ -72,9 +72,12 @@ export function ThemeToggle() {
       type="button"
       onClick={() => choose(theme === "dark" ? "light" : "dark")}
       className="hover:text-text"
+      // The label still says what pressing it does; the word says what you
+      // are looking at. A control in a footer beside two others that report
+      // their current setting should report its own.
       aria-label={theme === "dark" ? t("toLight") : t("toDark")}
     >
-      {theme === "dark" ? t("light") : t("dark")}
+      {theme === "dark" ? t("dark") : t("light")}
     </button>
   );
 }

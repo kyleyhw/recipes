@@ -19,6 +19,10 @@ import { computeNutrition } from "@/lib/nutrition/compute";
 export interface RecipeSummary {
   slug: string;
   title: string;
+  /** The title in each language a translation exists for. */
+  titles: Record<string, string>;
+  /** The verb for the cooking time, per language. */
+  cookLabels: Record<string, string>;
   category: string;
   cuisine: string | null;
   tags: string[];
@@ -54,6 +58,14 @@ export function summarise(
   return {
     slug: recipe.slug,
     title: recipe.title,
+    titles: Object.fromEntries(
+      Object.entries(recipe.translations).map(([code, t]) => [code, t.title]),
+    ),
+    cookLabels: Object.fromEntries(
+      Object.entries(recipe.translations).flatMap(([code, t]) =>
+        t.cookLabel ? [[code, t.cookLabel]] : [],
+      ),
+    ),
     category: recipe.category,
     cuisine: recipe.cuisine,
     tags: recipe.tags,
@@ -72,6 +84,16 @@ export function summarise(
       recipe.cuisine ?? "",
       recipe.tags.join(" "),
       recipe.ingredients.join(" "),
+      // Searching in the language you are reading in has to work, so every
+      // translation is in the haystack too — you can type "выпечка" or
+      // "банановый" and find the loaf.
+      Object.values(recipe.translations)
+        .map((t) =>
+          [t.title, t.description ?? "", t.tags.join(" "), t.ingredientNames.join(" ")].join(
+            " ",
+          ),
+        )
+        .join(" "),
     ]
       .join(" ")
       .toLowerCase(),

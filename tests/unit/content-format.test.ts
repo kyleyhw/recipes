@@ -26,6 +26,7 @@ import {
 
 function recipe(overrides: Partial<RecipeFile> = {}): RecipeFile {
   return {
+    translations: {},
     slug: "butter-loaf",
     title: "Butter Loaf",
     description: "Rich and close-crumbed.",

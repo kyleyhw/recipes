@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useT } from "@/components/language";
+import { TContent, useLanguage, useT } from "@/components/language";
 import type { RecipeSummary } from "@/lib/content/summary";
 import { decimal } from "@/lib/format";
 import { placeholderStyle } from "@/lib/photos/placeholder";
@@ -29,13 +29,17 @@ export function RecipeCard({
   showProtein?: boolean;
 }) {
   const t = useT();
+  const language = useLanguage();
   // Prep and cook shown separately rather than summed: they answer different
   // questions. "Can I start this now?" is prep; a cook can add two numbers for
   // the total. A single figure hides which of the two a 90-minute recipe is.
   const times = [
     recipe.prepMinutes ? t("minPrep", { n: recipe.prepMinutes }) : null,
     recipe.cookMinutes
-      ? t("minCook", { n: recipe.cookMinutes, label: recipe.cookLabel })
+      ? t("minCook", {
+          n: recipe.cookMinutes,
+          label: recipe.cookLabels[language] ?? recipe.cookLabel,
+        })
       : null,
   ].filter(Boolean);
 
@@ -66,7 +70,9 @@ export function RecipeCard({
         )}
       </div>
       <div className="p-3">
-        <h3 className="text-sm leading-snug font-medium">{recipe.title}</h3>
+        <h3 className="text-sm leading-snug font-medium">
+          <TContent en={recipe.title} translated={recipe.titles} />
+        </h3>
         <p className="numeric mt-1 text-xs text-text-muted">
           {times.join(" · ")}
           {recipe.draft ? (

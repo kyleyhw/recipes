@@ -20,6 +20,8 @@ import {
 
 function recipe(overrides: Partial<RecipeSummary> & { title: string }): RecipeSummary {
   return {
+    titles: {},
+    cookLabels: {},
     slug: overrides.title.toLowerCase().replace(/\s+/g, "-"),
     category: "Mains",
     cuisine: null,

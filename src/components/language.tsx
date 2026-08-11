@@ -114,12 +114,25 @@ export function useT(): (key: StringKey, vars?: Record<string, string | number>)
 export function T({
   k,
   vars,
+  labelTranslations,
 }: {
   k: StringKey;
   vars?: Record<string, string | number>;
+  /**
+   * Translations for the `label` variable, keyed by language.
+   *
+   * "60 min bake" has a word in it that belongs to the recipe rather than to
+   * the string table — the verb for its cooking time — so the sentence comes
+   * from the table and the word inside it comes from the translation file.
+   */
+  labelTranslations?: Record<string, string | null | undefined>;
 }) {
   const language = useLanguage();
-  return <>{translate(language, k, vars)}</>;
+  const resolved =
+    labelTranslations?.[language] && vars
+      ? { ...vars, label: labelTranslations[language] as string }
+      : vars;
+  return <>{translate(language, k, resolved)}</>;
 }
 
 /** A category name, translated where this collection's own table knows it. */
@@ -145,12 +158,18 @@ export function LanguageMenu() {
       <button
         type="button"
         aria-haspopup="menu"
+        // The accessible name says what the control is; the visible word says
+        // what it is currently set to. Without the label it would announce
+        // itself as "Русский", which is a value, not a control.
+        aria-label={translate(language, "language")}
+        lang={language}
         className="hover:text-text"
         // Clicking the word does nothing on its own: the menu is the control,
         // and this is here so a keyboard can reach it and a tap can open it.
         onClick={(event) => event.preventDefault()}
       >
-        {translate(language, "language")}
+        {LANGUAGES.find((entry) => entry.code === language)?.label ??
+          translate(language, "language")}
       </button>
 
       <div
@@ -192,3 +211,26 @@ export function LanguageMenu() {
  * job is only to make the stored choice readable by `getSnapshot`.
  */
 export const languageScript = `(function(){try{var l=localStorage.getItem("${STORAGE_KEY}");if(l){document.documentElement.setAttribute("${ATTRIBUTE}",l)}}catch(e){}})()`;
+
+/**
+ * A piece of recipe content, in the reader's language.
+ *
+ * The interface has a string table; a recipe does not. Its title and its notes
+ * are content — the same words, said again by `scripts/translate.ts` and
+ * committed as a file — so this takes the English and a map of the alternatives
+ * rather than a key.
+ *
+ * Falls back to English per field. A translation that has a title but no
+ * storage section shows a translated title and English storage, which is
+ * visibly incomplete rather than silently missing.
+ */
+export function TContent({
+  en,
+  translated,
+}: {
+  en: string;
+  translated: Record<string, string | null | undefined>;
+}) {
+  const language = useLanguage();
+  return <>{translated[language] || en}</>;
+}

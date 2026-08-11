@@ -165,6 +165,31 @@ const en = {
   "category.Drinks": "Drinks",
   "category.Snacks": "Snacks",
 
+
+  /*
+   * Units, for translated ingredient lines.
+   *
+   * Keyed by unit rather than by label, because a label is already inflected
+   * and already English — "cups" is a word, not an identifier. A translated
+   * line is assembled as amount + unit + name, so this is the middle of it.
+   */
+  "unit.g": "g",
+  "unit.kg": "kg",
+  "unit.oz": "oz",
+  "unit.lb": "lb",
+  "unit.ml": "ml",
+  "unit.l": "l",
+  "unit.tsp": "tsp",
+  "unit.tbsp": "tbsp",
+  "unit.cup": "cup",
+  "unit.floz": "fl oz",
+  "unit.pint": "pint",
+  "unit.quart": "quart",
+  "unit.gallon": "gallon",
+  "unit.clove": "clove",
+  "unit.can": "can",
+  "unit.pinch": "pinch",
+
   // Nutrients
   "nutrient.kcal": "Energy",
   "nutrient.protein": "Protein",
@@ -299,6 +324,23 @@ const zhHant: Dict = {
   "category.Drinks": "飲品",
   "category.Snacks": "點心",
 
+  "unit.g": "公克",
+  "unit.kg": "公斤",
+  "unit.oz": "盎司",
+  "unit.lb": "磅",
+  "unit.ml": "毫升",
+  "unit.l": "公升",
+  "unit.tsp": "小匙",
+  "unit.tbsp": "大匙",
+  "unit.cup": "杯",
+  "unit.floz": "液盎司",
+  "unit.pint": "品脫",
+  "unit.quart": "夸脫",
+  "unit.gallon": "加侖",
+  "unit.clove": "瓣",
+  "unit.can": "罐",
+  "unit.pinch": "撮",
+
   "nutrient.kcal": "熱量",
   "nutrient.protein": "蛋白質",
   "nutrient.carbs": "碳水化合物",
@@ -428,6 +470,23 @@ const zhHans: Dict = {
   "category.Sauces & Condiments": "酱料与调味",
   "category.Drinks": "饮品",
   "category.Snacks": "点心",
+
+  "unit.g": "克",
+  "unit.kg": "千克",
+  "unit.oz": "盎司",
+  "unit.lb": "磅",
+  "unit.ml": "毫升",
+  "unit.l": "升",
+  "unit.tsp": "小勺",
+  "unit.tbsp": "大勺",
+  "unit.cup": "杯",
+  "unit.floz": "液盎司",
+  "unit.pint": "品脱",
+  "unit.quart": "夸脱",
+  "unit.gallon": "加仑",
+  "unit.clove": "瓣",
+  "unit.can": "罐",
+  "unit.pinch": "撮",
 
   "nutrient.kcal": "热量",
   "nutrient.protein": "蛋白质",
@@ -567,6 +626,23 @@ const ru: Dict = {
   "category.Sauces & Condiments": "Соусы и приправы",
   "category.Drinks": "Напитки",
   "category.Snacks": "Закуски",
+
+  "unit.g": "г",
+  "unit.kg": "кг",
+  "unit.oz": "унц.",
+  "unit.lb": "фунт",
+  "unit.ml": "мл",
+  "unit.l": "л",
+  "unit.tsp": "ч. л.",
+  "unit.tbsp": "ст. л.",
+  "unit.cup": "стакан",
+  "unit.floz": "жидк. унц.",
+  "unit.pint": "пинта",
+  "unit.quart": "кварта",
+  "unit.gallon": "галлон",
+  "unit.clove": "зубчик",
+  "unit.can": "банка",
+  "unit.pinch": "щепотка",
 
   "nutrient.kcal": "Энергия",
   "nutrient.protein": "Белки",

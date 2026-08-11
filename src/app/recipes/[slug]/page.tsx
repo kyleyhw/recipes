@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { RecipeView } from "@/components/recipe-view";
-import { T, TCategory } from "@/components/language";
+import { T, TCategory, TContent } from "@/components/language";
 import { SourceLine } from "@/components/source-line";
 import { ExportLinks } from "@/components/export-links";
-import { recipeFilename } from "@/lib/content/format";
+import { recipeFilename, type RecipeTranslation } from "@/lib/content/format";
 import { loadCollection } from "@/lib/content/library";
 import { prepareRecipe } from "@/lib/content/prepare";
 import { placeholderStyle } from "@/lib/photos/placeholder";
@@ -42,6 +42,21 @@ export default async function RecipePage({
   const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
   const file = recipeFilename(recipe.slug);
   const repo = repoUrl();
+
+  // One field at a time, so a half-finished translation degrades field by
+  // field rather than all at once.
+  const field = (pick: (t: RecipeTranslation) => string | null) =>
+    Object.fromEntries(
+      Object.entries(recipe.translations).map(([code, t]) => [code, pick(t)]),
+    );
+  const titles = field((t) => t.title);
+  const cookLabels = field((t) => t.cookLabel);
+  // Tags are a list, so they translate as a list: index by index, falling back
+  // to the English tag where a translation has fewer.
+  const tagAt = (index: number) =>
+    Object.fromEntries(
+      Object.entries(recipe.translations).map(([code, t]) => [code, t.tags[index] ?? null]),
+    );
 
   return (
     <article className="mx-auto max-w-2xl">
@@ -90,10 +105,17 @@ export default async function RecipePage({
           ) : null}
         </div>
 
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">{recipe.title}</h1>
+        <h1 className="mt-1 text-2xl font-semibold tracking-tight">
+          <TContent en={recipe.title} translated={titles} />
+        </h1>
 
         {recipe.description ? (
-          <p className="mt-2 text-text-muted">{recipe.description}</p>
+          <p className="mt-2 text-text-muted">
+            <TContent
+              en={recipe.description}
+              translated={field((t) => t.description)}
+            />
+          </p>
         ) : null}
 
         {totalMinutes > 0 ? (
@@ -103,7 +125,11 @@ export default async function RecipePage({
             ) : null}
             {recipe.prepMinutes && recipe.cookMinutes ? " · " : null}
             {recipe.cookMinutes ? (
-              <T k="minCook" vars={{ n: recipe.cookMinutes, label: recipe.cookLabel }} />
+              <T
+                k="minCook"
+                vars={{ n: recipe.cookMinutes, label: recipe.cookLabel }}
+                labelTranslations={cookLabels}
+              />
             ) : null}
             {recipe.prepMinutes && recipe.cookMinutes ? (
               <>
@@ -116,12 +142,12 @@ export default async function RecipePage({
 
         {recipe.tags.length > 0 ? (
           <ul className="mt-3 flex flex-wrap gap-1.5">
-            {recipe.tags.map((tag) => (
+            {recipe.tags.map((tag, index) => (
               <li
                 key={tag}
                 className="rounded-full bg-surface-2 px-2 py-0.5 text-xs text-text-muted"
               >
-                {tag}
+                <TContent en={tag} translated={tagAt(index)} />
               </li>
             ))}
           </ul>
@@ -135,6 +161,7 @@ export default async function RecipePage({
         nutrition={prepared.nutrition}
         steps={recipe.steps}
         tin={recipe.tin}
+        translations={recipe.translations}
       />
 
       <div className="mt-4">
@@ -146,7 +173,9 @@ export default async function RecipePage({
           <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
             <T k="notes" />
           </h2>
-          <p className="text-sm whitespace-pre-line text-text-muted">{recipe.notes}</p>
+          <p className="text-sm whitespace-pre-line text-text-muted">
+            <TContent en={recipe.notes} translated={field((t) => t.notes)} />
+          </p>
         </section>
       ) : null}
 
@@ -155,7 +184,9 @@ export default async function RecipePage({
           <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
             <T k="storage" />
           </h2>
-          <p className="text-sm whitespace-pre-line text-text-muted">{recipe.storage}</p>
+          <p className="text-sm whitespace-pre-line text-text-muted">
+            <TContent en={recipe.storage} translated={field((t) => t.storage)} />
+          </p>
         </section>
       ) : null}
 
