@@ -1,8 +1,12 @@
 # Recipes
 
 A personal recipe collection: storage, portion scaling, macronutrient
-computation, Claude-assisted substitution and generation, and sharing between
-independently-hosted instances.
+computation, Claude-assisted substitution and generation, per-recipe notes with
+a full revision history, and sharing between independently-hosted instances.
+
+Recipes taken from a website keep the address they came from. Cook one, find it
+wants more butter, say so in its notes, and the recipe changes — with the reason
+recorded beside the change and every earlier version one click away.
 
 **This application does not track macro intake.** It computes and exposes
 macros so they can be fed into whatever tracker you already use, which is why
@@ -25,6 +29,7 @@ variables, and you have your own — see [docs/self-hosting.md](docs/self-hostin
 | [docs/nutrition-pipeline.md](docs/nutrition-pipeline.md) | Ingredient resolution and reading the macro panel |
 | [docs/sharing-format.md](docs/sharing-format.md) | The portable bundle and cross-instance import |
 | [docs/claude-integration.md](docs/claude-integration.md) | The model features, the spend ceiling, and every failure mode |
+| [docs/log-and-history.md](docs/log-and-history.md) | Per-recipe notes, revising by message, snapshots and restore |
 | [PROJECT_PLAN.md](PROJECT_PLAN.md) | Phase breakdown and current status |
 | [tests/reports/](tests/reports/) | Test reports, with runtimes and input justifications |
 
@@ -63,6 +68,8 @@ recipes/
 │       ├── sharing/           portable bundle format                [phase 6]
 │       ├── photos/            sourcing, storage, placeholder        [phase 3]
 │       ├── memories.ts        standing preferences, injected into prompts
+│       ├── journal.ts         the per-recipe log and its revisions    [phase 8]
+│       ├── snapshot.ts        the revision format; pure, so restorable
 │       └── ai/                Claude client, schemas, features      [phase 7]
 │           ├── client.ts      the one entry point: ceiling, logging, validation
 │           ├── pricing.ts     model prices; pure, so the ceiling is testable

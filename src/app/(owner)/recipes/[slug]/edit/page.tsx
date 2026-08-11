@@ -4,6 +4,7 @@ import Link from "next/link";
 import { RecipeForm } from "@/components/recipe-form";
 import { db } from "@/lib/db";
 import { readRecipeInput } from "@/lib/form";
+import { recordRevision, snapshotOf } from "@/lib/journal";
 import {
   deleteRecipe,
   getRecipeBySlug,
@@ -32,7 +33,14 @@ export default async function EditRecipePage({
 
   async function save(formData: FormData): Promise<void> {
     "use server";
+    // Snapshotted before the write, so the version being replaced is the
+    // baseline if this is the recipe's first recorded change. Read fresh rather
+    // than closed over: the page may have been open for a while.
+    const before = await getRecipeBySlug(slug);
     const nextSlug = await updateRecipe(recipeId, readRecipeInput(formData));
+    await recordRevision(recipeId, "EDIT", "Edited by hand.", {
+      baseline: before ? snapshotOf(before) : null,
+    });
     revalidatePath("/");
     revalidatePath(`/recipes/${nextSlug}`);
     redirect(`/recipes/${nextSlug}`);

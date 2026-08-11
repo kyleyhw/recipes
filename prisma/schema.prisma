@@ -48,6 +48,27 @@ enum AiKind {
   IMPORT
   PHOTO
   MACRO_MATCH
+  REVISE
+}
+
+/// What a line in a recipe's log is.
+///
+/// Notes and messages are both typed by the owner and differ only in whether
+/// they were sent to Claude. Keeping them in one table rather than two is what
+/// makes the log a single chronological record: "needed more butter" and the
+/// revision it produced belong next to each other, not in separate lists.
+enum EntryKind {
+  NOTE // written by the owner; no model call, no cost
+  MESSAGE // written by the owner and sent to Claude
+  REPLY // Claude's answer
+}
+
+/// What caused a revision.
+enum RevisionSource {
+  INITIAL // the state before any recorded change
+  CHAT // Claude acted on a message in the log
+  EDIT // the editor
+  RESTORE // an earlier revision was rolled back to
 }
 
 // ---------------------------------------------------------------------------
@@ -117,6 +138,8 @@ model Recipe {
   ingredients RecipeIngredient[]
   steps       Step[]
   aiLog       AiInteraction[]
+  entries     RecipeEntry[]
+  revisions   RecipeRevision[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -207,6 +230,62 @@ model Ingredient {
   updatedAt DateTime @updatedAt
 
   @@index([usdaFdcId])
+}
+
+/// A line in a recipe's log: a cook's note, a message to Claude, or its reply.
+///
+/// The log exists because a recipe is not finished when it is written. It is
+/// cooked, found wanting, and adjusted — and the reason for each adjustment is
+/// worth more than the adjustment itself. "Needed more butter, the crumb was
+/// dry at 180 g" is what makes the next change an informed one.
+model RecipeEntry {
+  id       String    @id @default(cuid())
+  recipeId String
+  recipe   Recipe    @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  kind     EntryKind
+  text     String
+
+  /// Set when this entry changed the recipe, linking the reason to the result.
+  revisionId String?         @unique
+  revision   RecipeRevision? @relation(fields: [revisionId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([recipeId, createdAt])
+}
+
+/// A complete snapshot of a recipe at a point in time.
+///
+/// Snapshots rather than diffs. A diff chain is smaller and has to be replayed
+/// from the beginning to reconstruct any version, so a single corrupted link
+/// destroys everything after it; a snapshot is restorable on its own. Recipes
+/// are a few kilobytes and are revised a handful of times, so the storage
+/// argument for diffs does not apply here.
+///
+/// The snapshot records the state *after* the revision, and a baseline
+/// `INITIAL` revision is written before the first change, so the series is
+/// complete: every version the recipe has ever had is one row.
+model RecipeRevision {
+  id       String @id @default(cuid())
+  recipeId String
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  /// Sequential within the recipe, so a version has a number a person can use.
+  number Int
+  source RevisionSource
+  /// One line describing what changed, shown in the history.
+  summary String
+
+  /// The full recipe as it stood: title, servings, ingredient lines, steps,
+  /// notes, tags, category. Everything needed to restore it without consulting
+  /// any other row.
+  snapshot Json
+
+  createdAt DateTime     @default(now())
+  entry     RecipeEntry?
+
+  @@unique([recipeId, number])
+  @@index([recipeId, createdAt])
 }
 
 // ---------------------------------------------------------------------------

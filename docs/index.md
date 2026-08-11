@@ -12,7 +12,8 @@ Design and rationale for the recipe management application. Start with
 | [self-hosting.md](self-hosting.md) | Running your own instance: local development and deployment |
 | [nutrition-pipeline.md](nutrition-pipeline.md) | Ingredient resolution, USDA lookup, macro panel interpretation |
 | [sharing-format.md](sharing-format.md) | The portable recipe bundle and cross-instance import |
-| [claude-integration.md](claude-integration.md) | The five model features, the spend ceiling, and every failure mode |
+| [claude-integration.md](claude-integration.md) | The model features, the spend ceiling, and every failure mode |
+| [log-and-history.md](log-and-history.md) | Per-recipe notes, revising by message, snapshots and restore |
 
 Project status and the phase breakdown live in
 [`PROJECT_PLAN.md`](../PROJECT_PLAN.md).

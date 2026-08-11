@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { MacroPanel } from "@/components/macro-panel";
+import { SourceLine } from "@/components/source-line";
 import { ServingsStepper } from "@/components/servings-stepper";
 import { db } from "@/lib/db";
 import { appUrl } from "@/lib/env";
@@ -98,6 +99,9 @@ export default async function SharedRecipePage({
             {recipe.category.name}
           </p>
           <h1 className="mt-1 text-2xl font-semibold tracking-tight">{recipe.title}</h1>
+          {/* The original source travels with a shared recipe. A visitor is
+              entitled to know where it came from as much as the owner is. */}
+          <SourceLine sourceUrl={recipe.sourceUrl} className="mt-2" />
           {recipe.description ? (
             <p className="mt-2 text-text-muted">{recipe.description}</p>
           ) : null}

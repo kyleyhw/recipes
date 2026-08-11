@@ -82,6 +82,30 @@ the totals.
 `sourceNote` records where a number came from, satisfying the magic-number
 standard for values like flour's $\rho \approx 0.53\ \mathrm{g\,ml^{-1}}$.
 
+## `RecipeEntry` and `RecipeRevision`
+
+The per-recipe log and its history, added in phase 8 and documented in full in
+[log-and-history.md](log-and-history.md).
+
+`RecipeEntry` is one table for three kinds of line — a note, a message to
+Claude, its reply — because "needed more butter" and the change it caused belong
+next to each other rather than in separate lists. An entry that changed the
+recipe carries `revisionId`, which is what lets the history show *why* a version
+exists rather than only that it does.
+
+`RecipeRevision.snapshot` stores a **complete** recipe, not a diff against the
+previous one. A diff chain has to be replayed from the beginning to reconstruct
+any version, so one corrupted link destroys everything after it; a snapshot is
+restorable on its own. Recipes are a few kilobytes and are revised a handful of
+times, so the storage argument for diffs does not apply. Diffs are still what is
+displayed — computed at render time, where being wrong costs a confusing screen
+rather than a lost recipe.
+
+The snapshot carries category and tag *names* and ingredients as **text**, for
+the same reason the sharing bundle does: restoring then runs the ordinary edit
+path, re-parsing and re-resolving, so a restored recipe is indistinguishable
+from a typed one and later parser improvements reach it.
+
 ## `AiInteraction`
 
 Records token counts *and* a `costUsd` snapshot priced at call time. The

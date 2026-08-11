@@ -158,6 +158,11 @@ export default async function ImportPage({
       .join("\n")
       .trim();
 
+    // Where a pasted recipe came from, when the person pasting knows. A recipe
+    // whose origin is recorded can be checked later; one whose origin was lost
+    // at the moment of pasting cannot ever be.
+    const pastedSource = String(formData.get("sourceUrl") ?? "").trim();
+
     const slug = await createRecipe({
       title,
       description: null,
@@ -166,7 +171,7 @@ export default async function ImportPage({
       servingLabel: "serving",
       prepMinutes: null,
       cookMinutes: null,
-      sourceUrl: null,
+      sourceUrl: pastedSource.length > 0 ? pastedSource : null,
       notes: null,
       status: "DRAFT",
       ingredientsText,
@@ -178,12 +183,6 @@ export default async function ImportPage({
     redirect(`/recipes/${slug}/edit`);
   }
 
-  /**
-   * Import from another instance's share link.
-   *
-   * The recipe arrives with its ingredient nutrition already resolved, so it is
-   * accurate here immediately with no USDA key and no lookup.
-   */
   /**
    * The Claude path, for what the deterministic readers cannot handle.
    *
@@ -239,6 +238,12 @@ export default async function ImportPage({
     redirect(`/recipes/${saved.slug}/edit`);
   }
 
+  /**
+   * Import from another instance's share link.
+   *
+   * The recipe arrives with its ingredient nutrition already resolved, so it is
+   * accurate here immediately with no USDA key and no lookup.
+   */
   async function importFromShareLink(formData: FormData): Promise<void> {
     "use server";
     const link = String(formData.get("shareUrl") ?? "").trim();
@@ -433,6 +438,16 @@ export default async function ImportPage({
           name="text"
           rows={12}
           className={`${inputClass} font-mono text-sm`}
+        />
+        <label htmlFor="pastedSourceUrl" className="text-xs text-text-muted">
+          Where it came from, if it came from a website
+        </label>
+        <input
+          id="pastedSourceUrl"
+          name="sourceUrl"
+          type="url"
+          placeholder="https://example.com/recipes/…"
+          className={inputClass}
         />
         <div className="flex flex-wrap items-center gap-4">
           <button

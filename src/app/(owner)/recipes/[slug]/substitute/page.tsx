@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { AiBudgetNote } from "@/components/ai-budget-note";
 import { proposeSubstitution } from "@/lib/ai/substitute";
 import { features } from "@/lib/env";
+import { recordRevision, snapshotOf } from "@/lib/journal";
 import { getRecipeBySlug, tagsToText, updateRecipe } from "@/lib/recipes";
 
 /**
@@ -60,6 +61,12 @@ export default async function SubstitutePage({
       ingredientsText: String(formData.get("ingredientsText") ?? ""),
       stepsText: String(formData.get("stepsText") ?? ""),
       tagsText: tagsToText(current),
+    });
+
+    // Recorded like any other change, so a substitution is as recoverable as a
+    // note-driven one and shows up in the same history.
+    await recordRevision(recipeId, "EDIT", `Substituted: ${request}`, {
+      baseline: snapshotOf(current),
     });
 
     revalidatePath("/");

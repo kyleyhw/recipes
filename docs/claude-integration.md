@@ -1,6 +1,6 @@
 # Claude integration
 
-Five features use the model, all server-side, all through one function. This
+Six features use the model, all server-side, all through one function. This
 document covers what they do, how cost is bounded, and what happens when
 anything goes wrong — which is most of the interesting content, because a
 feature that depends on a paid remote service fails in more ways than the rest
@@ -60,11 +60,12 @@ and paying for a call that then times out is the worst of both outcomes.
 
 ---
 
-## 2. The five features
+## 2. The features
 
 | Feature | Module | Model | Why that model |
 | --- | --- | --- | --- |
 | Generation | `ai/generate.ts` | Opus 5 | Composition; the quality shows up on the plate. |
+| Revision from a note | `ai/revise.ts` | Opus 5 | Judgement about a real cook's correction. |
 | Substitution | `ai/substitute.ts` | Opus 5 | Judgement about food and about ratios. |
 | Extraction | `ai/extract.ts` | Opus 5 | The answer is in the input; low effort. |
 | Photo search | `ai/photo.ts` | Haiku 4.5 | Recognition, not reasoning; the search dominates the cost. |
@@ -81,6 +82,14 @@ flavours* — apply to a recipe generated six months later. Composing it per
 feature would let the three drift, and a drifted memory is worse than an absent
 one: the owner would see their preference honoured in one place and ignored in
 another with no way to tell why.
+
+### Revision from the recipe log
+
+The one feature that **applies** its change rather than proposing it. It is
+described in full in [log-and-history.md](log-and-history.md); the short version
+is that it is safe because it is reversible, every version being a complete
+snapshot, and because the cook's message is written to the log *before* the call
+so a failure never costs them their own words.
 
 ### Substitution returns a diff, not a rewritten recipe
 

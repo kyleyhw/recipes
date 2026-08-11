@@ -15,6 +15,90 @@
  * Pure, so both the matching and the failure reporting are directly testable.
  */
 
+/** One line of a rendered diff. */
+export interface DiffLine {
+  op: "kept" | "added" | "removed";
+  text: string;
+}
+
+/**
+ * Diffs two lists of lines, for showing what a revision changed.
+ *
+ * Used where a change arrives as a *replacement* rather than as targeted edits:
+ * a message in the recipe log ("it needs more butter") can require rebalancing
+ * several lines at once, so the model returns the whole new list and the diff is
+ * computed here rather than described by the model. A described diff would be
+ * prose about the change; this is the change.
+ *
+ * Longest common subsequence, computed by the standard dynamic program. It is
+ * O(nm) in time and space, which is irrelevant at the size of a recipe — tens of
+ * lines — and is worth having over a cheaper heuristic because the cheap ones
+ * (matching only at the ends, or line-by-line in order) report an insertion near
+ * the top as though every line below it had changed, which is exactly the case a
+ * cook needs to read clearly.
+ */
+export function lineDiff(
+  before: readonly string[],
+  after: readonly string[],
+): DiffLine[] {
+  const n = before.length;
+  const m = after.length;
+
+  // lengths[i][j] is the LCS length of before[i..] and after[j..]. Filled
+  // backwards so the traceback below runs forwards, which keeps the output in
+  // reading order without a final reverse.
+  const lengths: number[][] = Array.from({ length: n + 1 }, () =>
+    new Array<number>(m + 1).fill(0),
+  );
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = m - 1; j >= 0; j--) {
+      const row = lengths[i];
+      const next = lengths[i + 1];
+      if (!row || !next) continue;
+      row[j] =
+        before[i] === after[j]
+          ? (next[j + 1] ?? 0) + 1
+          : Math.max(next[j] ?? 0, row[j + 1] ?? 0);
+    }
+  }
+
+  const diff: DiffLine[] = [];
+  let i = 0;
+  let j = 0;
+  while (i < n && j < m) {
+    if (before[i] === after[j]) {
+      diff.push({ op: "kept", text: before[i] ?? "" });
+      i++;
+      j++;
+      continue;
+    }
+    // A removal is preferred when it leads to at least as long a common
+    // subsequence, so a replaced line reads as removed-then-added rather than
+    // added-then-removed.
+    const keepingBefore = lengths[i + 1]?.[j] ?? 0;
+    const keepingAfter = lengths[i]?.[j + 1] ?? 0;
+    if (keepingBefore >= keepingAfter) {
+      diff.push({ op: "removed", text: before[i] ?? "" });
+      i++;
+    } else {
+      diff.push({ op: "added", text: after[j] ?? "" });
+      j++;
+    }
+  }
+  while (i < n) diff.push({ op: "removed", text: before[i++] ?? "" });
+  while (j < m) diff.push({ op: "added", text: after[j++] ?? "" });
+
+  return diff;
+}
+
+/** True when the two lists differ at all. */
+export function linesChanged(
+  before: readonly string[],
+  after: readonly string[],
+): boolean {
+  return before.length !== after.length || before.some((line, i) => line !== after[i]);
+}
+
 export interface LineEdit {
   from: string;
   to: string;

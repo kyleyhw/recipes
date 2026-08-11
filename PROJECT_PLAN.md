@@ -134,11 +134,39 @@ derivations underpinning scaling and nutrition are in
     - [completed] Spend ceiling proven to refuse *before* spending, in 167 ms
     - [completed] Untested surface recorded explicitly in the phase-7 report
 
+## Phase 8: Provenance, the recipe log, and history
+
+36. [completed] The original source is recorded and shown for web-sourced recipes.
+    - [completed] Captured on URL import, Claude extraction, and now on paste
+    - [completed] Displayed as the site's name under the title, linking to the full address
+    - [completed] Shown on the public share page; already carried by the bundle and both exports
+    - [completed] Part of every revision snapshot, so a restore cannot detach it
+37. [completed] A per-recipe log of notes and messages.
+    - [completed] Closed by default; one quiet line on the recipe page, opened via `?chat=1`
+    - [completed] **Note it** records a note with no model call and no cost
+    - [completed] **Ask Claude** sends the message and applies whatever should change
+    - [completed] The message is written to the log *before* the call, so a failure never costs the cook their words
+    - [completed] Notes are deletable; the revisions they produced are not
+38. [completed] Revision history with complete snapshots.
+    - [completed] Snapshots, not diffs: any version is restorable on its own
+    - [completed] A baseline `INITIAL` revision captures the state before a recipe's first recorded change
+    - [completed] Recorded for chat revisions, hand edits, applied substitutions, and restores
+    - [completed] Displayed as a longest-common-subsequence diff against the previous version
+    - [completed] Restoring writes a new revision rather than deleting later ones
+39. [completed] Desktop and mobile layout.
+    - [completed] Recipe centred and primary; the log becomes a second column only when opened
+    - [completed] Verified at 390, 768, and 1440 px with no horizontal overflow anywhere
+40. [completed] Verification: 39 new unit tests, 43 browser assertions across three flows.
+    - [completed] Diff round-trip property: kept+removed reconstructs the old, kept+added the new
+    - [completed] Full edit → history → restore cycle against real Postgres
+    - [completed] A failed model call still records the cook's message and records no version
+
 ---
 
 ## Status
 
-All seven phases are complete. The one substantial gap in verification is
+All eight phases are complete. The one substantial gap in verification is
 recorded in [`tests/reports/phase-7-claude.md`](tests/reports/phase-7-claude.md)
-§6: no Anthropic API key was available, so nothing downstream of a successful
-model response has been exercised against the live service.
+§6 and restated in the phase 8 report: no Anthropic API key was available, so
+nothing downstream of a successful model response — including the recipe
+revision this phase adds — has been exercised against the live service.

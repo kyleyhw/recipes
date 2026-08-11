@@ -212,6 +212,63 @@ export const substitutionSchema = z.object({
 export type Substitution = z.infer<typeof substitutionSchema>;
 
 // ---------------------------------------------------------------------------
+// Revision from the recipe log
+// ---------------------------------------------------------------------------
+
+/**
+ * Claude's response to a message in a recipe's log.
+ *
+ * Unlike a substitution, this returns the **whole** new ingredient list and
+ * method rather than targeted edits. That is deliberate: "it needs more butter"
+ * can require rebalancing several lines at once — more butter may mean less
+ * milk, and a longer rest — and expressing that as a set of independent line
+ * edits invites a partially-applied recipe where the butter went up and nothing
+ * else moved. A whole list is applied atomically or not at all, and the diff is
+ * computed here rather than described by the model.
+ *
+ * The cost of that choice is that a careless answer could drop an ingredient
+ * silently, which is why the reply is diffed against the previous version in
+ * the log, every version is recoverable, and an empty list is refused outright.
+ */
+export const revisionProposalSchema = z.object({
+  reply: z
+    .string()
+    .describe(
+      "What to say back to the cook. Two or three sentences at most. Say what you changed and why it follows from what they told you. If you changed nothing, say why not. Do not restate the recipe.",
+    ),
+  changed: z
+    .boolean()
+    .describe(
+      "True only if the recipe should actually change. A question, an observation, or a note to remember is not a change — record it and answer, but leave the recipe alone.",
+    ),
+  summary: z
+    .string()
+    .describe(
+      "One short line for the history, in the past tense: 'Butter raised to 220 g and the rest extended to 30 minutes.' Empty if nothing changed.",
+    ),
+  ingredients: z
+    .array(z.string())
+    .nullable()
+    .describe(
+      "The COMPLETE new ingredient list, every line, in the same format as the original — not only the lines you changed. Null if the ingredients are untouched. Never return a shortened list: anything you omit is deleted from the recipe.",
+    ),
+  steps: z
+    .array(z.string())
+    .nullable()
+    .describe(
+      "The COMPLETE new method, every step. Null if the method is untouched. The same warning applies: what you omit is deleted.",
+    ),
+  notes: z
+    .string()
+    .nullable()
+    .describe(
+      "Replacement text for the recipe's notes field, if this change belongs there — a storage instruction, a warning, a variation. Null to leave the notes alone.",
+    ),
+});
+
+export type RevisionProposal = z.infer<typeof revisionProposalSchema>;
+
+// ---------------------------------------------------------------------------
 // Photo sourcing
 // ---------------------------------------------------------------------------
 
