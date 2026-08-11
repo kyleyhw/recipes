@@ -56,27 +56,28 @@ Keeps two days in the fridge. Bring it back in a hot dry wok for 60 seconds — 
 
 ## Diagram
 
-- stir 3 times, plate
+- stir 3 times, plate at once
   - stir 45 s
-    - stir 60 s, then 5 s
-      - fry 30 s, no further
-        - peanut oil
+    - sear 20 s, stir 40 s, lift out still pink
+      - a third of the peanut oil
+      - marinate 10 min
+        - beef sirloin
+        - half the salt
+        - half the soy sauce
+        - oyster sauce
+        - cornflour
+    - 60 s, then soy down the hot side, 5 s
+      - fry 30 s, gold at the edges only
+        - a third of the peanut oil
         - ginger
         - garlic
       - bird's eye chillies
       - pickled chillies
-      - coriander
-      - light soy sauce
-    - sear 20 s, stir 40 s
-      - peanut oil
-      - marinate 10 min
-        - beef sirloin
-        - salt
-        - light soy sauce
-        - oyster sauce
-        - cornflour
+      - coriander stems
+      - the rest of the soy sauce
+    - the rest of the salt
     - chicken bouillon powder
-  - coriander
+  - coriander leaves
 
 ## Log
 

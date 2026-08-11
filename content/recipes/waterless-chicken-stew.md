@@ -62,17 +62,20 @@ Reheat gently in a covered pan over low heat for 12 minutes, stirring once. A ha
 
 ## Diagram
 
-- simmer covered 60–90 min
-  - boil uncovered 5 min
-    - layer, lid off
-      - chinese cabbage
-      - carrots
-      - onion
-      - apple
-      - bone-in chicken thighs
-      - ginger
-      - garlic
-      - bay leaves
+- simmer covered, 60–90 min, lid never lifted
+  - boil uncovered, 5 min, to drive off the alcohol
+    - pour over
+      - layer 3: the meat and aromatics
+        - layer 2: the sweets
+          - layer 1: the liquid source
+            - Chinese cabbage
+          - carrots
+          - onion
+          - apple
+        - bone-in chicken thighs
+        - ginger
+        - garlic
+        - bay leaves
       - whisk 20 s
         - light soy sauce
         - shaoxing wine

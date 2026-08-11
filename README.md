@@ -51,32 +51,56 @@ Create `content/recipes/<slug>.md`. The filename becomes the URL.
 
 ```markdown
 ---
-title: Dal Tarka
-description: Red lentils cooked soft, finished with spices bloomed in hot ghee.
-category: Mains
+title: Banana Bread
+description: Dark, dense and heavily spiced, with brown butter and black bananas.
+category: Baked Goods
+cuisine: British
 tags:
-  - quick
-  - vegetarian
-servings: 4
-prepMinutes: 10
-cookMinutes: 35
-source: https://example.com/where-it-came-from
+  - freezes well
+servings: 10
+servingLabel: slice
+prepMinutes: 20
+cookMinutes: 60
+tin:
+  shape: loaf
+  length: 23
+  width: 13
+  depth: 7
 ---
 
 ## Ingredients
 
-- 250 g red lentils
-- 2 tbsp ghee
-- 1 tsp fine salt
+- 115 g unsalted butter
+- 4 bananas, black-skinned and soft
+- 250 g all-purpose flour
+- 1 tsp salt
 
 ## Method
 
-1. Rinse the lentils until the water runs clear.
-2. Simmer for 25 minutes, until they collapse when pressed.
+1. Heat the oven to 175 °C and line a 900 g loaf tin with baking paper.
+2. Melt the butter over medium heat for 4 to 6 minutes, swirling the pan, until
+   brown flecks settle on the base and it smells of toffee.
+3. Bake for 55 to 65 minutes, until a skewer comes out with moist crumbs but no
+   wet batter.
 
 ## Notes
 
-Keeps three days in the fridge.
+The bananas must be black, not merely spotted.
+
+## Storage
+
+Keeps four days at room temperature, wrapped in foil rather than cling film.
+
+## Diagram
+
+- bake 175 °C, 55–65 min
+  - fold, no more than 15 turns
+    - brown, 4–6 min
+      - unsalted butter
+    - mash to no lump bigger than a pea
+      - bananas
+    - all-purpose flour
+    - salt
 
 ## Log
 
@@ -85,6 +109,19 @@ Keeps three days in the fridge.
 
 Only `title`, `category` and `servings` are required. Commit the file and push;
 the site rebuilds itself.
+
+Two sections earn their keep and are worth writing every time:
+
+- **`## Storage`** — how long it keeps, whether it freezes, and how to bring it
+  back. Most of what gets cooked is eaten again the next day, and a recipe that
+  stops at the moment of serving has stopped halfway.
+- **`## Diagram`** — the method as an indented tree, rendered as a table of
+  ingredients and the operations that combine them. A leaf that names an
+  ingredient picks up its scaled quantity and translated name automatically.
+  See [`docs/diagram.md`](docs/diagram.md).
+
+A baked recipe should also state its `tin`, so the site can scale the batter to
+the tin you actually own — and warn you when it cannot.
 
 You can also edit any recipe straight from GitHub — every recipe page links to
 its own file, its edit form, and its full history.
@@ -115,6 +152,17 @@ Two things worth knowing when reading the panel:
 
 If an ingredient shows as unmatched, add it to `content/ingredients.json` with
 a note saying where its figures came from.
+
+### Languages
+
+The interface is available in English, 繁體中文, 简体中文 and Русский, from the
+menu at the bottom of any page. Recipes are written in English and translated
+by `npm run translate`, which needs an `ANTHROPIC_API_KEY` in the environment
+and writes `content/recipes/<slug>.<language>.md` beside each recipe.
+
+Translations are generated once and committed, never fetched at read time —
+there is no server here to hold a key. A recipe with no translation yet shows
+its English text inside the translated interface.
 
 ### Exporting
 
@@ -150,7 +198,8 @@ Two notes on hosting:
   served from the root, delete that line from
   `.github/workflows/pages.yml`.
 
-Nothing else is configured, and there are no API keys to set.
+Nothing else is configured, and there are no API keys to set. `ANTHROPIC_API_KEY`
+is needed only to *generate* translations, never to read the site.
 
 ---
 
