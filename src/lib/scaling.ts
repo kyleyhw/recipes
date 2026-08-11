@@ -59,7 +59,24 @@ export const ADVISORY_LOG_THRESHOLD = Math.log(1.5);
  * none because it would be trusted. It flags them and leaves the judgement to
  * the cook.
  */
-const NON_LINEAR: ReadonlyArray<{ pattern: RegExp; advisory: string }> = [
+/** What makes a dough a ferment, and salt's role in it structural. */
+const FERMENT = /\b(yeast|sourdough|starter|levain|poolish|biga)\b/i;
+
+const NON_LINEAR: ReadonlyArray<{
+  pattern: RegExp;
+  advisory: string;
+  /**
+   * A condition on the *recipe*, not the ingredient.
+   *
+   * Some ingredients only scale badly in company. Salt is the case that forced
+   * this: in a fermented dough it regulates yeast activity and scaling it
+   * changes the ferment, and in everything else it is just seasoning. Without
+   * this the warning fired on every recipe containing salt, and one that
+   * explained fermentation to someone making banana bread taught them to stop
+   * reading the warnings.
+   */
+  requires?: (ingredientNames: readonly string[]) => boolean;
+}> = [
   {
     pattern: /\b(baking powder|baking soda|bicarbonate|bicarb)\b/i,
     advisory:
@@ -73,7 +90,8 @@ const NON_LINEAR: ReadonlyArray<{ pattern: RegExp; advisory: string }> = [
   {
     pattern: /\b(salt|kosher salt|sea salt)\b/i,
     advisory:
-      "Salt in a fermented dough regulates yeast activity as well as seasoning it, so scaling it linearly changes the fermentation rate. In an unfermented dish, scale it but taste before serving.",
+      "Salt regulates yeast activity as well as seasoning, so scaling it linearly changes how fast this dough ferments. Keep it nearer the original proportion and prove to the dough's condition.",
+    requires: (names) => names.some((name) => FERMENT.test(name)),
   },
   {
     pattern: /\b(gelatin|gelatine|agar|pectin|xanthan)\b/i,
@@ -140,6 +158,8 @@ export function scaleRecipe(
   const logFactor = Math.abs(Math.log(factor));
   const flagNonLinear = logFactor > ADVISORY_LOG_THRESHOLD;
 
+  const allNames = ingredients.map((ingredient) => ingredient.name);
+
   const scaled: ScaledIngredient[] = ingredients.map((ingredient) => {
     if (!ingredient.scalable || ingredient.quantity === null) {
       return {
@@ -156,7 +176,11 @@ export function scaleRecipe(
     const rendered = renderQuantity(scaledQuantity, ingredient.unit);
 
     const advisoryMatch = flagNonLinear
-      ? NON_LINEAR.find((entry) => entry.pattern.test(ingredient.name))
+      ? NON_LINEAR.find(
+          (entry) =>
+            entry.pattern.test(ingredient.name) &&
+            (entry.requires === undefined || entry.requires(allNames)),
+        )
       : undefined;
 
     const parts = [rendered.text, ingredient.name];

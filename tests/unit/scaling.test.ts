@@ -215,3 +215,41 @@ describe("rendering integration", () => {
     expect(scaled.ingredients[0]?.display).toBe("2 onion, finely diced");
   });
 });
+
+describe("advisories that depend on the rest of the recipe", () => {
+  const at = (names: string[], factor: number) =>
+    scaleRecipe(
+      names.map((name, index) => ({
+        id: String(index),
+        rawText: `100 g ${name}`,
+        quantity: 100,
+        unit: "g",
+        name,
+        prepNote: null,
+        optional: false,
+        scalable: true,
+      })),
+      4,
+      4 * factor,
+    ).ingredients;
+
+  /**
+   * Salt's advisory is about fermentation. Firing it on a cake taught the
+   * reader that the warnings are noise, which costs more than the warning
+   * itself is worth.
+   */
+  it("says nothing about salt in a recipe with nothing to ferment", () => {
+    const [, salt] = at(["all-purpose flour", "salt"], 3);
+    expect(salt?.advisory).toBeNull();
+  });
+
+  it("warns about salt once there is yeast in the bowl", () => {
+    const [, salt] = at(["strong flour", "salt", "dried yeast"], 3);
+    expect(salt?.advisory).toMatch(/yeast/i);
+  });
+
+  it("still warns about leavening regardless of company", () => {
+    const [, bicarb] = at(["flour", "bicarbonate of soda"], 3);
+    expect(bicarb?.advisory).toMatch(/leavening/i);
+  });
+})
