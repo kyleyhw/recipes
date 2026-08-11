@@ -1,5 +1,7 @@
 # Recipes
 
+**→ [kyleyhw.github.io/recipes](https://kyleyhw.github.io/recipes/)**
+
 A personal recipe collection that lives in a git repository. One Markdown file
 per recipe; the site is generated from those files and hosted on GitHub Pages.
 
@@ -13,7 +15,8 @@ No database, no server, no account, and nothing to pay for.
 
 ## Quickstart
 
-**To read it:** open the site. Every page works without JavaScript.
+**To read it:** [kyleyhw.github.io/recipes](https://kyleyhw.github.io/recipes/).
+Every page works without JavaScript.
 
 **To run it yourself:**
 
