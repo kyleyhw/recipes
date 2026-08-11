@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { LibraryIngredient } from "@/lib/content/library";
+import { useT } from "@/components/language";
 import { decimal, decimalOrDash } from "@/lib/format";
 
 /**
@@ -22,6 +23,7 @@ import { decimal, decimalOrDash } from "@/lib/format";
 export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredient[] }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const t = useT();
 
   const trimmed = query.trim().toLowerCase();
   const matching = useMemo(
@@ -42,7 +44,7 @@ export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredi
         className="text-sm text-text-muted hover:text-accent"
         aria-expanded={open}
       >
-        Ingredients
+        {t("ingredients")}
       </button>
 
       {open ? (
@@ -51,7 +53,7 @@ export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredi
               reachable from a keyboard, not only a pointer. */}
           <button
             type="button"
-            aria-label="Close the ingredient library"
+            aria-label={t("closeLibrary")}
             onClick={() => setOpen(false)}
             className="fixed inset-0 z-40 cursor-default bg-black/50"
           />
@@ -61,21 +63,21 @@ export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredi
           >
             <div className="flex items-baseline justify-between gap-3 border-b border-border px-4 py-3">
               <h2 className="text-sm font-semibold tracking-wide uppercase">
-                Ingredients
+                {t("ingredients")}
                 <span className="numeric ml-2 font-normal text-text-muted">
                   {ingredients.length}
                 </span>
               </h2>
               <div className="flex items-center gap-3 text-sm">
                 <a href="/ingredients" className="text-text-muted hover:text-accent">
-                  Full page
+                  {t("fullPage")}
                 </a>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
                   className="text-text-muted hover:text-text"
                 >
-                  Close
+                  {t("close")}
                 </button>
               </div>
             </div>
@@ -85,16 +87,15 @@ export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredi
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Find an ingredient"
-                aria-label="Find an ingredient"
+                placeholder={t("findIngredient")}
+                aria-label={t("findIngredient")}
                 className="w-full rounded-card border border-border bg-surface px-3 py-2 text-base outline-none focus:border-accent"
               />
             </div>
 
             <div className="flex-1 overflow-y-auto px-4 py-3">
               <p className="mb-3 text-xs text-text-muted">
-                Per 100 g, shared by every recipe — so a correction here fixes every
-                recipe at once.
+                {t("per100Note")}
               </p>
               <ul className="flex flex-col divide-y divide-border">
                 {matching.map((ingredient) => (
@@ -128,8 +129,7 @@ export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredi
               </ul>
               {matching.length === 0 ? (
                 <p className="text-sm text-text-muted">
-                  Nothing matched. Ingredients are added by editing{" "}
-                  <code>content/ingredients.json</code>.
+                  {t("noIngredientMatched")}
                 </p>
               ) : null}
             </div>

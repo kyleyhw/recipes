@@ -4,6 +4,13 @@ import Link from "next/link";
 import "./globals.css";
 import { repoUrl } from "@/lib/site";
 import { ThemeToggle, themeScript } from "@/components/theme-toggle";
+import {
+  LanguageDocumentSync,
+  LanguageMenu,
+  languageScript,
+  T,
+  TCategory,
+} from "@/components/language";
 import { IngredientSidebar } from "@/components/ingredient-sidebar";
 import { loadCollection } from "@/lib/content/library";
 
@@ -82,8 +89,12 @@ export default function RootLayout({
         {/* Applies a remembered light choice before first paint, so nobody who
             chose light sees a dark flash on every navigation. */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* And the remembered language, so the first React render already
+            agrees with the choice rather than correcting itself. */}
+        <script dangerouslySetInnerHTML={{ __html: languageScript }} />
       </head>
       <body className="min-h-dvh bg-bg text-text antialiased">
+        <LanguageDocumentSync />
         <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 sm:px-6">
           {/* nowrap + scroll: at phone width the link set is wider than the
               viewport, and wrapping pushed the last link onto its own line. */}
@@ -97,7 +108,7 @@ export default function RootLayout({
             <nav className="flex flex-1 items-center gap-3 text-sm">
               <Pipe />
               <Link href="/" className="font-semibold hover:text-accent">
-                All
+                <T k="all" />
               </Link>
               {categories.map((category) => (
                 <span key={category.slug} className="flex items-center gap-3">
@@ -106,7 +117,7 @@ export default function RootLayout({
                     href={`/category/${category.slug}`}
                     className="text-text-muted hover:text-accent"
                   >
-                    {category.name}
+                    <TCategory name={category.name} />
                   </Link>
                 </span>
               ))}
@@ -120,7 +131,7 @@ export default function RootLayout({
               <IngredientSidebar ingredients={ingredients} />
               <Pipe />
               <Link href="/about" className="text-text-muted hover:text-accent">
-                About
+                <T k="about" />
               </Link>
               <Pipe />
             </div>
@@ -134,7 +145,7 @@ export default function RootLayout({
               started reading the thing that holds them. */}
           <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 text-xs text-text-muted">
             <span>
-              Macros are computed for export, not tracked here. One file per recipe.
+              <T k="footerNote" />
             </span>
             <div className="flex items-center gap-3">
               {repo ? (
@@ -145,13 +156,17 @@ export default function RootLayout({
                     rel="noreferrer noopener"
                     className="hover:text-text"
                   >
-                    Source
+                    <T k="source" />
                   </a>
                   <span aria-hidden="true" className="text-border">
                     |
                   </span>
                 </>
               ) : null}
+              <LanguageMenu />
+              <span aria-hidden="true" className="text-border">
+                |
+              </span>
               <ThemeToggle />
             </div>
           </footer>

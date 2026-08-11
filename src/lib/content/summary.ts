@@ -1,6 +1,7 @@
 import type { RecipeFile } from "@/lib/content/format";
 import type { LibraryIngredient } from "@/lib/content/library";
 import { prepareRecipe } from "@/lib/content/prepare";
+import type { StringKey } from "@/lib/i18n/strings";
 import { computeNutrition } from "@/lib/nutrition/compute";
 
 /**
@@ -81,13 +82,30 @@ export function summarise(
 export type SortKey =
   "category" | "cuisine" | "alphabetical" | "prep-asc" | "prep-desc" | "protein-desc";
 
-export const SORT_LABELS: Record<SortKey, string> = {
-  category: "Category",
-  cuisine: "Cuisine",
-  alphabetical: "A–Z",
-  "prep-asc": "Quickest first",
-  "prep-desc": "Longest first",
-  "protein-desc": "Most protein",
+/**
+ * The arrangements, in the order they are offered.
+ *
+ * The labels are not here. They live in the string table with everything else
+ * a reader sees, and this maps each arrangement to its key there — so adding a
+ * language does not mean editing this file, and adding an arrangement means
+ * adding one row in each.
+ */
+export const SORT_KEYS: readonly SortKey[] = [
+  "category",
+  "cuisine",
+  "alphabetical",
+  "prep-asc",
+  "prep-desc",
+  "protein-desc",
+];
+
+export const SORT_STRING_KEYS: Record<SortKey, StringKey> = {
+  category: "sortCategory",
+  cuisine: "sortCuisine",
+  alphabetical: "sortAlphabetical",
+  "prep-asc": "sortQuickest",
+  "prep-desc": "sortLongest",
+  "protein-desc": "sortProtein",
 };
 
 /**
@@ -157,6 +175,15 @@ export function sortRecipes(
   }
 }
 
+/**
+ * The shelf that holds recipes with no cuisine.
+ *
+ * A named constant because the listing has to recognise it to translate it: it
+ * is the one shelf label this application invents rather than reads out of a
+ * file, so it is the one that can be translated at all.
+ */
+export const UNATTRIBUTED_SHELF = "Unattributed";
+
 export interface Shelf {
   name: string;
   recipes: RecipeSummary[];
@@ -186,7 +213,7 @@ export function shelveRecipes(
     // A recipe with no cuisine still has to appear somewhere; dropping it from
     // the page because a field is blank would hide it entirely.
     const name =
-      key === "category" ? recipe.category : (recipe.cuisine ?? "Unattributed");
+      key === "category" ? recipe.category : (recipe.cuisine ?? UNATTRIBUTED_SHELF);
     const existing = groups.get(name);
     if (existing) existing.push(recipe);
     else groups.set(name, [recipe]);

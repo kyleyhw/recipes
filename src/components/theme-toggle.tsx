@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useT } from "@/components/language";
 
 /**
  * Switching between the light and dark palettes.
@@ -64,17 +65,16 @@ function choose(next: Theme): void {
 
 export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const t = useT();
 
   return (
     <button
       type="button"
       onClick={() => choose(theme === "dark" ? "light" : "dark")}
       className="hover:text-text"
-      aria-label={
-        theme === "dark" ? "Switch to the light theme" : "Switch to the dark theme"
-      }
+      aria-label={theme === "dark" ? t("toLight") : t("toDark")}
     >
-      {theme === "dark" ? "Light" : "Dark"}
+      {theme === "dark" ? t("light") : t("dark")}
     </button>
   );
 }

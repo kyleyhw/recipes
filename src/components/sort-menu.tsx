@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { SORT_LABELS, type SortKey } from "@/lib/content/summary";
+import { useT } from "@/components/language";
+import { SORT_KEYS, SORT_STRING_KEYS, type SortKey } from "@/lib/content/summary";
 
 /**
  * How the listing is arranged.
@@ -31,7 +32,7 @@ export function SortMenu({
   onChange: (key: SortKey) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const keys = Object.keys(SORT_LABELS) as SortKey[];
+  const t = useT();
 
   function choose(key: SortKey): void {
     onChange(key);
@@ -56,7 +57,7 @@ export function SortMenu({
         aria-expanded={open}
         className="rounded-card border border-border bg-surface px-3 py-2 text-sm text-text-muted hover:text-text"
       >
-        Sort
+        {t("sort")}
       </button>
 
       <div
@@ -64,7 +65,7 @@ export function SortMenu({
         className="absolute top-full right-0 z-30 hidden min-w-44 pt-1 group-hover:block group-focus-within:block group-data-open:block"
       >
         <ul className="flex flex-col rounded-card border border-border bg-surface py-1 shadow-lg">
-          {keys.map((key) => (
+          {SORT_KEYS.map((key) => (
             <li key={key}>
               <button
                 type="button"
@@ -75,7 +76,7 @@ export function SortMenu({
                   key === value ? "text-accent" : "text-text-muted"
                 }`}
               >
-                {SORT_LABELS[key]}
+                {t(SORT_STRING_KEYS[key])}
               </button>
             </li>
           ))}

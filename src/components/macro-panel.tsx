@@ -1,3 +1,7 @@
+"use client";
+
+import { useT } from "@/components/language";
+import type { StringKey } from "@/lib/i18n/strings";
 import { energySplit, type NutritionResult } from "@/lib/nutrition/compute";
 import {
   formatNutrient,
@@ -55,6 +59,7 @@ function NutrientRow({
   value: number;
   coverage: number;
 }) {
+  const t = useT();
   const key = def.key as NutrientKey;
   const pct = percentOfReference(key, value);
   const known = coverage > 0;
@@ -64,13 +69,13 @@ function NutrientRow({
       <dt
         className={`text-xs ${def.subordinate ? "pl-3 text-text-muted" : "text-text-muted"}`}
       >
-        {def.label}
+        {t(`nutrient.${key}` as StringKey)}
         {known && coverage < LOW_COVERAGE ? (
           <span
             className="numeric ml-1.5 text-text-muted/60"
-            title="Share of the recipe's mass carrying a figure for this nutrient"
+            title={t("pctOfMassTitle")}
           >
-            {Math.round(coverage * 100)}% of mass
+            {t("pctOfMass", { n: Math.round(coverage * 100) })}
           </span>
         ) : null}
       </dt>
@@ -80,11 +85,14 @@ function NutrientRow({
             <span className="font-medium">{formatNutrient(key, value)}</span>
             <span className="text-text-muted"> {def.unit}</span>
             {pct === null ? null : (
-              <span className="ml-2 text-text-muted">{round(pct)}% RI</span>
+              <span className="ml-2 text-text-muted">
+                {round(pct)}
+                {t("referenceIntake")}
+              </span>
             )}
           </>
         ) : (
-          <span className="text-text-muted/60">no data</span>
+          <span className="text-text-muted/60">{t("noData")}</span>
         )}
       </dd>
     </div>
@@ -98,6 +106,7 @@ export function MacroPanel({
   nutrition: NutritionResult;
   servingLabel: string;
 }) {
+  const t = useT();
   const { perServing, coverage, nutrientCoverage, massUnknownCount, noQuantityCount } =
     nutrition;
   const split = energySplit(perServing);
@@ -124,21 +133,18 @@ export function MacroPanel({
     <section className="rounded-card border border-border bg-surface p-4">
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-sm font-semibold tracking-wide uppercase">
-          Per {servingLabel}
+          {t("perServing", { label: servingLabel })}
         </h2>
         <span
           className={`numeric text-xs ${low ? "text-warn" : "text-text-muted"}`}
-          title="Share of the recipe's determinable mass that carries nutrition data"
+          title={t("massCoveredTitle")}
         >
-          {coveragePct}% of mass covered
+          {t("massCovered", { n: coveragePct })}
         </span>
       </div>
 
       {!hasAnything ? (
-        <p className="mt-3 text-sm text-text-muted">
-          No nutrition data yet. Resolve the ingredients below, or add them to the
-          ingredient library by hand.
-        </p>
+        <p className="mt-3 text-sm text-text-muted">{t("noNutritionYet")}</p>
       ) : (
         <>
           <div className="mt-3 flex items-baseline gap-4">
@@ -147,8 +153,9 @@ export function MacroPanel({
             </span>
             <span className="text-sm text-text-muted">kcal</span>
             <span className="numeric text-xs text-text-muted">
-              {round(percentOfReference("kcal", perServing.kcal) ?? 0)}% of a 2000 kcal
-              day
+              {t("ofADay", {
+                n: round(percentOfReference("kcal", perServing.kcal) ?? 0),
+              })}
             </span>
           </div>
 
@@ -157,9 +164,9 @@ export function MacroPanel({
           <div
             className="mt-3 flex h-2 overflow-hidden rounded-full bg-surface-2"
             role="img"
-            aria-label={`Energy split: protein ${round(split.proteinPct)}%, carbohydrate ${round(
-              split.carbsPct,
-            )}%, fat ${round(split.fatPct)}%`}
+            aria-label={`${t("protein")} ${round(split.proteinPct)}%, ${t(
+              "carbs",
+            )} ${round(split.carbsPct)}%, ${t("fat")} ${round(split.fatPct)}%`}
           >
             <div style={{ width: `${split.proteinPct}%`, background: "var(--ok)" }} />
             <div style={{ width: `${split.carbsPct}%`, background: "var(--accent)" }} />
@@ -168,24 +175,24 @@ export function MacroPanel({
 
           <dl className="mt-3 grid grid-cols-3 gap-3 text-sm">
             <div>
-              <dt className="text-xs text-text-muted">Protein</dt>
+              <dt className="text-xs text-text-muted">{t("protein")}</dt>
               <dd className="numeric font-medium">{round(perServing.protein, 1)} g</dd>
               <dd className="numeric text-xs text-text-muted">
-                {round(split.proteinPct)}% energy
+                {t("pctEnergy", { n: round(split.proteinPct) })}
               </dd>
             </div>
             <div>
-              <dt className="text-xs text-text-muted">Carbs</dt>
+              <dt className="text-xs text-text-muted">{t("carbs")}</dt>
               <dd className="numeric font-medium">{round(perServing.carbs, 1)} g</dd>
               <dd className="numeric text-xs text-text-muted">
-                {round(split.carbsPct)}% energy
+                {t("pctEnergy", { n: round(split.carbsPct) })}
               </dd>
             </div>
             <div>
-              <dt className="text-xs text-text-muted">Fat</dt>
+              <dt className="text-xs text-text-muted">{t("fat")}</dt>
               <dd className="numeric font-medium">{round(perServing.fat, 1)} g</dd>
               <dd className="numeric text-xs text-text-muted">
-                {round(split.fatPct)}% energy
+                {t("pctEnergy", { n: round(split.fatPct) })}
               </dd>
             </div>
           </dl>
@@ -213,9 +220,9 @@ export function MacroPanel({
 
           <details className="mt-3 border-t border-border pt-2">
             <summary className="cursor-pointer text-xs text-text-muted hover:text-text">
-              Vitamins and minerals{" "}
+              {t("vitaminsAndMinerals")}{" "}
               <span className="numeric">
-                ({knownMicros} of {micronutrients.length} known)
+                {t("knownOf", { a: knownMicros, b: micronutrients.length })}
               </span>
             </summary>
             <dl className="mt-1 divide-y divide-border">
@@ -228,21 +235,12 @@ export function MacroPanel({
                 />
               ))}
             </dl>
-            <p className="mt-2 text-xs text-text-muted">
-              RI is the daily reference intake for an average adult, from the same
-              schedule used on food labelling in Britain and the EU. It is there for
-              scale, not as a target. A percentage next to a figure drawn from part of
-              the recipe is that part&rsquo;s percentage, and the mass share says which.
-            </p>
+            <p className="mt-2 text-xs text-text-muted">{t("referenceNote")}</p>
           </details>
 
           {/* How to read the bar. Required by the visualisation standard: a
               chart without an interpretation is decoration. */}
-          <p className="mt-3 text-xs text-text-muted">
-            The bar shows where the energy comes from, not the mass — fat carries 9 kcal
-            per gram against 4 for protein and carbohydrate, so equal weights are not
-            equal calories.
-          </p>
+          <p className="mt-3 text-xs text-text-muted">{t("barNote")}</p>
         </>
       )}
 
@@ -250,36 +248,24 @@ export function MacroPanel({
         <div className="mt-4 border-t border-border pt-3">
           {low ? (
             <p className="mb-2 text-xs font-medium text-warn">
-              These figures cover {coveragePct}% of the recipe by mass. Treat them as a
-              lower bound.
+              {t("lowerBound", { n: coveragePct })}
             </p>
           ) : null}
 
           <ul className="flex flex-col gap-1 text-xs text-text-muted">
             {gaps.map((gap) => (
               <li key={gap.id}>
-                <span className="font-medium">{gap.name}</span> — mass known, no nutrition
-                data
+                <span className="font-medium">{gap.name}</span> — {t("gapUnresolved")}
               </li>
             ))}
             {massUnknownCount > 0 ? (
-              <li>
-                {massUnknownCount} ingredient{massUnknownCount === 1 ? "" : "s"} whose
-                weight cannot be determined, so excluded from the coverage figure entirely
-              </li>
+              <li>{t("gapMassUnknown", { n: massUnknownCount })}</li>
             ) : null}
             {noQuantityCount > 0 ? (
-              <li>
-                {noQuantityCount} ingredient{noQuantityCount === 1 ? "" : "s"} with no
-                stated amount
-              </li>
+              <li>{t("gapNoQuantity", { n: noQuantityCount })}</li>
             ) : null}
           </ul>
-          <p className="mt-2 text-xs text-text-muted">
-            Every gap here is a missing row in{" "}
-            <code>content/ingredients.json</code>, not a limit of the arithmetic. Add the
-            ingredient and the figures complete themselves.
-          </p>
+          <p className="mt-2 text-xs text-text-muted">{t("gapsAreRows")}</p>
         </div>
       )}
     </section>

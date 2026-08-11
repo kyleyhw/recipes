@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useT } from "@/components/language";
 import type { RecipeSummary } from "@/lib/content/summary";
 import { decimal } from "@/lib/format";
 import { placeholderStyle } from "@/lib/photos/placeholder";
@@ -25,12 +28,15 @@ export function RecipeCard({
    */
   showProtein?: boolean;
 }) {
+  const t = useT();
   // Prep and cook shown separately rather than summed: they answer different
   // questions. "Can I start this now?" is prep; a cook can add two numbers for
   // the total. A single figure hides which of the two a 90-minute recipe is.
   const times = [
-    recipe.prepMinutes ? `${recipe.prepMinutes} min prep` : null,
-    recipe.cookMinutes ? `${recipe.cookMinutes} min ${recipe.cookLabel}` : null,
+    recipe.prepMinutes ? t("minPrep", { n: recipe.prepMinutes }) : null,
+    recipe.cookMinutes
+      ? t("minCook", { n: recipe.cookMinutes, label: recipe.cookLabel })
+      : null,
   ].filter(Boolean);
 
   return (
@@ -65,22 +71,22 @@ export function RecipeCard({
           {times.join(" · ")}
           {recipe.draft ? (
             <span className="ml-2 rounded bg-warn-soft px-1.5 py-0.5 text-warn">
-              draft
+              {t("draft")}
             </span>
           ) : null}
         </p>
         {showProtein ? (
           <p className="numeric mt-1 text-xs text-accent">
             {recipe.proteinPerServing === null
-              ? "protein unknown"
-              : `${decimal(recipe.proteinPerServing, 1)} g protein per serving`}
+              ? t("proteinUnknown")
+              : t("proteinPerServing", { n: decimal(recipe.proteinPerServing, 1) })}
             {/* Coverage qualifies the figure rather than hiding it: a number
                 derived from a fifth of the recipe's mass is not the same claim
                 as one derived from all of it. */}
             {recipe.proteinPerServing !== null && recipe.coverage < 0.9 ? (
               <span className="text-text-muted">
                 {" "}
-                ({Math.round(recipe.coverage * 100)}% covered)
+                {t("pctCovered", { n: Math.round(recipe.coverage * 100) })}
               </span>
             ) : null}
           </p>

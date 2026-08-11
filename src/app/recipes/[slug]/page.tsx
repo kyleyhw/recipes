@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { RecipeView } from "@/components/recipe-view";
+import { T, TCategory } from "@/components/language";
 import { SourceLine } from "@/components/source-line";
 import { ExportLinks } from "@/components/export-links";
 import { recipeFilename } from "@/lib/content/format";
@@ -65,7 +66,7 @@ export default async function RecipePage({
 
       {recipe.photoCredit?.pageUrl ? (
         <p className="text-xs text-text-muted">
-          Photo:{" "}
+          <T k="photoBy" />:{" "}
           <a
             href={recipe.photoCredit.pageUrl}
             target="_blank"
@@ -80,11 +81,11 @@ export default async function RecipePage({
       <header className="mt-6">
         <div className="flex items-baseline gap-3">
           <span className="text-xs font-medium tracking-wide text-text-muted uppercase">
-            {recipe.category}
+            <TCategory name={recipe.category} />
           </span>
           {recipe.draft ? (
             <span className="rounded bg-warn-soft px-1.5 py-0.5 text-xs font-medium text-warn">
-              Draft — not yet cooked here
+              <T k="draftBanner" />
             </span>
           ) : null}
         </div>
@@ -97,15 +98,19 @@ export default async function RecipePage({
 
         {totalMinutes > 0 ? (
           <p className="numeric mt-3 text-sm text-text-muted">
-            {[
-              recipe.prepMinutes ? `${recipe.prepMinutes} min prep` : null,
-              recipe.cookMinutes ? `${recipe.cookMinutes} min ${recipe.cookLabel}` : null,
-            ]
-              .filter(Boolean)
-              .join(" · ")}
-            {recipe.prepMinutes && recipe.cookMinutes
-              ? ` · ${totalMinutes} min total`
-              : null}
+            {recipe.prepMinutes ? (
+              <T k="minPrep" vars={{ n: recipe.prepMinutes }} />
+            ) : null}
+            {recipe.prepMinutes && recipe.cookMinutes ? " · " : null}
+            {recipe.cookMinutes ? (
+              <T k="minCook" vars={{ n: recipe.cookMinutes, label: recipe.cookLabel }} />
+            ) : null}
+            {recipe.prepMinutes && recipe.cookMinutes ? (
+              <>
+                {" · "}
+                <T k="minTotal" vars={{ n: totalMinutes }} />
+              </>
+            ) : null}
           </p>
         ) : null}
 
@@ -138,7 +143,9 @@ export default async function RecipePage({
 
       {recipe.notes ? (
         <section className="mt-8">
-          <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">Notes</h2>
+          <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
+            <T k="notes" />
+          </h2>
           <p className="text-sm whitespace-pre-line text-text-muted">{recipe.notes}</p>
         </section>
       ) : null}
@@ -146,7 +153,7 @@ export default async function RecipePage({
       {recipe.storage ? (
         <section className="mt-8">
           <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
-            Storage and reheating
+            <T k="storage" />
           </h2>
           <p className="text-sm whitespace-pre-line text-text-muted">{recipe.storage}</p>
         </section>
@@ -154,7 +161,9 @@ export default async function RecipePage({
 
       {recipe.log.length > 0 ? (
         <section className="mt-8">
-          <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">Log</h2>
+          <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
+            <T k="log" />
+          </h2>
           <ul className="flex flex-col gap-2">
             {recipe.log.map((entry, index) => (
               <li key={`${entry.date}-${index}`} className="text-sm">
@@ -179,14 +188,14 @@ export default async function RecipePage({
           <SourceLine sourceUrl={recipe.source} className="text-xs" />
           {repo ? (
           <p className="text-xs text-text-muted">
-            This recipe is one file.{" "}
+            <T k="oneFile" />{" "}
             <a
               href={`${repo}/blob/main/${file}`}
               target="_blank"
               rel="noreferrer noopener"
               className="underline hover:text-text"
             >
-              Read it
+              <T k="readIt" />
             </a>
             ,{" "}
             <a
@@ -195,7 +204,7 @@ export default async function RecipePage({
               rel="noreferrer noopener"
               className="underline hover:text-text"
             >
-              edit it
+              <T k="editIt" />
             </a>
             , or see{" "}
             <a
@@ -204,7 +213,7 @@ export default async function RecipePage({
               rel="noreferrer noopener"
               className="underline hover:text-text"
             >
-              everything it has ever been
+              <T k="history" />
             </a>
             .
           </p>

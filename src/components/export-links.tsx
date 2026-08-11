@@ -1,3 +1,7 @@
+"use client";
+
+import { useT } from "@/components/language";
+
 /**
  * Export links for one recipe.
  *
@@ -8,6 +12,7 @@
  */
 export function ExportLinks({ slug }: { slug: string }) {
   const base = `/recipes/${slug}/export`;
+  const t = useT();
 
   const links: ReadonlyArray<{ href: string; label: string; title: string }> = [
     { href: `${base}/json/`, label: "JSON", title: "Canonical machine format" },
@@ -23,14 +28,14 @@ export function ExportLinks({ slug }: { slug: string }) {
     },
     {
       href: `${base}/txt/`,
-      label: "For a tracker",
+      label: t("forTracker"),
       title: "Plaintext block for pasting into a tracker's recipe importer",
     },
   ];
 
   return (
     <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
-      <span>Export:</span>
+      <span>{t("exportLabel")}:</span>
       {links.map((link) => (
         <a
           key={link.label}

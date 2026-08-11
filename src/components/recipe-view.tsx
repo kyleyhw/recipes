@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useT } from "@/components/language";
 import { MacroPanel } from "@/components/macro-panel";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
@@ -47,6 +48,7 @@ export function RecipeView({
 }) {
   const [servings, setServings] = useState(baseServings);
   const [chosenTinLabel, setChosenTinLabel] = useState("");
+  const t = useT();
 
   /**
    * Choosing a tin sets the serving count, rather than being a separate scale.
@@ -104,7 +106,7 @@ export function RecipeView({
             setServings((n) => Math.max(step, n - step));
           }}
           className="h-9 w-9 rounded-card border border-border bg-surface text-lg leading-none"
-          aria-label="Fewer servings"
+          aria-label={t("fewerServings")}
         >
           −
         </button>
@@ -119,7 +121,7 @@ export function RecipeView({
             setServings((n) => n + step);
           }}
           className="h-9 w-9 rounded-card border border-border bg-surface text-lg leading-none"
-          aria-label="More servings"
+          aria-label={t("moreServings")}
         >
           +
         </button>
@@ -132,7 +134,7 @@ export function RecipeView({
             }}
             className="ml-1 text-xs text-text-muted hover:text-text"
           >
-            Reset
+            {t("reset")}
           </button>
         ) : null}
       </div>
@@ -140,8 +142,8 @@ export function RecipeView({
       {tin ? (
         <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-muted">
           <span>
-            Written for a {describeTin(tin)}
-            {tin.depth ? `, ${tin.depth} cm deep` : ""}.
+            {t("writtenForTin", { tin: describeTin(tin) })}
+            {tin.depth ? t("tinDepth", { n: tin.depth }) : ""}.
           </span>
           {/* The question a cook actually has is not "what tin does this want?"
               but "I have this tin — how much do I make?". Choosing a tin sets
@@ -149,14 +151,14 @@ export function RecipeView({
               and the macros follow. It is the same alpha as the stepper, driven
               from the other end. */}
           <label className="flex items-center gap-2">
-            <span>I have a</span>
+            <span>{t("iHaveA")}</span>
             <select
               value={chosenTinLabel}
               onChange={(event) => chooseTin(event.target.value)}
-              aria-label="The tin you are baking in"
+              aria-label={t("tinSelectLabel")}
               className="rounded-card border border-border bg-surface px-2 py-1 text-sm outline-none focus:border-accent"
             >
-              <option value="">{describeTin(tin)} (as written)</option>
+              <option value="">{t("asWritten", { tin: describeTin(tin) })}</option>
               {ALL_STANDARD_TINS.map((option) => (
                 <option key={option.label} value={option.label}>
                   {option.label}
@@ -175,7 +177,7 @@ export function RecipeView({
 
       <section className="mt-8">
         <h2 className="mb-3 text-sm font-semibold tracking-wide uppercase">
-          Ingredients
+          {t("ingredients")}
         </h2>
         <ul className="flex flex-col gap-1.5">
           {scaled.ingredients.map((ingredient) => (
@@ -188,9 +190,9 @@ export function RecipeView({
                 {ingredient.passedThrough && isScaled ? (
                   <span
                     className="shrink-0 text-xs text-text-muted"
-                    title="Excluded from scaling — multiplying it would produce a wrong amount"
+                    title={t("notScaledTitle")}
                   >
-                    (not scaled)
+                    {t("notScaled")}
                   </span>
                 ) : null}
               </div>
@@ -222,7 +224,9 @@ export function RecipeView({
       </section>
 
       <section className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide uppercase">Method</h2>
+        <h2 className="mb-3 text-sm font-semibold tracking-wide uppercase">
+          {t("method")}
+        </h2>
         <ol className="flex flex-col gap-3">
           {steps.map((step_, index) => (
             <li key={`${index}-${step_.slice(0, 24)}`} className="flex gap-3 text-sm">

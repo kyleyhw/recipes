@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   shelveRecipes,
   sortRecipes,
-  SORT_LABELS,
+  SORT_KEYS,
+  SORT_STRING_KEYS,
   type RecipeSummary,
   type SortKey,
 } from "@/lib/content/summary";
@@ -210,7 +211,7 @@ describe("shelves", () => {
   });
 
   /** Every recipe appears exactly once, whichever arrangement is chosen. */
-  it.each(Object.keys(SORT_LABELS) as SortKey[])(
+  it.each(SORT_KEYS)(
     "loses no recipe when arranged by %s",
     (key) => {
       const shelved = shelveRecipes(MIXED, key).flatMap((s) => s.recipes);
@@ -218,6 +219,18 @@ describe("shelves", () => {
       expect(new Set(shelved.map((r) => r.slug)).size).toBe(MIXED.length);
     },
   );
+
+  /**
+   * Every arrangement has a label to offer, in every language. A key added to
+   * SORT_KEYS without a row in SORT_STRING_KEYS would render as nothing at all
+   * — an empty line in the menu, which looks like a bug in the menu.
+   */
+  it("names every arrangement it offers", () => {
+    for (const key of SORT_KEYS) {
+      expect(SORT_STRING_KEYS[key]).toBeTruthy();
+    }
+    expect(SORT_KEYS).toHaveLength(Object.keys(SORT_STRING_KEYS).length);
+  });
 
   it("handles an empty collection", () => {
     expect(shelveRecipes([], "category")).toEqual([]);

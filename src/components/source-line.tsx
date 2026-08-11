@@ -1,3 +1,7 @@
+"use client";
+
+import { useT } from "@/components/language";
+
 /**
  * Where a recipe came from.
  *
@@ -22,6 +26,7 @@ export function SourceLine({
   sourceUrl: string | null;
   className?: string;
 }) {
+  const t = useT();
   if (!sourceUrl) return null;
 
   let host = sourceUrl;
@@ -34,7 +39,7 @@ export function SourceLine({
 
   return (
     <p className={`text-text-muted ${className}`}>
-      From{" "}
+      {t("from")}{" "}
       <a
         href={sourceUrl}
         target="_blank"

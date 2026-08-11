@@ -1,9 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useLanguage, useT } from "@/components/language";
 import { RecipeCard } from "@/components/recipe-card";
 import { SortMenu } from "@/components/sort-menu";
-import { shelveRecipes, type RecipeSummary, type SortKey } from "@/lib/content/summary";
+import {
+  shelveRecipes,
+  UNATTRIBUTED_SHELF,
+  type RecipeSummary,
+  type SortKey,
+} from "@/lib/content/summary";
+import { translateCategory } from "@/lib/i18n/strings";
 
 /**
  * Browsing, searching and arranging the collection.
@@ -37,6 +44,8 @@ export function Browse({
 }) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("category");
+  const t = useT();
+  const language = useLanguage();
 
   const trimmed = query.trim().toLowerCase();
 
@@ -66,8 +75,8 @@ export function Browse({
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search titles, ingredients and tags"
-          aria-label="Search recipes"
+          placeholder={t("searchPlaceholder")}
+          aria-label={t("searchLabel")}
           className="min-w-48 flex-1 rounded-card border border-border bg-surface px-3 py-2 text-base outline-none focus:border-accent"
         />
         <SortMenu value={sort} onChange={setSort} />
@@ -77,7 +86,7 @@ export function Browse({
             onClick={() => setQuery("")}
             className="rounded-card border border-border bg-surface-2 px-3 py-2 text-sm"
           >
-            Clear
+            {t("clear")}
           </button>
         ) : null}
       </div>
@@ -88,14 +97,13 @@ export function Browse({
 
       {trimmed.length > 0 ? (
         <p className="mb-4 text-sm text-text-muted">
-          {matching.length} result{matching.length === 1 ? "" : "s"} for “{query.trim()}”
+          {t("resultsFor", { n: matching.length, q: query.trim() })}
         </p>
       ) : null}
 
       {matching.length === 0 ? (
         <p className="text-sm text-text-muted">
-          Nothing matched. Search covers titles, descriptions, cuisines, tags and
-          ingredient lines.
+          {t("nothingMatched")}
         </p>
       ) : (
         <div className="flex flex-col gap-8">
@@ -103,7 +111,12 @@ export function Browse({
             <section key={shelf.name || "all"}>
               {shelf.name ? (
                 <h2 className="mb-3 text-sm font-semibold tracking-wide uppercase">
-                  {shelf.name}
+                  {/* A shelf is named after a category or a cuisine. The first
+                      the string table knows; the second is whatever the recipe
+                      file says, and is left alone. */}
+                  {shelf.name === UNATTRIBUTED_SHELF
+                    ? t("unattributed")
+                    : translateCategory(language, shelf.name)}
                   <span className="numeric ml-2 font-normal text-text-muted">
                     {shelf.recipes.length}
                   </span>

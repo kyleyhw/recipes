@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Recipes">
+  <!--
+    A knife and fork, drawn to a 32-unit grid.
+
+    The two are one object, not two icons that happen to be adjacent: they share
+    a handle width, a terminal radius, a top edge at y=5 and a bottom edge at
+    y=27. The pair is centred on its own bounding box and then nudged left by
+    0.9, because the knife's solid blade carries more visual weight than three
+    thin tines and pulls the eye that way — geometric centring would look
+    off-centre.
+
+    Negative space is graded: 1.6 between the tines, 2.7 between the two
+    utensils. The larger gap is what makes the mark read as two objects rather
+    than as six strokes.
+
+    The mark fills 22 of 32 units, a 69% safe area. More looks cramped in a tab
+    strip; less disappears at 16 px, which is the only size anyone really sees.
+
+    Ink tile with the mark knocked out in bone: a filled tile holds its shape on
+    a white tab strip and a dark one alike, where a bare silhouette vanishes
+    into one or the other.
+  -->
+  <rect width="32" height="32" rx="7" fill="#141413"/>
+  <g fill="#f0eee6" transform="translate(0.9 0)">
+    <rect x="6.6" y="5" width="2" height="7.8" rx="1"/>
+    <rect x="10.2" y="5" width="2" height="7.8" rx="1"/>
+    <rect x="13.8" y="5" width="2" height="7.8" rx="1"/>
+    <path d="M6.6 11.2h9.2v1.6q0 2.8-2.75 3.7h-3.7q-2.75-.9-2.75-3.7z"/>
+    <path d="M9.3 15.8h3.8v9.3a1.9 1.9 0 0 1-3.8 0z"/>
+    <path d="M18.5 16.3V6.6C18.5 5.6 19 5 19.6 5c1.8 0 3.5 3.4 3.5 6.6v4.7z"/>
+    <path d="M18.9 15.8h3.8v9.3a1.9 1.9 0 0 1-3.8 0z"/>
+  </g>
+</svg>
