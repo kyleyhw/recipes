@@ -95,34 +95,48 @@ export default function RootLayout({
                 </span>
               ))}
             </nav>
-            <div className="flex items-center gap-4">
+            {/* Divided from the categories by a rule and a wider gap, not by
+                space alone: these two are not another two shelves to browse,
+                and at a glance they were reading as though they were. */}
+            <div className="ml-2 flex items-center gap-3 border-l border-border pl-4 text-sm">
               <IngredientSidebar ingredients={ingredients} />
-              <Link href="/about" className="text-sm text-text-muted hover:text-accent">
+              <span aria-hidden="true" className="text-border">
+                |
+              </span>
+              <Link href="/about" className="text-text-muted hover:text-accent">
                 About
               </Link>
-              {repo ? (
-                <a
-                  href={repo}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-sm text-text-muted hover:text-text"
-                >
-                  Source
-                </a>
-              ) : null}
             </div>
           </header>
 
           <main className="flex-1 py-6">{children}</main>
 
-          {/* The theme lives at the bottom: it is set once and then never
-              touched again, so it does not deserve a place in the header beside
-              the things you use on every visit. */}
+          {/* The theme and the repository live at the bottom. Neither is part
+              of browsing: one is set once and never touched again, and the
+              other is where you go when you have stopped reading recipes and
+              started reading the thing that holds them. */}
           <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 text-xs text-text-muted">
             <span>
               Macros are computed for export, not tracked here. One file per recipe.
             </span>
-            <ThemeToggle />
+            <div className="flex items-center gap-3">
+              {repo ? (
+                <>
+                  <a
+                    href={repo}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="hover:text-text"
+                  >
+                    Source
+                  </a>
+                  <span aria-hidden="true" className="text-border">
+                    |
+                  </span>
+                </>
+              ) : null}
+              <ThemeToggle />
+            </div>
           </footer>
         </div>
       </body>

@@ -69,7 +69,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => choose(theme === "dark" ? "light" : "dark")}
-      className="text-sm text-text-muted hover:text-text"
+      className="hover:text-text"
       aria-label={
         theme === "dark" ? "Switch to the light theme" : "Switch to the dark theme"
       }

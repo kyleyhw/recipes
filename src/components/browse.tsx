@@ -2,12 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { RecipeCard } from "@/components/recipe-card";
-import {
-  shelveRecipes,
-  SORT_LABELS,
-  type RecipeSummary,
-  type SortKey,
-} from "@/lib/content/summary";
+import { SortMenu } from "@/components/sort-menu";
+import { shelveRecipes, type RecipeSummary, type SortKey } from "@/lib/content/summary";
 
 /**
  * Browsing, searching and arranging the collection.
@@ -74,21 +70,7 @@ export function Browse({
           aria-label="Search recipes"
           className="min-w-48 flex-1 rounded-card border border-border bg-surface px-3 py-2 text-base outline-none focus:border-accent"
         />
-        <label className="flex items-center gap-2 text-sm text-text-muted">
-          <span className="sr-only sm:not-sr-only">Arrange by</span>
-          <select
-            value={sort}
-            onChange={(event) => setSort(event.target.value as SortKey)}
-            aria-label="Arrange recipes by"
-            className="rounded-card border border-border bg-surface px-2 py-2 text-sm outline-none focus:border-accent"
-          >
-            {(Object.keys(SORT_LABELS) as SortKey[]).map((key) => (
-              <option key={key} value={key}>
-                {SORT_LABELS[key]}
-              </option>
-            ))}
-          </select>
-        </label>
+        <SortMenu value={sort} onChange={setSort} />
         {trimmed.length > 0 ? (
           <button
             type="button"
