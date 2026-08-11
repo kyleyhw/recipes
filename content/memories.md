@@ -55,7 +55,7 @@ not be fine on a noticeboard.
   later as a coverage gap on the recipe page. The gap is always a missing row,
   never a limit of the arithmetic.
 
-- **Every recipe needs a diagram**, and it must obey the eight rules in
+- **Every recipe needs a diagram**, and it must obey the eleven rules in
   [docs/diagram.md](../docs/diagram.md). Four are worth remembering while
   writing one:
 
@@ -63,6 +63,8 @@ not be fine on a noticeboard.
   - those ingredients must be a **contiguous** block of rows;
   - so the left column, read downward, is the order things **enter** the
     recipe — not the order the ingredient list happens to use;
+  - **labels stay short** — two or three words, a number only where the number
+    is the point. The detail is in the method; the diagram is the shape;
   - and a **sequence is a chain, not a fan**. "Whisk in the sugar, then the
     eggs, then the bananas" is three operations. Drawing it as one node with
     four inputs loses the ordering the instruction exists to convey.

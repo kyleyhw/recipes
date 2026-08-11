@@ -163,6 +163,7 @@ export default async function RecipePage({
       </header>
 
       <RecipeView
+        title={recipe.title}
         baseServings={recipe.servings}
         servingLabel={recipe.servingLabel}
         scalable={prepared.scalable}

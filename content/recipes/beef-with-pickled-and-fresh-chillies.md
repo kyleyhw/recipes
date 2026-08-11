@@ -56,12 +56,12 @@ Keeps two days in the fridge. Bring it back in a hot dry wok for 60 seconds — 
 
 ## Diagram
 
-- stir 3 times, plate at once
+- stir, plate
   - stir 45 s
-    - sear 20 s, stir 40 s, lift out pink
+    - sear 60 s
       - rest 10 min
         - stir in
-          - stir 60 s in one direction
+          - stir 60 s
             - beef sirloin
             - 1/2 salt
             - 1/2 light soy sauce
@@ -69,8 +69,8 @@ Keeps two days in the fridge. Bring it back in a hot dry wok for 60 seconds — 
             - cornflour
           - 1/3 peanut oil
       - 1/3 peanut oil
-    - 60 s, then soy down the side
-      - fry 30 s, gold at the edges
+    - fry 60 s
+      - fry 30 s
         - 1/3 peanut oil
         - ginger
         - garlic

@@ -88,24 +88,16 @@ export interface PlacedNode extends DiagramNode {
   row: number;
   /** Distance from the leaf column. Leaves are 0. */
   column: number;
-}
-
-/**
- * A gap between an ingredient and the operation it feeds.
- *
- * Rendered as an empty, borderless cell. **Not** as a stretched ingredient:
- * widening the ingredient's own box to fill the gap makes the left column
- * ragged and makes the ingredient read as though it were itself an operation.
- * The gap is nothing, and it should look like nothing.
- */
-export interface BlankCell {
-  blank: true;
-}
-
-export type Cell = PlacedNode | BlankCell;
-
-export function isBlank(cell: Cell): cell is BlankCell {
-  return "blank" in cell;
+  /**
+   * Columns this cell spans, reaching from its own to its parent's.
+   *
+   * A cell stretches to meet the operation it feeds rather than leaving the
+   * squares between them empty. That is how the form is drawn — a lone
+   * ingredient dropping into a late operation is one long box, not a short box
+   * and a hole — and a table with no empty squares is also a table the browser
+   * cannot lay out in more than one way.
+   */
+  colSpan: number;
 }
 
 export interface Diagram {
@@ -116,13 +108,17 @@ export interface Diagram {
   rows: number;
   /** Every node, in the order cells should be emitted. */
   cells: PlacedNode[];
+  /** The table, row by row, ready to emit. Never has a hole in it. */
+  grid: PlacedNode[][];
   /**
-   * The table, row by row, ready to emit.
+   * Operations that take no ingredients at all, spanning the full width above
+   * everything else — "heat the oven to 175 °C".
    *
-   * Every entry is either a node's cell or a blank filler. A renderer walks
-   * this and needs to know nothing about the tree.
+   * They have no inputs, so they have no rows to stand against and no place in
+   * the tree. Written as the top-level lines *before* the root, and rendered as
+   * banners, which is where the form has always put them.
    */
-  grid: Cell[][];
+  banners: string[];
 }
 
 /**
@@ -150,11 +146,14 @@ export function parseDiagram(lines: readonly string[]): DiagramNode | null {
 
   if (entries.length === 0) return null;
 
-  // The first line is the root, and everything else hangs beneath it. A file
-  // with two top-level lines has two roots and no single dish; the second and
-  // any after it are dropped rather than guessed at.
-  const first = entries[0];
+  // The *last* top-level line is the root; any before it are banners. A dish
+  // has one finishing operation, so anything at the top level above it is a
+  // step with no ingredients of its own — heating an oven, lighting a grill.
+  const base = Math.min(...entries.map((entry) => entry.indent));
+  const topLevel = entries.filter((entry) => entry.indent === base);
+  const first = topLevel[topLevel.length - 1];
   if (!first) return null;
+  const rootAt = entries.indexOf(first);
 
   const rootSplit = splitShare(first.text);
   const root: DiagramNode = {
@@ -167,7 +166,7 @@ export function parseDiagram(lines: readonly string[]): DiagramNode | null {
     { indent: first.indent, node: root },
   ];
 
-  for (const entry of entries.slice(1)) {
+  for (const entry of entries.slice(rootAt + 1)) {
     while (stack.length > 1 && entry.indent <= (stack[stack.length - 1]?.indent ?? 0)) {
       stack.pop();
     }
@@ -185,6 +184,22 @@ export function parseDiagram(lines: readonly string[]): DiagramNode | null {
   }
 
   return root;
+}
+
+/** The banner lines: every top-level line above the root. */
+export function parseBanners(lines: readonly string[]): string[] {
+  const entries: Array<{ indent: number; text: string }> = [];
+  for (const line of lines) {
+    const match = /^(\s*)(?:[-*+]|\d+[.)])\s+(.*)$/.exec(line);
+    if (!match) continue;
+    const text = (match[2] ?? "").trim();
+    if (text.length === 0) continue;
+    entries.push({ indent: (match[1] ?? "").replace(/\t/g, "    ").length, text });
+  }
+  if (entries.length === 0) return [];
+  const base = Math.min(...entries.map((entry) => entry.indent));
+  const topLevel = entries.filter((entry) => entry.indent === base);
+  return topLevel.slice(0, -1).map((entry) => entry.text);
 }
 
 /** Serialises a tree back to the outline, for a byte-stable round trip. */
@@ -284,18 +299,25 @@ export function placeDiagram(root: DiagramNode): Diagram {
   const rootColumn = columnOf(root);
   const cells: PlacedNode[] = [];
 
-  const walk = (node: DiagramNode, row: number): void => {
+  const walk = (node: DiagramNode, row: number, parentColumn: number): void => {
     const column = columnOf(node);
-    cells.push({ ...node, row, column, rowSpan: leafCount(node) });
+    cells.push({
+      ...node,
+      row,
+      column,
+      rowSpan: leafCount(node),
+      // The root has no parent to reach, so it spans one column.
+      colSpan: Math.max(1, parentColumn - column),
+    });
 
     let next = row;
     for (const child of node.children) {
-      walk(child, next);
+      walk(child, next, column);
       next += leafCount(child);
     }
   };
 
-  walk(root, 0);
+  walk(root, 0, rootColumn + 1);
 
   // Row-major: everything on row 0 first, and within a row, leftmost first —
   // which is *ascending* column, because column 0 is the leaves. Ingredients
@@ -305,35 +327,10 @@ export function placeDiagram(root: DiagramNode): Diagram {
   const columns = rootColumn + 1;
   const rows = leafCount(root);
 
-  // Which (row, column) squares a cell already covers, so the gaps can be
-  // found rather than guessed at.
-  const covered: boolean[][] = Array.from({ length: rows }, () =>
-    Array.from({ length: columns }, () => false),
-  );
-  for (const cell of cells) {
-    for (let r = cell.row; r < cell.row + cell.rowSpan; r += 1) {
-      const line = covered[r];
-      if (line) line[cell.column] = true;
-    }
-  }
+  const grid: PlacedNode[][] = Array.from({ length: rows }, () => []);
+  for (const cell of cells) grid[cell.row]?.push(cell);
 
-  const starts = new Map<string, PlacedNode>();
-  for (const cell of cells) starts.set(`${cell.row}:${cell.column}`, cell);
-
-  const grid: Cell[][] = [];
-  for (let r = 0; r < rows; r += 1) {
-    const line: Cell[] = [];
-    for (let c = 0; c < columns; c += 1) {
-      const start = starts.get(`${r}:${c}`);
-      if (start) line.push(start);
-      else if (!covered[r]?.[c]) line.push({ blank: true });
-      // Otherwise this square belongs to a cell that started on an earlier row,
-      // and there is nothing to emit for it.
-    }
-    grid.push(line);
-  }
-
-  return { root, columns, rows, cells, grid };
+  return { root, columns, rows, cells, grid, banners: [] };
 }
 
 /**
@@ -396,5 +393,6 @@ export function buildDiagram(
 ): Diagram | null {
   const parsed = parseDiagram(lines);
   if (!parsed) return null;
-  return placeDiagram(linkIngredients(parsed, ingredientNames));
+  const placed = placeDiagram(linkIngredients(parsed, ingredientNames));
+  return { ...placed, banners: parseBanners(lines) };
 }

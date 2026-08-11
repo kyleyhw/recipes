@@ -95,10 +95,48 @@ plausible, and no longer means anything.
    Those two orders differ, and the diagram follows use. Banana bread lists the
    bananas second and uses them fourth; the diagram puts them fourth.
 
-8. **Gaps are blank.** If an ingredient goes straight into an operation three
-   columns away, the cells between it are empty and borderless. The ingredient's
-   own box does **not** stretch to fill them — a stretched box makes the left
-   column ragged and makes the ingredient read as though it were an operation.
+8. **Cells stretch; nothing is ever blank.** An ingredient that goes straight
+   into an operation three columns away is drawn as one long box reaching it,
+   not as a short box and a hole. There is no empty square anywhere in the
+   table.
+
+   *This rule was written backwards at first* — as "gaps are blank" — on a
+   misreading of the cheesecake. Both of Chu's diagrams stretch: the chicken's
+   `3 boneless, skinless chicken breasts` runs under `combine`, and its three
+   spices run under `brine 4 hours`. Corrected here rather than quietly, since
+   this file is the record.
+
+9. **A banner for operations with no ingredients.** Heating an oven or lighting
+   a grill takes nothing in, so it has no rows to stand against. It spans the
+   full width above everything, and is written as a top-level line *before* the
+   root:
+
+   ```markdown
+   - heat the oven to 175 °C
+   - cool 1 h
+     - bake 60 min
+       ...
+   ```
+
+   The last top-level line is the root; anything above it is a banner.
+
+10. **A title bar**, carrying the recipe's name and the serving count the table
+    is drawn at. It is inside the table so that it is exactly as wide as the
+    diagram and scrolls with it.
+
+11. **One fill for every cell.** Position already says which cells are
+    ingredients — the left column is ingredients and nothing else — so
+    colouring operations differently states twice what the layout says once.
+
+### Keep the labels short
+
+`combine`. `season`. `brine 4 hours`. Two or three words, and a number only
+where the number is the point. Long labels force wide columns, wide columns
+force a horizontal scrollbar, and the scrollbar hides the last operation —
+which is the finished dish.
+
+The detail belongs in the method, which is directly below. The diagram is the
+shape.
 
 ### A chain is not a fan
 
@@ -120,8 +158,9 @@ laid out this way cannot violate them.
 Rule 8 holds by construction too, since the renderer emits blank cells rather
 than stretching anything.
 
-Rules 1 and 2 are asserted in `tests/unit/diagram.test.ts` against every recipe
-in the collection, not against a fixture.
+Rules 1, 2 and 8 are asserted in `tests/unit/diagram.test.ts` against every
+recipe in the collection, not against a fixture — rule 8 as "every row adds up
+to the full width", which is the same statement as "no holes".
 
 `validateDiagram` catches the one mechanical failure that is otherwise
 invisible: **an ingredient the diagram forgot**. A recipe with fourteen

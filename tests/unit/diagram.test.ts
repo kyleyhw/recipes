@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
   buildDiagram,
-  isBlank,
   linkIngredients,
   parseDiagram,
   placeDiagram,
@@ -117,27 +116,23 @@ describe("placing the cells", () => {
    * cell spanning down from above, or a blank. A row that is short leaves a
    * hole, and a table with holes is laid out however the browser feels like.
    */
-  it("accounts for every column on every row", () => {
+  it("fills every row to the full width, with no holes", () => {
     for (let row = 0; row < placed.rows; row += 1) {
-      const spanningFromAbove = placed.cells.filter(
-        (c) => c.row < row && c.row + c.rowSpan > row,
-      ).length;
-      expect(placed.grid[row]!.length + spanningFromAbove, `row ${row}`).toBe(
-        placed.columns,
-      );
+      const width = placed.cells
+        .filter((c) => c.row <= row && c.row + c.rowSpan > row)
+        .reduce((total, c) => total + c.colSpan, 0);
+      expect(width, `row ${row}`).toBe(placed.columns);
     }
   });
 
   /**
-   * Rule 8. A stretched ingredient makes the left column ragged and reads as
-   * though the ingredient were itself an operation.
+   * Rule 8. A lone ingredient dropping into a late operation is one long box,
+   * not a short box and a hole.
    */
-  it("leaves gaps blank rather than stretching an ingredient across them", () => {
-    const walnuts = placed.grid.flat().find((c) => !isBlank(c) && c.text === "walnuts");
-    expect(walnuts && !isBlank(walnuts) && walnuts.column).toBe(0);
-    // walnuts sits three columns from the root, so its row carries blanks.
-    const row = placed.grid[4]!;
-    expect(row.filter(isBlank).length).toBeGreaterThan(0);
+  it("stretches a shallow cell across the gap to its parent", () => {
+    const walnuts = placed.cells.find((c) => c.text === "walnuts");
+    expect(walnuts?.column).toBe(0);
+    expect(walnuts?.colSpan).toBe(placed.columns - 1);
   });
 
   it("emits cells left to right within a row", () => {
@@ -196,5 +191,22 @@ describe("the shipped collection", () => {
         else expect(cell.column, cell.text).toBe(0);
       }
     }
+  });
+});
+
+describe("banners", () => {
+  /** An operation with no ingredients has no rows to stand against. */
+  it("takes the top-level lines above the root", () => {
+    const d = buildDiagram(
+      ["- heat the oven to 175 °C", "- bake", "  - flour", "  - salt"],
+      ["flour", "salt"],
+    );
+    expect(d?.banners).toEqual(["heat the oven to 175 °C"]);
+    expect(d?.root.text).toBe("bake");
+    expect(d?.rows).toBe(2);
+  });
+
+  it("has none when the outline is a single tree", () => {
+    expect(buildDiagram(["- bake", "  - flour"], ["flour"])?.banners).toEqual([]);
   });
 });

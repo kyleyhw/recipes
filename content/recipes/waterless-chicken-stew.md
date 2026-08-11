@@ -63,11 +63,11 @@ Reheat gently in a covered pan over low heat for 12 minutes, stirring once. A ha
 
 ## Diagram
 
-- simmer covered, 60–90 min, lid never lifted
-  - pour over, then seal
-    - layer 3: the meat and aromatics
-      - layer 2: the sweets
-        - layer 1: the liquid source
+- simmer 60–90 min
+  - pour over, seal
+    - layer 3
+      - layer 2
+        - layer 1
           - Chinese cabbage
         - carrots
         - onion
@@ -76,7 +76,7 @@ Reheat gently in a covered pan over low heat for 12 minutes, stirring once. A ha
       - ginger
       - garlic
       - bay leaves
-    - whisk 20 s
+    - whisk
       - salt
       - msg
       - white pepper

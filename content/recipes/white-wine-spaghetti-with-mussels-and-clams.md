@@ -59,21 +59,21 @@ If there is some left, pick the meat out of the shells before it goes in the fri
 
 ## Diagram
 
-- toss twice, serve at once
-  - toss off the heat, 30 s
-    - toss over high heat, 2 min
-      - boil 2 min under the packet
+- toss, serve
+  - toss off the heat
+    - toss 2 min
+      - boil
         - salt
         - spaghetti
-      - lift out, keep every drop
-        - steam covered, 3 min then 3 min
-          - reduce hard, 90 s
-            - soften, 3 min
-              - foam, 2 min
+      - lift out
+        - steam 6 min
+          - reduce 90 s
+            - soften 3 min
+              - foam 2 min
                 - olive oil
                 - 1/2 unsalted butter
               - shallots
-            - 60 s, gold at the rim
+            - fry 60 s
               - garlic
               - chilli flakes
             - dry white wine

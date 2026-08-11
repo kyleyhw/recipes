@@ -55,20 +55,21 @@ To bring a day-old loaf back, warm slices in a dry frying pan over medium heat f
 
 ## Diagram
 
-- cool 15 min in the tin, 1 h on a rack
-  - bake 175 °C, 55–65 min
-    - fold in, 3 turns
-      - fold, no more than 15 turns
+- heat the oven to 175 °C
+- cool 1 h
+  - bake 60 min
+    - fold in
+      - fold 15 turns
         - whisk in
-          - whisk in, 20 s each
-            - whisk to wet sand
-              - brown 4–6 min, cool
+          - whisk in
+            - whisk
+              - brown 5 min
                 - unsalted butter
               - brown sugar
             - eggs
-          - mash to no lump bigger than a pea
+          - mash
             - bananas
-        - stir 10 s
+        - stir
           - all-purpose flour
           - bicarbonate of soda
           - salt

@@ -1,7 +1,7 @@
 "use client";
 
 import { useT } from "@/components/language";
-import { isBlank, type Diagram } from "@/lib/content/diagram";
+import type { Diagram } from "@/lib/content/diagram";
 
 /**
  * The recipe as a table of ingredients and operations.
@@ -28,8 +28,13 @@ import { isBlank, type Diagram } from "@/lib/content/diagram";
 export function RecipeDiagram({
   diagram,
   line,
+  title,
+  servings,
 }: {
   diagram: Diagram;
+  /** Shown in the bar across the top, with the serving count beside it. */
+  title: string;
+  servings: string;
   /**
    * The text for a leaf: the ingredient at that index, scaled and translated,
    * and reduced to `share` of itself where the leaf takes only part of it.
@@ -44,21 +49,41 @@ export function RecipeDiagram({
         {t("diagram")}
       </h2>
 
-      <div className="overflow-x-auto rounded-card border border-border bg-surface p-2">
-        <table className="border-collapse text-xs">
+      <div className="overflow-x-auto">
+        <table className="border-collapse border border-rule text-xs">
           <caption className="sr-only">{t("diagramCaption")}</caption>
           <tbody>
+            {/* The title bar. Inside the table rather than above it, so it is
+                as wide as the diagram is and scrolls with it — and it carries
+                the serving count, which is the one number the whole table is
+                drawn at. */}
+            <tr>
+              <th
+                colSpan={diagram.columns}
+                scope="colgroup"
+                className="border border-rule px-2.5 py-1.5 text-left font-semibold"
+              >
+                {title} <span className="numeric font-normal">({servings})</span>
+              </th>
+            </tr>
+
+            {/* Operations with no ingredients — heating an oven — span the
+                full width above everything, because they have no rows to
+                stand against. */}
+            {diagram.banners.map((banner) => (
+              <tr key={banner}>
+                <td
+                  colSpan={diagram.columns}
+                  className="border border-rule px-2.5 py-1.5 text-center"
+                >
+                  {banner}
+                </td>
+              </tr>
+            ))}
+
             {diagram.grid.map((row, index) => (
               <tr key={index}>
-                {row.map((cell, at) => {
-                  // A gap between an ingredient and the operation it feeds.
-                  // Empty and unbordered: the gap is nothing and should look
-                  // like nothing. Hidden from assistive technology, which would
-                  // otherwise announce a blank cell per gap per row.
-                  if (isBlank(cell)) {
-                    return <td key={`blank-${at}`} aria-hidden="true" />;
-                  }
-
+                {row.map((cell) => {
                   const isLeaf = cell.children.length === 0;
                   const text =
                     cell.ingredientIndex !== null
@@ -69,19 +94,14 @@ export function RecipeDiagram({
                     <td
                       key={`${cell.row}-${cell.column}-${cell.text}`}
                       rowSpan={cell.rowSpan}
+                      colSpan={cell.colSpan}
+                      // One fill for every cell. Position says which is an
+                      // ingredient and which is an operation — the left column
+                      // is ingredients and nothing else — so colouring them
+                      // differently states twice what the layout already says.
                       className={[
-                        "border border-rule px-2.5 py-1.5 align-middle",
-                        // Ingredients read as data and operations as
-                        // instructions, so they are weighted differently: the
-                        // eye should find the left edge of the tree without
-                        // reading any of it.
-                        isLeaf
-                          ? "min-w-36 max-w-56 text-text"
-                          // Wide enough that a two-word operation stays on one
-                          // line. Narrower and every label stacks into a
-                          // column of single words, which is unreadable at the
-                          // heights a rowspan of nine produces.
-                          : "min-w-28 max-w-44 bg-surface-2 text-center font-medium text-text-muted",
+                        "border border-rule px-2.5 py-1 align-middle",
+                        isLeaf ? "min-w-40 text-left" : "text-center",
                       ].join(" ")}
                     >
                       {text}

@@ -39,6 +39,7 @@ import {
  * All the arithmetic is the same pure code the server build used, unchanged.
  */
 export function RecipeView({
+  title,
   baseServings,
   servingLabel,
   scalable,
@@ -48,6 +49,7 @@ export function RecipeView({
   translations = {},
   diagram = null,
 }: {
+  title: string;
   baseServings: number;
   servingLabel: string;
   scalable: ScalableIngredient[];
@@ -382,6 +384,10 @@ export function RecipeView({
       {diagram ? (
         <RecipeDiagram
           diagram={diagram}
+          title={translated?.title ?? title}
+          servings={`${Number.isInteger(servings) ? servings : servings.toFixed(1)} ${shownServingLabel}${
+            language === "en" && servings !== 1 ? "s" : ""
+          }`}
           line={(index, share) => {
             const ingredient = scaled.ingredients[index];
             return ingredient ? ingredientLine(ingredient, index, share) : null;
