@@ -65,7 +65,7 @@ export function RecipeCard({
             style={placeholderStyle(recipe.slug)}
             aria-hidden="true"
           >
-            <span className="text-3xl font-semibold text-white/70">{glyph}</span>
+            <span className="text-6xl drop-shadow-sm">{glyph}</span>
           </div>
         )}
       </div>

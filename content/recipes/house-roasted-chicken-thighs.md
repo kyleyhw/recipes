@@ -14,7 +14,7 @@ cookLabel: roast
 
 ## Ingredients
 
-- 800 g chicken thighs, bone in and skin on
+- 800 g chicken thighs (about 6), bone in and skin on
 - 1 tbsp neutral oil
 - 1.5 tsp salt
 - 1 tsp black pepper

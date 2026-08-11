@@ -12,9 +12,9 @@ cookMinutes: 10
 
 ## Ingredients
 
-- 325 g sweetcorn
+- 325 g sweetcorn (1 tin)
 - 500 ml chicken stock
-- 200 g chicken breast, cooked and shredded
+- 200 g chicken breast (1 breast), cooked and shredded
 - 1 tbsp light soy sauce
 - 1 tsp sesame oil
 - 1 tbsp cornflour

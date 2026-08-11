@@ -13,15 +13,15 @@ cookMinutes: 10
 ## Ingredients
 
 - 500 g pork mince
-- 60 ml lime juice
+- 60 ml lime juice (2 limes)
 - 5 tbsp fish sauce
 - 2 tsp granulated sugar
 - 1 tsp chilli flakes
 - 3 shallots, very thinly sliced
-- 20 g mint
-- 20 g coriander, leaves and tender stems
+- 20 g mint (a large bunch)
+- 20 g coriander (a large bunch), leaves and tender stems
 - 2 tbsp jasmine rice
-- 120 g lettuce, in whole leaves
+- 120 g lettuce (12 large leaves), kept whole
 
 ## Method
 

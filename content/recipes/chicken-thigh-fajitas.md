@@ -13,7 +13,7 @@ cookLabel: bake
 
 ## Ingredients
 
-- 640 g chicken thighs, boneless and skinless
+- 640 g chicken thighs (about 5), boneless and skinless
 - 2 bell peppers, sliced into 2 cm strips
 - 1 onion, sliced into 2 cm wedges
 - 1.5 tbsp olive oil

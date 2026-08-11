@@ -377,9 +377,15 @@ export function validateDiagram(
     if (linked.has(index)) continue;
     // An ingredient split across two uses is written in words — "half the
     // butter" — so it links to nothing. It still has to be *mentioned*.
-    const mentioned = leaves.some((leaf) =>
-      leaf.text.toLowerCase().includes(name.toLowerCase()),
-    );
+    // The bracketed count on an ingredient line — "(2 limes)" — is for the
+    // reader, not part of the name, so it is dropped before looking for a
+    // mention of it in the diagram.
+    const bare = name
+      .replace(/\(.*?\)/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+    const mentioned = leaves.some((leaf) => leaf.text.toLowerCase().includes(bare));
     if (!mentioned) problems.push(`ingredient missing from the diagram: ${name}`);
   }
 

@@ -2,46 +2,46 @@
   {
     "name": "Mains",
     "slug": "mains",
-    "glyph": "M"
+    "glyph": "🍽️"
   },
   {
     "name": "Sides",
     "slug": "sides",
-    "glyph": "S"
+    "glyph": "🥗"
   },
   {
     "name": "Breakfast",
     "slug": "breakfast",
-    "glyph": "B"
+    "glyph": "🍳"
   },
   {
     "name": "Soups & Stews",
     "slug": "soups-and-stews",
-    "glyph": "U"
+    "glyph": "🍲"
   },
   {
     "name": "Baked Goods",
     "slug": "baked-goods",
-    "glyph": "K"
+    "glyph": "🍞"
   },
   {
     "name": "Desserts",
     "slug": "desserts",
-    "glyph": "D"
+    "glyph": "🍰"
   },
   {
     "name": "Sauces & Condiments",
     "slug": "sauces-and-condiments",
-    "glyph": "C"
+    "glyph": "🫙"
   },
   {
     "name": "Snacks",
     "slug": "snacks",
-    "glyph": "N"
+    "glyph": "🥜"
   },
   {
     "name": "Drinks",
     "slug": "drinks",
-    "glyph": "R"
+    "glyph": "🍵"
   }
 ]

@@ -13,11 +13,11 @@ cookLabel: bake
 
 ## Ingredients
 
-- 1 kg chicken thighs, boneless and skinless
+- 1 kg chicken thighs (about 8), boneless and skinless
 - 3 tbsp ginger, minced
 - 2 tbsp shaoxing wine
 - 1.5 tsp salt
-- 200 g jasmine rice
+- 200 g jasmine rice (1 cup)
 - 1 tbsp neutral oil
 - 1 clove garlic, minced
 - 4 spring onions, white parts only

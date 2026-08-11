@@ -14,8 +14,8 @@ cookLabel: roast
 
 ## Ingredients
 
-- 400 g broccoli, cut into bite-sized florets
-- 200 g baby corn
+- 400 g broccoli (1 large head), cut into bite-sized florets
+- 200 g baby corn (about 25 ears)
 - 2 tbsp neutral oil
 - 1 tsp salt
 - 0.5 tsp black pepper

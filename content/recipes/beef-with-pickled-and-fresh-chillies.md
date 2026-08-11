@@ -13,16 +13,16 @@ source: 菠萝精呀 (Xiaohongshu)
 
 ## Ingredients
 
-- 300 g beef sirloin, sliced 3 mm thick across the grain
+- 300 g beef sirloin (1 large steak), sliced 3 mm thick across the grain
 - 1 tsp cornflour
 - 2 tbsp light soy sauce
 - 1 tbsp oyster sauce
 - 3 tbsp peanut oil
 - 20 g ginger, finely chopped
 - 6 cloves garlic, finely chopped
-- 60 g bird's eye chillies, sliced into rings
+- 60 g bird's eye chillies (about 30), sliced into rings
 - 60 g pickled chillies, roughly chopped
-- 60 g coriander, stems and leaves, cut into 4 cm lengths
+- 60 g coriander (2 large bunches), stems and leaves, cut into 4 cm lengths
 - 1 tsp salt
 - 1 tsp chicken bouillon powder
 

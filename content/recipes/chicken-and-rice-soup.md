@@ -13,13 +13,13 @@ cookMinutes: 25
 ## Ingredients
 
 - 300 g chicken thighs, boneless and skinless
-- 20 g ginger, sliced
+- 20 g ginger (a thumb), sliced
 - 1 tbsp shaoxing wine
 - 1 tbsp light soy sauce
 - 600 ml water
-- 300 g cooked rice
+- 300 g cooked rice (2 bowls)
 - 4 spring onions, chopped
-- 20 g fried shallots
+- 20 g fried shallots (a large pinch each)
 - 0.5 tsp salt
 - 0.25 tsp black pepper
 

@@ -13,12 +13,12 @@ cookLabel: bake
 
 ## Ingredients
 
-- 400 g turkey breast
+- 400 g turkey breast (2 breasts)
 - 2 tbsp dijon mustard
 - 1 tsp dried thyme
 - 0.75 tsp salt
 - 0.5 tsp black pepper
-- 15 g walnuts, crushed
+- 15 g walnuts (a small handful), crushed
 
 ## Method
 

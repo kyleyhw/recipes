@@ -14,12 +14,12 @@ cookLabel: simmer
 
 ## Ingredients
 
-- 400 g Chinese cabbage, roughly chopped
-- 250 g carrots, roughly chopped
+- 400 g Chinese cabbage (a quarter head), roughly chopped
+- 250 g carrots (3 small), roughly chopped
 - 1 onion, roughly chopped
 - 1 apple, roughly chopped
-- 1 kg bone-in chicken thighs
-- 100 g ginger, roughly chopped
+- 1 kg bone-in chicken thighs (about 6)
+- 100 g ginger (2 thumbs), roughly chopped
 - 10 cloves garlic, peeled and smashed flat
 - 4 bay leaves
 - 1.5 tsp salt

@@ -14,12 +14,12 @@ cookMinutes: 25
 
 - 800 g chicken thighs, boneless and cut into 3 cm chunks
 - 2 tbsp sesame oil
-- 40 g ginger, sliced thinly
+- 40 g ginger (a thumb), sliced thinly
 - 6 cloves garlic, peeled and left whole
 - 3 tbsp shaoxing wine
 - 3 tbsp light soy sauce
 - 1 tbsp granulated sugar
-- 30 g thai basil
+- 30 g thai basil (a large handful)
 
 ## Method
 

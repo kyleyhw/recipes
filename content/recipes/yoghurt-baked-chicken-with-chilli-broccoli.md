@@ -13,15 +13,15 @@ cookLabel: bake
 
 ## Ingredients
 
-- 640 g chicken thighs, boneless and skinless
-- 180 g greek yogurt
+- 640 g chicken thighs (about 5), boneless and skinless
+- 180 g greek yogurt (a small pot)
 - 1.5 tsp garlic powder
 - 1.5 tsp onion powder
 - 1 tsp dried oregano
 - 1.25 tsp salt
 - 1 tsp black pepper
 - 15 g parmesan
-- 400 g broccoli, cut into bite-sized florets
+- 400 g broccoli (1 large head), cut into bite-sized florets
 - 1 tbsp olive oil
 - 0.5 tsp chilli flakes
 - 1 lemon, cut into wedges

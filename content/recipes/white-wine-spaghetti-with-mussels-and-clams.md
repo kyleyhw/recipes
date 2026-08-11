@@ -22,9 +22,9 @@ source: https://www.thekitchn.com/white-wine-spaghetti-with-mussels-and-clams-23
 - 2 shallots, thinly sliced
 - 8 cloves garlic, thinly sliced
 - 1 tsp chilli flakes
-- 180 ml dry white wine
+- 180 ml dry white wine (a large glass)
 - 1 tsp salt
-- 4 tbsp flat-leaf parsley, chopped
+- 4 tbsp flat-leaf parsley (a small bunch), chopped
 - 2 tbsp lemon juice
 - 1 lemon, cut into wedges
 

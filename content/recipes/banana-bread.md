@@ -27,7 +27,7 @@ tin:
 - 1 tsp salt
 - 2 tsp ground cinnamon
 - 1 tsp ground cardamom
-- 80 g walnuts, roughly chopped
+- 80 g walnuts (a small handful), roughly chopped
 
 ## Method
 

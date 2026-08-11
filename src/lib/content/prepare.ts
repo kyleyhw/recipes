@@ -84,10 +84,21 @@ export function matchIngredient(
   library: readonly LibraryIngredient[],
 ): LibraryIngredient | null {
   const normalised = normaliseName(name);
+  // The bare name with any parenthesis dropped. A line may carry a count in
+  // brackets — "60 ml lime juice (2 limes)" — which is for the reader and not
+  // part of the name, and which `normaliseName` cannot be relied on to survive
+  // because it also strips apostrophes ("bird's eye" becomes "bird s eye").
+  const withoutBrackets = name
+    .replace(/\(.*?\)/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
   const candidates = [
     normalised,
     name.trim().toLowerCase(),
+    withoutBrackets,
     normalised.replace(/s$/, ""),
+    withoutBrackets.replace(/s$/, ""),
   ];
 
   for (const candidate of candidates) {
