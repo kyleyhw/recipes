@@ -55,6 +55,15 @@ export default function AboutPage() {
         publicly readable; only the repository owner can change it.
       </p>
 
+      <h2 className="mt-8 text-sm font-semibold tracking-wide uppercase">Memories</h2>
+      <p className="mt-2 text-sm">
+        Standing instructions for the whole collection — how strongly things should be
+        seasoned, that steps must be unambiguous, that every recipe says how to store and
+        reheat it, and that baked goods state their tin. They live in{" "}
+        <code>content/memories.md</code>, so changing a preference is a commit and the
+        history says when it changed.
+      </p>
+
       {repo ? (
         <p className="mt-8 text-sm">
           <a

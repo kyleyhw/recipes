@@ -121,6 +121,7 @@ export default async function RecipePage({
         scalable={prepared.scalable}
         nutrition={prepared.nutrition}
         steps={recipe.steps}
+        tin={recipe.tin}
       />
 
       <div className="mt-4">
@@ -131,6 +132,15 @@ export default async function RecipePage({
         <section className="mt-8">
           <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">Notes</h2>
           <p className="text-sm whitespace-pre-line text-text-muted">{recipe.notes}</p>
+        </section>
+      ) : null}
+
+      {recipe.storage ? (
+        <section className="mt-8">
+          <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
+            Storage and reheating
+          </h2>
+          <p className="text-sm whitespace-pre-line text-text-muted">{recipe.storage}</p>
         </section>
       ) : null}
 

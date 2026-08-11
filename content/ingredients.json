@@ -84,7 +84,7 @@
     "fiber100g": 0,
     "sugar100g": 97.02,
     "sodiumMg100g": 28,
-    "densityGPerMl": 0.8875,
+    "densityGPerMl": 0.887,
     "gramsPerUnit": null,
     "sourceNote": "USDA SR Legacy 168833; rho from King Arthur, 213 g per cup packed",
     "source": "USDA"
@@ -309,7 +309,7 @@
     "fiber100g": 10.6,
     "sugar100g": 0,
     "sodiumMg100g": 2,
-    "densityGPerMl": 0.37083333333333335,
+    "densityGPerMl": 0.371,
     "gramsPerUnit": null,
     "sourceNote": "USDA SR Legacy 169705; rho from King Arthur, 89 g per cup",
     "source": "USDA"
@@ -324,7 +324,7 @@
     "fiber100g": 0,
     "sugar100g": 0,
     "sodiumMg100g": 38758,
-    "densityGPerMl": 1.1375,
+    "densityGPerMl": 1.137,
     "gramsPerUnit": null,
     "sourceNote": "USDA SR Legacy 173468 (table salt); rho 273 g per cup; sodium by stoichiometry",
     "source": "USDA"
@@ -354,7 +354,7 @@
     "fiber100g": 0,
     "sugar100g": 0.06,
     "sodiumMg100g": 11,
-    "densityGPerMl": 0.9458333333333333,
+    "densityGPerMl": 0.946,
     "gramsPerUnit": null,
     "sourceNote": "USDA SR Legacy 173430; rho from the 227 g (2-stick) US cup",
     "source": "USDA"
@@ -384,7 +384,7 @@
     "fiber100g": 1.3,
     "sugar100g": 0.12,
     "sodiumMg100g": 5,
-    "densityGPerMl": 0.7708333333333334,
+    "densityGPerMl": 0.771,
     "gramsPerUnit": null,
     "sourceNote": "USDA SR Legacy 168878 (long-grain, raw); rho 185 g per cup",
     "source": "USDA"

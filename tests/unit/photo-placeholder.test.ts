@@ -67,14 +67,21 @@ describe("colour constraints", () => {
     }
   });
 
-  it("keeps hue within the colour circle", () => {
-    for (let i = 0; i < 2000; i += 1) {
+  /**
+   * Hue is confined to the warm arc rather than the full circle. Unconstrained,
+   * roughly a third of slugs landed in blue-violet — "banana-bread" hashed to
+   * lavender — which fights the bone-and-clay palette, and worse in dark mode
+   * where the card is the brightest thing on the page.
+   */
+  it("keeps every hue inside the warm arc", () => {
+    for (let i = 0; i < 400; i++) {
       const hues = [...backgroundOf(`recipe-${i}`).matchAll(/ (\d+)\)/g)].map((m) =>
         Number(m[1]),
       );
+      expect(hues.length).toBeGreaterThan(0);
       for (const h of hues) {
-        expect(h).toBeGreaterThanOrEqual(0);
-        expect(h).toBeLessThan(360);
+        expect(h).toBeGreaterThanOrEqual(20);
+        expect(h).toBeLessThanOrEqual(100);
       }
     }
   });

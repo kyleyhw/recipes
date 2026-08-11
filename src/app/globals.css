@@ -3,46 +3,52 @@
 /*
  * Design tokens.
  *
- * Defined on bare `:root` so the light palette is the unconditional default,
- * then redefined under `prefers-color-scheme: dark`. Every colour has a value
- * outside any media query, so no surface is left unpainted if the query does
- * not match.
+ * **Dark is the default.** The palette on bare `:root` is the dark one, and the
+ * light palette is applied only when it is explicitly asked for — by the
+ * toggle, which stamps `data-theme="light"` on the root element. Opening the
+ * site therefore gives dark regardless of the operating system's setting.
  *
- * The palette is warm and low-contrast by intent: this application is read in
- * a kitchen, often at arm's length, and a stark white field under bright
- * lights is harder to scan than a paper-toned one.
+ * That is a deliberate inversion of the usual arrangement, and the reason it is
+ * safe is that no colour is defined *only* inside a selector that might not
+ * match: the dark values are unconditional, so a browser that never applies the
+ * attribute still renders a complete, painted page.
+ *
+ * The two palettes are one design rather than two. The bone that is the paper
+ * in light mode becomes the ink in dark mode, and the near-black ink becomes
+ * the field. Only the clay accent is adjusted between them, and only because it
+ * has to be: at its light value it goes muddy against a near-black field.
  */
 :root {
-  --bg: #faf7f2;
-  --surface: #ffffff;
-  --surface-2: #f3ede4;
-  --border: #e4dace;
-  --text: #241f1a;
-  --text-muted: #6b6157;
-  --accent: #a8481f;
-  --accent-soft: #f6e5dc;
-  --ok: #2f6b45;
-  --warn: #8a5a00;
-  --warn-soft: #fbf0d8;
-  --danger: #a32c22;
-  --radius: 0.625rem;
+  --bg: #191816;
+  --surface: #221f1c;
+  --surface-2: #2b2723;
+  --border: #38332d;
+  --text: #f0eee6;
+  --text-muted: #a09a8c;
+  --accent: #e08a63;
+  --accent-soft: #39251d;
+  --ok: #7ab894;
+  --warn: #d8ab5f;
+  --warn-soft: #332a16;
+  --danger: #e2867a;
+  --radius: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #17140f;
-    --surface: #211d17;
-    --surface-2: #2b251d;
-    --border: #3a3229;
-    --text: #f1e9df;
-    --text-muted: #a99c8d;
-    --accent: #e08a5c;
-    --accent-soft: #38251c;
-    --ok: #7fbf95;
-    --warn: #e0b567;
-    --warn-soft: #33280f;
-    --danger: #e58a7f;
-  }
+:root[data-theme="light"] {
+  /* The bone field. Cards sit *above* it, a shade lighter, so a panel reads as
+     laid on the page rather than cut into it. */
+  --bg: #f0eee6;
+  --surface: #faf9f5;
+  --surface-2: #e7e4d8;
+  --border: #dcd8c9;
+  --text: #141413;
+  --text-muted: #6b6759;
+  --accent: #c8613f;
+  --accent-soft: #f7e7df;
+  --ok: #3f6b52;
+  --warn: #8a5a00;
+  --warn-soft: #f2ead4;
+  --danger: #a8392b;
 }
 
 @theme inline {
@@ -59,18 +65,53 @@
   --color-warn-soft: var(--warn-soft);
   --color-danger: var(--danger);
   --radius-card: var(--radius);
+
+  --font-serif:
+    "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Charter, Georgia,
+    serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+/*
+ * Serif for the recipe, sans for the controls.
+ *
+ * The split is the point: what you cook from reads as a document, and what you
+ * press reads as an interface. Numbers are sans too — a serif's old-style
+ * figures are lovely in prose and wrong in a column of quantities, where what
+ * matters is that 3 and 8 are instantly distinguishable at arm's length.
+ */
 body {
   background: var(--bg);
   color: var(--text);
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    sans-serif;
+  font-family: var(--font-serif);
   -webkit-font-smoothing: antialiased;
+}
+
+header,
+nav,
+footer,
+button,
+input,
+select,
+textarea,
+table,
+.numeric {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  letter-spacing: -0.005em;
+}
+
+/* The method is read a line at a time, standing up, from a phone propped
+   against something. It wants more room between lines than prose normally
+   gets. */
+article li,
+article p {
+  line-height: 1.6;
 }
 
 /* Tabular figures for quantities and macros, so scaled numbers do not jitter

@@ -8,6 +8,11 @@ servings: 10
 servingLabel: slice
 prepMinutes: 20
 cookMinutes: 60
+tin:
+  shape: loaf
+  length: 23
+  width: 13
+  depth: 7
 ---
 
 ## Ingredients
@@ -39,4 +44,10 @@ cookMinutes: 60
 
 The bananas must be black, not merely spotted. Yellow bananas make a loaf that tastes of flour.
 
-Keeps four days wrapped, and freezes well cut into slices — toast them from frozen.
+## Storage
+
+Keeps four days at room temperature, wrapped in foil rather than cling film — foil keeps the crust from going tacky.
+
+Freezes well cut into slices: wrap them individually, and they keep three months. Toast from frozen for 3 minutes, or microwave a slice for 20 seconds.
+
+To bring a day-old loaf back, warm slices in a dry frying pan over medium heat for 90 seconds a side, until the cut faces are crisp. Do not microwave a whole loaf — it steams the crust soft.

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { MacroPanel } from "@/components/macro-panel";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
+import { describeTin, tinAdviceText, type Tin } from "@/lib/tin";
 
 /**
  * The ingredients, the method, and the macro panel, at whatever serving count
@@ -29,12 +30,14 @@ export function RecipeView({
   scalable,
   nutrition,
   steps,
+  tin = null,
 }: {
   baseServings: number;
   servingLabel: string;
   scalable: ScalableIngredient[];
   nutrition: NutritionInput[];
   steps: string[];
+  tin?: Tin | null;
 }) {
   const [servings, setServings] = useState(baseServings);
 
@@ -56,6 +59,9 @@ export function RecipeView({
   );
 
   const isScaled = Math.abs(scaled.factor - 1) > 1e-9;
+  // A cake batter doubled into the same tin is twice as deep and bakes wrongly.
+  // The tin has to scale with the recipe, and by the square root of alpha.
+  const tinNote = tin ? tinAdviceText(tin, scaled.factor) : null;
   // A step of one serving is right for 4 people and absurd for 24 cookies.
   const step = baseServings >= 12 ? Math.round(baseServings / 12) : 1;
 
@@ -92,6 +98,19 @@ export function RecipeView({
           </button>
         ) : null}
       </div>
+
+      {tin ? (
+        <p className="mt-3 text-sm text-text-muted">
+          Baked in a {describeTin(tin)}
+          {tin.depth ? `, ${tin.depth} cm deep` : ""}.
+        </p>
+      ) : null}
+
+      {tinNote ? (
+        <p className="mt-2 rounded-card bg-warn-soft px-3 py-2 text-sm text-warn">
+          {tinNote}
+        </p>
+      ) : null}
 
       <section className="mt-8">
         <h2 className="mb-3 text-sm font-semibold tracking-wide uppercase">

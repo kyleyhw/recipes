@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { loadCollection } from "@/lib/content/library";
+import { decimal, decimalOrDash } from "@/lib/format";
 
 /**
  * The canonical ingredient library.
@@ -43,15 +44,23 @@ export default function IngredientsPage() {
             {ingredients.map((ingredient) => (
               <tr key={ingredient.name} className="border-b border-border/60 align-top">
                 <td className="py-2 pr-3">{ingredient.name}</td>
-                <td className="numeric py-2 pr-3 text-right">{ingredient.kcal100g}</td>
-                <td className="numeric py-2 pr-3 text-right">{ingredient.protein100g}</td>
-                <td className="numeric py-2 pr-3 text-right">{ingredient.carbs100g}</td>
-                <td className="numeric py-2 pr-3 text-right">{ingredient.fat100g}</td>
                 <td className="numeric py-2 pr-3 text-right">
-                  {ingredient.densityGPerMl ?? "—"}
+                  {decimal(ingredient.kcal100g, 1)}
                 </td>
                 <td className="numeric py-2 pr-3 text-right">
-                  {ingredient.gramsPerUnit ?? "—"}
+                  {decimal(ingredient.protein100g, 1)}
+                </td>
+                <td className="numeric py-2 pr-3 text-right">
+                  {decimal(ingredient.carbs100g, 1)}
+                </td>
+                <td className="numeric py-2 pr-3 text-right">
+                  {decimal(ingredient.fat100g, 1)}
+                </td>
+                <td className="numeric py-2 pr-3 text-right">
+                  {decimalOrDash(ingredient.densityGPerMl)}
+                </td>
+                <td className="numeric py-2 pr-3 text-right">
+                  {decimalOrDash(ingredient.gramsPerUnit, 1)}
                 </td>
                 <td className="py-2 text-xs text-text-muted">
                   {ingredient.sourceNote ?? ingredient.usdaFdcId ?? "—"}

@@ -49,9 +49,20 @@ function hash(input: string): number {
  * The two stops are separated by 40 degrees of hue, enough for a visible
  * gradient without crossing into an unrelated colour.
  */
+/** The warm arc, in oklch degrees: terracotta (20) through amber to olive (100). */
+const WARM_HUE_START = 20;
+const WARM_HUE_SPAN = 80;
+
 export function placeholderStyle(seed: string): CSSProperties {
   const h = hash(seed);
-  const hue = h % 360;
+  // Hue is confined to the warm arc rather than the full circle. Unconstrained,
+  // roughly a third of slugs land in the blue-violet range — "banana-bread"
+  // hashed to lavender — which fights the bone-and-clay palette badly, and
+  // worse in dark mode where the card is the brightest thing on the page.
+  //
+  // 20 to 100 degrees in oklch spans terracotta through amber to olive: the
+  // colours of the food this collection is full of, and of the palette itself.
+  const hue = WARM_HUE_START + (h % WARM_HUE_SPAN);
   // 0.06-0.12: muted, comfortably below the chroma of a real photograph.
   const chroma = 0.06 + ((h >>> 9) % 7) / 100;
   // 0.55-0.68: dark enough for white text at AA contrast, light enough not to
@@ -59,7 +70,10 @@ export function placeholderStyle(seed: string): CSSProperties {
   const lightness = 0.55 + ((h >>> 17) % 14) / 100;
 
   const from = `oklch(${lightness.toFixed(3)} ${chroma.toFixed(3)} ${hue})`;
-  const to = `oklch(${(lightness - 0.1).toFixed(3)} ${chroma.toFixed(3)} ${(hue + 40) % 360})`;
+  // The second stop stays inside the arc too, so a gradient cannot slide out of
+  // it: the span is clamped rather than wrapped.
+  const toHue = Math.min(hue + 40, WARM_HUE_START + WARM_HUE_SPAN);
+  const to = `oklch(${(lightness - 0.1).toFixed(3)} ${chroma.toFixed(3)} ${toHue})`;
 
   return { backgroundImage: `linear-gradient(135deg, ${from}, ${to})` };
 }

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { repoUrl } from "@/lib/site";
+import { ThemeToggle, themeScript } from "@/components/theme-toggle";
 
 export const metadata: Metadata = {
   title: "Recipes",
@@ -28,6 +29,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* Applies a remembered light choice before first paint, so nobody who
+            chose light sees a dark flash on every navigation. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-dvh bg-bg text-text antialiased">
         <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 sm:px-6">
           {/* nowrap + scroll: at phone width the link set is wider than the
@@ -44,16 +50,19 @@ export default function RootLayout({
                 About
               </Link>
             </nav>
-            {repo ? (
-              <a
-                href={repo}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="text-sm text-text-muted hover:text-text"
-              >
-                Source
-              </a>
-            ) : null}
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              {repo ? (
+                <a
+                  href={repo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-sm text-text-muted hover:text-text"
+                >
+                  Source
+                </a>
+              ) : null}
+            </div>
           </header>
 
           <main className="flex-1 py-6">{children}</main>

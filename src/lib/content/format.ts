@@ -1,5 +1,6 @@
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
 import { z } from "zod";
+import type { Tin, TinShape } from "@/lib/tin";
 
 /**
  * The on-disk recipe file: Markdown with YAML front matter.
@@ -53,6 +54,20 @@ const frontMatterSchema = z.object({
     .nullish(),
   /** DRAFT recipes are Claude's proposals, not yet cooked here. */
   draft: z.boolean().nullish(),
+  /**
+   * The tin a baked recipe is written for. Required for anything baked, because
+   * without it the recipe cannot be scaled honestly: doubling a batter into the
+   * same tin doubles its depth and ruins the bake. See lib/tin.ts.
+   */
+  tin: z
+    .object({
+      shape: z.enum(["round", "square", "rectangular", "loaf"]),
+      diameter: z.number().positive().nullish(),
+      length: z.number().positive().nullish(),
+      width: z.number().positive().nullish(),
+      depth: z.number().positive().nullish(),
+    })
+    .nullish(),
 });
 
 export interface RecipeFile {
@@ -69,12 +84,16 @@ export interface RecipeFile {
   photo: string | null;
   photoCredit: { siteName: string | null; pageUrl: string | null } | null;
   draft: boolean;
+  /** The tin this is baked in, when it is baked. */
+  tin: Tin | null;
   /** One ingredient per entry, as written. */
   ingredients: string[];
   /** One step per entry. */
   steps: string[];
-  /** Free prose after the method: storage, variations, warnings. */
+  /** Free prose after the method: variations, warnings, what to look out for. */
   notes: string | null;
+  /** How to keep it and how to bring it back. */
+  storage: string | null;
   /** The cook's log, newest last. Dated lines. */
   log: LogEntry[];
 }
@@ -92,6 +111,13 @@ const HEADINGS = {
   ingredients: /^##\s+ingredients\s*$/i,
   method: /^##\s+method\s*$/i,
   notes: /^##\s+notes\s*$/i,
+  /**
+   * Storage and reheating gets its own section rather than living inside the
+   * notes, because it is the part read on the *second* day, when the loaf is
+   * already made and the question is only how to bring it back. Burying it in a
+   * paragraph about ripe bananas is how it gets missed.
+   */
+  storage: /^##\s+(storage|storage and reheating|keeping)\s*$/i,
   log: /^##\s+log\s*$/i,
 } as const;
 
@@ -161,9 +187,19 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
           }
         : null,
       draft: parsed.data.draft ?? false,
+      tin: parsed.data.tin
+        ? {
+            shape: parsed.data.tin.shape as TinShape,
+            ...(parsed.data.tin.diameter ? { diameter: parsed.data.tin.diameter } : {}),
+            ...(parsed.data.tin.length ? { length: parsed.data.tin.length } : {}),
+            ...(parsed.data.tin.width ? { width: parsed.data.tin.width } : {}),
+            ...(parsed.data.tin.depth ? { depth: parsed.data.tin.depth } : {}),
+          }
+        : null,
       ingredients: sections.ingredients.map(stripListMarker).filter(Boolean),
       steps: sections.steps.map(stripListMarker).filter(Boolean),
       notes: sections.notes.join("\n").trim() || null,
+      storage: sections.storage.join("\n").trim() || null,
       log: parseLog(sections.log),
     },
   };
@@ -173,6 +209,7 @@ interface Sections {
   ingredients: string[];
   steps: string[];
   notes: string[];
+  storage: string[];
   log: string[];
 }
 
@@ -185,7 +222,13 @@ interface Sections {
  * promoting it to an ingredient would put it in the shopping list.
  */
 function splitSections(body: string): Sections {
-  const sections: Sections = { ingredients: [], steps: [], notes: [], log: [] };
+  const sections: Sections = {
+    ingredients: [],
+    steps: [],
+    notes: [],
+    storage: [],
+    log: [],
+  };
   let current: keyof Sections | null = null;
 
   for (const line of body.split("\n")) {
@@ -201,6 +244,10 @@ function splitSections(body: string): Sections {
       current = "notes";
       continue;
     }
+    if (HEADINGS.storage.test(line)) {
+      current = "storage";
+      continue;
+    }
     if (HEADINGS.log.test(line)) {
       current = "log";
       continue;
@@ -213,7 +260,7 @@ function splitSections(body: string): Sections {
     }
     if (current && line.trim().length > 0) sections[current].push(line);
     // Blank lines are kept only in prose, where paragraphs matter.
-    else if (current === "notes") sections.notes.push("");
+    else if (current === "notes" || current === "storage") sections[current].push("");
   }
 
   return sections;
@@ -266,6 +313,15 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
     };
   }
   if (recipe.draft) frontMatter["draft"] = true;
+  if (recipe.tin) {
+    frontMatter["tin"] = {
+      shape: recipe.tin.shape,
+      ...(recipe.tin.diameter ? { diameter: recipe.tin.diameter } : {}),
+      ...(recipe.tin.length ? { length: recipe.tin.length } : {}),
+      ...(recipe.tin.width ? { width: recipe.tin.width } : {}),
+      ...(recipe.tin.depth ? { depth: recipe.tin.depth } : {}),
+    };
+  }
 
   const parts = [
     "---",
@@ -283,6 +339,10 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
 
   if (recipe.notes) {
     parts.push("", "## Notes", "", recipe.notes.trim());
+  }
+
+  if (recipe.storage) {
+    parts.push("", "## Storage", "", recipe.storage.trim());
   }
 
   if (recipe.log.length > 0) {

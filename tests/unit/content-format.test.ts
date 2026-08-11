@@ -39,9 +39,11 @@ function recipe(overrides: Partial<RecipeFile> = {}): RecipeFile {
     photo: null,
     photoCredit: null,
     draft: false,
+    tin: null,
     ingredients: ["220 g butter", "300 g plain flour", "2 eggs"],
     steps: ["Cream the butter for 4 minutes, until pale.", "Fold in the flour."],
     notes: "Keeps three days wrapped.",
+    storage: "Four days in a tin. Freezes three months, sliced.",
     log: [{ date: "2026-08-11", text: "Dry at 180 g butter; raised it." }],
     ...overrides,
   };
@@ -73,8 +75,11 @@ describe("round trip", () => {
     ["no timings", { prepMinutes: null, cookMinutes: null }],
     ["no source", { source: null }],
     ["no notes", { notes: null }],
+    ["no storage", { storage: null }],
     ["no log", { log: [] }],
     ["a draft", { draft: true }],
+    ["a baking tin", { tin: { shape: "round" as const, diameter: 20, depth: 7 } }],
+    ["a loaf tin", { tin: { shape: "loaf" as const, length: 23, width: 13 } }],
     [
       "a photo with credit",
       {

@@ -12,7 +12,14 @@ import { placeholderStyle } from "@/lib/photos/placeholder";
  * also the only thing that costs nothing.
  */
 export function RecipeCard({ recipe, glyph }: { recipe: RecipeFile; glyph: string }) {
-  const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
+  // Prep and cook shown separately rather than summed: they answer different
+  // questions. "Can I start this now?" is prep; "will it be ready by eight?" is
+  // the total, and a cook can add two numbers. A single figure hides which of
+  // the two a 90-minute recipe actually is.
+  const times = [
+    recipe.prepMinutes ? `${recipe.prepMinutes} min prep` : null,
+    recipe.cookMinutes ? `${recipe.cookMinutes} min cook` : null,
+  ].filter(Boolean);
 
   return (
     <Link
@@ -43,7 +50,7 @@ export function RecipeCard({ recipe, glyph }: { recipe: RecipeFile; glyph: strin
       <div className="p-3">
         <h3 className="text-sm leading-snug font-medium">{recipe.title}</h3>
         <p className="numeric mt-1 text-xs text-text-muted">
-          {totalMinutes > 0 ? `${totalMinutes} min` : null}
+          {times.join(" · ")}
           {recipe.draft ? (
             <span className="ml-2 rounded bg-warn-soft px-1.5 py-0.5 text-warn">
               draft
