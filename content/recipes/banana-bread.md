@@ -2,6 +2,7 @@
 title: Banana Bread
 description: Dark, dense and heavily spiced, with brown butter and black bananas.
 category: Baked Goods
+cuisine: British
 tags:
   - freezes well
 servings: 10

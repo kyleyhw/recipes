@@ -1,5 +1,6 @@
 import Link from "next/link";
-import type { RecipeFile } from "@/lib/content/format";
+import type { RecipeSummary } from "@/lib/content/summary";
+import { decimal } from "@/lib/format";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 
 /**
@@ -11,11 +12,22 @@ import { placeholderStyle } from "@/lib/photos/placeholder";
  * as a visual one — and on a static site with no image service behind it, it is
  * also the only thing that costs nothing.
  */
-export function RecipeCard({ recipe, glyph }: { recipe: RecipeFile; glyph: string }) {
+export function RecipeCard({
+  recipe,
+  glyph,
+  showProtein = false,
+}: {
+  recipe: RecipeSummary;
+  glyph: string;
+  /**
+   * Shown when the listing is ranked by protein. Ranking by a number the reader
+   * cannot see is a ranking they have to take on trust.
+   */
+  showProtein?: boolean;
+}) {
   // Prep and cook shown separately rather than summed: they answer different
-  // questions. "Can I start this now?" is prep; "will it be ready by eight?" is
-  // the total, and a cook can add two numbers. A single figure hides which of
-  // the two a 90-minute recipe actually is.
+  // questions. "Can I start this now?" is prep; a cook can add two numbers for
+  // the total. A single figure hides which of the two a 90-minute recipe is.
   const times = [
     recipe.prepMinutes ? `${recipe.prepMinutes} min prep` : null,
     recipe.cookMinutes ? `${recipe.cookMinutes} min ${recipe.cookLabel}` : null,
@@ -57,6 +69,22 @@ export function RecipeCard({ recipe, glyph }: { recipe: RecipeFile; glyph: strin
             </span>
           ) : null}
         </p>
+        {showProtein ? (
+          <p className="numeric mt-1 text-xs text-accent">
+            {recipe.proteinPerServing === null
+              ? "protein unknown"
+              : `${decimal(recipe.proteinPerServing, 1)} g protein per serving`}
+            {/* Coverage qualifies the figure rather than hiding it: a number
+                derived from a fifth of the recipe's mass is not the same claim
+                as one derived from all of it. */}
+            {recipe.proteinPerServing !== null && recipe.coverage < 0.9 ? (
+              <span className="text-text-muted">
+                {" "}
+                ({Math.round(recipe.coverage * 100)}% covered)
+              </span>
+            ) : null}
+          </p>
+        ) : null}
       </div>
     </Link>
   );

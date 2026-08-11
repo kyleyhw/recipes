@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Browse } from "@/components/browse";
 import { loadCollection } from "@/lib/content/library";
+import { summarise } from "@/lib/content/summary";
 
 /**
  * The collection.
@@ -12,7 +13,11 @@ import { loadCollection } from "@/lib/content/library";
  * seen.
  */
 export default function BrowsePage() {
-  const { recipes, categories, problems } = loadCollection();
+  const { recipes, categories, ingredients, problems } = loadCollection();
+  // Summarised at build time so the browser can sort by protein per serving
+  // without shipping the ingredient library and the nutrition pipeline.
+  const summaries = recipes.map((recipe) => summarise(recipe, ingredients));
+  const glyphs = Object.fromEntries(categories.map((c) => [c.name, c.glyph]));
 
   return (
     <div>
@@ -50,7 +55,11 @@ export default function BrowsePage() {
           </Link>
         </div>
       ) : (
-        <Browse recipes={recipes} categories={categories} />
+        <Browse
+          recipes={summaries}
+          categoryOrder={categories.map((c) => c.name)}
+          glyphs={glyphs}
+        />
       )}
     </div>
   );

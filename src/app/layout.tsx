@@ -4,6 +4,8 @@ import Link from "next/link";
 import "./globals.css";
 import { repoUrl } from "@/lib/site";
 import { ThemeToggle, themeScript } from "@/components/theme-toggle";
+import { IngredientSidebar } from "@/components/ingredient-sidebar";
+import { loadCollection } from "@/lib/content/library";
 
 /**
  * Source Serif 4, self-hosted.
@@ -50,6 +52,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const repo = repoUrl();
+  const { recipes, categories: allCategories, ingredients } = loadCollection();
+
+  // Only categories with something in them: an empty shelf is not a place to
+  // go, and offering one is a promise the collection does not keep.
+  const used = new Set(recipes.map((recipe) => recipe.category));
+  const categories = allCategories.filter((category) => used.has(category.name));
 
   return (
     <html lang="en" className={sourceSerif.variable}>
@@ -63,27 +71,35 @@ export default function RootLayout({
           {/* nowrap + scroll: at phone width the link set is wider than the
               viewport, and wrapping pushed the last link onto its own line. */}
           <header className="flex items-center gap-4 overflow-x-auto border-b border-border py-4 whitespace-nowrap">
-            {/* Separated by rules rather than by space alone. Three words in a
-                row read as a heading; three words divided read as a set of
-                choices, which is what they are. */}
+            {/* The navigation is the collection's own shape: the categories
+                that actually hold recipes, in the order the collection defines.
+                An empty category is not a place to go, so it is not offered.
+
+                Separated by rules rather than by space alone — words in a row
+                read as a heading, words divided read as a set of choices. */}
             <nav className="flex flex-1 items-center gap-3 text-sm">
               <Link href="/" className="font-semibold hover:text-accent">
-                Recipes
+                All
               </Link>
-              <span aria-hidden="true" className="text-border">
-                |
-              </span>
-              <Link href="/ingredients" className="text-text-muted hover:text-accent">
-                Ingredients
-              </Link>
-              <span aria-hidden="true" className="text-border">
-                |
-              </span>
-              <Link href="/about" className="text-text-muted hover:text-accent">
-                About
-              </Link>
+              {categories.map((category) => (
+                <span key={category.slug} className="flex items-center gap-3">
+                  <span aria-hidden="true" className="text-border">
+                    |
+                  </span>
+                  <Link
+                    href={`/category/${category.slug}`}
+                    className="text-text-muted hover:text-accent"
+                  >
+                    {category.name}
+                  </Link>
+                </span>
+              ))}
             </nav>
             <div className="flex items-center gap-4">
+              <IngredientSidebar ingredients={ingredients} />
+              <Link href="/about" className="text-sm text-text-muted hover:text-accent">
+                About
+              </Link>
               <ThemeToggle />
               {repo ? (
                 <a

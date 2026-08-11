@@ -38,6 +38,13 @@ const frontMatterSchema = z.object({
   title: z.string(),
   description: z.string().nullish(),
   category: z.string(),
+  /**
+   * Where the dish is from. Separate from the category because they answer
+   * different questions: category is what kind of thing it is (a main, a
+   * dessert), cuisine is whose it is. A Thai curry and a Thai salad share a
+   * cuisine and nothing else.
+   */
+  cuisine: z.string().nullish(),
   tags: z.array(z.string()).nullish(),
   servings: z.number().positive(),
   servingLabel: z.string().nullish(),
@@ -88,6 +95,7 @@ export interface RecipeFile {
   title: string;
   description: string | null;
   category: string;
+  cuisine: string | null;
   tags: string[];
   servings: number;
   servingLabel: string;
@@ -188,6 +196,7 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
       title: parsed.data.title,
       description: parsed.data.description ?? null,
       category: parsed.data.category,
+      cuisine: parsed.data.cuisine ?? null,
       tags: parsed.data.tags ?? [],
       servings: parsed.data.servings,
       servingLabel: parsed.data.servingLabel ?? "serving",
@@ -315,6 +324,7 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
   const frontMatter: Record<string, unknown> = { title: recipe.title };
   if (recipe.description) frontMatter["description"] = recipe.description;
   frontMatter["category"] = recipe.category;
+  if (recipe.cuisine) frontMatter["cuisine"] = recipe.cuisine;
   if (recipe.tags.length > 0) frontMatter["tags"] = recipe.tags;
   frontMatter["servings"] = recipe.servings;
   if (recipe.servingLabel && recipe.servingLabel !== "serving") {
