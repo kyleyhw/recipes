@@ -74,6 +74,12 @@ not be fine on a noticeboard.
   ingredient is split across two uses, write it as a fraction — `1/3 peanut
   oil` — and the diagram shows what that fraction comes to and rescales it.
 
+  **A split ingredient must not carry a bracketed count.** The bracket
+  describes the whole — "400 g Chinese cabbage (a quarter head)" — and the
+  diagram prints it against each part, so the half-portion cell reads
+  "240 g Chinese cabbage (a quarter head)", which is a lie about both numbers.
+  Brackets are for ingredients that go in all at once.
+
 - **Look at a diagram before calling it good.** Build the site, open the recipe
   and read the rendered table against the method. Do not judge it from the
   outline: an outline that is obviously right on the page is regularly wrong in
