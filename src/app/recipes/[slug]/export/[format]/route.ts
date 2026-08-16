@@ -40,9 +40,10 @@ export async function GET(
   { params }: { params: Promise<{ slug: string; format: string }> },
 ): Promise<Response> {
   const { slug, format } = await params;
-  const { recipes, ingredients } = loadCollection();
+  const { recipes, ingredients, attribution } = loadCollection();
   const recipe = recipes.find((entry) => entry.slug === slug);
   if (!recipe) return new Response("Not found", { status: 404 });
+  const credit = attribution[slug];
 
   const prepared = prepareRecipe(recipe, ingredients);
   const nutrition = computeNutrition(prepared.nutrition, recipe.servings);
@@ -61,6 +62,14 @@ export async function GET(
     photo: recipe.photo,
     ingredients: prepared.scalable,
     steps: recipe.steps,
+    author: credit
+      ? {
+          name: credit.addedBy.name,
+          url: credit.addedBy.handle
+            ? `https://github.com/${credit.addedBy.handle}`
+            : null,
+        }
+      : null,
   };
 
   switch (format as Format) {

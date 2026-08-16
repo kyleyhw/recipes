@@ -36,6 +36,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The whole history, not the tip commit.
+          #
+          # Recipe pages say who added each recipe, and that comes from `git
+          # log` at build time rather than from a field in the file. The default
+          # shallow checkout has one commit in it, which would credit every
+          # recipe in the collection to whoever pushed last. The build detects
+          # that and prints nothing rather than printing a wrong name, so
+          # removing this line loses attribution rather than corrupting it —
+          # see src/lib/content/attribution.ts.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:

@@ -91,7 +91,11 @@ const en = {
   oneFile: "This recipe is one file.",
   readIt: "Read it",
   editIt: "edit it",
+  orSee: ", or see",
   history: "everything it has ever been",
+  addedBy: "Added by {who} on {date}.",
+  editedBy: "Edited since by {who}.",
+  listAnd: "and",
   exportLabel: "Export",
   forTracker: "For a tracker",
 
@@ -124,8 +128,7 @@ const en = {
   // Nutrition
   perServing: "Per {label}",
   massCovered: "{n}% of mass covered",
-  massCoveredTitle:
-    "Share of the recipe's determinable mass that carries nutrition data",
+  massCoveredTitle: "Share of the recipe's determinable mass that carries nutrition data",
   ofADay: "{n}% of a 2000 kcal day",
   protein: "Protein",
   carbs: "Carbs",
@@ -135,8 +138,7 @@ const en = {
   knownOf: "({a} of {b} known)",
   noData: "no data",
   pctOfMass: "{n}% of mass",
-  pctOfMassTitle:
-    "Share of the recipe's mass carrying a figure for this nutrient",
+  pctOfMassTitle: "Share of the recipe's mass carrying a figure for this nutrient",
   referenceIntake: "% RI",
   referenceNote:
     "RI is the daily reference intake for an average adult, from the same schedule used on food labelling in Britain and the EU. It is there for scale, not as a target. A percentage next to a figure drawn from part of the recipe is that part’s percentage, and the mass share says which.",
@@ -158,8 +160,10 @@ const en = {
 
   // The diagram
   diagram: "Diagram",
-  diagramCaption: "The recipe as a tree: ingredients on the left, and the operations that combine them to the right.",
-  diagramNote: "Each operation stands as tall as the ingredients it takes in. Read left to right.",
+  diagramCaption:
+    "The recipe as a tree: ingredients on the left, and the operations that combine them to the right.",
+  diagramNote:
+    "Each operation stands as tall as the ingredients it takes in. Read left to right.",
 
   // The ingredient library
   findIngredient: "Find an ingredient",
@@ -183,7 +187,6 @@ const en = {
   "category.Sauces & Condiments": "Sauces & Condiments",
   "category.Drinks": "Drinks",
   "category.Snacks": "Snacks",
-
 
   /*
    * Units, for translated ingredient lines.
@@ -281,7 +284,11 @@ const zhHant: Dict = {
   oneFile: "這道食譜就是一個檔案。",
   readIt: "閱讀",
   editIt: "編輯",
+  orSee: "，或",
   history: "查看它的所有歷史版本",
+  addedBy: "由 {who} 於 {date} 加入。",
+  editedBy: "之後由 {who} 修改。",
+  listAnd: "和",
   exportLabel: "匯出",
   forTracker: "給記錄工具",
 
@@ -348,8 +355,7 @@ const zhHant: Dict = {
   close: "關閉",
   closeLibrary: "關閉食材庫",
   per100Note: "以每 100 公克計，所有食譜共用 — 在這裡更正一次，全部食譜同時修正。",
-  noIngredientMatched:
-    "沒有符合的結果。食材請透過編輯 content/ingredients.json 新增。",
+  noIngredientMatched: "沒有符合的結果。食材請透過編輯 content/ingredients.json 新增。",
 
   "category.Mains": "主菜",
   "category.Sides": "配菜",
@@ -446,7 +452,11 @@ const zhHans: Dict = {
   oneFile: "这道食谱就是一个文件。",
   readIt: "阅读",
   editIt: "编辑",
+  orSee: "，或",
   history: "查看它的所有历史版本",
+  addedBy: "由 {who} 于 {date} 添加。",
+  editedBy: "之后由 {who} 修改。",
+  listAnd: "和",
   exportLabel: "导出",
   forTracker: "给记录工具",
 
@@ -513,8 +523,7 @@ const zhHans: Dict = {
   close: "关闭",
   closeLibrary: "关闭食材库",
   per100Note: "以每 100 克计，所有食谱共用 — 在这里更正一次，全部食谱同时修正。",
-  noIngredientMatched:
-    "没有匹配的结果。食材请通过编辑 content/ingredients.json 新增。",
+  noIngredientMatched: "没有匹配的结果。食材请通过编辑 content/ingredients.json 新增。",
 
   "category.Mains": "主菜",
   "category.Sides": "配菜",
@@ -613,7 +622,11 @@ const ru: Dict = {
   oneFile: "Этот рецепт — один файл.",
   readIt: "Открыть его",
   editIt: "изменить",
+  orSee: ", или посмотреть",
   history: "всю его историю",
+  addedBy: "Добавил(а) {who}, {date}.",
+  editedBy: "Позже правили: {who}.",
+  listAnd: "и",
   exportLabel: "Экспорт",
   forTracker: "Для трекера",
 
@@ -626,8 +639,7 @@ const ru: Dict = {
   tinSelectLabel: "Форма, в которой вы печёте",
   asWritten: "{tin} (как в рецепте)",
   notScaled: "(без пересчёта)",
-  notScaledTitle:
-    "Исключено из пересчёта — умножение дало бы неверное количество",
+  notScaledTitle: "Исключено из пересчёта — умножение дало бы неверное количество",
 
   yourTin: "Ваша форма",
   tinShape: "Форма",
@@ -656,8 +668,7 @@ const ru: Dict = {
   knownOf: "(известно {a} из {b})",
   noData: "нет данных",
   pctOfMass: "{n}% массы",
-  pctOfMassTitle:
-    "Доля массы рецепта, для которой есть значение этого нутриента",
+  pctOfMassTitle: "Доля массы рецепта, для которой есть значение этого нутриента",
   referenceIntake: "% РСП",
   referenceNote:
     "РСП — рекомендуемое суточное потребление для среднего взрослого, по той же шкале, что используется в маркировке продуктов в Британии и ЕС. Она нужна для масштаба, а не как цель. Если значение получено из части рецепта, то и процент относится к этой части, а доля массы говорит, к какой именно.",
@@ -665,8 +676,7 @@ const ru: Dict = {
     "Полоса показывает, откуда берётся энергия, а не массу — жир даёт 9 ккал на грамм против 4 у белков и углеводов, поэтому равные веса не равны по калориям.",
   noNutritionYet:
     "Данных о питательности пока нет. Сопоставьте ингредиенты ниже или добавьте их в справочник вручную.",
-  lowerBound:
-    "Эти значения охватывают {n}% массы рецепта. Считайте их нижней границей.",
+  lowerBound: "Эти значения охватывают {n}% массы рецепта. Считайте их нижней границей.",
   gapUnresolved: "масса известна, данных о питательности нет",
   gapMassUnknown:
     "Ингредиентов, чей вес определить нельзя: {n} — они полностью исключены из охвата",
@@ -678,8 +688,10 @@ const ru: Dict = {
   pctCovered: "(охвачено {n}%)",
 
   diagram: "Схема",
-  diagramCaption: "Рецепт как дерево: слева ингредиенты, справа операции, которые их соединяют.",
-  diagramNote: "Высота каждой операции равна набору ингредиентов, которые в неё входят. Читается слева направо.",
+  diagramCaption:
+    "Рецепт как дерево: слева ингредиенты, справа операции, которые их соединяют.",
+  diagramNote:
+    "Высота каждой операции равна набору ингредиентов, которые в неё входят. Читается слева направо.",
 
   findIngredient: "Найти ингредиент",
   fullPage: "Отдельная страница",

@@ -26,6 +26,26 @@ not be fine on a noticeboard.
   from looking at a picture at home. Anything added now should be a photo taken
   here or one whose licence permits redistribution.
 
+## Recipes are attributed from git
+
+Every recipe page says who added it, and that comes from the commit that added
+the file — not from a field in it. Nobody fills anything in, and nobody can get
+it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.ts).
+
+- **Never add an `addedBy:` field.** A second copy of something git already
+  holds is a second copy that can disagree with the first, and the one written
+  by hand is the one that will be wrong.
+- **A recipe someone else sent is committed as theirs, or credited in the
+  notes.** Committing it under this account makes the site say it was added
+  here, which is a small lie that nothing will ever correct. A pull request is
+  the easy path: merge it and the credit is right by construction.
+- **Squash-merging is fine**; GitHub keeps the contributor as the commit's
+  author. Rewriting history is not — a rebase that re-authors someone's commit
+  takes their name off their recipe.
+- **The build needs the whole history**, which is why the Pages workflow sets
+  `fetch-depth: 0`. Without it the site shows no attribution at all, by design:
+  a shallow clone would credit every recipe to whoever pushed last.
+
 ## Taste
 
 - **Strong, assertive flavours.** Season properly. Where a recipe suggests a

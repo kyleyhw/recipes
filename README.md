@@ -180,6 +180,22 @@ the ones a tracker wants regardless of how much you cooked.
 
 ---
 
+## Contributing a recipe
+
+Recipes are welcome by pull request. Fork, add
+`content/recipes/<slug>.md`, run `npm run check`, and open it —
+[CONTRIBUTING.md](CONTRIBUTING.md) has what makes a recipe good rather than
+merely valid, and the checks that run on your pull request are the same ones
+that run before a deploy.
+
+**Your name goes on it automatically.** Each recipe page says who added it and
+links to the commit that did, taken from the git history rather than from a
+field in the file — so there is nothing to fill in, and nothing that can drift
+out of date. Later edits are credited too, beneath the author. Email addresses
+are read to find a GitHub handle and are never published.
+
+---
+
 ## Make your own
 
 1. **Fork or clone this repository.** Delete the recipes in

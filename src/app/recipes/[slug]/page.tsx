@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { RecipeView } from "@/components/recipe-view";
 import { T, TCategory, TContent } from "@/components/language";
 import { SourceLine } from "@/components/source-line";
+import { AttributionLine } from "@/components/attribution-line";
 import { ExportLinks } from "@/components/export-links";
 import { recipeFilename, type RecipeTranslation } from "@/lib/content/format";
 import { loadCollection } from "@/lib/content/library";
@@ -35,9 +36,10 @@ export default async function RecipePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { recipes, ingredients, categories } = loadCollection();
+  const { recipes, ingredients, categories, attribution } = loadCollection();
   const recipe = recipes.find((entry) => entry.slug === slug);
   if (!recipe) notFound();
+  const credit = attribution[slug] ?? null;
 
   const prepared = prepareRecipe(recipe, ingredients);
   const glyph = categories.find((c) => c.name === recipe.category)?.glyph ?? "*";
@@ -63,7 +65,10 @@ export default async function RecipePage({
   // to the English tag where a translation has fewer.
   const tagAt = (index: number) =>
     Object.fromEntries(
-      Object.entries(recipe.translations).map(([code, t]) => [code, t.tags[index] ?? null]),
+      Object.entries(recipe.translations).map(([code, t]) => [
+        code,
+        t.tags[index] ?? null,
+      ]),
     );
 
   return (
@@ -119,10 +124,7 @@ export default async function RecipePage({
 
         {recipe.description ? (
           <p className="mt-2 text-text-muted">
-            <TContent
-              en={recipe.description}
-              translated={field((t) => t.description)}
-            />
+            <TContent en={recipe.description} translated={field((t) => t.description)} />
           </p>
         ) : null}
 
@@ -224,40 +226,46 @@ export default async function RecipePage({
           Where a recipe came from and where the file lives are the same kind of
           fact — they answer "is this trustworthy?" rather than "how do I cook
           it?" — so they sit together, below the cooking, out of the way of it. */}
-      {recipe.source || repo ? (
+      {recipe.source || repo || credit ? (
         <section className="mt-10 flex flex-col gap-1 border-t border-border pt-4">
           <SourceLine sourceUrl={recipe.source} className="text-xs" />
+          {credit ? (
+            <AttributionLine
+              attribution={credit}
+              commitUrl={repo ? `${repo}/commit/${credit.addedCommit}` : null}
+            />
+          ) : null}
           {repo ? (
-          <p className="text-xs text-text-muted">
-            <T k="oneFile" />{" "}
-            <a
-              href={`${repo}/blob/main/${file}`}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="underline hover:text-text"
-            >
-              <T k="readIt" />
-            </a>
-            ,{" "}
-            <a
-              href={`${repo}/edit/main/${file}`}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="underline hover:text-text"
-            >
-              <T k="editIt" />
-            </a>
-            , or see{" "}
-            <a
-              href={`${repo}/commits/main/${file}`}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="underline hover:text-text"
-            >
-              <T k="history" />
-            </a>
-            .
-          </p>
+            <p className="text-xs text-text-muted">
+              <T k="oneFile" />{" "}
+              <a
+                href={`${repo}/blob/main/${file}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="underline hover:text-text"
+              >
+                <T k="readIt" />
+              </a>
+              ,{" "}
+              <a
+                href={`${repo}/edit/main/${file}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="underline hover:text-text"
+              >
+                <T k="editIt" />
+              </a>
+              <T k="orSee" />{" "}
+              <a
+                href={`${repo}/commits/main/${file}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="underline hover:text-text"
+              >
+                <T k="history" />
+              </a>
+              .
+            </p>
           ) : null}
         </section>
       ) : null}

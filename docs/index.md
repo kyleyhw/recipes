@@ -15,8 +15,9 @@ Design and rationale for the recipe management application. Start with
 | [claude-integration.md](claude-integration.md) | The model features, the spend ceiling, and every failure mode |
 | [log-and-history.md](log-and-history.md) | Per-recipe notes, revising by message, snapshots and restore |
 
-Project status and the phase breakdown live in
-[`PROJECT_PLAN.md`](../PROJECT_PLAN.md).
+How to add a recipe by pull request — and how the site works out whose it is —
+is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). Project status and the phase
+breakdown live in [`PROJECT_PLAN.md`](../PROJECT_PLAN.md).
 
 ## Reading order
 

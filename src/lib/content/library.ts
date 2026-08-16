@@ -7,6 +7,7 @@ import {
   type RecipeFile,
 } from "@/lib/content/format";
 import { buildDiagram, validateDiagram } from "@/lib/content/diagram";
+import { loadAttribution, type Attribution } from "@/lib/content/attribution";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { LANGUAGE_CODES } from "@/lib/i18n/strings";
 
@@ -95,6 +96,16 @@ export interface Collection {
   recipes: RecipeFile[];
   ingredients: LibraryIngredient[];
   categories: Category[];
+  /**
+   * Who added each recipe, keyed by slug, read from git.
+   *
+   * Not on `RecipeFile` because it is not in the file: the file is what someone
+   * wrote, and this is what the repository knows about how it got here. Keeping
+   * them apart is what stops the two from ever disagreeing — see
+   * lib/content/attribution.ts. Empty for a recipe committed in a history this
+   * build cannot see, and empty everywhere on a shallow clone.
+   */
+  attribution: Record<string, Attribution>;
   /** Files that could not be read. Rendered on the site rather than hidden. */
   problems: LoadProblem[];
 }
@@ -153,7 +164,9 @@ export function loadCollection(): Collection {
       // A diagram that has forgotten an ingredient looks entirely reasonable,
       // which is exactly why it is checked here and reported on the site
       // rather than left to be noticed.
-      const names = parsed.recipe.ingredients.map((line) => parseIngredientLine(line).name);
+      const names = parsed.recipe.ingredients.map(
+        (line) => parseIngredientLine(line).name,
+      );
       const diagram = buildDiagram(parsed.recipe.diagram, names);
       if (diagram) {
         for (const problem of validateDiagram(diagram, names)) {
@@ -190,5 +203,5 @@ export function loadCollection(): Collection {
 
   recipes.sort((a, b) => a.title.localeCompare(b.title));
 
-  return { recipes, ingredients, categories, problems };
+  return { recipes, ingredients, categories, attribution: loadAttribution(), problems };
 }

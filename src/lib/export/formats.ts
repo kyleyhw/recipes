@@ -31,6 +31,15 @@ export interface ExportRecipe {
   photo: string | null;
   ingredients: ScalableIngredient[];
   steps: string[];
+  /**
+   * Who added the recipe to the collection, from its git history.
+   *
+   * Optional because an export can be produced from a recipe that has no
+   * history yet — one being previewed before it is committed — and because
+   * schema.org's `author` must be absent rather than empty when unknown. It is
+   * a name and a profile, never an address: see lib/content/attribution.ts.
+   */
+  author?: { name: string; url: string | null } | null;
 }
 
 /**
@@ -106,6 +115,7 @@ export function toJson(
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
     sourceUrl: recipe.source,
+    addedBy: recipe.author ?? null,
     ingredients: scaled.ingredients.map((row) => ({
       text: row.passedThrough ? row.rawText : row.display,
       name: row.name,
@@ -159,6 +169,15 @@ export function toJsonLd(
     "@type": "Recipe",
     name: recipe.title,
     description: recipe.description ?? undefined,
+    // Whoever added it to this collection, which is what this document can
+    // honestly claim. Where the dish itself came from is `url`, below.
+    author: recipe.author
+      ? {
+          "@type": "Person",
+          name: recipe.author.name,
+          url: recipe.author.url ?? undefined,
+        }
+      : undefined,
     recipeCategory: recipe.category,
     keywords: recipe.tags.join(", ") || undefined,
     recipeYield: `${servings} ${recipe.servingLabel}${servings === 1 ? "" : "s"}`,
@@ -230,13 +249,7 @@ export function toCsv(recipe: ExportRecipe, nutrition: NutritionResult): string 
     return `${csvColumnName(key)}_${unit === "µg" ? "ug" : unit}`;
   });
 
-  const header = [
-    "ingredient",
-    "as_written",
-    "grams",
-    ...nutrientColumns,
-    "status",
-  ];
+  const header = ["ingredient", "as_written", "grams", ...nutrientColumns, "status"];
 
   const rows = nutrition.contributions.map((c) => [
     csvCell(c.name),
@@ -266,9 +279,7 @@ export function toCsv(recipe: ExportRecipe, nutrition: NutritionResult): string 
     csvCell("COVERAGE"),
     csvCell("share of determinable mass carrying a figure"),
     csvCell(round(nutrition.determinableGrams)),
-    ...NUTRIENT_KEYS.map((key) =>
-      csvCell(round(nutrition.nutrientCoverage[key], 3)),
-    ),
+    ...NUTRIENT_KEYS.map((key) => csvCell(round(nutrition.nutrientCoverage[key], 3))),
     csvCell(""),
   ];
 

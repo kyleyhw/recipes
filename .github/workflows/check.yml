@@ -1,0 +1,52 @@
+name: Check
+
+# Runs on every pull request, including from forks.
+#
+# The deploy workflow only fires on a push to `main`, which a contributor cannot
+# do — so without this, a recipe arriving by pull request would be checked for
+# the first time by being published. The checks here are the same ones the
+# deploy runs, so a green tick means the site will build with this recipe in it.
+#
+# `pull_request` rather than `pull_request_target`: this checks out the
+# contributor's code and runs their `npm ci`, so it must not have write access
+# or secrets. It has neither.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Types, lint, formatting and the tests. The tests read the real content/
+      # directory, so a recipe with broken front matter, an ingredient missing
+      # from the library, or a diagram whose shares do not add up fails here,
+      # with the file named.
+      - run: npm run check
+
+      # Proves the pages actually build, which the tests do not: a recipe can
+      # parse and still break rendering.
+      - name: Build the static site
+        env:
+          STATIC_EXPORT: "1"
+        run: npm run build
