@@ -252,4 +252,4 @@ describe("advisories that depend on the rest of the recipe", () => {
     const [, bicarb] = at(["flour", "bicarbonate of soda"], 3);
     expect(bicarb?.advisory).toMatch(/leavening/i);
   });
-})
+});

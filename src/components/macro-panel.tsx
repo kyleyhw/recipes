@@ -71,10 +71,7 @@ function NutrientRow({
       >
         {t(`nutrient.${key}` as StringKey)}
         {known && coverage < LOW_COVERAGE ? (
-          <span
-            className="numeric ml-1.5 text-text-muted/60"
-            title={t("pctOfMassTitle")}
-          >
+          <span className="numeric ml-1.5 text-text-muted/60" title={t("pctOfMassTitle")}>
             {t("pctOfMass", { n: Math.round(coverage * 100) })}
           </span>
         ) : null}

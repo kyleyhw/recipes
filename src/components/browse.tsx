@@ -102,9 +102,7 @@ export function Browse({
       ) : null}
 
       {matching.length === 0 ? (
-        <p className="text-sm text-text-muted">
-          {t("nothingMatched")}
-        </p>
+        <p className="text-sm text-text-muted">{t("nothingMatched")}</p>
       ) : (
         <div className="flex flex-col gap-8">
           {shelves.map((shelf) => (

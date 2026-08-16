@@ -213,14 +213,11 @@ describe("shelves", () => {
   });
 
   /** Every recipe appears exactly once, whichever arrangement is chosen. */
-  it.each(SORT_KEYS)(
-    "loses no recipe when arranged by %s",
-    (key) => {
-      const shelved = shelveRecipes(MIXED, key).flatMap((s) => s.recipes);
-      expect(shelved).toHaveLength(MIXED.length);
-      expect(new Set(shelved.map((r) => r.slug)).size).toBe(MIXED.length);
-    },
-  );
+  it.each(SORT_KEYS)("loses no recipe when arranged by %s", (key) => {
+    const shelved = shelveRecipes(MIXED, key).flatMap((s) => s.recipes);
+    expect(shelved).toHaveLength(MIXED.length);
+    expect(new Set(shelved.map((r) => r.slug)).size).toBe(MIXED.length);
+  });
 
   /**
    * Every arrangement has a label to offer, in every language. A key added to

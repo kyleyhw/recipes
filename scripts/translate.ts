@@ -206,7 +206,9 @@ export function serialise(t: Translation, hash: string): string {
     t.description ? `description: ${JSON.stringify(t.description)}` : null,
     t.servingLabel ? `servingLabel: ${JSON.stringify(t.servingLabel)}` : null,
     t.cookLabel ? `cookLabel: ${JSON.stringify(t.cookLabel)}` : null,
-    t.tags.length > 0 ? `tags:\n${t.tags.map((x) => `  - ${JSON.stringify(x)}`).join("\n")}` : null,
+    t.tags.length > 0
+      ? `tags:\n${t.tags.map((x) => `  - ${JSON.stringify(x)}`).join("\n")}`
+      : null,
     `sourceHash: ${hash}`,
     "---",
   ].filter((line): line is string => line !== null);

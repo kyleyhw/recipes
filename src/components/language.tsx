@@ -97,7 +97,10 @@ export function LanguageDocumentSync() {
 }
 
 /** The translator, bound to the current language. */
-export function useT(): (key: StringKey, vars?: Record<string, string | number>) => string {
+export function useT(): (
+  key: StringKey,
+  vars?: Record<string, string | number>,
+) => string {
   const language = useLanguage();
   return (key, vars) => translate(language, key, vars);
 }

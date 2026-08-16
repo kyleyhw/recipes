@@ -279,9 +279,7 @@ export function RecipeView({
                 <option value="">{t("tinAsWritten")}</option>
                 {TIN_SHAPES.map((shape) => (
                   <option key={shape} value={shape}>
-                    {t(
-                      `tin${shape[0]!.toUpperCase()}${shape.slice(1)}` as StringKey,
-                    )}
+                    {t(`tin${shape[0]!.toUpperCase()}${shape.slice(1)}` as StringKey)}
                   </option>
                 ))}
               </select>

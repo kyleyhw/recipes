@@ -154,7 +154,13 @@ describe("building the whole thing", () => {
   });
 
   it("produces a table whose cells account for every node", () => {
-    const diagram = buildDiagram(OUTLINE, ["butter", "sugar", "flour", "salt", "walnuts"]);
+    const diagram = buildDiagram(OUTLINE, [
+      "butter",
+      "sugar",
+      "flour",
+      "salt",
+      "walnuts",
+    ]);
     expect(diagram?.cells).toHaveLength(9);
   });
 });

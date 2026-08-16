@@ -89,9 +89,12 @@ export function summarise(
       // "банановый" and find the loaf.
       Object.values(recipe.translations)
         .map((t) =>
-          [t.title, t.description ?? "", t.tags.join(" "), t.ingredientNames.join(" ")].join(
-            " ",
-          ),
+          [
+            t.title,
+            t.description ?? "",
+            t.tags.join(" "),
+            t.ingredientNames.join(" "),
+          ].join(" "),
         )
         .join(" "),
     ]

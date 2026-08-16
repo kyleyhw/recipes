@@ -72,7 +72,8 @@ function splitShare(text: string): { share: number | null; rest: string } {
   if (!match) return { share: null, rest: text };
 
   const glyph = match[3];
-  if (glyph) return { share: GLYPH_SHARES[glyph] ?? null, rest: text.slice(match[0].length) };
+  if (glyph)
+    return { share: GLYPH_SHARES[glyph] ?? null, rest: text.slice(match[0].length) };
 
   const numerator = Number(match[1]);
   const denominator = Number(match[2]);
@@ -292,9 +293,7 @@ export function placeDiagram(root: DiagramNode): Diagram {
       : node.children.reduce((total, child) => total + leafCount(child), 0);
 
   const columnOf = (node: DiagramNode): number =>
-    node.children.length === 0
-      ? 0
-      : Math.max(...node.children.map(columnOf)) + 1;
+    node.children.length === 0 ? 0 : Math.max(...node.children.map(columnOf)) + 1;
 
   const rootColumn = columnOf(root);
   const cells: PlacedNode[] = [];
@@ -363,7 +362,10 @@ export function validateDiagram(
   const shares = new Map<number, number>();
   for (const leaf of leaves) {
     if (leaf.ingredientIndex === null || leaf.share === null) continue;
-    shares.set(leaf.ingredientIndex, (shares.get(leaf.ingredientIndex) ?? 0) + leaf.share);
+    shares.set(
+      leaf.ingredientIndex,
+      (shares.get(leaf.ingredientIndex) ?? 0) + leaf.share,
+    );
   }
   for (const [index, total] of shares) {
     if (Math.abs(total - 1) > 1e-6) {

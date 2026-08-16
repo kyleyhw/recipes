@@ -212,8 +212,7 @@ function stripListMarker(line: string): string {
 export type ParseResult = { ok: true; recipe: RecipeFile } | { ok: false; error: string };
 
 export type TranslationParseResult =
-  | { ok: true; translation: RecipeTranslation }
-  | { ok: false; error: string };
+  { ok: true; translation: RecipeTranslation } | { ok: false; error: string };
 
 /** Front matter a translation may carry. Nothing structural: see the type. */
 const translationFrontMatterSchema = z.object({
@@ -362,7 +361,12 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
       steps: sections.steps.map(stripListMarker).filter(Boolean),
       notes: sections.notes.join("\n").trim() || null,
       storage: sections.storage.join("\n").trim() || null,
-      diagram: sections.diagram.map((line) => line.replace(/\s+$/, "")).filter((line, i, all) => line.length > 0 || all.slice(i).some((rest) => rest.length > 0)),
+      diagram: sections.diagram
+        .map((line) => line.replace(/\s+$/, ""))
+        .filter(
+          (line, i, all) =>
+            line.length > 0 || all.slice(i).some((rest) => rest.length > 0),
+        ),
       log: parseLog(sections.log),
       // Filled in by the loader, which is the only thing that can see the
       // sibling files.

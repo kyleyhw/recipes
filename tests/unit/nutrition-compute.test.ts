@@ -218,14 +218,23 @@ describe("per-nutrient coverage", () => {
    * genuinely contains none of the nutrient.
    */
   it("reports zero coverage for a nutrient nothing carries", () => {
-    const result = computeNutrition([input({ id: "a", macro: macro({ folateUg: null }) })], 1);
+    const result = computeNutrition(
+      [input({ id: "a", macro: macro({ folateUg: null }) })],
+      1,
+    );
     expect(result.nutrientCoverage.folateUg).toBe(0);
     expect(result.total.folateUg).toBe(0);
   });
 
   it("distinguishes an unknown from a stated zero", () => {
-    const unknown = computeNutrition([input({ id: "a", macro: macro({ folateUg: null }) })], 1);
-    const stated = computeNutrition([input({ id: "a", macro: macro({ folateUg: 0 }) })], 1);
+    const unknown = computeNutrition(
+      [input({ id: "a", macro: macro({ folateUg: null }) })],
+      1,
+    );
+    const stated = computeNutrition(
+      [input({ id: "a", macro: macro({ folateUg: 0 }) })],
+      1,
+    );
     expect(unknown.total.folateUg).toBe(stated.total.folateUg);
     // The totals agree; the coverage is what tells them apart.
     expect(unknown.nutrientCoverage.folateUg).toBe(0);
@@ -374,7 +383,15 @@ describe("energy split", () => {
 
   it("produces percentages summing to 100", () => {
     const split = energySplit(
-      totals({ kcal: 500, protein: 30, carbs: 45, fat: 20, fiber: 5, sugar: 10, sodiumMg: 400 }),
+      totals({
+        kcal: 500,
+        protein: 30,
+        carbs: 45,
+        fat: 20,
+        fiber: 5,
+        sugar: 10,
+        sodiumMg: 400,
+      }),
     );
     expect(split.proteinPct + split.carbsPct + split.fatPct).toBeCloseTo(100, 10);
   });
