@@ -100,6 +100,13 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   "240 g Chinese cabbage (a quarter head)", which is a lie about both numbers.
   Brackets are for ingredients that go in all at once.
 
+- **Notes, Storage and the Log are plain text, not Markdown.** They are rendered
+  with the line breaks kept and nothing else interpreted, so `**bold**` shows as
+  asterisks and `[a link](to.md)` shows as brackets and a filename. Write them as
+  prose, and refer to another recipe by its title rather than by a link. Both of
+  those have shipped and been caught on the rendered page rather than in a test —
+  which is the same lesson as the one below.
+
 - **Look at a diagram before calling it good.** Build the site, open the recipe
   and read the rendered table against the method. Do not judge it from the
   outline: an outline that is obviously right on the page is regularly wrong in
