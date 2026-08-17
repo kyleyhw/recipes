@@ -1,7 +1,7 @@
 /**
  * Rendering a magnitude as a usable kitchen measurement.
  *
- * Implements §2 of docs/mathematics.md. Pure: no database, no network, no clock.
+ * Pure: no database, no network, no clock.
  */
 
 import {

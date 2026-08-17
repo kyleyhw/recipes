@@ -1,7 +1,7 @@
 /**
  * Portion scaling.
  *
- * Implements the scaling half of §2 of docs/mathematics.md. Pure: no database,
+ * Pure: no database,
  * no network, no clock.
  *
  * Scaling is a *view*. The stored recipe keeps its base servings, and a recipe

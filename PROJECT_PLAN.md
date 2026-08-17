@@ -3,9 +3,10 @@
 This document outlines the planned phases and tasks for developing the recipe management
 application. Status tags are updated as work completes.
 
-Design rationale for the whole system is in [`docs/`](docs/index.md); the mathematical
-derivations underpinning scaling and nutrition are in
-[`docs/mathematics.md`](docs/mathematics.md).
+Design rationale for the whole system is in [`docs/`](docs/index.md). The derivations
+behind scaling and nutrition live in the modules that implement them —
+`lib/quantity.ts`, `lib/scaling.ts` and `lib/nutrition/compute.ts` — which are pure
+functions with the reasoning in their own comments.
 
 ---
 

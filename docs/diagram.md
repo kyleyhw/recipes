@@ -36,12 +36,77 @@ line without is an ingredient.
     - walnuts
 ```
 
+And that renders as this — one row per ingredient, each operation standing as
+tall as the ingredients it takes in:
+
+<table>
+  <tr>
+    <th colspan="5" align="left">Walnut Loaf <em>(10 slices)</em></th>
+  </tr>
+  <tr>
+    <td>115 g unsalted butter</td>
+    <td>brown, 4–6 min</td>
+    <td rowspan="2">whisk</td>
+    <td rowspan="5">fold 15 turns, then 3 more</td>
+    <td rowspan="5">bake 175 °C, 55–65 min</td>
+  </tr>
+  <tr>
+    <td colspan="2">200 g brown sugar</td>
+  </tr>
+  <tr>
+    <td>250 g all-purpose flour</td>
+    <td rowspan="2" colspan="2">stir 10 s</td>
+  </tr>
+  <tr>
+    <td>1 tsp salt</td>
+  </tr>
+  <tr>
+    <td colspan="3">80 g walnuts</td>
+  </tr>
+</table>
+
+Read it left to right: butter is browned, the sugar joins it in the whisk, flour
+and salt are stirred together separately, and the two meet the walnuts in the
+fold. The quantities are not in the outline — they come from the ingredient
+list, which is why they change when you change the serving count.
+
 That is the whole grammar. Anything richer would be a second recipe format to
 keep in step with the first.
 
-Any consistent indent width works — a line is a child of the nearest line above
-it with strictly less indentation — so it survives whatever editor it is typed
-in.
+## Syntax, in full
+
+| Written | Means |
+| --- | --- |
+| `- text` at the least indentation | The **root** — the last operation, and the last top-level line in the section |
+| `- text` at a greater indentation | A **child** of the nearest line above it with strictly less indentation |
+| A line **with** children | An **operation**. Its text is the label — two or three words |
+| A line **without** children | An **ingredient**, or a piece of plain text if it matches no ingredient |
+| A top-level line **above** the root | A **banner**: an operation that takes nothing in, like heating an oven. It spans the full width above the table |
+| `- 1/3 peanut oil` | A **share** of an ingredient used in more than one place. Renders as that fraction of the scaled quantity |
+| `- ⅓ peanut oil` | The same. `½ ⅓ ⅔ ¼ ¾ ⅛` are accepted alongside `1/2`, `1/3` and so on |
+
+Any consistent indent width works — two spaces, four, a tab — because a line is
+a child of the nearest line above it with less indentation, not of a line a
+fixed distance to its left. It survives whatever editor it is typed in.
+
+The shares of one ingredient must add up to exactly 1, and `npm test` fails if
+they do not. Two thirds and a third is a split; two thirds and two thirds is a
+recipe that uses more of something than it lists.
+
+## Where it is rendered
+
+Three files, in order:
+
+| File | Does |
+| --- | --- |
+| [`src/lib/content/format.ts`](../src/lib/content/format.ts) | Reads the `## Diagram` section out of the recipe file, keeping the indentation verbatim, since the indentation *is* the tree |
+| [`src/lib/content/diagram.ts`](../src/lib/content/diagram.ts) | Parses the outline, links leaves to ingredients, and computes the grid — which row each cell sits on, and how many rows and columns it spans |
+| [`src/components/recipe-diagram.tsx`](../src/components/recipe-diagram.tsx) | Draws it as a real `<table>` with `rowspan` and `colspan`, on the recipe page below the method |
+
+The grid is computed at **build time**, on the server, because it depends only
+on the file. What the browser gets is the finished table. The one thing that
+happens in the browser is the quantities changing when the serving stepper
+moves, and those come from the ingredient list rather than from the diagram.
 
 ## Leaves are references
 

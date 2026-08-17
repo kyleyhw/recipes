@@ -1,7 +1,7 @@
 /**
  * Macronutrient aggregation and coverage.
  *
- * Implements §3 of docs/mathematics.md. Pure: no database, no network, no clock.
+ * Pure: no database, no network, no clock.
  */
 
 import {

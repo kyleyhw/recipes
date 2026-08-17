@@ -116,9 +116,39 @@ Two sections earn their keep and are worth writing every time:
   back. Most of what gets cooked is eaten again the next day, and a recipe that
   stops at the moment of serving has stopped halfway.
 - **`## Diagram`** — the method as an indented tree, rendered as a table of
-  ingredients and the operations that combine them. A leaf that names an
-  ingredient picks up its scaled quantity and translated name automatically.
-  See [`docs/diagram.md`](docs/diagram.md).
+  ingredients and the operations that combine them. The form is Michael Chu's,
+  from Cooking For Engineers.
+
+The `## Diagram` block above renders as this, at the bottom of the recipe page:
+
+<table>
+  <tr>
+    <th colspan="4" align="left">Banana Bread <em>(10 slices)</em></th>
+  </tr>
+  <tr>
+    <td>115 g unsalted butter</td>
+    <td>brown, 4–6 min</td>
+    <td rowspan="4">fold, no more than 15 turns</td>
+    <td rowspan="4">bake 175 °C, 55–65 min</td>
+  </tr>
+  <tr>
+    <td>4 bananas</td>
+    <td>mash to no lump bigger than a pea</td>
+  </tr>
+  <tr>
+    <td colspan="2">250 g all-purpose flour</td>
+  </tr>
+  <tr>
+    <td colspan="2">1 tsp salt</td>
+  </tr>
+</table>
+
+Read it left to right. Each operation stands exactly as tall as the ingredients
+it takes in, so the shape of the table *is* the shape of the method — which
+bowl holds what, and when. A leaf that names an ingredient picks up its scaled
+quantity and its translated name automatically, so the table redraws itself when
+you change the serving count. The grammar and the eleven rules the layout obeys
+are in [`docs/diagram.md`](docs/diagram.md).
 
 A baked recipe should also state its `tin`, so the site can scale the batter to
 the tin you actually own — and warn you when it cannot.
@@ -224,5 +254,5 @@ is needed only to *generate* translations, never to read the site.
 
 ## Documentation
 
-Design and reasoning live in [`docs/`](docs/index.md) — the mathematics behind
-scaling and macros, the file format, and how the Pages build works.
+Design and reasoning live in [`docs/`](docs/index.md) — the file format, the
+diagram, the nutrition pipeline, and how the Pages build works.

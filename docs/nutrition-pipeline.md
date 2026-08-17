@@ -1,9 +1,9 @@
 # Nutrition pipeline
 
 How an ingredient line becomes a number on the macro panel, and how to read the
-panel once it is there. The mathematics is derived in
-[mathematics.md §3](mathematics.md#3-macronutrient-aggregation-and-coverage);
-this document is the pipeline and its provenance rules.
+panel once it is there. The arithmetic itself is in `lib/nutrition/compute.ts`,
+which is a pure function with its reasoning in its own comments; this document
+is the pipeline and its provenance rules.
 
 ```
 rawText -> parse -> resolve to canonical Ingredient -> convert to grams -> aggregate
@@ -26,8 +26,7 @@ Two flags come out of this stage and matter later:
 - `optional` — set by a trailing `(optional)` or a leading `optionally`.
   Excluded from macro totals by default, includable on request.
 - `scalable` — cleared for lines like `salt to taste` and `oil for frying`,
-  which are quantities in name only. See
-  [mathematics.md §2.4](mathematics.md).
+  which are quantities in name only. See `lib/scaling.ts`.
 
 `rawText` is never discarded. Everything above is a derived view over it, so a
 parsing error degrades the macro panel rather than corrupting the recipe.
@@ -108,7 +107,7 @@ know which one is behind a total.
 
 ## 3. Conversion to grams
 
-`lib/units.ts`, per [mathematics.md §2](mathematics.md). Mass units convert by
+`lib/units.ts`. Mass units convert by
 their factor; volume needs $\rho$; count needs $\mu$. A `gramsOverride` on the
 recipe ingredient bypasses all of it and always wins.
 

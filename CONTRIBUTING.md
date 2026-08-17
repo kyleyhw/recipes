@@ -4,89 +4,82 @@ Recipes are welcome by pull request. A recipe is one Markdown file in
 `content/recipes/`; adding one is adding a file, and the site rebuilds itself
 when it merges.
 
-**Your name goes on it automatically.** This collection records who added each
-recipe, and it takes that from the git history rather than from anything you
-type — the commit that adds the file is the record, so the recipe page says
-"Added by *you*" and links to the commit. There is no field to fill in and
-nothing to remember. Two consequences worth knowing:
+This collection has opinions about how a recipe is written — steps with numbers
+in them, a storage section, an ingredient library, a diagram with a grammar.
+That is a lot to read before you can share a recipe you already know how to
+cook, so **the intended path is to hand it to a model.**
+
+---
+
+## The short path
+
+Give the model your recipe, however you have it — a photo of a page, a link, a
+voice note you typed out badly — along with this:
+
+> Write this as a recipe file for the collection at
+> `https://github.com/kyleyhw/recipes`, following its rules exactly. Read all
+> three of these first:
+>
+> - https://raw.githubusercontent.com/kyleyhw/recipes/main/content/memories.md
+> - https://raw.githubusercontent.com/kyleyhw/recipes/main/docs/contributing-by-hand.md
+> - https://raw.githubusercontent.com/kyleyhw/recipes/main/docs/diagram.md
+>
+> Give me the complete file, and a JSON row for every ingredient that is not
+> already in `content/ingredients.json`.
+
+Then put the file in `content/recipes/<slug>.md`, run `npm run check`, and open
+a pull request.
+
+If you are working in a checkout with Claude Code or a similar agent, the rules
+are already in the repository — `content/memories.md` is loaded as project
+instructions — so "add this recipe to the collection" is usually the whole
+prompt.
+
+## What you still have to do yourself
+
+A model will produce a file that parses. It will not reliably produce a file
+that is *true*, and three things are worth your own eyes:
+
+- **The numbers.** Times, temperatures and quantities are where a model will
+  quietly smooth your recipe into the average of every similar recipe it has
+  seen. If your grandmother's braise is 4 hours, check it still says 4 hours.
+- **The nutrition rows.** Every figure in `content/ingredients.json` carries a
+  `sourceNote` saying where it came from, and a model will happily invent both
+  the figure and the source. Check them against
+  [FoodData Central](https://fdc.nal.usda.gov/), or against the packet, and say
+  which in the note. A wrong figure is worse than a missing one, because a gap
+  is visible on the page and a wrong number is not.
+- **The diagram, rendered.** Run `npm run dev`, open the recipe, and read the
+  table against your method. An outline that looks obviously right in the file
+  is regularly wrong in the table — indentation reads as grouping, and the
+  table reads as geometry.
+
+## Doing it by hand
+
+[docs/contributing-by-hand.md](docs/contributing-by-hand.md) is the whole of it:
+every section of the file, every front-matter field, the ingredient library, and
+what the checks cover. [docs/diagram.md](docs/diagram.md) is the diagram's
+grammar and its rules.
+
+---
+
+## Your name goes on it automatically
+
+This collection records who added each recipe, and it takes that from the git
+history rather than from anything you type — the commit that adds the file is
+the record, so the recipe page says "Added by *you*" and links to the commit.
+There is no field to fill in. Two consequences:
 
 - **Commit under your own account.** Whatever `git config user.name` and
-  `user.email` say at the moment you commit is what the site will show.
+  `user.email` say when you commit is what the site shows.
 - **A linked name needs a GitHub address.** If your commits use GitHub's private
-  address — `you@users.noreply.github.com`, which is the default when *Keep my
-  email address private* is on, and always the case for edits made in the GitHub
-  web interface — your name links to your profile. If they use a personal
-  address, your name is shown without a link. Your email address itself is never
-  published on the site.
+  address — `you@users.noreply.github.com`, the default when *Keep my email
+  address private* is on, and always the case for edits made in the GitHub web
+  interface — your name links to your profile. Otherwise it is shown unlinked.
+  Your email address itself is never published.
 
----
-
-## The short version
-
-1. Fork the repository and make a branch.
-2. Add `content/recipes/<slug>.md`. The filename becomes the URL.
-3. Add anything new it uses to `content/ingredients.json`.
-4. Run `npm run check`.
-5. Open a pull request.
-
-The [README](README.md#adding-a-recipe) has a complete file to copy. Only
-`title`, `category` and `servings` are required by the parser — the rest of this
-page is what makes a recipe good rather than merely valid.
-
----
-
-## What a recipe needs
-
-These are the standing rules of the collection, kept in full in
-[`content/memories.md`](content/memories.md). They are not style preferences;
-each of them exists because a recipe without it failed somebody in the kitchen.
-
-**Steps that cannot be misread.** Say exactly what to do, to what, for how long.
-Temperatures, pan sizes and heat levels are numbers, not adjectives. Every step
-that ends gives a sensory cue for how to tell it is done — what it looks, smells
-or sounds like. No "about", no "or so", no "until done".
-
-**Seasoning that means it.** Where a recipe suggests a cautious amount of chilli,
-acid, garlic or spice, take the upper end. A dish that tastes of nothing is a
-failure even if it is technically correct.
-
-**A `## Storage` section.** How long it keeps and in what, whether it freezes and
-how to defrost it, how to bring it back without ruining it. Where a dish
-genuinely must be eaten straight away, say that instead — it is the same
-question, answered.
-
-**Every ingredient in the library.** Anything your recipe introduces needs a row
-in `content/ingredients.json`, with its per-100 g figures, its density or
-grams-per-item where it is measured by volume or by count, and a `sourceNote`
-saying where each figure came from. A missing row does not fail the build; it
-quietly drops that ingredient out of the nutrition panel and shows up as a
-coverage gap. USDA FoodData Central is the usual source, a jar label is an
-acceptable one, and a guess is not.
-
-**A `## Diagram`.** The method as an indented tree, which renders as the table of
-ingredients and operations at the bottom of every recipe page. The eleven rules
-are in [`docs/diagram.md`](docs/diagram.md); four of them account for most
-mistakes:
-
-- an operation's box spans **exactly** the ingredients it consumes, and those
-  ingredients must be a **contiguous** block of rows — so the left column read
-  downward is the order things *enter* the recipe, not the order your ingredient
-  list happens to use;
-- **a sequence is a chain, not a fan.** "Whisk in the sugar, then the eggs, then
-  the bananas" is three operations, not one node with four inputs;
-- **labels stay short** — two or three words. The detail is in the method;
-- **look at it rendered** before you call it done. Run `npm run dev`, open the
-  recipe and read the table against your method. An outline that is obviously
-  right on the page is regularly wrong in the table.
-
-**A tin, if it is baked.** `tin:` in the front matter, so the site can scale the
-batter to the tin you actually own. A batter doubled into the same tin is twice
-as deep and bakes wrongly.
-
-**Where it came from.** `source:` for a recipe off a website. If it came from a
-person, say so in `## Notes`.
-
----
+The site can also filter the collection by who added a recipe, which is the
+other half of the same idea.
 
 ## Photographs
 
@@ -97,36 +90,18 @@ This repository is public, so anything committed here is redistributed. Add a
 photograph only if **you took it**, or if its licence permits redistribution and
 you record that in `photoCredit`. A picture found on a search engine is neither.
 
----
-
-## Before you open the pull request
-
-```bash
-npm run check     # typecheck, lint, format, tests
-npm run dev       # then look at the recipe page, and at its diagram
-```
-
-`npm run check` reads the real `content/` directory, so it catches broken front
-matter, an ingredient missing from the library, and a diagram whose split
-fractions do not add up — each with the file named. The same checks run on your
-pull request.
-
-What it cannot catch is whether the diagram is *right*, whether the steps are
-unambiguous, and whether the seasoning is enough. That is what the review is
-for.
-
 ## Changing someone else's recipe
 
 Please do — a correction to a quantity, a step that turned out to be wrong, a
 better sensory cue. The recipe stays attributed to whoever added it, and your
-name is added to the line beneath as having edited it since.
+name is added beneath as having edited it since.
 
 If you cooked it and want to record what happened, that is what `## Log` is for:
 
 ```markdown
 ## Log
 
-- 2026-08-16: Needed more salt — went up to 1½ tsp.
+- 2026-08-17: Needed more salt — went up to 1½ tsp.
 ```
 
-The log is public and it is a cook's log, not a diary.
+The log is public, and it is a cook's log rather than a diary.

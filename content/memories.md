@@ -143,5 +143,5 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
 
 - **Baked goods must state their tin**, and scale it. A cake batter doubled into
   the same tin is twice as deep and bakes wrongly: the outside sets before the
-  middle is done. See [docs/mathematics.md](../docs/mathematics.md) for how the
-  tin is scaled with the recipe.
+  middle is done. `lib/tin.ts` scales the tin with the recipe — area with the
+  serving count, so linear dimensions go as its square root.

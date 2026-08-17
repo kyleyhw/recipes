@@ -13,7 +13,7 @@ work, and a self-hoster who deployed early would inherit it.
 ## `Recipe`
 
 `baseServings` is the serving count the stored quantities correspond to — the
-$S$ of [mathematics.md](mathematics.md#23-macronutrient-aggregation-and-coverage).
+$S$ that per-serving macros are divided by.
 Scaling never mutates it: scaling is a *view*, and a recipe scaled to eight
 servings and back to four must be bit-identical to where it started. Saving a
 scaled copy is an explicit, separate action.

@@ -41,8 +41,8 @@ network access, and no clock:
 | `lib/sharing/bundle.ts` | Serialise, parse, validate, migrate the portable format |
 
 This split is deliberate rather than stylistic. These modules carry all of the
-application's mathematical content (see [mathematics.md](mathematics.md)) and
-therefore essentially all of its correctness risk; the rest is CRUD, whose
+application's mathematical content and therefore essentially all of its
+correctness risk; the rest is CRUD, whose
 failure modes are visible on sight. Purity means they are tested directly, with
 no fixtures, no mocking, and no running Postgres — which in turn means the
 tests are cheap enough to be exhaustive where it matters.

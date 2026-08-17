@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { UNITS, convert, displayUnitsFor, toBase, toGrams } from "@/lib/units";
 
 /**
- * Tests for unit conversion (docs/mathematics.md §1).
+ * Tests for unit conversion.
  *
  * The central property is that within-dimension conversion is a group action of
  * the positive reals under multiplication: associative, invertible, and

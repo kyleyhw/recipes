@@ -15,7 +15,7 @@ import {
 } from "@/lib/nutrition/nutrients";
 
 /**
- * Tests for macro aggregation and coverage (docs/mathematics.md §3).
+ * Tests for macro aggregation and coverage.
  *
  * The centrepiece is the scaling invariant, which is an exact algebraic
  * identity and therefore testable without any hand-computed expected value.
@@ -242,7 +242,7 @@ describe("per-nutrient coverage", () => {
   });
 
   /**
-   * The scaling invariant of docs/mathematics.md §3 is a statement about the
+   * The scaling invariant is a statement about the
    * whole vector, not just about energy. It has to hold for a micronutrient
    * drawn from part of the recipe too.
    */

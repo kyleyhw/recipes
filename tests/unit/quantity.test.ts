@@ -8,7 +8,7 @@ import {
 } from "@/lib/quantity";
 
 /**
- * Tests for quantity rendering (docs/mathematics.md §2).
+ * Tests for quantity rendering.
  *
  * The defining property is the *constraint*: every fraction this module emits
  * must have a denominator in D = {1,2,3,4,6,8}, because those are the

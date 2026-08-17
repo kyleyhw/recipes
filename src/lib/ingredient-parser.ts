@@ -127,7 +127,7 @@ const UNIT_ALIASES: Readonly<Record<string, string>> = {
  *
  * Multiplying "salt to taste" by three produces confident nonsense, and
  * "oil for frying" describes a method rather than an amount. These lines pass
- * through scaling untouched; see docs/mathematics.md §2.
+ * through scaling untouched; see lib/scaling.ts.
  */
 const UNSCALABLE_PATTERNS: readonly RegExp[] = [
   /\bto taste\b/i,

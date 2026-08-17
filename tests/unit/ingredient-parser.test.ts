@@ -110,7 +110,7 @@ describe("name and preparation note", () => {
 describe("scalability", () => {
   /**
    * These are the lines where naive multiplication produces confident
-   * nonsense. See docs/mathematics.md §2, "Non-linearity".
+   * nonsense. See the advisories in lib/scaling.ts.
    */
   it.each([
     "Salt to taste",

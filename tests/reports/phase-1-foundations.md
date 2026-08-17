@@ -156,4 +156,4 @@ Stated explicitly rather than left implicit:
   unexercised.
 - **The pure mathematical modules do not exist yet** (phases 4–5), so the
   scaling-invariant property test described in
-  [`docs/mathematics.md §3`](../../docs/mathematics.md) is not yet present.
+  the macro aggregation of `lib/nutrition/compute.ts` is not yet present.

@@ -1,7 +1,7 @@
 /**
  * Units and conversion.
  *
- * Implements §1 of docs/mathematics.md. Pure: no database, no network, no clock.
+ * Pure: no database, no network, no clock.
  *
  * Units partition by physical dimension. Within a dimension each unit `u`
  * carries a fixed factor `lambda_u` to that dimension's base unit, so a

@@ -6,7 +6,7 @@ import {
 } from "@/lib/scaling";
 
 /**
- * Tests for portion scaling (docs/mathematics.md §2).
+ * Tests for portion scaling.
  */
 
 function ingredient(
