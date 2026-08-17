@@ -55,8 +55,12 @@ The panel counts the teaspoon of brine as more bean curd, because that is what
 it is: the same ferment with more water in it.
 
 Things that traditionally go into the mixture, one at a time rather than all at
-once: a chopped water chestnut for crunch, a spoonful of soaked dried shrimp, or
-a salted egg yolk pressed into the middle before it goes in to steam.
+once: a chopped water chestnut for crunch, or a spoonful of soaked dried shrimp.
+
+The other patty in this collection, Steamed Pork Patty with Salted Egg, is the
+same technique flavoured a different way. That one needs three tablespoons of
+water beaten into the meat; this one does not, because the bean curd brine is
+already liquid.
 
 ## Storage
 

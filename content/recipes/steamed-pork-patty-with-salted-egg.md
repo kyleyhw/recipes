@@ -1,0 +1,98 @@
+---
+title: Steamed Pork Patty with Salted Egg
+description: The Cantonese one. Salted egg whites beaten into the pork with three spoons of water, the yolks halved on top, and fifteen minutes over a rolling boil.
+category: Mains
+cuisine: Chinese
+tags:
+  - quick
+  - one pot
+servings: 2
+prepMinutes: 10
+cookMinutes: 15
+cookLabel: steam
+---
+
+## Ingredients
+
+- 2 salted duck eggs
+- 3 tbsp water
+- 2 tsp cornflour
+- 1 tbsp shaoxing wine
+- 1 tsp light soy sauce
+- 0.5 tsp granulated sugar
+- 0.25 tsp white pepper
+- 0.5 tsp sesame oil
+- 250 g fatty pork mince
+- 10 g ginger, finely minced
+- 15 g spring onions, green parts only
+
+## Method
+
+1. Crack the salted eggs and separate them. Put the whites in a mixing bowl. Cut each yolk in half and set the four halves aside, cut side up.
+2. Add the water, cornflour, shaoxing wine, soy sauce, sugar, white pepper and sesame oil to the whites. Whisk for 20 seconds, until the cornflour has gone and nothing grainy is left on the bottom of the bowl.
+3. Add the pork and the ginger. Stir hard with chopsticks in one direction only — never back and forth — for 3 minutes. It starts sloppy and ends sticky enough to lift out on the chopsticks in one mass. Do not stop early: the three tablespoons of water stay in the patty only if the meat takes them up, and a mixture stirred for one minute weeps them straight back out in the steamer.
+4. Put a steaming rack in a wok or a wide pan, add water to just below it, and bring it to a rolling boil.
+5. Spread the meat into a shallow heatproof dish in an even layer 1.5 cm thick, right to the edges. Press the four yolk halves into the surface, cut side up and spaced apart, until they sit level with the meat and no further — a buried yolk stays hard.
+6. Set the dish on the rack, cover with a tight lid, and steam over high heat for 15 minutes. It is done when the patty has shrunk from the sides of the dish, clear broth has pooled around it, and the yolks have turned matt orange with a slick of oil at their edges.
+7. Scatter the spring onion over the top and take it to the table in the dish it steamed in, with plain rice. Break a yolk into each portion and stir it through the broth before spooning it over the rice.
+
+## Notes
+
+No salt goes in anywhere, and none should. The whites are the seasoning for the
+whole patty.
+
+The three tablespoons of water are what separate this from a dry patty, and they
+are the reason the stir has to run a full three minutes rather than until it
+looks mixed. Cantonese cooks call it da shui, beating the water in.
+
+The panel says 1730 mg of sodium a serving, which is real — nothing here gets
+poured away, since the whites go into the meat and the broth goes onto the rice.
+It is also the least certain number on the page. Salted eggs vary more than any
+other ingredient in this collection, because how long they were cured decides it
+and the packet never says: published figures put one egg anywhere between 800
+and 1600 mg, and the library takes a middle value. If yours are from a strong
+brand, leave the soy sauce out.
+
+This is a dish eaten in small quantities with a lot of plain rice, which is what
+the arithmetic assumes you will not do if nobody says so.
+
+If the yolks smell raw, rinse them in a spoonful of shaoxing wine and pat them
+dry before they go on.
+
+A chopped water chestnut, a soaked dried shiitake or a spoonful of soaked dried
+shrimp all belong in the mixture — one at a time, not all at once.
+
+For the same patty flavoured with fermented bean curd instead, see Steamed Pork
+Patty with Preserved Bean Curd. Same stir, same dish, same thickness; the bean
+curd version needs no added water because the brine brings its own.
+
+## Storage
+
+Two days in the fridge, in the dish, covered, with its broth. Steam it again for
+5 minutes, or microwave it covered for 90 seconds — it survives both, having
+been steamed to begin with.
+
+The raw mixture freezes for a month, but freeze it without the yolks and press
+them on after it has defrosted: a frozen yolk goes chalky and never comes back.
+
+## Diagram
+
+- garnish, serve
+  - steam 15 min
+    - stir one way 3 min
+      - whisk smooth
+        - salted duck eggs
+        - water
+        - cornflour
+        - shaoxing wine
+        - light soy sauce
+        - granulated sugar
+        - white pepper
+        - sesame oil
+      - fatty pork mince
+      - ginger
+  - spring onions
+
+## Log
+
+- 2026-08-17: Added. The recipe sites could not be reached from the machine this file was written on, so the quantities are the standard proportions for the dish rather than a transcription of any one version.
