@@ -13,10 +13,12 @@ import { summarise } from "@/lib/content/summary";
  * seen.
  */
 export default function BrowsePage() {
-  const { recipes, categories, ingredients, problems } = loadCollection();
+  const { recipes, categories, ingredients, attribution, problems } = loadCollection();
   // Summarised at build time so the browser can sort by protein per serving
   // without shipping the ingredient library and the nutrition pipeline.
-  const summaries = recipes.map((recipe) => summarise(recipe, ingredients));
+  const summaries = recipes.map((recipe) =>
+    summarise(recipe, ingredients, attribution[recipe.slug]?.addedBy.name ?? null),
+  );
   const glyphs = Object.fromEntries(categories.map((c) => [c.name, c.glyph]));
 
   return (

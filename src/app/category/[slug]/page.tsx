@@ -29,13 +29,15 @@ export default async function CategoryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { recipes, categories, ingredients } = loadCollection();
+  const { recipes, categories, ingredients, attribution } = loadCollection();
   const category = categories.find((entry) => entry.slug === slug);
   if (!category) notFound();
 
   const summaries = recipes
     .filter((recipe) => recipe.category === category.name)
-    .map((recipe) => summarise(recipe, ingredients));
+    .map((recipe) =>
+      summarise(recipe, ingredients, attribution[recipe.slug]?.addedBy.name ?? null),
+    );
 
   return (
     <Browse

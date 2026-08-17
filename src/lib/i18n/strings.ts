@@ -75,6 +75,10 @@ const en = {
   sortQuickest: "Quickest first",
   sortLongest: "Longest first",
   sortProtein: "Most protein",
+  sortLeastProtein: "Least protein",
+  sortReverseAlphabetical: "Z–A",
+  sortAddedBy: "Added by",
+  filterShowAll: "All",
 
   // A recipe
   method: "Method",
@@ -270,6 +274,10 @@ const zhHant: Dict = {
   sortQuickest: "最快優先",
   sortLongest: "最久優先",
   sortProtein: "蛋白質最高",
+  sortLeastProtein: "蛋白質最低",
+  sortReverseAlphabetical: "Z–A",
+  sortAddedBy: "新增者",
+  filterShowAll: "全部",
 
   method: "做法",
   notes: "筆記",
@@ -439,6 +447,10 @@ const zhHans: Dict = {
   sortQuickest: "最快优先",
   sortLongest: "最久优先",
   sortProtein: "蛋白质最高",
+  sortLeastProtein: "蛋白质最低",
+  sortReverseAlphabetical: "Z–A",
+  sortAddedBy: "添加者",
+  filterShowAll: "全部",
 
   method: "做法",
   notes: "笔记",
@@ -610,6 +622,10 @@ const ru: Dict = {
   sortQuickest: "Сначала быстрые",
   sortLongest: "Сначала долгие",
   sortProtein: "Больше белка",
+  sortLeastProtein: "Меньше белка",
+  sortReverseAlphabetical: "Я–А",
+  sortAddedBy: "Кто добавил",
+  filterShowAll: "Все",
 
   method: "Приготовление",
   notes: "Заметки",

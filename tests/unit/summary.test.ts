@@ -1,12 +1,18 @@
 import { describe, expect, it } from "vitest";
 import {
+  filterOptions,
+  filterRecipes,
+  nextSort,
   shelveRecipes,
   sortRecipes,
-  SORT_KEYS,
+  SORT_ROWS,
   SORT_STRING_KEYS,
+  UNATTRIBUTED_SHELF,
   type RecipeSummary,
   type SortKey,
 } from "@/lib/content/summary";
+
+const SORT_KEYS = Object.keys(SORT_STRING_KEYS) as SortKey[];
 
 /**
  * Tests for arranging a listing.
@@ -25,6 +31,7 @@ function recipe(overrides: Partial<RecipeSummary> & { title: string }): RecipeSu
     slug: overrides.title.toLowerCase().replace(/\s+/g, "-"),
     category: "Mains",
     cuisine: null,
+    addedBy: null,
     tags: [],
     prepMinutes: 10,
     cookMinutes: 20,
@@ -213,7 +220,7 @@ describe("shelves", () => {
   });
 
   /** Every recipe appears exactly once, whichever arrangement is chosen. */
-  it.each(SORT_KEYS)("loses no recipe when arranged by %s", (key) => {
+  it.each(SORT_KEYS)("loses no recipe when arranged by %s", (key: SortKey) => {
     const shelved = shelveRecipes(MIXED, key).flatMap((s) => s.recipes);
     expect(shelved).toHaveLength(MIXED.length);
     expect(new Set(shelved.map((r) => r.slug)).size).toBe(MIXED.length);
@@ -228,11 +235,109 @@ describe("shelves", () => {
     for (const key of SORT_KEYS) {
       expect(SORT_STRING_KEYS[key]).toBeTruthy();
     }
-    expect(SORT_KEYS).toHaveLength(Object.keys(SORT_STRING_KEYS).length);
+  });
+
+  /**
+   * Every arrangement must be reachable from the menu. A key that exists in
+   * the type and in the string table but in no row is an arrangement the code
+   * can be in and the reader can never choose — or, worse, can be left in with
+   * no row lit to say so.
+   */
+  it("offers every arrangement in some row", () => {
+    const reachable = new Set(
+      SORT_ROWS.flatMap((row) =>
+        row.reverse ? [row.primary, row.reverse] : [row.primary],
+      ),
+    );
+    expect([...SORT_KEYS].filter((key) => !reachable.has(key))).toEqual([]);
   });
 
   it("handles an empty collection", () => {
     expect(shelveRecipes([], "category")).toEqual([]);
     expect(shelveRecipes([], "alphabetical")[0]?.recipes).toEqual([]);
+  });
+});
+
+describe("toggling an ordering", () => {
+  const time = SORT_ROWS.find((row) => row.primary === "prep-asc")!;
+  const category = SORT_ROWS.find((row) => row.primary === "category")!;
+
+  /**
+   * Three clicks and you are back where you started. This is the whole reason
+   * the two time rows became one: a reader who wants to undo "quickest first"
+   * should not have to work out that the way back is a different row.
+   */
+  it("cycles primary, reverse, off", () => {
+    expect(nextSort(time, "category")).toBe("prep-asc");
+    expect(nextSort(time, "prep-asc")).toBe("prep-desc");
+    expect(nextSort(time, "prep-desc")).toBe("category");
+  });
+
+  it("starts at the primary from any unrelated arrangement", () => {
+    expect(nextSort(time, "alphabetical")).toBe("prep-asc");
+    expect(nextSort(time, "protein-desc")).toBe("prep-asc");
+  });
+
+  it("does not toggle a grouping", () => {
+    expect(nextSort(category, "category")).toBe("category");
+    expect(nextSort(category, "prep-desc")).toBe("category");
+  });
+});
+
+describe("filters", () => {
+  const LISTING: RecipeSummary[] = [
+    recipe({ title: "Larb", cuisine: "Thai", addedBy: "ada" }),
+    recipe({ title: "Curry", cuisine: "Thai", addedBy: "bob" }),
+    recipe({ title: "Loaf", cuisine: "British", addedBy: "ada" }),
+    recipe({ title: "Orphan" }),
+  ];
+
+  it("narrows to one cuisine", () => {
+    expect(
+      filterRecipes(LISTING, { cuisine: "Thai", addedBy: null }).map((r) => r.title),
+    ).toEqual(["Larb", "Curry"]);
+  });
+
+  it("narrows to one contributor", () => {
+    expect(
+      filterRecipes(LISTING, { cuisine: null, addedBy: "ada" }).map((r) => r.title),
+    ).toEqual(["Larb", "Loaf"]);
+  });
+
+  it("combines the two", () => {
+    expect(
+      filterRecipes(LISTING, { cuisine: "Thai", addedBy: "ada" }).map((r) => r.title),
+    ).toEqual(["Larb"]);
+  });
+
+  it("returns everything when nothing is set", () => {
+    expect(filterRecipes(LISTING, { cuisine: null, addedBy: null })).toHaveLength(4);
+  });
+
+  /**
+   * A recipe with no cuisine has to be reachable. Otherwise filtering is a way
+   * to lose a recipe permanently: it is on no shelf you can select, and the
+   * only way back to it is to clear the filter you may not remember setting.
+   */
+  it("gathers a missing value under one named option", () => {
+    expect(filterOptions(LISTING, "cuisine")).toEqual([
+      { value: "British", count: 1 },
+      { value: "Thai", count: 2 },
+      { value: UNATTRIBUTED_SHELF, count: 1 },
+    ]);
+    expect(
+      filterRecipes(LISTING, { cuisine: UNATTRIBUTED_SHELF, addedBy: null }).map(
+        (r) => r.title,
+      ),
+    ).toEqual(["Orphan"]);
+  });
+
+  it("counts contributors", () => {
+    expect(filterOptions(LISTING, "addedBy")).toEqual([
+      { value: "ada", count: 2 },
+      { value: "bob", count: 1 },
+      // Last, wherever the alphabet would have put it.
+      { value: UNATTRIBUTED_SHELF, count: 1 },
+    ]);
   });
 });

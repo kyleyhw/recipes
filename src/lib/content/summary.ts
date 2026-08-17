@@ -25,6 +25,11 @@ export interface RecipeSummary {
   cookLabels: Record<string, string>;
   category: string;
   cuisine: string | null;
+  /**
+   * Who added the recipe, from its git history. Null where the build could not
+   * see the history — see lib/content/attribution.ts.
+   */
+  addedBy: string | null;
   tags: string[];
   prepMinutes: number | null;
   cookMinutes: number | null;
@@ -50,6 +55,7 @@ export interface RecipeSummary {
 export function summarise(
   recipe: RecipeFile,
   library: readonly LibraryIngredient[],
+  addedBy: string | null = null,
 ): RecipeSummary {
   const prepared = prepareRecipe(recipe, library);
   const nutrition = computeNutrition(prepared.nutrition, recipe.servings);
@@ -68,6 +74,7 @@ export function summarise(
     ),
     category: recipe.category,
     cuisine: recipe.cuisine,
+    addedBy,
     tags: recipe.tags,
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
@@ -105,33 +112,146 @@ export function summarise(
 
 /** How a listing can be arranged. */
 export type SortKey =
-  "category" | "cuisine" | "alphabetical" | "prep-asc" | "prep-desc" | "protein-desc";
-
-/**
- * The arrangements, in the order they are offered.
- *
- * The labels are not here. They live in the string table with everything else
- * a reader sees, and this maps each arrangement to its key there — so adding a
- * language does not mean editing this file, and adding an arrangement means
- * adding one row in each.
- */
-export const SORT_KEYS: readonly SortKey[] = [
-  "category",
-  "cuisine",
-  "alphabetical",
-  "prep-asc",
-  "prep-desc",
-  "protein-desc",
-];
+  | "category"
+  | "cuisine"
+  | "added-by"
+  | "alphabetical"
+  | "alphabetical-desc"
+  | "prep-asc"
+  | "prep-desc"
+  | "protein-desc"
+  | "protein-asc";
 
 export const SORT_STRING_KEYS: Record<SortKey, StringKey> = {
   category: "sortCategory",
   cuisine: "sortCuisine",
+  "added-by": "sortAddedBy",
   alphabetical: "sortAlphabetical",
+  "alphabetical-desc": "sortReverseAlphabetical",
   "prep-asc": "sortQuickest",
   "prep-desc": "sortLongest",
   "protein-desc": "sortProtein",
+  "protein-asc": "sortLeastProtein",
 };
+
+/**
+ * Which way an arrangement runs, for the arrow beside it.
+ *
+ * Ascending is up: A first, quickest first, least protein first. Grouping
+ * arrangements have no direction and no arrow, because "grouped by category"
+ * is not a direction and an arrow next to it would be answering a question
+ * nobody asked.
+ */
+export type SortDirection = "asc" | "desc";
+
+export const SORT_DIRECTIONS: Record<SortKey, SortDirection | null> = {
+  category: null,
+  cuisine: null,
+  "added-by": null,
+  alphabetical: "asc",
+  "alphabetical-desc": "desc",
+  "prep-asc": "asc",
+  "prep-desc": "desc",
+  "protein-desc": "desc",
+  "protein-asc": "asc",
+};
+
+/**
+ * A row in the arrange-and-filter menu.
+ *
+ * One row per *question* rather than one per answer. "Quickest first" and
+ * "Longest first" were two rows and are one: they are the same question asked
+ * in two directions, and a menu that lists both makes the reader find the
+ * opposite of what they chose in order to undo it. Clicking a row with a
+ * `reverse` cycles primary → reverse → off, which is the whole of the
+ * interaction and needs no explanation.
+ *
+ * `filter` marks the rows that also open a submenu of values. Those are the
+ * ones where the collection's own content supplies the choices — its cuisines,
+ * its contributors — so they cannot be listed here and are gathered from the
+ * recipes at render time.
+ */
+export interface SortRow {
+  /** What a first click gives. */
+  primary: SortKey;
+  /** What a second click gives, or null where the row does not toggle. */
+  reverse: SortKey | null;
+  /** The dimension this row can also filter on. */
+  filter: FilterField | null;
+}
+
+export type FilterField = "cuisine" | "addedBy";
+
+export const SORT_ROWS: readonly SortRow[] = [
+  { primary: "category", reverse: null, filter: null },
+  { primary: "cuisine", reverse: null, filter: "cuisine" },
+  { primary: "added-by", reverse: null, filter: "addedBy" },
+  { primary: "alphabetical", reverse: "alphabetical-desc", filter: null },
+  { primary: "prep-asc", reverse: "prep-desc", filter: null },
+  { primary: "protein-desc", reverse: "protein-asc", filter: null },
+];
+
+/** The arrangement a row moves to when it is clicked, given the current one. */
+export function nextSort(row: SortRow, current: SortKey): SortKey {
+  if (row.reverse === null) return row.primary;
+  if (current === row.primary) return row.reverse;
+  // Off again. `category` is the default arrangement rather than a null state:
+  // the listing has to be in *some* order, and grouped by category is the one
+  // the collection is built around.
+  if (current === row.reverse) return "category";
+  return row.primary;
+}
+
+/** What a listing is narrowed to. Null on a field means "everything". */
+export interface Filters {
+  cuisine: string | null;
+  addedBy: string | null;
+}
+
+export const NO_FILTERS: Filters = { cuisine: null, addedBy: null };
+
+export function filterRecipes(
+  recipes: readonly RecipeSummary[],
+  filters: Filters,
+): RecipeSummary[] {
+  return recipes.filter(
+    (recipe) =>
+      (filters.cuisine === null ||
+        (recipe.cuisine ?? UNATTRIBUTED_SHELF) === filters.cuisine) &&
+      (filters.addedBy === null ||
+        (recipe.addedBy ?? UNATTRIBUTED_SHELF) === filters.addedBy),
+  );
+}
+
+/**
+ * The values a field actually takes across a listing, with their counts.
+ *
+ * Gathered from the recipes rather than declared, so a cuisine that no recipe
+ * uses is never offered — a filter that returns nothing is a dead end, and one
+ * that is *offered* and returns nothing reads as a bug in the site.
+ */
+export function filterOptions(
+  recipes: readonly RecipeSummary[],
+  field: FilterField,
+): Array<{ value: string; count: number }> {
+  const counts = new Map<string, number>();
+  for (const recipe of recipes) {
+    const value =
+      (field === "cuisine" ? recipe.cuisine : recipe.addedBy) ?? UNATTRIBUTED_SHELF;
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+  // Alphabetical, but the catch-all last wherever the alphabet would have put
+  // it. It is not a cuisine or a person; it is the absence of one, and reading
+  // it in the middle of the list as though it were a name is confusing in
+  // exactly the way the unknowns-last sorting rule exists to avoid.
+  return [...counts]
+    .map(([value, count]) => ({ value, count }))
+    .sort((a, b) => {
+      if (a.value === UNATTRIBUTED_SHELF) return 1;
+      if (b.value === UNATTRIBUTED_SHELF) return -1;
+      return a.value.localeCompare(b.value);
+    });
+}
 
 /**
  * Recipes with nothing to sort by go last, whichever direction is asked for.
@@ -178,7 +298,10 @@ export function sortRecipes(
     case "alphabetical":
     case "category":
     case "cuisine":
+    case "added-by":
       return sorted.sort(byTitle);
+    case "alphabetical-desc":
+      return sorted.sort((a, b) => byTitle(b, a));
     case "prep-asc":
       return sorted.sort(
         (a, b) =>
@@ -195,6 +318,12 @@ export function sortRecipes(
       return sorted.sort(
         (a, b) =>
           withUnknownsLast(a.proteinPerServing, b.proteinPerServing, (x, y) => y - x) ||
+          byTitle(a, b),
+      );
+    case "protein-asc":
+      return sorted.sort(
+        (a, b) =>
+          withUnknownsLast(a.proteinPerServing, b.proteinPerServing, (x, y) => x - y) ||
           byTitle(a, b),
       );
   }
@@ -229,7 +358,7 @@ export function shelveRecipes(
 ): Shelf[] {
   const sorted = sortRecipes(recipes, key);
 
-  if (key !== "category" && key !== "cuisine") {
+  if (key !== "category" && key !== "cuisine" && key !== "added-by") {
     return [{ name: "", recipes: sorted }];
   }
 
@@ -238,7 +367,11 @@ export function shelveRecipes(
     // A recipe with no cuisine still has to appear somewhere; dropping it from
     // the page because a field is blank would hide it entirely.
     const name =
-      key === "category" ? recipe.category : (recipe.cuisine ?? UNATTRIBUTED_SHELF);
+      key === "category"
+        ? recipe.category
+        : key === "cuisine"
+          ? (recipe.cuisine ?? UNATTRIBUTED_SHELF)
+          : (recipe.addedBy ?? UNATTRIBUTED_SHELF);
     const existing = groups.get(name);
     if (existing) existing.push(recipe);
     else groups.set(name, [recipe]);

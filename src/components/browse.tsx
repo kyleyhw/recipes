@@ -5,8 +5,13 @@ import { useLanguage, useT } from "@/components/language";
 import { RecipeCard } from "@/components/recipe-card";
 import { SortMenu } from "@/components/sort-menu";
 import {
+  filterOptions,
+  filterRecipes,
+  NO_FILTERS,
   shelveRecipes,
   UNATTRIBUTED_SHELF,
+  type FilterField,
+  type Filters,
   type RecipeSummary,
   type SortKey,
 } from "@/lib/content/summary";
@@ -44,6 +49,7 @@ export function Browse({
 }) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("category");
+  const [filters, setFilters] = useState<Filters>(NO_FILTERS);
   const t = useT();
   const language = useLanguage();
 
@@ -59,14 +65,37 @@ export function Browse({
     );
   }, [recipes, trimmed]);
 
-  const shelves = useMemo(
-    () => shelveRecipes(matching, sort, categoryOrder),
-    [matching, sort, categoryOrder],
+  // Filters narrow what the search already matched, and the options offered
+  // are gathered from everything on the page rather than from what is left
+  // after filtering — a menu whose contents change as you use it is a menu you
+  // cannot find your way back through.
+  const narrowed = useMemo(() => filterRecipes(matching, filters), [matching, filters]);
+
+  const options = useMemo(
+    () => ({
+      cuisine: filterOptions(recipes, "cuisine"),
+      addedBy: filterOptions(recipes, "addedBy"),
+    }),
+    [recipes],
   );
+
+  const shelves = useMemo(
+    () => shelveRecipes(narrowed, sort, categoryOrder),
+    [narrowed, sort, categoryOrder],
+  );
+
+  const active = (["cuisine", "addedBy"] as const).flatMap((field) => {
+    const value = filters[field];
+    return value === null ? [] : [{ field, value }];
+  });
+
+  function setFilter(field: FilterField, value: string | null): void {
+    setFilters((current) => ({ ...current, [field]: value }));
+  }
 
   // Protein is the one sort whose figure is worth showing on the card: ranking
   // by a number the reader cannot see is a ranking they have to take on trust.
-  const showProtein = sort === "protein-desc";
+  const showProtein = sort === "protein-desc" || sort === "protein-asc";
 
   return (
     <div>
@@ -79,7 +108,13 @@ export function Browse({
           aria-label={t("searchLabel")}
           className="min-w-48 flex-1 rounded-card border border-border bg-surface px-3 py-2 text-base outline-none focus:border-accent"
         />
-        <SortMenu value={sort} onChange={setSort} />
+        <SortMenu
+          value={sort}
+          onChange={setSort}
+          filters={filters}
+          onFilter={setFilter}
+          options={options}
+        />
         {trimmed.length > 0 ? (
           <button
             type="button"
@@ -95,13 +130,37 @@ export function Browse({
         <h1 className="mb-4 text-lg font-semibold tracking-tight">{heading}</h1>
       ) : null}
 
+      {/* An active filter has to be visible outside the menu that set it, and
+          removable without going back into it. A listing quietly showing a
+          third of itself is the same failure as a search box you cannot see
+          the contents of. */}
+      {active.length > 0 ? (
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          {active.map(({ field, value }) => (
+            <button
+              key={`${field}-${value}`}
+              type="button"
+              onClick={() => setFilter(field, null)}
+              className="rounded-full bg-surface-2 px-3 py-1 text-xs text-text-muted hover:text-text"
+            >
+              {value === UNATTRIBUTED_SHELF
+                ? t("unattributed")
+                : translateCategory(language, value)}
+              <span aria-hidden="true" className="ml-2">
+                ×
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       {trimmed.length > 0 ? (
         <p className="mb-4 text-sm text-text-muted">
-          {t("resultsFor", { n: matching.length, q: query.trim() })}
+          {t("resultsFor", { n: narrowed.length, q: query.trim() })}
         </p>
       ) : null}
 
-      {matching.length === 0 ? (
+      {narrowed.length === 0 ? (
         <p className="text-sm text-text-muted">{t("nothingMatched")}</p>
       ) : (
         <div className="flex flex-col gap-8">
