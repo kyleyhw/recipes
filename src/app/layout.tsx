@@ -121,6 +121,12 @@ export default function RootLayout({
                   </Link>
                 </span>
               ))}
+              {/* Closes the set. Every other item in this row is preceded by a
+                  rule, so without one at the end the last category is the only
+                  one with an open side — and at wide widths, where `flex-1`
+                  pushes the right-hand group away, that open side is a gap
+                  rather than a boundary. */}
+              <Pipe />
             </nav>
             {/* One rule closes the categories and opens these two, rather than
                 a pipe and a border sitting side by side looking like a stutter.

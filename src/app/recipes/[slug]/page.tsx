@@ -8,7 +8,7 @@ import { recipeFilename, type RecipeTranslation } from "@/lib/content/format";
 import { loadCollection } from "@/lib/content/library";
 import { buildDiagram } from "@/lib/content/diagram";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
-import { prepareRecipe } from "@/lib/content/prepare";
+import { keepingNotes, prepareRecipe } from "@/lib/content/prepare";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 import { repoUrl } from "@/lib/site";
 
@@ -42,6 +42,7 @@ export default async function RecipePage({
   const credit = attribution[slug] ?? null;
 
   const prepared = prepareRecipe(recipe, ingredients);
+  const keeping = keepingNotes(recipe, ingredients);
   const glyph = categories.find((c) => c.name === recipe.category)?.glyph ?? "*";
   const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
   const file = recipeFilename(recipe.slug);
@@ -191,14 +192,37 @@ export default async function RecipePage({
         </section>
       ) : null}
 
-      {recipe.storage ? (
+      {/* Storing the dish and storing what is left of its ingredients are the
+          same question asked once, standing at the counter with half a cabbage
+          in hand. So they are one section: the recipe's own prose first, then
+          the perishables it used, whose notes come from the ingredient library
+          and are shared by every recipe that uses them. */}
+      {recipe.storage || keeping.length > 0 ? (
         <section className="mt-8">
           <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
             <T k="storage" />
           </h2>
-          <p className="text-sm whitespace-pre-line text-text-muted">
-            <TContent en={recipe.storage} translated={field((t) => t.storage)} />
-          </p>
+          {recipe.storage ? (
+            <p className="text-sm whitespace-pre-line text-text-muted">
+              <TContent en={recipe.storage} translated={field((t) => t.storage)} />
+            </p>
+          ) : null}
+
+          {keeping.length > 0 ? (
+            <div className="mt-4">
+              <h3 className="mb-2 text-xs font-medium tracking-wide text-text-muted uppercase">
+                <T k="keepingUnused" />
+              </h3>
+              <dl className="flex flex-col gap-1.5">
+                {keeping.map((entry) => (
+                  <div key={entry.name} className="text-sm">
+                    <dt className="inline font-medium">{entry.name}</dt>{" "}
+                    <dd className="inline text-text-muted">{entry.keeping}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ) : null}
         </section>
       ) : null}
 

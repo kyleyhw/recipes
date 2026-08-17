@@ -200,6 +200,34 @@ export function prepareRecipe(
   return { scalable, nutrition };
 }
 
+/**
+ * The keeping notes for what a recipe leaves over.
+ *
+ * A recipe's Storage section is about the dish; these are about the ingredients
+ * — the rest of the cabbage, the half bunch of coriander — and they belong
+ * beside it, because "what do I do with what is left?" is one question and the
+ * cook asks it once, standing in front of the counter.
+ *
+ * Only the perishables come back: a row without a `keeping` note is one where
+ * the answer is "put it in the cupboard" and saying so would be noise. Order
+ * follows the ingredient list, and an ingredient used twice appears once.
+ */
+export function keepingNotes(
+  recipe: RecipeFile,
+  library: readonly LibraryIngredient[],
+): Array<{ name: string; keeping: string }> {
+  const seen = new Set<string>();
+  const notes: Array<{ name: string; keeping: string }> = [];
+
+  for (const line of recipe.ingredients) {
+    const match = matchIngredient(parseIngredientLine(line).name, library);
+    if (!match?.keeping || seen.has(match.name)) continue;
+    seen.add(match.name);
+    notes.push({ name: match.name, keeping: match.keeping });
+  }
+  return notes;
+}
+
 /** Nutrition for a recipe at its base serving count. */
 export function nutritionFor(recipe: RecipeFile, library: readonly LibraryIngredient[]) {
   return computeNutrition(prepareRecipe(recipe, library).nutrition, recipe.servings);

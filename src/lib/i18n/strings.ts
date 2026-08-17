@@ -172,6 +172,7 @@ const en = {
   // The ingredient library
   findIngredient: "Find an ingredient",
   keeping: "Keeping",
+  keepingUnused: "What you did not use",
   fullPage: "Full page",
   close: "Close",
   closeLibrary: "Close the ingredient library",
@@ -361,6 +362,7 @@ const zhHant: Dict = {
 
   findIngredient: "尋找食材",
   keeping: "保存",
+  keepingUnused: "沒用完的食材",
   fullPage: "完整頁面",
   close: "關閉",
   closeLibrary: "關閉食材庫",
@@ -534,6 +536,7 @@ const zhHans: Dict = {
 
   findIngredient: "查找食材",
   keeping: "保存",
+  keepingUnused: "没用完的食材",
   fullPage: "完整页面",
   close: "关闭",
   closeLibrary: "关闭食材库",
@@ -714,6 +717,7 @@ const ru: Dict = {
 
   findIngredient: "Найти ингредиент",
   keeping: "Хранение",
+  keepingUnused: "Что осталось от продуктов",
   fullPage: "Отдельная страница",
   close: "Закрыть",
   closeLibrary: "Закрыть справочник ингредиентов",

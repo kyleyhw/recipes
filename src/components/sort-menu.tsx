@@ -52,9 +52,28 @@ import {
  * one question — "by cuisine" and "Thai only" are the same thought, arrived at
  * a second apart.
  *
- * The submenu opens to the **left**. The panel is right-aligned under a trigger
- * that sits at the right of the controls, so a submenu opening rightwards would
- * hang off the edge of the screen on any narrow window.
+ * ## One variable decides which submenu is open
+ *
+ * The panel itself opens on CSS hover, which is fine because there is only one
+ * of it. The submenus cannot work that way: with `group-hover` on each row *and*
+ * a click-held state for touch, clicking one row's arrow and then hovering
+ * another showed both submenus at once, overlapping, with no way to tell which
+ * of them the next click would apply to.
+ *
+ * So `openFilter` is the only thing that decides, and hover, focus and click all
+ * write to it — hovering any row without a submenu writes `null`, which is what
+ * closes the last one. A pointer moving down the menu therefore opens and closes
+ * submenus as it goes, and a tap on an arrow holds one open, and the two cannot
+ * disagree because there is only one variable.
+ *
+ * The submenu opens to the **right**, alongside the panel — but only where it
+ * fits. The panel is right-aligned under a trigger that sits at the right edge
+ * of a centred column, so on a 1100 px window there are 38 px of page margin to
+ * its right and a submenu opening into them is half off the screen. So the row
+ * is measured when it opens and the submenu flips to the left when the window
+ * cannot take it. A fixed breakpoint cannot decide this: what matters is the
+ * distance from the panel's right edge to the edge of the window, and that
+ * depends on the column width and the window together.
  */
 export function SortMenu({
   value,
@@ -74,6 +93,8 @@ export function SortMenu({
   // Which submenu a *tap* has opened. Hover and focus are handled in CSS; this
   // exists only for touch, where neither happens.
   const [openFilter, setOpenFilter] = useState<FilterField | null>(null);
+  // Which way the submenu opens. Rightwards unless the window cannot take it.
+  const [side, setSide] = useState<"right" | "left">("right");
   const t = useT();
   const language = useLanguage();
 
@@ -93,6 +114,23 @@ export function SortMenu({
     // one decision made in two or three clicks, and closing the menu after each
     // would mean reopening it to change your mind.
     if (row.reverse === null) close();
+  }
+
+  /**
+   * Opens a row's submenu, on the side there is room for.
+   *
+   * `row.filter` is null on the ordering rows, and writing that null is what
+   * closes whichever submenu was open — one variable, so two of them can never
+   * be open at once.
+   */
+  function reveal(row: SortRow, element: HTMLElement | null): void {
+    if (row.filter && element) {
+      const rect = element.getBoundingClientRect();
+      // The submenu's own width plus a margin, before it exists to be measured.
+      const needed = SUBMENU_WIDTH + 12;
+      setSide(rect.right + needed <= window.innerWidth ? "right" : "left");
+    }
+    setOpenFilter(row.filter);
   }
 
   function pick(field: FilterField, next: string | null): void {
@@ -150,8 +188,12 @@ export function SortMenu({
             return (
               <li
                 key={row.primary}
-                className="group/row relative"
-                data-open={openFilter && openFilter === row.filter ? "" : undefined}
+                className="relative"
+                // Hover and focus both set which submenu is open — including to
+                // `null` on a row that has none, which is what closes the one
+                // before it.
+                onMouseEnter={(event) => reveal(row, event.currentTarget)}
+                onFocus={(event) => reveal(row, event.currentTarget)}
               >
                 <div className="flex items-stretch">
                   <button
@@ -174,12 +216,12 @@ export function SortMenu({
                     <button
                       type="button"
                       aria-haspopup="menu"
+                      aria-expanded={openFilter === row.filter}
                       aria-label={`${t(SORT_STRING_KEYS[row.primary])}: ${t("filterShowAll")}`}
-                      onClick={() =>
-                        setOpenFilter((current) =>
-                          current === row.filter ? null : row.filter,
-                        )
-                      }
+                      onClick={(event) => {
+                        if (openFilter === row.filter) setOpenFilter(null);
+                        else reveal(row, event.currentTarget.closest("li"));
+                      }}
                       className={`px-2 text-xs hover:bg-surface-2 ${
                         filtered ? "text-accent" : "text-text-muted"
                       }`}
@@ -189,10 +231,16 @@ export function SortMenu({
                   ) : null}
                 </div>
 
-                {row.filter ? (
+                {row.filter && openFilter === row.filter ? (
                   <div
                     role="menu"
-                    className="absolute top-0 right-full z-40 hidden min-w-40 pr-1 group-hover/row:block group-focus-within/row:block group-data-open/row:block"
+                    // Padding rather than a margin on the facing side: it keeps
+                    // the pointer inside the row while it crosses the gap, and a
+                    // margin would let the submenu close underneath it.
+                    className={`absolute top-0 z-40 ${
+                      side === "right" ? "left-full pl-1" : "right-full pr-1"
+                    }`}
+                    style={{ width: SUBMENU_WIDTH }}
                   >
                     <ul className="flex max-h-72 flex-col overflow-y-auto rounded-card border border-border bg-surface py-1 shadow-lg">
                       <li>
@@ -248,6 +296,15 @@ export function SortMenu({
  * for the same reason — the label beside it already reads "A–Z" or "Quickest
  * first", which is the direction in words.
  */
+/**
+ * How wide a submenu is.
+ *
+ * Fixed, and set here rather than by its contents, because the side it opens on
+ * has to be decided *before* it is rendered — a menu that measured itself would
+ * have to appear on the wrong side first.
+ */
+const SUBMENU_WIDTH = 176;
+
 function Arrow({ sort }: { sort: SortKey }) {
   const direction = SORT_DIRECTIONS[sort];
   if (!direction) return null;
