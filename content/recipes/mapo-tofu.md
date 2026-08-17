@@ -8,7 +8,6 @@ tags:
 servings: 4
 prepMinutes: 10
 cookMinutes: 15
-draft: true
 ---
 
 ## Ingredients
@@ -43,10 +42,8 @@ draft: true
 
 ## Notes
 
-This is a draft: not yet cooked here.
-
-It is the modern home version, and it differs from the Chengdu original in three
-ways, each of them deliberate. The meat is pork rather than beef — Chen Mapo
+This is the modern home version, and it differs from the Chengdu original in
+three ways, each of them deliberate. The meat is pork rather than beef — Chen Mapo
 Doufu in Chengdu, where the dish is from, has used beef since 1862, and beef is
 what the Sichuan cookery schools teach. Pork is what most kitchens outside
 Sichuan cook, it is sweeter and softer, and it is a real version rather than a
