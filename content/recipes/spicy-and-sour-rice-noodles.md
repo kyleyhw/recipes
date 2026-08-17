@@ -1,5 +1,5 @@
 ---
-title: Pickled Mustard Green and Pork Noodle Soup
+title: Spicy and Sour Rice Noodles
 description: A Chongqing bowl — rice noodles in a red, sour broth built on two pickles and a spoon of hot pot base. Fifteen minutes, and almost all of the flavour comes out of packets.
 category: Soups & Stews
 cuisine: Chinese
