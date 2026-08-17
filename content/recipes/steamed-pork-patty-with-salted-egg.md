@@ -14,7 +14,7 @@ cookLabel: steam
 
 ## Ingredients
 
-- 2 salted duck eggs
+- 2 salted duck eggs, raw
 - 3 tbsp water
 - 2 tsp cornflour
 - 1 tbsp shaoxing wine
@@ -28,7 +28,7 @@ cookLabel: steam
 
 ## Method
 
-1. Crack the salted eggs and separate them. Put the whites in a mixing bowl. Cut each yolk in half and set the four halves aside, cut side up.
+1. Crack the salted eggs and separate them — they must be the raw kind, sold in brine or coated in black clay, not the cooked vacuum-packed ones. The white runs like a normal raw white and the cured yolk is dense enough to cut. Put the whites in a mixing bowl, cut each yolk in half, and set the four halves aside, cut side up.
 2. Add the water, cornflour, shaoxing wine, soy sauce, sugar, white pepper and sesame oil to the whites. Whisk for 20 seconds, until the cornflour has gone and nothing grainy is left on the bottom of the bowl.
 3. Add the pork and the ginger. Stir hard with chopsticks in one direction only — never back and forth — for 3 minutes. It starts sloppy and ends sticky enough to lift out on the chopsticks in one mass. Do not stop early: the three tablespoons of water stay in the patty only if the meat takes them up, and a mixture stirred for one minute weeps them straight back out in the steamer.
 4. Put a steaming rack in a wok or a wide pan, add water to just below it, and bring it to a rolling boil.
@@ -39,7 +39,16 @@ cookLabel: steam
 ## Notes
 
 No salt goes in anywhere, and none should. The whites are the seasoning for the
-whole patty.
+whole patty — they are not mashed or chopped into it but whisked in as the
+liquid, which is what they are: a raw salted white pours like any other, and it
+carries most of the egg's salt. The yolk is the opposite, and it stays whole on
+top where you can see it.
+
+Raw salted eggs, then. Cooked ones — the vacuum-packed kind, already boiled —
+cannot be separated and their whites are rubber; if that is all you can find,
+chop the whites finely and fold them through the meat, halve the yolks onto the
+top as usual, and add a tablespoon of water to make up for the liquid you have
+lost.
 
 The three tablespoons of water are what separate this from a dry patty, and they
 are the reason the stir has to run a full three minutes rather than until it
@@ -63,8 +72,9 @@ A chopped water chestnut, a soaked dried shiitake or a spoonful of soaked dried
 shrimp all belong in the mixture — one at a time, not all at once.
 
 For the same patty flavoured with fermented bean curd instead, see Steamed Pork
-Patty with Preserved Bean Curd. Same stir, same dish, same thickness; the bean
-curd version needs no added water because the brine brings its own.
+Patty with Preserved Bean Curd. Same stir, same dish, same thickness — but far
+less liquid goes into it, a tablespoon against the 130 g of water and egg white
+here, so it is a denser patty with less broth around it.
 
 ## Storage
 
@@ -96,3 +106,4 @@ them on after it has defrosted: a frozen yolk goes chalky and never comes back.
 ## Log
 
 - 2026-08-17: Added. The recipe sites could not be reached from the machine this file was written on, so the quantities are the standard proportions for the dish rather than a transcription of any one version.
+- 2026-08-17: Said which kind of salted egg. Step 1 assumed the raw sort without saying so, and it cannot be followed with a cooked one — you cannot separate a boiled egg.
