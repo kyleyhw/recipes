@@ -57,8 +57,16 @@ export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredi
             onClick={() => setOpen(false)}
             className="fixed inset-0 z-40 cursor-default bg-black/50"
           />
+          {/* `whitespace-normal` undoes an inheritance, and it is load-bearing.
+              The button that opens this drawer lives in the header, which sets
+              `whitespace-nowrap` so the category links scroll sideways at phone
+              width instead of wrapping. The drawer is `fixed`, so it looks
+              unrelated — but it is still a DOM descendant of that header, and
+              it inherited the rule. Every note in here was being laid out on
+              one line and clipped at the edge with no scrollbar and no
+              ellipsis: present in the HTML, invisible on the screen. */}
           <aside
-            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col border-l border-border bg-bg shadow-2xl"
+            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col border-l border-border bg-bg whitespace-normal shadow-2xl"
             aria-label="Ingredient library"
           >
             <div className="flex items-baseline justify-between gap-3 border-b border-border px-4 py-3">
@@ -115,6 +123,17 @@ export function IngredientSidebar({ ingredients }: { ingredients: LibraryIngredi
                         ? ` · μ ${decimalOrDash(ingredient.gramsPerUnit, 1)} g`
                         : ""}
                     </p>
+                    {/* How to keep what the recipe did not use. First, and in
+                        the stronger colour: it is the thing you need while the
+                        rest of the bunch is still on the counter, whereas the
+                        provenance of a figure is something you look up later. */}
+                    {ingredient.keeping ? (
+                      <p className="mt-1 text-xs text-text-muted">
+                        <span className="font-medium">{t("keeping")}</span>
+                        {" — "}
+                        {ingredient.keeping}
+                      </p>
+                    ) : null}
                     {/* Every figure is a magic number, and must be traceable to
                         where it came from. */}
                     {ingredient.sourceNote ? (

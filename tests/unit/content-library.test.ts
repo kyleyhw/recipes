@@ -120,6 +120,19 @@ describe("the ingredient library", () => {
     expect(untraceable).toEqual([]);
   });
 
+  /**
+   * A `keeping` note is optional, but a stub is worse than nothing: it takes up
+   * the space where the real answer would go and reads as though the question
+   * has been answered. Forty characters is roughly "Two days in the fridge, or
+   * freeze it flat for 3 months" — a place, a time, and a method.
+   */
+  it("keeps no stub storage notes", () => {
+    const stubs = ingredients
+      .filter((ingredient) => ingredient.keeping && ingredient.keeping.trim().length < 40)
+      .map((ingredient) => ingredient.name);
+    expect(stubs).toEqual([]);
+  });
+
   it("has no negative or non-finite macro figures", () => {
     for (const ingredient of ingredients) {
       for (const value of [

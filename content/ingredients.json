@@ -51,7 +51,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 182,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171688, raw with skin. mu 182 g, USDA medium apple; the recipe peels it, which takes off about 15 g."
+    "sourceNote": "USDA SR Legacy 171688, raw with skin. mu 182 g, USDA medium apple; the recipe peels it, which takes off about 15 g.",
+    "keeping": "Six weeks in the fridge, in a bag, away from everything else — apples give off ethylene and will ripen and then rot whatever they sit next to."
   },
   {
     "name": "baby corn",
@@ -74,7 +75,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 8,
     "source": "MANUAL",
-    "sourceNote": "Fresh baby corn. FoodData Central lists only the canned product, which is saltier and softer; these are the declared values for the fresh vegetable. mu 8 g per ear."
+    "sourceNote": "Fresh baby corn. FoodData Central lists only the canned product, which is saltier and softer; these are the declared values for the fresh vegetable. mu 8 g per ear.",
+    "keeping": "A week in the fridge in a bag. It is sold both fresh and in tins — the tinned kind keeps unopened for years and needs draining and a good rinse, and once opened it goes in a box of fresh water in the fridge for 3 days."
   },
   {
     "name": "baking powder",
@@ -178,7 +180,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 168608, beef top sirloin, raw, trimmed to 1/8 inch fat."
+    "sourceNote": "USDA SR Legacy 168608, beef top sirloin, raw, trimmed to 1/8 inch fat.",
+    "keeping": "Three days in the fridge, unwrapped from plastic and loosely covered on a plate — plastic film traps moisture against the surface and it goes slimy. Freezes 6 months whole, and it slices far more neatly half-frozen."
   },
   {
     "name": "bell peppers",
@@ -204,7 +207,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 119,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170427, raw red pepper. mu 119 g for one. Green peppers carry about a third of the vitamin C."
+    "sourceNote": "USDA SR Legacy 170427, raw red pepper. mu 119 g for one. Green peppers carry about a third of the vitamin C.",
+    "keeping": "Two weeks whole in the fridge. Cut peppers keep 3 days in a box, and they freeze well sliced, which is worth doing with the last of a bag: they go soft on thawing, so use them where they are cooked anyway."
   },
   {
     "name": "bicarbonate of soda",
@@ -257,7 +261,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 2,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170108, raw red hot chilli peppers. mu 2 g for one bird's eye chilli."
+    "sourceNote": "USDA SR Legacy 170108, raw red hot chilli peppers. mu 2 g for one bird's eye chilli.",
+    "keeping": "Two weeks in the fridge in a paper bag. Better: freeze the lot whole in a bag on the day you buy them. They slice perfectly from frozen, lose nothing but their crunch, and keep 6 months, which is the difference between a jar of chillies you use and a black bag you throw away."
   },
   {
     "name": "black pepper",
@@ -326,7 +331,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171076, raw chicken thigh meat and skin, multiplied by a 70% edible yield because a recipe states bone-in thighs by the weight you buy. The yield is the assumption in this row; it runs 65-75% by size. Weigh the meat and use a gram override if it matters."
+    "sourceNote": "USDA SR Legacy 171076, raw chicken thigh meat and skin, multiplied by a 70% edible yield because a recipe states bone-in thighs by the weight you buy. The yield is the assumption in this row; it runs 65-75% by size. Weigh the meat and use a gram override if it matters.",
+    "keeping": "Two days in the fridge, on the bottom shelf. Freeze 4 months. If you are only using the meat, freeze the bones separately in a bag and add to it — six sets make a stock."
   },
   {
     "name": "bread flour",
@@ -379,7 +385,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 608,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170379, raw. mu 608 g for one large head, untrimmed; florets come to roughly two-thirds of that."
+    "sourceNote": "USDA SR Legacy 170379, raw. mu 608 g for one large head, untrimmed; florets come to roughly two-thirds of that.",
+    "keeping": "A week in the fridge, unwashed, in a loose bag. Yellowing florets are on the way out but taste fine cooked; a slimy stem base does not — cut it back to white."
   },
   {
     "name": "brown sugar",
@@ -434,7 +441,8 @@
     "densityGPerMl": 1.03,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 173441 (low-fat); rho 1.03 g/ml as for milk"
+    "sourceNote": "USDA SR Legacy 173441 (low-fat); rho 1.03 g/ml as for milk",
+    "keeping": "Two weeks after opening, in the fridge. It is already soured, so it lasts far longer than milk; separation is normal and a shake fixes it. Freezes well in the quantity a recipe uses."
   },
   {
     "name": "carrots",
@@ -460,7 +468,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 61,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170393, raw. mu 61 g, USDA medium carrot."
+    "sourceNote": "USDA SR Legacy 170393, raw. mu 61 g, USDA medium carrot.",
+    "keeping": "Three weeks in the fridge in a bag with the leafy tops cut off — the tops go on drawing water out of the root. Limp carrots come back after an hour in cold water, and are then fine for anything cooked."
   },
   {
     "name": "chicken bouillon powder",
@@ -504,7 +513,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171477 (skinless, roasted)"
+    "sourceNote": "USDA SR Legacy 171477 (skinless, roasted)",
+    "keeping": "Two days in the fridge, on the bottom shelf so nothing under it catches a drip. Freeze in single pieces rather than a block, 4 months."
   },
   {
     "name": "chicken stock",
@@ -528,7 +538,8 @@
     "densityGPerMl": 1.0,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 174538, ready-to-serve chicken stock. rho 1.0 g/ml. Stock made from a cube runs several times this in sodium."
+    "sourceNote": "USDA SR Legacy 174538, ready-to-serve chicken stock. rho 1.0 g/ml. Stock made from a cube runs several times this in sodium.",
+    "keeping": "Four days in the fridge once the carton is open, or freeze it — 250 ml portions in a bag, laid flat, are the useful unit. Home-made stock keeps 3 days and freezes for 6 months."
   },
   {
     "name": "chicken thigh",
@@ -556,7 +567,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171479 (skinless, roasted)"
+    "sourceNote": "USDA SR Legacy 171479 (skinless, roasted)",
+    "keeping": "Two days in the fridge. Thighs freeze better than breast — 4 months, and they come back juicy where breast comes back stringy."
   },
   {
     "name": "chilli flakes",
@@ -583,7 +595,8 @@
     "densityGPerMl": 0.34,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171329, ground red pepper (cayenne). rho 0.34 g/ml, from a level tablespoon of coarse flakes at 5 g."
+    "sourceNote": "USDA SR Legacy 171329, ground red pepper (cayenne). rho 0.34 g/ml, from a level tablespoon of coarse flakes at 5 g.",
+    "keeping": "A year in a sealed jar out of the light. They fade rather than spoil, and heat goes before colour does."
   },
   {
     "name": "chilli oil",
@@ -602,7 +615,8 @@
     "densityGPerMl": 0.9,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Crispy chilli oil of the Lao Gan Ma type, from a typical jar rather than FoodData Central. It is roughly two-thirds oil and one-third fried solids, so a spoonful is mostly fat and the sodium is real. Plain chilli oil with no solids is nearer 880 kcal and carries almost no sodium — a different row if you use it."
+    "sourceNote": "Crispy chilli oil of the Lao Gan Ma type, from a typical jar rather than FoodData Central. It is roughly two-thirds oil and one-third fried solids, so a spoonful is mostly fat and the sodium is real. Plain chilli oil with no solids is nearer 880 kcal and carries almost no sodium — a different row if you use it.",
+    "keeping": "Three months in the cupboard, six in the fridge, cap on. The oil goes rancid before the chilli does. If it was made at home with fresh aromatics — garlic, ginger, shallot — the fridge is not optional and a month is the limit."
   },
   {
     "name": "chilli powder",
@@ -653,7 +667,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 169975, raw napa cabbage."
+    "sourceNote": "USDA SR Legacy 169975, raw napa cabbage.",
+    "keeping": "Three weeks whole in the fridge, which is far longer than it looks like it should. Cut it from the base up and press cling film onto the cut face; the exposed leaf browns in a day, the rest is untouched. Never wash it before storing."
   },
   {
     "name": "clams in the shell",
@@ -680,7 +695,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171975, raw clam meat, multiplied by a 25% meat yield because a recipe states clams by the weight you buy, which is mostly shell. The yield is the assumption in this row: it runs 20-30% by species and size, so read these figures to within about a fifth of themselves. Weigh the shelled meat and use a gram override if it matters."
+    "sourceNote": "USDA SR Legacy 171975, raw clam meat, multiplied by a 25% meat yield because a recipe states clams by the weight you buy, which is mostly shell. The yield is the assumption in this row: it runs 20-30% by species and size, so read these figures to within about a fifth of themselves. Weigh the shelled meat and use a gram override if it matters.",
+    "keeping": "Cook them the day you buy them. Until then: in the fridge in a bowl, covered with a damp cloth, never sealed in a bag and never sitting in water — they are alive and both suffocate them. Throw out any that will not close when tapped."
   },
   {
     "name": "cooked rice",
@@ -704,7 +720,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 169756, cooked white rice. Roughly a third of the energy of raw rice by weight, because it is two-thirds water."
+    "sourceNote": "USDA SR Legacy 169756, cooked white rice. Roughly a third of the energy of raw rice by weight, because it is two-thirds water.",
+    "keeping": "This one is a safety question rather than a quality one. Cool it within an hour — spread it out, do not leave the pot on the hob — then fridge for one day only, and reheat until it is steaming all the way through. Rice left warm grows Bacillus cereus, which makes a toxin that reheating does not destroy. Freezes for a month and reheats better from frozen than from the fridge."
   },
   {
     "name": "coriander",
@@ -730,7 +747,8 @@
     "densityGPerMl": 0.26,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 169997, fresh coriander leaves (cilantro). rho 0.26 g/ml chopped."
+    "sourceNote": "USDA SR Legacy 169997, fresh coriander leaves (cilantro). rho 0.26 g/ml chopped.",
+    "keeping": "Ten days in the fridge treated like flowers: stems in a glass of water, a bag loosely over the top, water changed every other day. The leaves freeze badly and the stems freeze well — chop the stems, freeze them flat, and use them where the recipe cooks them."
   },
   {
     "name": "cornflour",
@@ -770,7 +788,8 @@
     "densityGPerMl": 1.2,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "From a Pearl River Bridge superior dark soy bottle: 20 kcal, 4 g carbohydrate and 1 g protein per 15 ml tablespoon, scaled to 100 ml. Dark soy is thicker and sweeter than light and is used by the spoon rather than the splash. The sodium is the weakest figure here — brands run 5000 to 7000 mg per 100 ml and few of them print it — so treat it as an estimate. Not interchangeable with `light soy sauce`, which is saltier and thinner."
+    "sourceNote": "From a Pearl River Bridge superior dark soy bottle: 20 kcal, 4 g carbohydrate and 1 g protein per 15 ml tablespoon, scaled to 100 ml. Dark soy is thicker and sweeter than light and is used by the spoon rather than the splash. The sodium is the weakest figure here — brands run 5000 to 7000 mg per 100 ml and few of them print it — so treat it as an estimate. Not interchangeable with `light soy sauce`, which is saltier and thinner.",
+    "keeping": "As for light soy — safe in the cupboard, better in the fridge if the bottle lasts more than a few months. It thickens in the cold, which is not a problem for a teaspoon at a time."
   },
   {
     "name": "dijon mustard",
@@ -794,7 +813,8 @@
     "densityGPerMl": 1.05,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 168579. rho 1.05 g/ml. Wholegrain is close enough to use the same row."
+    "sourceNote": "USDA SR Legacy 168579. rho 1.05 g/ml. Wholegrain is close enough to use the same row.",
+    "keeping": "A year in the fridge once opened. It does not spoil so much as fade: the heat in mustard is volatile and an old jar is mostly sourness."
   },
   {
     "name": "doubanjiang",
@@ -817,7 +837,8 @@
     "densityGPerMl": 1.1,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Pixian chilli bean paste, from jar labels. rho 1.1 g/ml, from a tablespoon at 17 g. Brands differ by more than any figure here suggests: an aged Pixian paste is drier, saltier and less sweet than a supermarket doubanjiang, and the sodium spread across the shelf is roughly 5000 to 7000 mg per 100 g."
+    "sourceNote": "Pixian chilli bean paste, from jar labels. rho 1.1 g/ml, from a tablespoon at 17 g. Brands differ by more than any figure here suggests: an aged Pixian paste is drier, saltier and less sweet than a supermarket doubanjiang, and the sodium spread across the shelf is roughly 5000 to 7000 mg per 100 g.",
+    "keeping": "Fridge once opened, where it keeps a year. Level the surface after each use and pour a film of oil over it: what spoils a bean paste is the air on the top, not the age of the jar. Always a clean dry spoon."
   },
   {
     "name": "dried lentils",
@@ -972,7 +993,8 @@
     "densityGPerMl": 0.99,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 174837, table white wine. rho 0.99 g/ml. Most of the energy is alcohol, and most of the alcohol boils off in a sauce reduced hard, so treat the kcal as an upper bound rather than a figure."
+    "sourceNote": "USDA SR Legacy 174837, table white wine. rho 0.99 g/ml. Most of the energy is alcohol, and most of the alcohol boils off in a sauce reduced hard, so treat the kcal as an upper bound rather than a figure.",
+    "keeping": "Three days in the fridge with the cap on once opened, and a week if you pour it into a smaller bottle so there is less air on top. Past that it is vinegar in slow motion — still usable in a braise, no longer usable in a sauce."
   },
   {
     "name": "egg",
@@ -1000,7 +1022,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 50,
     "source": "USDA",
-    "sourceNote": "USDA Foundation 748967 (whole, raw); mu 50 g, USDA large egg without shell"
+    "sourceNote": "USDA Foundation 748967 (whole, raw); mu 50 g, USDA large egg without shell",
+    "keeping": "Three weeks in the fridge, pointed end down so the yolk stays centred. To test one, put it in a bowl of water: it lies flat when fresh, stands on end at about three weeks, and floats when it should be thrown away. Whites freeze perfectly, yolks do not."
   },
   {
     "name": "fatty pork mince",
@@ -1025,7 +1048,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "Interpolated between USDA SR Legacy 168318 (96% lean) and 168333 (84% lean) to give 10% fat, which is what a stir-fry wants — 5% mince gives up no fat to fry the aromatics in. A 20% mince runs nearer 250 kcal."
+    "sourceNote": "Interpolated between USDA SR Legacy 168318 (96% lean) and 168333 (84% lean) to give 10% fat, which is what a stir-fry wants — 5% mince gives up no fat to fry the aromatics in. A 20% mince runs nearer 250 kcal.",
+    "keeping": "Two days in the coldest part of the fridge, in the bottom of the packet on a plate in case it leaks. Mince spoils faster than a whole cut because grinding puts the surface everywhere. Freeze it flat in a bag on the day you buy it — 3 months, and it defrosts in an hour rather than overnight."
   },
   {
     "name": "fermented black beans",
@@ -1048,7 +1072,8 @@
     "densityGPerMl": 0.8,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Douchi, the dry salted black soybean sold in bags and tubs. Figures are a soybean base adjusted for the salt it is cured in; no USDA entry exists for it. The sodium is the load-bearing number and it is high enough that rinsing before use is standard — this row is for unrinsed beans, so treat it as a ceiling. rho 0.8 g/ml, from a tablespoon at 12 g."
+    "sourceNote": "Douchi, the dry salted black soybean sold in bags and tubs. Figures are a soybean base adjusted for the salt it is cured in; no USDA entry exists for it. The sodium is the load-bearing number and it is high enough that rinsing before use is standard — this row is for unrinsed beans, so treat it as a ceiling. rho 0.8 g/ml, from a tablespoon at 12 g.",
+    "keeping": "A year in a sealed jar in the cupboard, and longer in the fridge. They are salted and dry, so what ruins them is damp — a wet spoon or a bag left open makes them clump and mould."
   },
   {
     "name": "firm tofu",
@@ -1073,7 +1098,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 400,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 172475, tofu raw firm prepared with calcium sulfate. The calcium is the coagulant, not the bean: a nigari-set block runs nearer 130 mg per 100 g, so treat 683 as specific to calcium-sulfate tofu and read the packet. gramsPerUnit 400 is a supermarket block. Figures were read off aggregators of that entry rather than FoodData Central itself, which could not be reached from the machine this row was written on; they cross-check against its 126 g serving (iron 3.35 mg, potassium 299 mg, sodium 18 mg)."
+    "sourceNote": "USDA SR Legacy 172475, tofu raw firm prepared with calcium sulfate. The calcium is the coagulant, not the bean: a nigari-set block runs nearer 130 mg per 100 g, so treat 683 as specific to calcium-sulfate tofu and read the packet. gramsPerUnit 400 is a supermarket block. Figures were read off aggregators of that entry rather than FoodData Central itself, which could not be reached from the machine this row was written on; they cross-check against its 126 g serving (iron 3.35 mg, potassium 299 mg, sodium 18 mg).",
+    "keeping": "Once the packet is open: submerged in fresh cold water in a box, in the fridge, water changed every day, 4 days. Out of water it dries and sours in two. It also freezes — it comes back spongy and full of holes, which is a fault in this recipe and a virtue in a braise."
   },
   {
     "name": "fish sauce",
@@ -1097,7 +1123,8 @@
     "densityGPerMl": 1.2,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 174288. rho 1.2 g/ml. The sodium is not a misprint and it dominates any dish using it."
+    "sourceNote": "USDA SR Legacy 174288. rho 1.2 g/ml. The sodium is not a misprint and it dominates any dish using it.",
+    "keeping": "The cupboard is fine and it keeps a year, though it darkens. The white crystals that appear at the bottom or round the cap are salt, not spoilage."
   },
   {
     "name": "flat-leaf parsley",
@@ -1124,7 +1151,8 @@
     "densityGPerMl": 0.26,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170416, fresh. rho 0.26 g/ml, from a level tablespoon of finely chopped leaves at 3.8 g."
+    "sourceNote": "USDA SR Legacy 170416, fresh. rho 0.26 g/ml, from a level tablespoon of finely chopped leaves at 3.8 g.",
+    "keeping": "Two weeks, stems in water in the fridge with a bag over the top. Sturdier than coriander and can also be washed, dried and frozen chopped, where it keeps its flavour if not its shape."
   },
   {
     "name": "fried shallots",
@@ -1140,7 +1168,8 @@
     "densityGPerMl": 0.2,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Crisp fried shallots from a tub, from a typical label rather than FoodData Central. They are shallots deep-fried until dry, so most of the weight is the frying oil — which is why the energy is nearer an oil's than an onion's. rho 0.2 g/ml."
+    "sourceNote": "Crisp fried shallots from a tub, from a typical label rather than FoodData Central. They are shallots deep-fried until dry, so most of the weight is the frying oil — which is why the energy is nearer an oil's than an onion's. rho 0.2 g/ml.",
+    "keeping": "A month in an airtight jar, and they must be properly cold before the lid goes on or the steam softens them. They are fried, so they eventually go rancid rather than stale."
   },
   {
     "name": "garlic",
@@ -1168,7 +1197,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 3,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 169230 (raw); mu 3 g, USDA one clove"
+    "sourceNote": "USDA SR Legacy 169230 (raw); mu 3 g, USDA one clove",
+    "keeping": "Whole heads keep two months somewhere dark, dry and airy — not the fridge, where they sprout and go rubbery, and not a sealed jar. Peeled cloves keep a week in the fridge in a closed box. A green shoot inside a clove is bitter: split the clove and flick it out."
   },
   {
     "name": "garlic powder",
@@ -1219,7 +1249,8 @@
     "densityGPerMl": 0.91,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Clarified butter is essentially pure milk fat: 100 g fat per 100 g, 9 kcal per gram by the Atwater factor. rho 0.91 g/ml for melted fat. Micronutrients from USDA SR Legacy 171444, butter oil (anhydrous milk fat)."
+    "sourceNote": "Clarified butter is essentially pure milk fat: 100 g fat per 100 g, 9 kcal per gram by the Atwater factor. rho 0.91 g/ml for melted fat. Micronutrients from USDA SR Legacy 171444, butter oil (anhydrous milk fat).",
+    "keeping": "Three months in the cupboard, sealed, and a year in the fridge. The water and milk solids are gone, which is the whole reason it keeps — but only if every spoon that goes in is clean and dry. One wet spoon and it grows mould."
   },
   {
     "name": "ginger",
@@ -1244,7 +1275,8 @@
     "densityGPerMl": 0.41,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 169231, raw root ginger. rho 0.41 g/ml, from a level tablespoon of minced ginger at 6 g."
+    "sourceNote": "USDA SR Legacy 169231, raw root ginger. rho 0.41 g/ml, from a level tablespoon of minced ginger at 6 g.",
+    "keeping": "Three weeks in the fridge unpeeled, in a paper bag rather than plastic, which sweats and makes it mouldy. Better: freeze the whole root and grate it from frozen straight into the pan — it grates finer frozen than fresh and never needs peeling."
   },
   {
     "name": "granulated sugar",
@@ -1300,7 +1332,8 @@
     "densityGPerMl": 1.04,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA 330137 (plain, nonfat); rho 1.04 g/ml"
+    "sourceNote": "USDA 330137 (plain, nonfat); rho 1.04 g/ml",
+    "keeping": "A week after opening. Pour off the whey that gathers on top rather than stirring it in if you want it thick, and keep the spoon that goes in clean — yogurt spoils from what is put into it."
   },
   {
     "name": "ground cardamom",
@@ -1399,7 +1432,8 @@
     "densityGPerMl": 0.4,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Hua jiao mian: the husk of the Sichuan peppercorn, ground. There is no USDA entry and no reliable table for it, so these are the figures of a comparable dried whole spice and every one of them is an estimate. It contributes about a gram per serving to any dish that uses it, so the error it can introduce to a panel is smaller than the rounding — it is here so that a recipe using it resolves, not because the numbers are worth much. rho 0.4 g/ml, from a level teaspoon at 2 g."
+    "sourceNote": "Hua jiao mian: the husk of the Sichuan peppercorn, ground. There is no USDA entry and no reliable table for it, so these are the figures of a comparable dried whole spice and every one of them is an estimate. It contributes about a gram per serving to any dish that uses it, so the error it can introduce to a panel is smaller than the rounding — it is here so that a recipe using it resolves, not because the numbers are worth much. rho 0.4 g/ml, from a level teaspoon at 2 g.",
+    "keeping": "Three months, and this is the shortest life of any spice here. It is entirely aroma, and ground it is gone within a season — buy the whole husks, keep them a year in a jar, and grind what a dish needs. If yours has been open two years it is doing nothing at all."
   },
   {
     "name": "honey",
@@ -1450,7 +1484,8 @@
     "densityGPerMl": 1.0,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Spicy Sichuan hot pot base, the solid block sold for making hot pot broth, from packet labels. It is mostly beef tallow and chilli, which is why it is half fat and a fifth of that saturated. rho 1.0 g/ml is nominal: it is a solid at room temperature and a spoon of it is packed rather than poured."
+    "sourceNote": "Spicy Sichuan hot pot base, the solid block sold for making hot pot broth, from packet labels. It is mostly beef tallow and chilli, which is why it is half fat and a fifth of that saturated. rho 1.0 g/ml is nominal: it is a solid at room temperature and a spoon of it is packed rather than poured.",
+    "keeping": "Fridge once opened, 3 months, or freeze the block in portions the size you use — it is mostly beef tallow, so it cuts cleanly from frozen. Rancid fat is what fails first here, and it smells of old crayons."
   },
   {
     "name": "jasmine rice",
@@ -1499,7 +1534,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 84,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 167746, flesh without peel. mu 84 g, USDA's medium lemon. A lemon cut into wedges alongside a dish is mostly not eaten, so this overstates what a serving actually contributes."
+    "sourceNote": "USDA SR Legacy 167746, flesh without peel. mu 84 g, USDA's medium lemon. A lemon cut into wedges alongside a dish is mostly not eaten, so this overstates what a serving actually contributes.",
+    "keeping": "A month in the fridge in a closed bag — four times what they manage in the fruit bowl, where they go hard and dry in a week. Zest before juicing, always, and freeze the zest."
   },
   {
     "name": "lemon juice",
@@ -1524,7 +1560,8 @@
     "densityGPerMl": 1.03,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 167747, raw lemon juice. rho 1.03 g/ml."
+    "sourceNote": "USDA SR Legacy 167747, raw lemon juice. rho 1.03 g/ml.",
+    "keeping": "Bottled: fridge once opened, 6 months. Freshly squeezed: 3 days in the fridge, or freeze it in an ice cube tray, which is the honest way to use up the half lemon a recipe leaves."
   },
   {
     "name": "lettuce",
@@ -1549,7 +1586,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 10,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 169247, romaine. mu 10 g for one leaf."
+    "sourceNote": "USDA SR Legacy 169247, romaine. mu 10 g for one leaf.",
+    "keeping": "A week in the fridge if you wash and spin it dry first, then box it with a sheet of kitchen paper to take up the water it throws off. Wet leaves rot in two days; dry leaves in a sealed box do not."
   },
   {
     "name": "light soy sauce",
@@ -1574,7 +1612,8 @@
     "densityGPerMl": 1.08,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 172443, soy sauce from soy and wheat (shoyu). rho 1.08 g/ml, from a tablespoon at 16 g. Chinese light soy sauce (sheng chou) is saltier than Japanese shoyu, so treat the sodium as a floor."
+    "sourceNote": "USDA SR Legacy 172443, soy sauce from soy and wheat (shoyu). rho 1.08 g/ml, from a tablespoon at 16 g. Chinese light soy sauce (sheng chou) is saltier than Japanese shoyu, so treat the sodium as a floor.",
+    "keeping": "The cupboard is safe indefinitely, but flavour is a different question: an open bottle oxidises and flattens over about six months. If you get through it slowly, keep it in the fridge, where it holds for a year."
   },
   {
     "name": "lime",
@@ -1598,7 +1637,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 67,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 168155, raw. mu 67 g for one lime."
+    "sourceNote": "USDA SR Legacy 168155, raw. mu 67 g for one lime.",
+    "keeping": "Three weeks in the fridge in a bag. They dry out faster than lemons and a hard, light lime has no juice in it; roll it hard on the counter before cutting, or microwave it for 10 seconds."
   },
   {
     "name": "lime juice",
@@ -1622,7 +1662,8 @@
     "densityGPerMl": 1.03,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 168156, raw. rho 1.03 g/ml. One lime gives about 30 ml."
+    "sourceNote": "USDA SR Legacy 168156, raw. rho 1.03 g/ml. One lime gives about 30 ml.",
+    "keeping": "Fresh lime juice loses its edge within a day of squeezing and is bitter by the third — squeeze it as you need it. Frozen in a tray it holds for 3 months and is better than any bottle."
   },
   {
     "name": "mint",
@@ -1647,7 +1688,8 @@
     "densityGPerMl": 0.15,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 173470, fresh spearmint. rho 0.15 g/ml for loose leaves."
+    "sourceNote": "USDA SR Legacy 173470, fresh spearmint. rho 0.15 g/ml for loose leaves.",
+    "keeping": "A week, stems in water on the counter or in the fridge. Never in a sealed bag — mint blackens where it touches plastic."
   },
   {
     "name": "msg",
@@ -1690,7 +1732,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 174219, raw blue mussel meat, multiplied by a 33% meat yield for the same reason as the clams. Mussels shell out higher than clams and vary with the season; the yield is the assumption in this row."
+    "sourceNote": "USDA SR Legacy 174219, raw blue mussel meat, multiplied by a 33% meat yield for the same reason as the clams. Mussels shell out higher than clams and vary with the season; the yield is the assumption in this row.",
+    "keeping": "The same day. Fridge, in a bowl under a damp cloth, not in water and not in a sealed bag. Debearded mussels die faster than bearded ones, so pull the beards just before cooking."
   },
   {
     "name": "neutral oil",
@@ -1708,7 +1751,8 @@
     "densityGPerMl": 0.92,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171030, rapeseed (canola) oil, standing for any neutral cooking oil. Sunflower and groundnut differ in their fatty acids but not in energy. rho 0.92 g/ml."
+    "sourceNote": "USDA SR Legacy 171030, rapeseed (canola) oil, standing for any neutral cooking oil. Sunflower and groundnut differ in their fatty acids but not in energy. rho 0.92 g/ml.",
+    "keeping": "A year in a dark cupboard, sealed. Refined oils are the most stable in the kitchen, which is what makes them the right thing to fry in."
   },
   {
     "name": "olive oil",
@@ -1736,7 +1780,8 @@
     "densityGPerMl": 0.91,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171413; rho 0.91 g/ml, standard for olive oil at 20 C"
+    "sourceNote": "USDA SR Legacy 171413; rho 0.91 g/ml, standard for olive oil at 20 C",
+    "keeping": "A dark cupboard, away from the hob — heat and light kill it faster than time does. A year sealed, and about three months of good flavour once it is opened."
   },
   {
     "name": "onion",
@@ -1764,7 +1809,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 110,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170000 (raw); mu 110 g, USDA medium onion"
+    "sourceNote": "USDA SR Legacy 170000 (raw); mu 110 g, USDA medium onion",
+    "keeping": "A month somewhere dark and airy, in a paper bag or a basket, never a sealed one and never next to potatoes — each makes the other sprout. A cut half keeps 3 days in the fridge in a box, cut face down; wrapping the cut face is what stops it perfuming the butter."
   },
   {
     "name": "onion powder",
@@ -1812,7 +1858,8 @@
     "densityGPerMl": 1.2,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 172234. rho 1.2 g/ml, from a tablespoon at 18 g."
+    "sourceNote": "USDA SR Legacy 172234. rho 1.2 g/ml, from a tablespoon at 18 g.",
+    "keeping": "Fridge once opened, and it says so on the bottle. Six months, and use a clean spoon: it is thick enough that anything dropped into it sits there."
   },
   {
     "name": "parmesan",
@@ -1838,7 +1885,8 @@
     "densityGPerMl": 0.4,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171247, hard grated parmesan. rho 0.4 g/ml grated."
+    "sourceNote": "USDA SR Legacy 171247, hard grated parmesan. rho 0.4 g/ml grated.",
+    "keeping": "Six weeks in the fridge wrapped in baking paper and then loosely in foil. Cling film suffocates it and it sweats; paper lets it breathe. Freeze the rinds in a bag and drop one into a soup or a stock."
   },
   {
     "name": "peanut oil",
@@ -1856,7 +1904,8 @@
     "densityGPerMl": 0.914,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy, peanut oil (salad or cooking). rho 0.914 g/ml at 20 C."
+    "sourceNote": "USDA SR Legacy, peanut oil (salad or cooking). rho 0.914 g/ml at 20 C.",
+    "keeping": "A year in a dark cupboard. Once it has been used for frying, strain it through a coffee filter while it is still warm and keep it in the fridge; it will take two or three more fryings before it starts to smell fishy, which is when it goes."
   },
   {
     "name": "pickled chillies",
@@ -1872,7 +1921,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Chinese pickled chillies (泡椒), drained. FoodData Central has no record of them; these are raw chilli figures adjusted for brine, with sodium from a typical jar. The sodium is the figure to distrust — it runs from 1500 to 3000 mg per 100 g by brand."
+    "sourceNote": "Chinese pickled chillies (泡椒), drained. FoodData Central has no record of them; these are raw chilli figures adjusted for brine, with sodium from a typical jar. The sodium is the figure to distrust — it runs from 1500 to 3000 mg per 100 g by brand.",
+    "keeping": "Fridge once opened, and they keep six months as long as everything stays under the brine — push them back down with a clean fork each time. Anything sitting proud of the liquid goes soft and then mouldy."
   },
   {
     "name": "pickled mustard greens",
@@ -1895,7 +1945,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Suan cai, the sour pickled mustard green sold in vacuum packs. From packet labels, which mostly print energy and sodium and nothing else; the vitamin C is low because the pickling destroys most of what the fresh green had. The sodium is the figure that matters and it varies enormously — rinsing the leaves takes a third off it and is worth doing."
+    "sourceNote": "Suan cai, the sour pickled mustard green sold in vacuum packs. From packet labels, which mostly print energy and sodium and nothing else; the vitamin C is low because the pickling destroys most of what the fresh green had. The sodium is the figure that matters and it varies enormously — rinsing the leaves takes a third off it and is worth doing.",
+    "keeping": "A week in the fridge once the pack is open, in a box with any liquid it came with. It is preserved but not sterile, and an opened pack goes slimy at the cut ends first."
   },
   {
     "name": "pork mince",
@@ -1920,7 +1971,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 168318, lean raw ground pork, interpolated to 5% fat. Fattier mince changes the energy sharply — 20% mince is nearly twice this."
+    "sourceNote": "USDA SR Legacy 168318, lean raw ground pork, interpolated to 5% fat. Fattier mince changes the energy sharply — 20% mince is nearly twice this.",
+    "keeping": "Two days in the fridge, or freeze flat in a bag for 3 months. Grey on the surface with no smell is oxygen and is fine; grey with a sour smell is not."
   },
   {
     "name": "potato",
@@ -1948,7 +2000,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 173,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170026 (flesh and skin, raw); mu 173 g, USDA medium potato"
+    "sourceNote": "USDA SR Legacy 170026 (flesh and skin, raw); mu 173 g, USDA medium potato",
+    "keeping": "A month somewhere dark, cool and airy — a paper bag, never plastic, never the fridge, where the starch turns to sugar and the potato browns unpleasantly when fried. Away from onions. Green skin is solanine and bitter: cut it off, and if it is green throughout, throw it away."
   },
   {
     "name": "preserved bean curd",
@@ -1973,7 +2026,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 12,
     "source": "USDA",
-    "sourceNote": "Fu yu, the fermented tofu sold in jars of brine — USDA SR Legacy 174280, salted and fermented tofu. gramsPerUnit 12 is one cube. Its brine is the same product with more water in it, so a recipe that uses a spoonful of the liquid can count it as more of the cube without introducing a real error. The red kind (nan ru, cured with red yeast rice) is sweeter and deeper and would want its own row if a recipe called for it."
+    "sourceNote": "Fu yu, the fermented tofu sold in jars of brine — USDA SR Legacy 174280, salted and fermented tofu. gramsPerUnit 12 is one cube. Its brine is the same product with more water in it, so a recipe that uses a spoonful of the liquid can count it as more of the cube without introducing a real error. The red kind (nan ru, cured with red yeast rice) is sweeter and deeper and would want its own row if a recipe called for it.",
+    "keeping": "A year in the fridge once opened, as long as the cubes stay under the brine. Top the jar up with a splash of shaoxing wine rather than water if the level drops."
   },
   {
     "name": "red lentils",
@@ -2086,7 +2140,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 60,
     "source": "MANUAL",
-    "sourceNote": "Whole salted duck egg, shell off — white and yolk together. Energy, protein, fat and cholesterol from the Chinese food composition table's entry for xian ya dan; the cholesterol is high because a duck yolk is large and this is most of one. gramsPerUnit 60 is the edible part of one egg, of which roughly 18 g is yolk. The sodium is the weak figure and deliberately a middle one: sources run from 1300 to 2700 mg per 100 g depending on how long the egg was cured, so a recipe using these will be within a factor of two rather than exact. A recipe that uses only the yolks is saltier per gram than this row and less so per egg, since most of the salt is in the white."
+    "sourceNote": "Whole salted duck egg, shell off — white and yolk together. Energy, protein, fat and cholesterol from the Chinese food composition table's entry for xian ya dan; the cholesterol is high because a duck yolk is large and this is most of one. gramsPerUnit 60 is the edible part of one egg, of which roughly 18 g is yolk. The sodium is the weak figure and deliberately a middle one: sources run from 1300 to 2700 mg per 100 g depending on how long the egg was cured, so a recipe using these will be within a factor of two rather than exact. A recipe that uses only the yolks is saltier per gram than this row and less so per egg, since most of the salt is in the white.",
+    "keeping": "Two months uncooked in the fridge, still in their coating if they came in one. They are cured, so they are far more forgiving than a fresh egg — but once cooked they keep only 4 days."
   },
   {
     "name": "sesame oil",
@@ -2104,7 +2159,8 @@
     "densityGPerMl": 0.92,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171029. rho 0.92 g/ml. Toasted sesame oil is used as a seasoning here rather than a frying medium, except in the three-cup chicken where it is both."
+    "sourceNote": "USDA SR Legacy 171029. rho 0.92 g/ml. Toasted sesame oil is used as a seasoning here rather than a frying medium, except in the three-cup chicken where it is both.",
+    "keeping": "Six months in a dark cupboard once opened, a year in the fridge. Toasted sesame oil goes rancid faster than most oils, and since it is used a teaspoon at a time the bottle usually outlives its flavour."
   },
   {
     "name": "shallot",
@@ -2130,7 +2186,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 40,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170439, raw. mu 40 g for one banana shallot, peeled; USDA's own 10 g figure is for a single small round shallot, which is not what a recipe calling for 'a shallot' means."
+    "sourceNote": "USDA SR Legacy 170439, raw. mu 40 g for one banana shallot, peeled; USDA's own 10 g figure is for a single small round shallot, which is not what a recipe calling for 'a shallot' means.",
+    "keeping": "The same as onions, dark and airy, a month. They dry out faster than onions do, so a shallot that has gone papery and light has nothing left in it."
   },
   {
     "name": "shaoxing wine",
@@ -2146,7 +2203,8 @@
     "densityGPerMl": 0.99,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Shaoxing rice wine, from a typical bottle rather than FoodData Central. Cooking grades are salted, which is where the sodium comes from; drinking grades are not. Most of the alcohol boils off in step 9, so treat the energy as an upper bound."
+    "sourceNote": "Shaoxing rice wine, from a typical bottle rather than FoodData Central. Cooking grades are salted, which is where the sodium comes from; drinking grades are not. Most of the alcohol boils off in step 9, so treat the energy as an upper bound.",
+    "keeping": "The cupboard, a year, cap on. It is a fortified cooking wine and does not turn the way a table wine does — it just gets duller, and a bottle that has been open two years is worth replacing."
   },
   {
     "name": "sichuan chilli powder",
@@ -2173,7 +2231,8 @@
     "densityGPerMl": 0.5,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "Ground dried chilli — erjingtiao or facing-heaven, the coarse red powder Sichuan cooking uses by the spoon. Nutritionally it is the same thing as USDA SR Legacy 171329 (ground red pepper), which is what these figures are, and it is a separate row only because it is a separate ingredient in a recipe: `chilli powder` in this library is the American blend with cumin and salt in it, and using that here would be wrong twice over. rho 0.5 g/ml, from a level teaspoon at 2.5 g — powder packs denser than the flakes row."
+    "sourceNote": "Ground dried chilli — erjingtiao or facing-heaven, the coarse red powder Sichuan cooking uses by the spoon. Nutritionally it is the same thing as USDA SR Legacy 171329 (ground red pepper), which is what these figures are, and it is a separate row only because it is a separate ingredient in a recipe: `chilli powder` in this library is the American blend with cumin and salt in it, and using that here would be wrong twice over. rho 0.5 g/ml, from a level teaspoon at 2.5 g — powder packs denser than the flakes row.",
+    "keeping": "Six months in a sealed jar out of the light, or a year in the freezer, which is worth it for a bag bought in any real quantity. Colour is the tell: bright red is alive, brown is over."
   },
   {
     "name": "sichuan peppercorn oil",
@@ -2190,7 +2249,8 @@
     "densityGPerMl": 0.92,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Hua jiao you: a neutral or rapeseed oil infused with Sichuan peppercorn, so it is nutritionally the oil it was made from and is entered as such. rho 0.92 g/ml, as for other seed oils. It goes in by the teaspoon at the end and never as a frying medium — heating it drives off the numbing aromatic that is the whole point of it."
+    "sourceNote": "Hua jiao you: a neutral or rapeseed oil infused with Sichuan peppercorn, so it is nutritionally the oil it was made from and is entered as such. rho 0.92 g/ml, as for other seed oils. It goes in by the teaspoon at the end and never as a frying medium — heating it drives off the numbing aromatic that is the whole point of it.",
+    "keeping": "Six months in a dark cupboard. Its whole point is a volatile aroma, so it fades rather than spoils; a bottle that no longer prickles when you smell it is finished, whatever the date says."
   },
   {
     "name": "silken tofu",
@@ -2215,7 +2275,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 300,
     "source": "USDA",
-    "sourceNote": "USDA soft silken tofu. A third of the protein and a twentieth of the calcium of the `firm tofu` row, because silken tofu is barely pressed and is set with GDL or nigari rather than calcium sulfate — the two are not interchangeable in a recipe or in this table. gramsPerUnit 300 is a standard tube or box."
+    "sourceNote": "USDA soft silken tofu. A third of the protein and a twentieth of the calcium of the `firm tofu` row, because silken tofu is barely pressed and is set with GDL or nigari rather than calcium sulfate — the two are not interchangeable in a recipe or in this table. gramsPerUnit 300 is a standard tube or box.",
+    "keeping": "Use it the day you open it. Submerged in water in the fridge it holds for 2 days, and it will have wept and softened by then. Never freeze it."
   },
   {
     "name": "smoked paprika",
@@ -2294,7 +2355,8 @@
     "densityGPerMl": 0.25,
     "gramsPerUnit": 15,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170005, raw scallions. mu 15 g for one; rho 0.25 g/ml chopped."
+    "sourceNote": "USDA SR Legacy 170005, raw scallions. mu 15 g for one; rho 0.25 g/ml chopped.",
+    "keeping": "Two weeks in the fridge wrapped in a damp cloth inside a bag. Or stand them root-down in 2 cm of water on the windowsill, change the water every other day, and they keep growing — a bunch gives two or three cuttings before it gives up."
   },
   {
     "name": "sweetcorn",
@@ -2319,7 +2381,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 168536, canned sweetcorn with liquid. Draining it takes out most of the sodium; creamed corn is thicker and slightly sweeter."
+    "sourceNote": "USDA SR Legacy 168536, canned sweetcorn with liquid. Draining it takes out most of the sodium; creamed corn is thicker and slightly sweeter.",
+    "keeping": "Cook it the day you buy it if it is on the cob: the sugar starts turning to starch the moment it is picked, and a two-day-old cob is measurably duller. Kernels off the cob freeze perfectly."
   },
   {
     "name": "thai basil",
@@ -2345,7 +2408,8 @@
     "densityGPerMl": 0.1,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 172232, fresh basil. Thai basil is a different cultivar with the same composition to within the precision of this table. rho 0.1 g/ml for loose leaves."
+    "sourceNote": "USDA SR Legacy 172232, fresh basil. Thai basil is a different cultivar with the same composition to within the precision of this table. rho 0.1 g/ml for loose leaves.",
+    "keeping": "On the counter, stems in water, out of the fridge entirely: below about 7 degrees the leaves blacken overnight. Three days is what you get, so buy it for the day."
   },
   {
     "name": "toasted sesame seeds",
@@ -2370,7 +2434,8 @@
     "densityGPerMl": 0.6,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170151, whole sesame seeds roasted and toasted. rho 0.6 g/ml, from a tablespoon at 9 g. The calcium is in the hull, so hulled (decorticated) seeds carry roughly a tenth of it — this row is for the unhulled kind sold for sprinkling."
+    "sourceNote": "USDA SR Legacy 170151, whole sesame seeds roasted and toasted. rho 0.6 g/ml, from a tablespoon at 9 g. The calcium is in the hull, so hulled (decorticated) seeds carry roughly a tenth of it — this row is for the unhulled kind sold for sprinkling.",
+    "keeping": "Six months in a sealed jar in the cupboard, a year in the freezer. They are half fat and they are already toasted, so rancidity is what ends them: a sharp, crayon-like smell means throw them out."
   },
   {
     "name": "tomato",
@@ -2398,7 +2463,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": 123,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170457 (red, ripe, raw); mu 123 g, USDA medium tomato"
+    "sourceNote": "USDA SR Legacy 170457 (red, ripe, raw); mu 123 g, USDA medium tomato",
+    "keeping": "On the counter, stem-side down, out of the sun. Never the fridge below full ripeness: under about 12 degrees the flesh goes mealy and the smell never comes back. Once dead ripe, the fridge buys 3 days."
   },
   {
     "name": "turkey breast",
@@ -2423,7 +2489,8 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171506, raw skinless turkey breast."
+    "sourceNote": "USDA SR Legacy 171506, raw skinless turkey breast.",
+    "keeping": "Two days in the fridge. Cooked turkey keeps 3 days and is drier every one of them; slice what is left, cover it with its own juices or a little stock, and it stays edible to the third."
   },
   {
     "name": "unsalted butter",
@@ -2451,7 +2518,8 @@
     "densityGPerMl": 0.946,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 173430; rho from the 227 g (2-stick) US cup"
+    "sourceNote": "USDA SR Legacy 173430; rho from the 227 g (2-stick) US cup",
+    "keeping": "A month in the fridge, wrapped, and 6 months in the freezer. Butter takes up smells through its wrapper, so it does not go next to the garlic or the fish; a stale, cheesy smell at the surface is rancidity and does not cook out."
   },
   {
     "name": "walnuts",
@@ -2479,7 +2547,8 @@
     "densityGPerMl": 0.5,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170187, English walnuts. rho 0.5 g/ml for roughly chopped halves, 120 g per cup."
+    "sourceNote": "USDA SR Legacy 170187, English walnuts. rho 0.5 g/ml for roughly chopped halves, 120 g per cup.",
+    "keeping": "The freezer, in a bag, a year — this is one of the few things genuinely worth freezing by default. Walnuts have the most fragile fat of any common nut and go bitter in a cupboard within about two months of opening."
   },
   {
     "name": "water",
@@ -2602,7 +2671,8 @@
     "densityGPerMl": 1.03,
     "gramsPerUnit": null,
     "source": "USDA",
-    "sourceNote": "USDA Foundation 746782; rho 1.03 g/ml, standard for whole milk"
+    "sourceNote": "USDA Foundation 746782; rho 1.03 g/ml, standard for whole milk",
+    "keeping": "Four days after opening, in the back of the fridge and never in the door, where the temperature swings every time it opens. It freezes in the bottle if you pour a little off first, and comes back fine for cooking though grainy for tea."
   },
   {
     "name": "zha cai",
@@ -2625,6 +2695,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Preserved mustard stem, the knobbly Sichuan pickle sold shredded in foil packets. Sodium from the Chinese food composition table's entry for zha cai, around 4250 mg per 100 g — it is the saltiest thing in most kitchens, and 40 g of it carries more salt than a quarter teaspoon of salt does."
+    "sourceNote": "Preserved mustard stem, the knobbly Sichuan pickle sold shredded in foil packets. Sodium from the Chinese food composition table's entry for zha cai, around 4250 mg per 100 g — it is the saltiest thing in most kitchens, and 40 g of it carries more salt than a quarter teaspoon of salt does.",
+    "keeping": "A month in the fridge in a sealed box once opened. Very salty and very dry, so it keeps far better than the pickled greens do — but it takes up smells, so it needs a lid rather than a plate over it."
   }
 ]

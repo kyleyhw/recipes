@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { loadCollection } from "@/lib/content/library";
 import { decimal, decimalOrDash } from "@/lib/format";
@@ -42,30 +43,45 @@ export default function IngredientsPage() {
           </thead>
           <tbody>
             {ingredients.map((ingredient) => (
-              <tr key={ingredient.name} className="border-b border-border/60 align-top">
-                <td className="py-2 pr-3">{ingredient.name}</td>
-                <td className="numeric py-2 pr-3 text-right">
-                  {decimal(ingredient.kcal100g, 1)}
-                </td>
-                <td className="numeric py-2 pr-3 text-right">
-                  {decimal(ingredient.protein100g, 1)}
-                </td>
-                <td className="numeric py-2 pr-3 text-right">
-                  {decimal(ingredient.carbs100g, 1)}
-                </td>
-                <td className="numeric py-2 pr-3 text-right">
-                  {decimal(ingredient.fat100g, 1)}
-                </td>
-                <td className="numeric py-2 pr-3 text-right">
-                  {decimalOrDash(ingredient.densityGPerMl)}
-                </td>
-                <td className="numeric py-2 pr-3 text-right">
-                  {decimalOrDash(ingredient.gramsPerUnit, 1)}
-                </td>
-                <td className="py-2 text-xs text-text-muted">
-                  {ingredient.sourceNote ?? ingredient.usdaFdcId ?? "—"}
-                </td>
-              </tr>
+              <Fragment key={ingredient.name}>
+                <tr
+                  className={`align-top ${ingredient.keeping ? "" : "border-b border-border/60"}`}
+                >
+                  <td className="py-2 pr-3">{ingredient.name}</td>
+                  <td className="numeric py-2 pr-3 text-right">
+                    {decimal(ingredient.kcal100g, 1)}
+                  </td>
+                  <td className="numeric py-2 pr-3 text-right">
+                    {decimal(ingredient.protein100g, 1)}
+                  </td>
+                  <td className="numeric py-2 pr-3 text-right">
+                    {decimal(ingredient.carbs100g, 1)}
+                  </td>
+                  <td className="numeric py-2 pr-3 text-right">
+                    {decimal(ingredient.fat100g, 1)}
+                  </td>
+                  <td className="numeric py-2 pr-3 text-right">
+                    {decimalOrDash(ingredient.densityGPerMl)}
+                  </td>
+                  <td className="numeric py-2 pr-3 text-right">
+                    {decimalOrDash(ingredient.gramsPerUnit, 1)}
+                  </td>
+                  <td className="py-2 text-xs text-text-muted">
+                    {ingredient.sourceNote ?? ingredient.usdaFdcId ?? "—"}
+                  </td>
+                </tr>
+                {/* Keeping runs full width beneath its row rather than in a
+                  column of its own: it is a sentence or two of prose, and a
+                  ninth column of prose would set the width of the whole table
+                  and push the numbers off the side of the screen. */}
+                {ingredient.keeping ? (
+                  <tr className="border-b border-border/60">
+                    <td colSpan={8} className="pb-2 text-xs text-text-muted">
+                      <span className="font-medium">Keeping</span> — {ingredient.keeping}
+                    </td>
+                  </tr>
+                ) : null}
+              </Fragment>
             ))}
           </tbody>
         </table>

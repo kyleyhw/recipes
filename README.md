@@ -151,7 +151,10 @@ Two things worth knowing when reading the panel:
   them apart.
 
 If an ingredient shows as unmatched, add it to `content/ingredients.json` with
-a note saying where its figures came from.
+a note saying where its figures came from — and, if it is perishable, a
+`keeping` note saying how to store what the recipe does not use. Those show
+under the ingredient in the library drawer, which is the thing to open when
+half a cabbage is still on the counter.
 
 ### Languages
 

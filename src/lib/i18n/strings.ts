@@ -167,6 +167,7 @@ const en = {
 
   // The ingredient library
   findIngredient: "Find an ingredient",
+  keeping: "Keeping",
   fullPage: "Full page",
   close: "Close",
   closeLibrary: "Close the ingredient library",
@@ -351,6 +352,7 @@ const zhHant: Dict = {
   diagramNote: "每個步驟的高度，就是它所用到的食材範圍。由左往右讀。",
 
   findIngredient: "尋找食材",
+  keeping: "保存",
   fullPage: "完整頁面",
   close: "關閉",
   closeLibrary: "關閉食材庫",
@@ -519,6 +521,7 @@ const zhHans: Dict = {
   diagramNote: "每个步骤的高度，就是它所用到的食材范围。由左往右读。",
 
   findIngredient: "查找食材",
+  keeping: "保存",
   fullPage: "完整页面",
   close: "关闭",
   closeLibrary: "关闭食材库",
@@ -694,6 +697,7 @@ const ru: Dict = {
     "Высота каждой операции равна набору ингредиентов, которые в неё входят. Читается слева направо.",
 
   findIngredient: "Найти ингредиент",
+  keeping: "Хранение",
   fullPage: "Отдельная страница",
   close: "Закрыть",
   closeLibrary: "Закрыть справочник ингредиентов",

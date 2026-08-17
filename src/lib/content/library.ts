@@ -75,6 +75,22 @@ const ingredientSchema = z.object({
   usdaFdcId: z.string().nullish(),
   source: z.enum(["USDA", "CLAUDE", "MANUAL"]).default("USDA"),
   sourceNote: z.string().nullish(),
+
+  /**
+   * How to keep what the recipe did not use.
+   *
+   * A recipe says how to store the dish and says nothing about the three
+   * quarters of the cabbage still on the counter, which is the part that
+   * actually gets thrown away. This is that answer, and it lives on the
+   * ingredient rather than in the recipe for the same reason its macros do:
+   * ginger is in ten recipes, and ten copies of the same paragraph would be
+   * ten paragraphs to keep in step with each other.
+   *
+   * Present only where the answer is worth having. Salt, sugar and flour do
+   * not need one, and a row that says "store in a cool dry place" is worse
+   * than a row that says nothing.
+   */
+  keeping: z.string().nullish(),
 });
 
 export type LibraryIngredient = z.infer<typeof ingredientSchema>;

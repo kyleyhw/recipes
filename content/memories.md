@@ -75,6 +75,20 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   later as a coverage gap on the recipe page. The gap is always a missing row,
   never a limit of the arithmetic.
 
+- **A perishable ingredient carries a `keeping` note.** The recipe says how to
+  store the dish; the library says how to store what the dish did not use, which
+  is the part that actually gets thrown away — three quarters of a cabbage, half
+  a bunch of coriander, the rest of the packet of mince. It lives on the
+  ingredient because ginger is in ten recipes and ten copies of the same
+  paragraph would be ten paragraphs to keep in step.
+
+  Write it the way a recipe step is written: a place, a time, and the trick that
+  actually extends it — "three weeks in the fridge unpeeled, in a paper bag;
+  better, freeze it whole and grate it from frozen". Where it matters, say how
+  to tell it has gone. A note that says "store in a cool dry place" is worse
+  than no note, and the tests reject one under forty characters for that reason.
+  Salt, sugar, flour and water do not need one.
+
 - **Every recipe needs a diagram**, and it must obey the eleven rules in
   [docs/diagram.md](../docs/diagram.md). Four are worth remembering while
   writing one:
