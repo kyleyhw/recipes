@@ -9,7 +9,6 @@ tags:
 servings: 1
 prepMinutes: 10
 cookMinutes: 15
-draft: true
 ---
 
 ## Ingredients
@@ -44,8 +43,7 @@ draft: true
 
 ## Notes
 
-This is a draft: written up from a screenshot, not yet cooked here. The
-quantities are the source's own.
+The quantities are the source's own.
 
 It is very salty. The panel says 5400 mg of sodium, which is more than twice
 a day's reference intake in one bowl, and that is with the broth drunk as well

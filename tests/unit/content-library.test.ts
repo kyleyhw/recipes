@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { loadCollection } from "@/lib/content/library";
+import { matchIngredient } from "@/lib/content/prepare";
+import { parseIngredientLine } from "@/lib/ingredient-parser";
 
 /**
  * Tests for loading the collection off disk.
@@ -69,6 +71,33 @@ describe("the committed collection", () => {
   it("returns recipes in a stable order", () => {
     const titles = collection.recipes.map((recipe) => recipe.title);
     expect([...titles].sort((a, b) => a.localeCompare(b))).toEqual(titles);
+  });
+});
+
+describe("every recipe resolves against the library", () => {
+  const { recipes, ingredients } = loadCollection();
+
+  /**
+   * The failure this catches is silent in every other way.
+   *
+   * An ingredient line that matches nothing contributes no nutrition — which is
+   * the documented behaviour, and is meant to show up as a coverage gap on the
+   * page. But coverage is a fraction of *determinable* mass, so a line whose
+   * mass cannot be worked out without the library (anything by the spoon, or by
+   * the item) drops out of the numerator and the denominator together, and the
+   * recipe still reports 100%. Nothing on the page says a word.
+   *
+   * It happened with `1 spring onion` against a library row named
+   * `spring onions`: the singular matched nothing, the nutrition quietly lost
+   * it, the diagram leaf lost its quantity, and the panel said 100% covered.
+   */
+  it("matches every ingredient line to a library entry", () => {
+    const unmatched = recipes.flatMap((recipe) =>
+      recipe.ingredients
+        .filter((line) => !matchIngredient(parseIngredientLine(line).name, ingredients))
+        .map((line) => `${recipe.slug}: ${line}`),
+    );
+    expect(unmatched).toEqual([]);
   });
 });
 
