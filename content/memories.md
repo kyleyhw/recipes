@@ -117,9 +117,17 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
 - **Notes, Storage and the Log are plain text, not Markdown.** They are rendered
   with the line breaks kept and nothing else interpreted, so `**bold**` shows as
   asterisks and `[a link](to.md)` shows as brackets and a filename. Write them as
-  prose, and refer to another recipe by its title rather than by a link. Both of
-  those have shipped and been caught on the rendered page rather than in a test —
-  which is the same lesson as the one below.
+  prose. Both of those have shipped and been caught on the rendered page rather
+  than in a test — which is the same lesson as the one below.
+
+  **Name another recipe by its title and the site links it for you.** Write
+  "or Roast Meat Soy Dressing" exactly as the title is written and it becomes a
+  link to that recipe, in Notes and in Storage — nothing is added to the file to
+  make that happen, so it stays readable as plain text on GitHub and in an
+  editor. Matching is exact in its words, case-sensitive, and forgiving only
+  about the line break a hard-wrapped paragraph puts in the middle of a title.
+  Rename a recipe and its old name stops linking, silently, which is the cost of
+  the whole arrangement.
 
 - **Look at a diagram before calling it good.** Build the site, open the recipe
   and read the rendered table against the method. Do not judge it from the

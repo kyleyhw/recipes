@@ -3,6 +3,7 @@ import { RecipeView } from "@/components/recipe-view";
 import { T, TCategory, TContent } from "@/components/language";
 import { SourceLine } from "@/components/source-line";
 import { AttributionLine } from "@/components/attribution-line";
+import { Prose } from "@/components/prose";
 import { ExportLinks } from "@/components/export-links";
 import { recipeFilename, type RecipeTranslation } from "@/lib/content/format";
 import { loadCollection } from "@/lib/content/library";
@@ -43,6 +44,18 @@ export default async function RecipePage({
 
   const prepared = prepareRecipe(recipe, ingredients);
   const keeping = keepingNotes(recipe, ingredients);
+  // Every recipe's name, in every language it has one in, so that a note naming
+  // another recipe links to it — see lib/content/cross-links.ts. This recipe is
+  // left out: a page that links to itself is a page that looks broken.
+  const crossLinks = recipes
+    .filter((entry) => entry.slug !== recipe.slug)
+    .flatMap((entry) => [
+      { title: entry.title, slug: entry.slug },
+      ...Object.values(entry.translations).map((t) => ({
+        title: t.title,
+        slug: entry.slug,
+      })),
+    ]);
   const glyph = categories.find((c) => c.name === recipe.category)?.glyph ?? "*";
   const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
   const file = recipeFilename(recipe.slug);
@@ -186,9 +199,12 @@ export default async function RecipePage({
           <h2 className="mb-2 text-sm font-semibold tracking-wide uppercase">
             <T k="notes" />
           </h2>
-          <p className="text-sm whitespace-pre-line text-text-muted">
-            <TContent en={recipe.notes} translated={field((t) => t.notes)} />
-          </p>
+          <Prose
+            en={recipe.notes}
+            translated={field((t) => t.notes)}
+            titles={crossLinks}
+            className="text-sm text-text-muted"
+          />
         </section>
       ) : null}
 
@@ -203,9 +219,12 @@ export default async function RecipePage({
             <T k="storage" />
           </h2>
           {recipe.storage ? (
-            <p className="text-sm whitespace-pre-line text-text-muted">
-              <TContent en={recipe.storage} translated={field((t) => t.storage)} />
-            </p>
+            <Prose
+              en={recipe.storage}
+              translated={field((t) => t.storage)}
+              titles={crossLinks}
+              className="text-sm text-text-muted"
+            />
           ) : null}
 
           {keeping.length > 0 ? (

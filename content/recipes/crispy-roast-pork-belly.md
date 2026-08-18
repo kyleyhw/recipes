@@ -53,8 +53,9 @@ If the skin blisters unevenly, the belly was not sitting level. Prop the low
 corner on a crumpled ball of foil.
 
 Mustard and sugar is how it is eaten as a dish. Over a plate of rice it wants a
-spoonful of Roast Meat Soy Dressing instead, which is what a shop pours over a
-siu yuk rice box — but on the rice and never on the meat, because anything wet
+soy dressing instead, which is what a shop pours over a siu yuk rice box: Lee
+Kum Kee's seasoned soy sauce for seafood from the bottle, or Roast Meat Soy
+Dressing. Either goes on the rice and never on the meat, because anything wet
 touching that crackling undoes twelve hours of work.
 
 The panel reads 874 kcal a serving, and that is the belly as it goes into

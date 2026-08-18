@@ -67,9 +67,10 @@ it is: the same ferment with more water in it.
 Things that traditionally go into the mixture, one at a time rather than all at
 once: a chopped water chestnut for crunch, or a spoonful of soaked dried shrimp.
 
-Optional: a spoonful of Roast Meat Soy Dressing over the rice, which is what a
-shop puts on a boxed one. Make it with this patty's own broth instead of water
-and it is better than the shop's, which has no broth left to use.
+Optional: a spoonful of soy dressing over the rice, which is what a shop puts on
+a boxed one — Lee Kum Kee's seasoned soy sauce for seafood out of the bottle, or
+Roast Meat Soy Dressing. Made in a pan with this patty's own broth in place of
+the water, it beats either.
 
 The other patty in this collection, Steamed Pork Patty with Salted Egg, is the
 same technique flavoured a different way. It is still the wetter of the two —
