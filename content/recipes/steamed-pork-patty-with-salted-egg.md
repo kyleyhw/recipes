@@ -44,11 +44,21 @@ liquid, which is what they are: a raw salted white pours like any other, and it
 carries most of the egg's salt. The yolk is the opposite, and it stays whole on
 top where you can see it.
 
-Raw salted eggs, then. Cooked ones — the vacuum-packed kind, already boiled —
-cannot be separated and their whites are rubber; if that is all you can find,
-chop the whites finely and fold them through the meat, halve the yolks onto the
-top as usual, and add a tablespoon of water to make up for the liquid you have
-lost.
+Raw salted eggs, then — and if all you can get are the cooked vacuum-packed
+ones, use their yolks and throw the whites away. That sounds wasteful and is the
+better patty. A boiled salted white will not dissolve into the meat; chopped and
+folded through it stays as rubbery flecks that season the mouthful they are in
+and nothing else, and it brings none of the 84 g of liquid the two raw whites
+were carrying. Two changes make the yolks-only version work: water up from 3
+tbsp to 6, replacing what the whites brought, and 0.75 tsp of salt into the
+bowl, replacing what they seasoned. The yolks then go on exactly as written. A cooked yolk behaves in the steamer
+much as a cured raw one does — it softens and goes oily rather than cooking
+further.
+
+Frozen or vacuum-packed salted yolks, sold on their own for mooncakes, are the
+same answer without the waste and are worth asking for. Or cure your own: raw
+duck eggs in brine, 60 g of salt to 500 ml of water, 30 days in a jar on the
+counter.
 
 The three tablespoons of water are what separate this from a dry patty, and the
 stir is what gets the meat to take them up. Cantonese cooks call it da shui,
