@@ -51,9 +51,9 @@ folded through it stays as rubbery flecks that season the mouthful they are in
 and nothing else, and it brings none of the 84 g of liquid the two raw whites
 were carrying. Two changes make the yolks-only version work: water up from 3
 tbsp to 6, replacing what the whites brought, and 0.75 tsp of salt into the
-bowl, replacing what they seasoned. The yolks then go on exactly as written. A cooked yolk behaves in the steamer
-much as a cured raw one does — it softens and goes oily rather than cooking
-further.
+bowl, replacing what they seasoned. The yolks then go on exactly as written: a
+cooked one behaves in the steamer much as a cured raw one does, softening and
+going oily rather than cooking further.
 
 Frozen or vacuum-packed salted yolks, sold on their own for mooncakes, are the
 same answer without the waste and are worth asking for. Or cure your own: raw
@@ -81,16 +81,19 @@ the arithmetic assumes you will not do if nobody says so.
 If the yolks smell raw, rinse them in a spoonful of shaoxing wine and pat them
 dry before they go on.
 
-A chopped water chestnut, a soaked dried shiitake or a spoonful of soaked dried
-shrimp all belong in the mixture — one at a time, not all at once.
+Things that belong in the mixture, one at a time rather than all at once: a
+chopped water chestnut for crunch, a soaked dried shiitake, a spoonful of soaked
+dried shrimp, or 40 g of zha cai — rinsed, squeezed dry and chopped fine. The
+zha cai is a dish in its own right at that point and wants no soy sauce at all,
+since it carries more salt than the eggs do.
 
 Optional, and the reason a shop's version tastes different: a spoonful of soy
-dressing over the rice. Lee Kum Kee's seasoned soy sauce for seafood straight
-from the bottle, or Roast Meat Soy Dressing made in a pan. A siu mei shop steams
-patties in bulk and boxes them, so the broth this one makes never reaches you,
-and the sauce they ladle on is what replaces it. You still have the broth — so
-the pan version, made with it instead of water, beats both the shop and the
-bottle.
+dressing over the rice. Lee Kum Kee's seasoned soy sauce for seafood is the
+bottle to keep for it, and straight from the bottle is the answer on a weeknight.
+Failing that, Roast Meat Soy Dressing is two minutes in a pan — and made with
+this patty's own broth in place of the water it is the better sauce of the two,
+since a shop only reaches for a bottle because boxing the patty lost the broth
+in the first place.
 
 For the same patty flavoured with fermented bean curd instead, see Steamed Pork
 Patty with Preserved Bean Curd. Same stir, same dish, same thickness, and a

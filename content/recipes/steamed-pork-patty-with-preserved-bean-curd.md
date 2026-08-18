@@ -65,12 +65,17 @@ The panel counts the teaspoon of brine as more bean curd, because that is what
 it is: the same ferment with more water in it.
 
 Things that traditionally go into the mixture, one at a time rather than all at
-once: a chopped water chestnut for crunch, or a spoonful of soaked dried shrimp.
+once: a chopped water chestnut for crunch, a spoonful of soaked dried shrimp, or
+40 g of zha cai, rinsed and squeezed dry and chopped fine. Zha cai is the
+commonest of all the steamed patties in China and effectively its own dish —
+leave the bean curd out if you use it, halve the sugar, and drop the soy sauce,
+because 40 g of it carries about 1700 mg of sodium on its own.
 
 Optional: a spoonful of soy dressing over the rice, which is what a shop puts on
-a boxed one — Lee Kum Kee's seasoned soy sauce for seafood out of the bottle, or
-Roast Meat Soy Dressing. Made in a pan with this patty's own broth in place of
-the water, it beats either.
+a boxed one. Lee Kum Kee's seasoned soy sauce for seafood, out of the bottle, is
+the easy version. Failing that — or when the broth in the dish looks too good to
+waste — Roast Meat Soy Dressing made with that broth is two minutes and the
+better sauce.
 
 The other patty in this collection, Steamed Pork Patty with Salted Egg, is the
 same technique flavoured a different way. It is still the wetter of the two —
