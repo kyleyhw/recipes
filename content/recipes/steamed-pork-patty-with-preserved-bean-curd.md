@@ -67,6 +67,10 @@ it is: the same ferment with more water in it.
 Things that traditionally go into the mixture, one at a time rather than all at
 once: a chopped water chestnut for crunch, or a spoonful of soaked dried shrimp.
 
+Optional: a spoonful of Roast Meat Soy Dressing over the rice, which is what a
+shop puts on a boxed one. Make it with this patty's own broth instead of water
+and it is better than the shop's, which has no broth left to use.
+
 The other patty in this collection, Steamed Pork Patty with Salted Egg, is the
 same technique flavoured a different way. It is still the wetter of the two —
 about 130 g of liquid into the same 250 g of pork against 90 g here, because

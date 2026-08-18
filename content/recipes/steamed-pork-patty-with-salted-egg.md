@@ -74,6 +74,12 @@ dry before they go on.
 A chopped water chestnut, a soaked dried shiitake or a spoonful of soaked dried
 shrimp all belong in the mixture — one at a time, not all at once.
 
+Optional, and the reason a shop's version tastes different: a spoonful of Roast
+Meat Soy Dressing over the rice. A siu mei shop steams patties in bulk and boxes
+them, so the broth this one makes never reaches you, and the sauce they ladle on
+is what replaces it. You still have the broth — so make that dressing with it
+rather than with water and you get both.
+
 For the same patty flavoured with fermented bean curd instead, see Steamed Pork
 Patty with Preserved Bean Curd. Same stir, same dish, same thickness, and a
 little drier — about 90 g of liquid into the same weight of pork against 130 g
