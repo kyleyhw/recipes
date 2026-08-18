@@ -65,11 +65,11 @@ The panel counts the teaspoon of brine as more bean curd, because that is what
 it is: the same ferment with more water in it.
 
 Things that traditionally go into the mixture, one at a time rather than all at
-once: a chopped water chestnut for crunch, a spoonful of soaked dried shrimp, or
-40 g of zha cai, rinsed and squeezed dry and chopped fine. Zha cai is the
-commonest of all the steamed patties in China and effectively its own dish —
-leave the bean curd out if you use it, halve the sugar, and drop the soy sauce,
-because 40 g of it carries about 1700 mg of sodium on its own.
+once: a chopped water chestnut for crunch, or a spoonful of soaked dried shrimp.
+Anything stronger is a different patty rather than an addition to this one —
+Steamed Pork Patty with Zha Cai, Steamed Pork Patty with Salted Fish, Steamed
+Pork Patty with Dried Squid and Steamed Pork Patty with Chinese Sausage are all
+this same technique flavoured another way.
 
 Optional: a spoonful of soy dressing over the rice, which is what a shop puts on
 a boxed one. Lee Kum Kee's seasoned soy sauce for seafood, out of the bottle, is

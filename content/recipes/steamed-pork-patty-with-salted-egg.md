@@ -82,10 +82,9 @@ If the yolks smell raw, rinse them in a spoonful of shaoxing wine and pat them
 dry before they go on.
 
 Things that belong in the mixture, one at a time rather than all at once: a
-chopped water chestnut for crunch, a soaked dried shiitake, a spoonful of soaked
-dried shrimp, or 40 g of zha cai — rinsed, squeezed dry and chopped fine. The
-zha cai is a dish in its own right at that point and wants no soy sauce at all,
-since it carries more salt than the eggs do.
+chopped water chestnut for crunch, a soaked dried shiitake, or a spoonful of
+soaked dried shrimp. Anything stronger than those is a different patty rather
+than an addition to this one, and there are four of them here.
 
 Optional, and the reason a shop's version tastes different: a spoonful of soy
 dressing over the rice. Lee Kum Kee's seasoned soy sauce for seafood is the
