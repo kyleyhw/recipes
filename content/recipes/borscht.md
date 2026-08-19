@@ -10,7 +10,6 @@ servings: 6
 prepMinutes: 30
 cookMinutes: 130
 cookLabel: simmer
-draft: true
 ---
 
 ## Ingredients
@@ -48,8 +47,6 @@ draft: true
 11. Serve with a spoonful of sour cream in each bowl, stirred in at the table.
 
 ## Notes
-
-This is a draft: not yet cooked here.
 
 The vinegar is not there to make the soup sour, and if you can taste it as
 vinegar there is too much. Beetroot is red because of betanin, which breaks down
@@ -125,3 +122,4 @@ freeze and boil fresh cubes into it as it reheats.
 ## Log
 
 - 2026-08-17: Added as a draft. The recipe sites could not be reached from the machine this file was written on, so this is the standard Ukrainian method — broth first, beetroot fried separately with tomato paste and acid, everything joined at the end — rather than a transcription of one version. The acid-with-the-beetroot step is the one thing every source agrees on and the one thing a bad borscht always gets wrong.
+- 2026-08-19: Out of draft.
