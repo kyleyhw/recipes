@@ -27,7 +27,7 @@ cookMinutes: 10
 
 ## Ingredients
 
-- 200 g dried wheat noodles
+- 200 g dried rice noodles
 - 4 cloves garlic, minced
 
 ## Method
@@ -46,7 +46,7 @@ How long it keeps, in what, and how to bring it back.
 
 - toss
   - boil 4 min
-    - dried wheat noodles
+    - dried rice noodles
   - fry 60 s
     - garlic
 

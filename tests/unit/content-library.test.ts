@@ -99,6 +99,38 @@ describe("every recipe resolves against the library", () => {
     );
     expect(unmatched).toEqual([]);
   });
+
+  /**
+   * And the other direction: no row in the library that no recipe uses.
+   *
+   * The two tests together make the library exactly the set of things this
+   * collection cooks with. That matters because every row is a claim — a
+   * sourced figure someone has to keep true — and a row nothing uses is a claim
+   * nobody will ever check, sitting on the ingredients page next to the ones
+   * that are checked every time a recipe is built.
+   *
+   * It is also the honest reading of what the library is *for*. It is not a
+   * food database; USDA is the food database. It is the subset of it these
+   * recipes need, and anything beyond that subset is drift.
+   *
+   * The fix when this fails is not to delete the row reflexively — a row added
+   * alongside a recipe that has not been committed yet fails here too. Commit
+   * the recipe, or drop the row.
+   */
+  it("keeps no ingredient the collection does not use", () => {
+    const used = new Set(
+      recipes.flatMap((recipe) =>
+        recipe.ingredients.flatMap((line) => {
+          const match = matchIngredient(parseIngredientLine(line).name, ingredients);
+          return match ? [match.name] : [];
+        }),
+      ),
+    );
+    const unused = ingredients
+      .map((ingredient) => ingredient.name)
+      .filter((name) => !used.has(name));
+    expect(unused).toEqual([]);
+  });
 });
 
 describe("the ingredient library", () => {

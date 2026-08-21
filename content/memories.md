@@ -75,6 +75,11 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   later as a coverage gap on the recipe page. The gap is always a missing row,
   never a limit of the arithmetic.
 
+  **And nothing beyond that.** The library is not a food database — USDA is the
+  food database — it is the subset these recipes need. A row no recipe uses is a
+  sourced claim nobody will ever check again, so the tests fail on one. Delete a
+  recipe and its private ingredients go with it.
+
 - **A perishable ingredient carries a `keeping` note.** The recipe says how to
   store the dish; the library says how to store what the dish did not use, which
   is the part that actually gets thrown away — three quarters of a cabbage, half
