@@ -93,3 +93,4 @@ brown and crisp, and eat it in wedges. It is a different dish and a good one.
 ## Log
 
 - 2026-08-19: Added. The recipe sites could not be reached from the machine this file was written on, so this is the Roman canon as every source agrees on it — cold pan for the guanciale, no cream, tempered egg, emulsified off the heat — rather than a transcription of one version.
+- 2026-08-21: Checked against the published Roman versions now that the machine can search again. They agree: four things — egg, pecorino romano, guanciale, black pepper — no cream, and the pan off the heat before the egg goes in, which is the step that decides between carbonara and scrambled eggs. No change to the recipe. Guanciale's library figures were re-checked at the same time, against Italian product labels rather than English-language aggregators, and stand.

@@ -851,15 +851,15 @@
   },
   {
     "name": "digestive biscuits",
-    "kcal100g": 480,
-    "protein100g": 6.5,
-    "carbs100g": 63,
-    "sugar100g": 17,
-    "fiber100g": 3.2,
+    "kcal100g": 483,
+    "protein100g": 7.0,
+    "carbs100g": 64,
+    "sugar100g": 15,
+    "fiber100g": 3.7,
     "fat100g": 21,
     "satFat100g": 10,
     "cholesterolMg100g": 2,
-    "sodiumMg100g": 550,
+    "sodiumMg100g": 520,
     "potassiumMg100g": 200,
     "calciumMg100g": 90,
     "ironMg100g": 2,
@@ -870,7 +870,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 13.5,
     "source": "MANUAL",
-    "sourceNote": "From a Sainsbury's packet, and close enough to McVitie's to stand for either. gramsPerUnit 13.5 is one biscuit, so a 150 g base is eleven of them. The sodium looks high for a sweet biscuit and is correct: digestives are made with bicarbonate of soda, which is where it comes from."
+    "sourceNote": "McVitie's own published figures for the Original digestive, August 2026: 483 kcal, 21 g fat of which 10 saturated, 64 g carbohydrate of which 15 sugars, 7 g protein, 3.7 g fibre and 1.3 g salt per 100 g. Sodium here is that salt figure divided by 2.5. Sainsbury's own-brand is close enough to stand in either direction. gramsPerUnit 13.5 is one biscuit, so a 150 g base is eleven of them."
   },
   {
     "name": "dijon mustard",
@@ -1633,7 +1633,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": null,
     "source": "MANUAL",
-    "sourceNote": "Cured pork jowl. No USDA entry exists for it, so these are read across from cured salt pork and pancetta and adjusted for jowl's higher fat — reckon on 65 to 70% fat against pancetta's 50. The sodium is a middle value: guanciale is dry-cured in salt and pepper and how long it hung decides it. Most of the fat renders out in the pan and a recipe that pours it away is eating fewer calories than this row implies; carbonara is not one of those recipes."
+    "sourceNote": "Cured pork jowl. No USDA entry exists for it. Checked in August 2026 against Italian product labels, which give 655 to 691 kcal and about 71 g of fat per 100 g — this row's 655 and 69 are the bottom of that range, so if anything it understates. Protein is the figure that moves most between producers, from 6.5 g to 12 g depending on how long it was hung. Beware the English-language nutrition aggregators here: several report guanciale at around 400 kcal and 30 g fat, which is pancetta's composition, not jowl's. Pancetta is the substitute, and it is leaner."
   },
   {
     "name": "hot pot base paste",
@@ -1923,9 +1923,9 @@
     "fat100g": 44,
     "satFat100g": 29,
     "cholesterolMg100g": 120,
-    "sodiumMg100g": 30,
+    "sodiumMg100g": 40,
     "potassiumMg100g": 100,
-    "calciumMg100g": 110,
+    "calciumMg100g": 190,
     "ironMg100g": 0.1,
     "magnesiumMg100g": 8,
     "zincMg100g": 0.4,
@@ -1937,7 +1937,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 250,
     "source": "MANUAL",
-    "sourceNote": "From a supermarket tub label. Mascarpone is barely a cheese — cream soured with acid and drained — which is why it is 44% fat where full-fat cream cheese is nearer 34%, and why a cheesecake made with it needs the acid put back. gramsPerUnit 250 is one standard tub."
+    "sourceNote": "From a supermarket tub label, checked in August 2026 against published figures for the cheese, which cluster at 430 to 437 kcal, 5 g protein and 42 to 44 g fat — this row sits inside that spread and its energy reconciles with its own macros, so the macros are left alone; calcium and sodium were the two that were wrong and are corrected here. USDA has no mascarpone record at all, only branded items, which is why this stays a label figure. Mascarpone is barely a cheese — cream soured with acid and drained — which is why it is 44% fat where full-fat cream cheese is nearer 34%, and why a cheesecake made with it needs the acid put back. gramsPerUnit 250 is one standard tub."
   },
   {
     "name": "mint",
