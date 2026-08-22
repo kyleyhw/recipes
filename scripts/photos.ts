@@ -29,14 +29,24 @@
  * picture and a run that dies halfway can simply be run again. `--force`
  * overrides it when the prompt itself has improved.
  *
+ * ## Two ways to pay for the same pictures
+ *
+ * The interactive endpoint returns each image in seconds at list price. The
+ * Batch API takes the whole run as one job, completes it "within 24 hours" (a
+ * run this size is usually minutes), and bills exactly half. `--batch` submits
+ * everything stale and waits; `--harvest <name>` collects a job created
+ * earlier, so a killed process loses nothing that was paid for.
+ *
  * Usage:
- *   GEMINI_API_KEY=... npm run photos
- *   GEMINI_API_KEY=... npm run photos -- --only mango-pudding
- *   GEMINI_API_KEY=... GEMINI_IMAGE_MODEL=gemini-2.5-flash-image npm run photos
- *   GEMINI_API_KEY=... npm run photos -- --force --limit 5
- *   GEMINI_API_KEY=... npm run photos -- --throttle 0     # paid key, no waiting
- *   GEMINI_API_KEY=... npm run photos -- --max-spend 2     # refuse to go over $2
- *   GEMINI_API_KEY=... npm run photos -- --dry-run
+ *   npm run photos                          # every stale recipe, interactive
+ *   npm run photos -- --batch               # the same images at half price
+ *   npm run photos -- --harvest batches/…   # collect an earlier --batch run
+ *   npm run photos -- --only mango-pudding
+ *   npm run photos -- --force --limit 5
+ *   npm run photos -- --throttle 0          # paid key, no waiting
+ *   npm run photos -- --max-spend 2         # refuse to go over $2
+ *   npm run photos -- --dry-run
+ *   GEMINI_IMAGE_MODEL=gemini-2.5-flash-image npm run photos
  */
 
 import { createHash } from "node:crypto";
@@ -58,32 +68,43 @@ const PHOTOS_DIR = join("public", "photos");
  *
  * Two of them exist and the choice is a real one:
  *
- *   - `gemini-2.5-flash-image` — the original, about $0.039 an image, and the
- *     default because it is a third of the price and this collection is 47
- *     pictures of dinner rather than a print campaign. It **retires on
- *     2 October 2026**, and on that day this script starts failing with a 404
- *     until the line below is changed. That is a deliberate trade: cheap now,
- *     one edit later.
- *   - `gemini-3-pro-image` — Nano Banana Pro, general since June 2026, about
- *     $0.134 an image, sharper and much better at text. What to switch to in
- *     October, or sooner if the cheap one disappoints.
+ *   - `gemini-3-pro-image` — Nano Banana Pro, general since June 2026 and the
+ *     default since August 2026, when the owner asked for the collection to be
+ *     drawn with it by name. About $0.134 an image at 1K/2K, half that through
+ *     the Batch API, and visibly better at composition and at not inventing
+ *     garnishes.
+ *   - `gemini-2.5-flash-image` — the original, about $0.039 an image, kept for
+ *     runs where cheap beats sharp. It **retires on 2 October 2026** and 404s
+ *     from then on.
+ *
+ * Neither model has a free tier (checked 2026-08-22 against the pricing page,
+ * and confirmed the hard way: a key with no billing attached is refused with a
+ * 429 whose quota is the free tier's, which for these models is zero). Every
+ * image bills.
  *
  * Override with GEMINI_IMAGE_MODEL rather than editing this line, so a run can
  * pick either without a commit.
  */
-const MODEL = process.env["GEMINI_IMAGE_MODEL"] ?? "gemini-2.5-flash-image";
+const MODEL = process.env["GEMINI_IMAGE_MODEL"] ?? "gemini-3-pro-image";
 
 /**
- * Published price per image, for the estimate printed before a run.
+ * Published price per image, for the estimate printed before a run and the
+ * `--max-spend` ceiling.
  *
- * Not authoritative and not used for anything but that line — it exists so the
- * run says what it is about to cost before it costs it, rather than after.
+ * Not authoritative — it exists so the run says what it is about to cost
+ * before it costs it, rather than after. Checked 2026-08-22 at
+ * ai.google.dev/gemini-api/docs/pricing.
  */
 const PRICE_PER_IMAGE: Record<string, number> = {
   "gemini-2.5-flash-image": 0.039,
   "gemini-3-pro-image": 0.134,
 };
-const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+
+/** The Batch API bills the same images at half list price (same page). */
+const BATCH_DISCOUNT = 0.5;
+
+const BASE = "https://generativelanguage.googleapis.com/v1beta";
+const ENDPOINT = `${BASE}/models/${MODEL}:generateContent`;
 
 /**
  * What the credit line says. Kept here so one edit changes every recipe.
@@ -91,21 +112,50 @@ const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODE
  * The model is named rather than left vague, because "generated" alone does not
  * say by what, and in a year it will matter which.
  */
-const CREDIT = `Generated image · Google ${MODEL} (Nano Banana)`;
+const NICKNAME = MODEL.startsWith("gemini-3-pro-image")
+  ? "Nano Banana Pro"
+  : "Nano Banana";
+const CREDIT = `Generated image · Google ${MODEL} (${NICKNAME})`;
 
 /**
  * Card images are 4:3 and the hero is 16:9, both at modest sizes on a phone.
- * 1200 px wide covers a 2x display at the hero's width and nothing more; the
- * model's own output is square, so it is cropped to the hero's shape here
- * rather than being asked for a shape it does not reliably produce.
+ * 1200 px wide covers a 2x display at the hero's width and nothing more. The
+ * pro model is asked for 16:9 outright (see `generationConfig`); the flash
+ * model only produces squares, which are cropped to shape here instead.
  */
 const WIDTH = 1200;
 const HEIGHT = 675;
 const QUALITY = 78;
 
+/**
+ * The generation settings, which differ by model family.
+ *
+ * The pro model thinks in text before it draws, and its documented requests
+ * ask for TEXT and IMAGE together; the text parts are read past and only the
+ * image is kept. It also honours an aspect ratio, so the 16:9 the site stores
+ * is requested rather than cut out of a square. Size stays at 1K deliberately:
+ * 1K and 2K bill the same $0.134, but a 1K 16:9 frame is already wider than
+ * the 1200 px stored here, and a whole collection of 2K PNGs quadruples the
+ * batch download for pixels sharp would immediately throw away.
+ *
+ * The flash model predates all of that: IMAGE alone, square output.
+ */
+function generationConfig(): Record<string, unknown> {
+  return MODEL.startsWith("gemini-3-pro-image")
+    ? {
+        responseModalities: ["TEXT", "IMAGE"],
+        imageConfig: { aspectRatio: "16:9", imageSize: "1K" },
+      }
+    : { responseModalities: ["IMAGE"] };
+}
+
 interface Args {
   force: boolean;
   dryRun: boolean;
+  /** Submit everything stale as one half-price Batch API job and wait for it. */
+  batch: boolean;
+  /** A batch name from an earlier `--batch` run, to collect without re-paying. */
+  harvest: string | null;
   only: string | null;
   limit: number | null;
   /** Seconds to wait between images, to stay under a free key's rate limit. */
@@ -126,15 +176,19 @@ function parseArgs(argv: string[]): Args {
   return {
     force: at("--force") !== -1,
     dryRun: at("--dry-run") !== -1,
+    batch: at("--batch") !== -1,
+    harvest: value("--harvest"),
     only: value("--only"),
     limit: limit === null ? null : Number(limit),
     // Six seconds is ten requests a minute, under the free tier's floor. It
     // costs four minutes across the whole collection and removes the commonest
     // reason a run half-fails.
     throttle: throttle === null ? 6 : Number(throttle),
-    // Five dollars against a ten dollar credit. The whole collection is under
-    // two, so this only ever fires when something is wrong — a model priced
-    // differently than expected, or a loop that is not stopping.
+    // Five dollars against a ten dollar credit. The full collection is about
+    // $3.15 through the Batch API and $6.30 interactive, so the default lets a
+    // batch run pass and stops a full-price interactive run for an explicit
+    // decision — as well as anything genuinely wrong, like a model priced
+    // differently than expected or a loop that is not stopping.
     maxSpend: maxSpend === null ? 5 : Number(maxSpend),
   };
 }
@@ -202,17 +256,17 @@ function imageFrom(body: unknown): Buffer {
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
- * One image, with the free tier in mind.
+ * One image, with rate limits in mind.
  *
- * A key with no billing attached is rate limited to single-digit requests a
- * minute, and forty-seven recipes in a loop will walk straight into that. A 429
- * there is not a failure, it is the tier working as designed — so it is waited
- * out rather than reported, with the delay doubling each time. Four attempts
- * covers a couple of minutes of backoff, which is longer than any per-minute
- * window.
+ * A 429 is waited out rather than reported, with the delay doubling each time;
+ * four attempts covers a couple of minutes of backoff, which is longer than
+ * any per-minute window. 500 and 503 get the same treatment for a different
+ * reason: they are the shapes a busy image model returns, and they clear on
+ * their own.
  *
- * 500 and 503 get the same treatment for a different reason: they are the
- * shapes a busy image model returns, and they clear on their own.
+ * A key with no billing attached also 429s, but with a quota of zero that no
+ * amount of waiting changes — that one comes back after the fourth attempt
+ * with Google's own "check your plan and billing" text intact.
  */
 async function generate(prompt: string, key: string): Promise<Buffer> {
   let wait = 8_000;
@@ -222,7 +276,7 @@ async function generate(prompt: string, key: string): Promise<Buffer> {
       headers: { "content-type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { responseModalities: ["IMAGE"] },
+        generationConfig: generationConfig(),
       }),
     });
     if (response.ok) return imageFrom(await response.json());
@@ -236,6 +290,167 @@ async function generate(prompt: string, key: string): Promise<Buffer> {
   }
 }
 
+/** A recipe whose picture is stale, with everything a generation needs. */
+interface Due {
+  slug: string;
+  path: string;
+  recipe: RecipeFile;
+  prompt: string;
+  fingerprint: string;
+  out: string;
+}
+
+/**
+ * Write the image and stamp the recipe, identically for both endpoints.
+ * Returns the stored size in kilobytes, for the caller's progress line.
+ */
+async function saveResult(due: Due, png: Buffer): Promise<number> {
+  await sharp(png)
+    .resize(WIDTH, HEIGHT, { fit: "cover", position: "centre" })
+    .webp({ quality: QUALITY })
+    .toFile(due.out);
+  writeFileSync(
+    due.path,
+    serialiseRecipeFile({
+      ...due.recipe,
+      photo: `/photos/${due.slug}.webp`,
+      photoCredit: { siteName: CREDIT, pageUrl: null },
+      photoPrompt: due.fingerprint,
+    }),
+  );
+  return Math.round(readFileSync(due.out).byteLength / 1024);
+}
+
+/**
+ * The whole run as one Batch API job: identical requests, half the price,
+ * minutes to hours instead of seconds (checked 2026-08-22; the batch docs'
+ * own image-generation example is this model family).
+ *
+ * Each request carries its slug as `metadata.key` and results are matched by
+ * that key rather than by position — the API preserves order, but a keyed
+ * match cannot be silently wrong.
+ */
+async function createBatch(due: Due[], key: string): Promise<string> {
+  const response = await fetch(`${BASE}/models/${MODEL}:batchGenerateContent`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-goog-api-key": key },
+    body: JSON.stringify({
+      batch: {
+        displayName: "recipe-photos",
+        inputConfig: {
+          requests: {
+            requests: due.map((item) => ({
+              request: {
+                contents: [{ parts: [{ text: item.prompt }] }],
+                generationConfig: generationConfig(),
+              },
+              metadata: { key: item.slug },
+            })),
+          },
+        },
+      },
+    }),
+  });
+  const body: unknown = await response.json().catch(() => ({}));
+  const name = (body as { name?: string }).name;
+  if (!response.ok || !name) {
+    throw new Error(
+      `batch creation failed: ${response.status} ${JSON.stringify(body).slice(0, 300)}`,
+    );
+  }
+  console.log(
+    `batch ${name} accepted for ${due.length} images.\n` +
+      `If this process dies, nothing paid for is lost:\n` +
+      `  npm run photos -- --harvest ${name}\n`,
+  );
+  return name;
+}
+
+/** Poll until the job leaves its running states, then hand back its body. */
+async function awaitBatch(name: string, key: string): Promise<unknown> {
+  const started = Date.now();
+  let lastState = "";
+  for (;;) {
+    const response = await fetch(`${BASE}/${name}`, {
+      headers: { "x-goog-api-key": key },
+    });
+    if (!response.ok) {
+      throw new Error(
+        `polling failed: ${response.status} ${(await response.text()).slice(0, 300)}`,
+      );
+    }
+    const body: unknown = await response.json();
+    const state =
+      (body as { metadata?: { state?: string } }).metadata?.state ??
+      (body as { state?: string }).state ??
+      "unknown";
+    if (state !== lastState) {
+      const minutes = Math.round((Date.now() - started) / 60_000);
+      console.log(
+        `  ${state.replace("JOB_STATE_", "").toLowerCase()}, ${minutes} min in`,
+      );
+      lastState = state;
+    }
+    if (state === "JOB_STATE_SUCCEEDED") return body;
+    if (
+      ["JOB_STATE_FAILED", "JOB_STATE_CANCELLED", "JOB_STATE_EXPIRED"].includes(state)
+    ) {
+      throw new Error(`batch ended ${state}: ${JSON.stringify(body).slice(0, 300)}`);
+    }
+    await sleep(30_000);
+  }
+}
+
+/**
+ * Write out everything a finished batch contains. A result with no matching
+ * recipe, or a recipe with no result, is reported rather than guessed at.
+ */
+async function harvestBatch(
+  body: unknown,
+  due: Due[],
+): Promise<{ done: number; failed: number }> {
+  const container = (body as { response?: { inlinedResponses?: unknown } }).response
+    ?.inlinedResponses;
+  // The list arrives nested one level deeper in some responses than in others;
+  // accept both rather than betting on one.
+  const items: unknown[] = Array.isArray(container)
+    ? container
+    : ((container as { inlinedResponses?: unknown[] } | undefined)?.inlinedResponses ??
+      []);
+  const bySlug = new Map(due.map((item) => [item.slug, item]));
+  let done = 0;
+  let failed = 0;
+  for (const [index, raw] of items.entries()) {
+    const item = raw as {
+      metadata?: { key?: string };
+      error?: { message?: string };
+      response?: unknown;
+    };
+    const slug = item.metadata?.key ?? due[index]?.slug ?? `#${index}`;
+    const target = bySlug.get(slug);
+    if (!target) {
+      console.error(`${slug}: result has no matching recipe, skipped`);
+      failed += 1;
+      continue;
+    }
+    try {
+      if (item.error) throw new Error(item.error.message ?? "request failed");
+      const kb = await saveResult(target, imageFrom(item.response));
+      console.log(`${slug}: ${kb} kB`);
+      done += 1;
+    } catch (error) {
+      console.error(`${slug}: ${(error as Error).message}`);
+      failed += 1;
+    }
+    bySlug.delete(slug);
+  }
+  for (const missing of bySlug.keys()) {
+    console.error(`${missing}: no result in the batch`);
+    failed += 1;
+  }
+  return { done, failed };
+}
+
 /**
  * Reads `.env`, so the key can live in a file rather than a shell history.
  *
@@ -243,6 +458,11 @@ async function generate(prompt: string, key: string): Promise<Buffer> {
  * is optional: an environment that already has the key set — CI, or an inline
  * `GEMINI_API_KEY=... npm run photos` — needs no file and is not overridden,
  * because `loadEnvFile` does not replace variables that are already set.
+ *
+ * The file must be UTF-8. A `.env` written by PowerShell's `>` redirect is
+ * UTF-16 and parses as nothing at all — silently, because a malformed .env
+ * must not stop a run whose key is already exported. If the key is "not set"
+ * while visibly in the file, that is what has happened.
  */
 function loadDotEnv(): void {
   if (!existsSync(".env")) return;
@@ -273,41 +493,14 @@ async function main(): Promise<void> {
     .filter((name) => name.endsWith(".md") && name.split(".").length === 2)
     .sort();
 
-  const price = PRICE_PER_IMAGE[MODEL];
-  const due = files.filter((file) => !args.only || file === `${args.only}.md`).length;
-  if (!args.dryRun) {
-    const estimate = price === undefined ? null : due * price;
-    console.log(
-      `${MODEL}: up to ${due} images, about ` +
-        `${estimate === null ? "an unknown amount" : `$${estimate.toFixed(2)}`} at list price.\n` +
-        `Already-current recipes are skipped, so the real number is usually lower.\n`,
-    );
-    if (estimate !== null && estimate > args.maxSpend) {
-      console.error(
-        `That is over the --max-spend ceiling of $${args.maxSpend.toFixed(2)}, so nothing has run.\n` +
-          `Raise it deliberately, or use --limit to do part of the collection.`,
-      );
-      process.exit(1);
-    }
-    if (price === undefined) {
-      console.error(
-        `No published price is recorded for ${MODEL}, so this run cannot check itself\n` +
-          `against the ceiling. Add it to PRICE_PER_IMAGE, or run with --dry-run first.`,
-      );
-      process.exit(1);
-    }
-  }
-
-  let done = 0;
+  // First pass: decide what is stale, without generating anything.
+  const due: Due[] = [];
   let skipped = 0;
   let failed = 0;
-  let first = true;
-  let spent = 0;
-
   for (const file of files) {
     const slug = file.replace(/\.md$/, "");
     if (args.only && slug !== args.only) continue;
-    if (args.limit !== null && done >= args.limit) break;
+    if (args.limit !== null && due.length >= args.limit) break;
 
     const path = join(RECIPES_DIR, file);
     const parsed = parseRecipeFile(slug, readFileSync(path, "utf8"));
@@ -320,63 +513,100 @@ async function main(): Promise<void> {
     const prompt = promptFor(recipe);
     const fingerprint = hash(prompt);
     const out = join(PHOTOS_DIR, `${slug}.webp`);
-
     if (!args.force && recipe.photoPrompt === fingerprint && existsSync(out)) {
       skipped += 1;
       continue;
     }
+    due.push({ slug, path, recipe, prompt, fingerprint, out });
+  }
 
-    if (args.dryRun) {
-      console.log(`\n--- ${slug}\n${prompt}`);
-      done += 1;
-      continue;
-    }
+  if (args.dryRun) {
+    for (const item of due) console.log(`\n--- ${item.slug}\n${item.prompt}`);
+    console.log(`\n${due.length} would be generated, ${skipped} unchanged.`);
+    return;
+  }
 
-    // Checked before each image rather than only at the start, because the
-    // estimate assumes every recipe is due and a resumed run is cheaper than
-    // that — but a mistake in the other direction should still stop here
-    // rather than at the end, when the money is already gone.
-    if (price !== undefined && spent + price > args.maxSpend) {
+  // Say what it is about to cost before it costs it, and refuse over-ceiling
+  // runs outright. A harvest bills nothing new: its job was priced and paid
+  // for when it was created.
+  const listPrice = PRICE_PER_IMAGE[MODEL];
+  const rate =
+    listPrice === undefined ? undefined : listPrice * (args.batch ? BATCH_DISCOUNT : 1);
+  if (args.harvest === null) {
+    const estimate = rate === undefined ? null : due.length * rate;
+    console.log(
+      `${MODEL}: ${due.length} stale of ${files.length} recipes, about ` +
+        `${estimate === null ? "an unknown amount" : `$${estimate.toFixed(2)}`} at ` +
+        `${args.batch ? "the batch rate" : "list price"}.\n`,
+    );
+    if (estimate !== null && estimate > args.maxSpend) {
       console.error(
-        `\nStopping at $${spent.toFixed(2)}: one more image would pass the ` +
-          `$${args.maxSpend.toFixed(2)} ceiling.`,
+        `That is over the --max-spend ceiling of $${args.maxSpend.toFixed(2)}, so nothing has run.\n` +
+          `Raise it deliberately, or use --limit to do part of the collection.`,
       );
-      break;
+      process.exit(1);
     }
-
-    try {
-      // Between images, not before the first: a one-recipe run should not sit
-      // there for six seconds doing nothing.
-      if (!first && args.throttle > 0) await sleep(args.throttle * 1000);
-      first = false;
-      const png = await generate(prompt, key);
-      await sharp(png)
-        .resize(WIDTH, HEIGHT, { fit: "cover", position: "centre" })
-        .webp({ quality: QUALITY })
-        .toFile(out);
-
-      writeFileSync(
-        path,
-        serialiseRecipeFile({
-          ...recipe,
-          photo: `/photos/${slug}.webp`,
-          photoCredit: { siteName: CREDIT, pageUrl: null },
-          photoPrompt: fingerprint,
-        }),
+    if (rate === undefined) {
+      console.error(
+        `No published price is recorded for ${MODEL}, so this run cannot check itself\n` +
+          `against the ceiling. Add it to PRICE_PER_IMAGE, or run with --dry-run first.`,
       );
-      const kb = Math.round(readFileSync(out).byteLength / 1024);
-      spent += price ?? 0;
-      console.log(`${slug}: ${kb} kB  ($${spent.toFixed(2)} so far)`);
-      done += 1;
-    } catch (error) {
-      console.error(`${slug}: ${(error as Error).message}`);
-      failed += 1;
+      process.exit(1);
+    }
+  }
+
+  let done = 0;
+  let spent = 0;
+  if (due.length === 0) {
+    // Nothing stale; fall through to the summary.
+  } else if (args.harvest !== null) {
+    const body = await awaitBatch(args.harvest, key);
+    const result = await harvestBatch(body, due);
+    done = result.done;
+    failed += result.failed;
+  } else if (args.batch) {
+    const name = await createBatch(due, key);
+    const body = await awaitBatch(name, key);
+    const result = await harvestBatch(body, due);
+    done = result.done;
+    failed += result.failed;
+    spent = done * (rate ?? 0);
+  } else {
+    let first = true;
+    for (const item of due) {
+      // Checked before each image rather than only at the start, because a
+      // resumed run is cheaper than the estimate assumed — but a mistake in
+      // the other direction should still stop here rather than at the end,
+      // when the money is already gone.
+      if (rate !== undefined && spent + rate > args.maxSpend) {
+        console.error(
+          `\nStopping at $${spent.toFixed(2)}: one more image would pass the ` +
+            `$${args.maxSpend.toFixed(2)} ceiling.`,
+        );
+        break;
+      }
+      try {
+        // Between images, not before the first: a one-recipe run should not
+        // sit there for six seconds doing nothing.
+        if (!first && args.throttle > 0) await sleep(args.throttle * 1000);
+        first = false;
+        const png = await generate(item.prompt, key);
+        const kb = await saveResult(item, png);
+        spent += rate ?? 0;
+        console.log(`${item.slug}: ${kb} kB  ($${spent.toFixed(2)} so far)`);
+        done += 1;
+      } catch (error) {
+        console.error(`${item.slug}: ${(error as Error).message}`);
+        failed += 1;
+      }
     }
   }
 
   console.log(
-    `\n${done} generated, ${skipped} unchanged, ${failed} failed. ` +
-      `About $${spent.toFixed(2)} at list price.`,
+    `\n${done} generated, ${skipped} unchanged, ${failed} failed.` +
+      (args.harvest !== null
+        ? ""
+        : ` About $${spent.toFixed(2)} at ${args.batch ? "the batch rate" : "list price"}.`),
   );
   if (failed > 0) process.exit(1);
 }

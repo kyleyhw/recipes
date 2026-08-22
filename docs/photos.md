@@ -33,12 +33,21 @@ in the place a photographer would have been credited. That line is not optional.
 
 ## Money
 
-**As of August 2026 the whole collection costs about $1.83.**
+**As of August 2026 the whole collection costs about $3.15 through the Batch
+API, or $6.30 interactively.**
 
-| Model | Per image | 47 recipes | Notes |
-| --- | --- | --- | --- |
-| `gemini-2.5-flash-image` | ~$0.039 | ~$1.83 | The default. **Retires 2 October 2026.** |
-| `gemini-3-pro-image` | ~$0.134 | ~$6.30 | Nano Banana Pro. Sharper. What to switch to. |
+| Model | Per image | Batched | 47 recipes | Notes |
+| --- | --- | --- | --- | --- |
+| `gemini-3-pro-image` | ~$0.134 | ~$0.067 | $6.30 / $3.15 | Nano Banana Pro. The default. |
+| `gemini-2.5-flash-image` | ~$0.039 | ~$0.020 | $1.83 / $0.92 | The cheap one. **Retires 2 October 2026.** |
+
+The Batch API runs the identical requests for exactly half price; the only
+cost is patience — "within 24 hours" nominally, in practice usually minutes
+for a run this size. `npm run photos -- --batch` submits everything stale as
+one job and waits, printing a `--harvest` command that can collect the job
+later if the wait is interrupted. 1K and 2K resolution bill the same $0.134,
+so the script asks for 1K at 16:9, which is already wider than the 1200 px it
+stores.
 
 ### The $10 credit, and its deadline
 
@@ -57,6 +66,9 @@ dollars for them.
 - `--max-spend` refuses to start when the estimate exceeds it, and stops
   mid-run before the next image would cross it. It defaults to **$5**, so the
   ceiling is half the credit even if nobody passes the flag.
+- That default sits deliberately between the two full-collection prices: a
+  $3.15 batch run passes, a $6.30 interactive one stops until someone types
+  `--max-spend 7` on purpose.
 - Recipes already carrying a current picture are skipped, so re-running costs
   nothing.
 - A model with no recorded price refuses to run at all rather than spending an
@@ -70,12 +82,17 @@ npm run photos -- --dry-run          # the prompts, no key and no cost
 
 ### Free tier
 
-A key with no billing attached is on the free tier: rate limited to
-single-digit requests a minute, and Google may use free-tier content to improve
-its products. The script handles the rate limit — six seconds between images by
-default, and a 429 is waited out with doubling backoff rather than failing —
-so a free-tier run works, it just takes four minutes. `--throttle 0` turns the
-spacing off once billing is attached.
+There is none for the image models. The pricing page lists no free tier for
+either of them, and a key with no billing attached is refused outright — a 429
+naming a free-tier quota of **zero**, which no amount of backoff clears
+(verified 2026-08-22 against a real key). Text models still have a free tier;
+pictures bill from the first one.
+
+So billing must be attached to the key's project before anything generates:
+[aistudio.google.com](https://aistudio.google.com) links each project to the
+Cloud console's billing setup. With the Google AI Pro credits above, attached
+billing still costs nothing until the credits lapse. The script's 429 backoff
+and `--throttle` spacing remain for the *paid* tier's per-minute limits.
 
 ---
 
@@ -91,6 +108,13 @@ spacing off once billing is attached.
 
    The script reads `.env` itself. An exported variable or an inline
    `GEMINI_API_KEY=... npm run photos` also works and takes precedence.
+
+   Write that file from Git Bash or a UTF-8 editor, not PowerShell:
+   PowerShell's `>` and `>>` produce UTF-16, which Node's `.env` parser reads
+   as nothing at all. The key then looks set and is not.
+
+3. Attach billing to the key's project — the image models have no free tier
+   (below), and a fresh key starts on it.
 
 **The key is a secret and never enters the repository.** `.gitignore` covers
 `.env*`, and `scripts/no-api-keys.sh` runs as a pre-commit hook that refuses any
@@ -110,8 +134,8 @@ protects nothing.
 
 ```bash
 npm install                                  # sharp does the WebP conversion
-npm run photos -- --only mango-pudding       # one first, $0.04
-npm run photos                               # the rest, ~4 minutes
+npm run photos -- --only mango-pudding       # one first, $0.13, seconds
+npm run photos -- --batch                    # the rest at half price, ~$3.15
 
 git add public/photos content/recipes
 git commit -m "Add generated photos"
@@ -124,10 +148,10 @@ site whose every picture 404s, with nothing failing until somebody looked.
 
 ### After 2 October 2026
 
-`gemini-2.5-flash-image` stops answering and runs fail with a 404. Change the
-default in `scripts/photos.ts` to `gemini-3-pro-image`, or set
-`GEMINI_IMAGE_MODEL=gemini-3-pro-image` for one run. Expect $6.30 rather than
-$1.83 for a full regeneration.
+Nothing: the default is already `gemini-3-pro-image`. The date matters only to
+runs pinned to the cheap model with
+`GEMINI_IMAGE_MODEL=gemini-2.5-flash-image`, which stops answering that day —
+from then on the override 404s and should simply be dropped.
 
 ---
 
@@ -160,5 +184,5 @@ these models produce restaurant styling, and this is a book about what comes out
 of a domestic pan.
 
 Editing the prompt changes every recipe's fingerprint, so the next run redraws
-the whole collection. That is a deliberate $1.83 and worth checking `--dry-run`
-first.
+the whole collection. That is a deliberate $3.15 batched ($6.30 interactive)
+and worth checking `--dry-run` first.

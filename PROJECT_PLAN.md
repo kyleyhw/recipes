@@ -162,11 +162,32 @@ functions with the reasoning in their own comments.
     - [completed] Full edit → history → restore cycle against real Postgres
     - [completed] A failed model call still records the cook's message and records no version
 
+## Phase 9: Generated photographs (static site)
+
+41. [completed] `scripts/photos.ts` upgraded for Nano Banana Pro and the Batch API.
+    - [completed] `gemini-3-pro-image` by default; native 16:9 at 1K; model-named credit line
+    - [completed] `--batch` / `--harvest`: identical images at half price via the Batch API
+    - [completed] `--max-spend` ceiling integrated with the batch rate ($5 default passes a
+      $3.15 batch run and stops a $6.30 interactive one)
+42. [completed] Key hygiene verified end to end.
+    - [completed] `.env` gitignored and never in any commit (checked against full history);
+      re-encoded UTF-16 → UTF-8 so Node's `loadEnvFile` actually reads it
+    - [completed] `uvx pre-commit install` run, so the hooks fire on this clone
+    - [completed] Canary test: `no-api-keys.sh` catches Google- and Anthropic-shaped keys in
+      all three tried forms; detect-secrets alone caught only the quoted form
+    - [completed] GitHub secret scanning and push protection enabled on the repository
+43. [pending] Generate all 47 card photos: `npm run photos -- --batch` (~$3.15).
+    - Blocked on billing: the key's project is on the free tier and the image models
+      have no free tier (429, quota 0, verified 2026-08-22). Attach billing — the
+      Google AI Pro credits then cover the run until they lapse at the end of
+      August 2026.
+
 ---
 
 ## Status
 
-All eight phases are complete. The one substantial gap in verification is
+Phases 1–8 are complete. Phase 9 waits on billing being attached to the
+Gemini key's project; everything up to the paid call is built and tested. The one substantial gap in verification is
 recorded in [`tests/reports/phase-7-claude.md`](tests/reports/phase-7-claude.md)
 §6 and restated in the phase 8 report: no Anthropic API key was available, so
 nothing downstream of a successful model response — including the recipe
