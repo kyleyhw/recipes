@@ -65,5 +65,10 @@ venv/
 # locally-stored photos (dev backend; Vercel Blob is used in deployment)
 /public/uploads/
 
+# /public/photos/ is deliberately NOT ignored. A static site has no server and
+# no blob store: the recipe photos are the deployed artefact, so they are
+# committed like the recipes themselves. Ignoring them would build a site whose
+# every image 404s, and nothing would fail until someone looked.
+
 # Static export output
 /out/

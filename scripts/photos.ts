@@ -32,6 +32,7 @@
  * Usage:
  *   GEMINI_API_KEY=... npm run photos
  *   GEMINI_API_KEY=... npm run photos -- --only mango-pudding
+ *   GEMINI_API_KEY=... GEMINI_IMAGE_MODEL=gemini-2.5-flash-image npm run photos
  *   GEMINI_API_KEY=... npm run photos -- --force --limit 5
  *   GEMINI_API_KEY=... npm run photos -- --dry-run
  */
@@ -50,14 +51,31 @@ const RECIPES_DIR = join("content", "recipes");
 const PHOTOS_DIR = join("public", "photos");
 
 /**
- * Nano Banana. `gemini-2.5-flash-image` is the model's actual id; the fruit is
- * what everyone calls it and what the request that led to this file said.
+ * Nano Banana, which is what everyone calls Google's image models and what the
+ * request that led to this file said.
+ *
+ * Two of them exist and the choice is a real one:
+ *
+ *   - `gemini-3-pro-image` — Nano Banana Pro, general since June 2026, about
+ *     $0.134 an image. The default, because it is the one that will still be
+ *     here next year.
+ *   - `gemini-2.5-flash-image` — the original, about $0.039 an image and inside
+ *     the free tier's rate limits, but **retired on 2 October 2026**. Worth
+ *     setting until then; after that it stops answering.
+ *
+ * Override with GEMINI_IMAGE_MODEL rather than editing this line, so a run can
+ * pick the cheap one without a commit.
  */
-const MODEL = "gemini-2.5-flash-image";
+const MODEL = process.env["GEMINI_IMAGE_MODEL"] ?? "gemini-3-pro-image";
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
-/** What the credit line says. Kept here so one edit changes every recipe. */
-const CREDIT = "Generated image · Google Gemini (Nano Banana)";
+/**
+ * What the credit line says. Kept here so one edit changes every recipe.
+ *
+ * The model is named rather than left vague, because "generated" alone does not
+ * say by what, and in a year it will matter which.
+ */
+const CREDIT = `Generated image · Google ${MODEL} (Nano Banana)`;
 
 /**
  * Card images are 4:3 and the hero is 16:9, both at modest sizes on a phone.

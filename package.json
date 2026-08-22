@@ -15,7 +15,8 @@
     "check": "npm run typecheck && npm run lint && npm run format:check && npm run test",
     "build:static": "STATIC_EXPORT=1 next build",
     "translate": "tsx scripts/translate.ts",
-    "photos": "tsx scripts/photos.ts"
+    "photos": "tsx scripts/photos.ts",
+    "photo:add": "tsx scripts/photo-add.ts"
   },
   "dependencies": {
     "cheerio": "^1.2.0",
