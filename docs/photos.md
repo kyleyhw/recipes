@@ -33,13 +33,15 @@ in the place a photographer would have been credited. That line is not optional.
 
 ## Money
 
-**As of August 2026 the whole collection costs about $3.15 through the Batch
-API, or $6.30 interactively.**
+**As of August 2026 the whole collection costs about $3.15 batched on the
+default model, and as little as $0.79 batched on Nano Banana 2 Lite.**
 
-| Model | Per image | Batched | 47 recipes | Notes |
+| Model | Per image | Batched | 47 recipes (list / batch) | Notes |
 | --- | --- | --- | --- | --- |
 | `gemini-3-pro-image` | ~$0.134 | ~$0.067 | $6.30 / $3.15 | Nano Banana Pro. The default. |
-| `gemini-2.5-flash-image` | ~$0.039 | ~$0.020 | $1.83 / $0.92 | The cheap one. **Retires 2 October 2026.** |
+| `gemini-3.1-flash-image` | ~$0.067 | ~$0.034 | $3.15 / $1.60 | Nano Banana 2. |
+| `gemini-3.1-flash-lite-image` | ~$0.0336 | ~$0.0168 | $1.58 / $0.79 | Nano Banana 2 Lite. The cheapest. |
+| `gemini-2.5-flash-image` | ~$0.039 | ~$0.020 | $1.83 / $0.92 | The original. **Retires 2 October 2026.** |
 
 The Batch API runs the identical requests for exactly half price; the only
 cost is patience — "within 24 hours" nominally, in practice usually minutes
@@ -82,17 +84,40 @@ npm run photos -- --dry-run          # the prompts, no key and no cost
 
 ### Free tier
 
-There is none for the image models. The pricing page lists no free tier for
-either of them, and a key with no billing attached is refused outright — a 429
-naming a free-tier quota of **zero**, which no amount of backoff clears
-(verified 2026-08-22 against a real key). Text models still have a free tier;
-pictures bill from the first one.
+There is none for the image models — any of them. All four were probed with a
+real free-tier key on 2026-08-22 and every one refuses the **first** request
+with a 429 naming a free-tier quota of **zero**; the pricing page marks each
+one "Not available" on the free tier. Text models still have a free tier;
+pictures bill from the first one, and a key with no billing attached
+generates nothing at all.
 
 So billing must be attached to the key's project before anything generates:
 [aistudio.google.com](https://aistudio.google.com) links each project to the
 Cloud console's billing setup. With the Google AI Pro credits above, attached
-billing still costs nothing until the credits lapse. The script's 429 backoff
-and `--throttle` spacing remain for the *paid* tier's per-minute limits.
+billing still costs nothing out of pocket until the credits lapse — and a
+credit that lapses unused bought nothing, which is the argument for spending
+it on the best model while it lasts. The script's 429 backoff and
+`--throttle` spacing remain for the *paid* tier's per-minute limits.
+
+### The free options that do exist
+
+- **A photograph you took**, via `npm run photo:add` (below). No key, no
+  network, no cost, and better than anything generated — it is evidence.
+- **Generating by hand in [AI Studio](https://aistudio.google.com) or the
+  Gemini app**, which give a signed-in person a daily consumer allowance the
+  API does not get. `npm run photos -- --dry-run` prints every recipe's exact
+  prompt; paste one, download the result, and ingest it with the honest
+  credit written out:
+
+  ```bash
+  npm run photo:add -- mango-pudding ~/Downloads/result.png \
+    --credit "Generated image · Google gemini-3-pro-image (Nano Banana Pro)"
+  ```
+
+  Free in money, expensive in attention: forty-seven prompts by hand.
+- **The placeholder.** Every card without a photo renders its deterministic
+  gradient and glyph, so the site is complete with no pictures at all. Zero
+  cost is the floor the design stands on, not a failure state.
 
 ---
 
@@ -116,7 +141,12 @@ and `--throttle` spacing remain for the *paid* tier's per-minute limits.
 3. Attach billing to the key's project — the image models have no free tier
    (below), and a fresh key starts on it.
 
-**The key is a secret and never enters the repository.** `.gitignore` covers
+**The key is a secret, never enters the repository, and never leaves the
+owner's machine.** It is used in exactly one way: in the header of a request
+from this machine to Google's API. It goes into no CI secret — the workflows
+run keyless, on committed results only — into no other service, and into no
+output (the scripts never log it, and the hook below reports line numbers,
+never text). `.gitignore` covers
 `.env*`, and `scripts/no-api-keys.sh` runs as a pre-commit hook that refuses any
 commit containing a string shaped like a Google or Anthropic key. That hook is
 installed per clone and does nothing until you run:
@@ -136,6 +166,9 @@ protects nothing.
 npm install                                  # sharp does the WebP conversion
 npm run photos -- --only mango-pudding       # one first, $0.13, seconds
 npm run photos -- --batch                    # the rest at half price, ~$3.15
+
+# Or the whole collection for about eighty cents:
+GEMINI_IMAGE_MODEL=gemini-3.1-flash-lite-image npm run photos -- --batch
 
 git add public/photos content/recipes
 git commit -m "Add generated photos"
@@ -163,8 +196,10 @@ npm run photo:add -- mango-pudding ~/Pictures/IMG_4823.jpg --credit "Photo by Ky
 
 Takes anything sharp can read, applies the EXIF rotation before cropping — the
 difference between a phone photo standing upright and lying on its side — and
-clears the generated-photo fingerprint, so `npm run photos` will never draw over
-it.
+clears the generated-photo fingerprint. `photos.ts` treats a photo with no
+fingerprint as human-supplied and never draws over it, not even with
+`--force`; delete the recipe's `photo:` line to hand the slot back to the
+generator.
 
 `--credit` is optional and free text. Leave it off and the page shows no credit
 line, which is right for your own photograph on your own site.

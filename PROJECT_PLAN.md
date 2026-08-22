@@ -177,10 +177,21 @@ functions with the reasoning in their own comments.
       all three tried forms; detect-secrets alone caught only the quoted form
     - [completed] GitHub secret scanning and push protection enabled on the repository
 43. [pending] Generate all 47 card photos: `npm run photos -- --batch` (~$3.15).
-    - Blocked on billing: the key's project is on the free tier and the image models
-      have no free tier (429, quota 0, verified 2026-08-22). Attach billing — the
+    - Blocked on billing: the key's project is on the free tier and no image model
+      has one — all four probed at quota zero, 2026-08-22. Attach billing; the
       Google AI Pro credits then cover the run until they lapse at the end of
       August 2026.
+    - Cheaper once billing exists: Nano Banana 2 at ~$1.60 batched, Nano Banana 2
+      Lite at ~$0.79. Free without billing: hand-generation in AI Studio ingested
+      by `photo:add`, or real photographs (docs/photos.md).
+44. [completed] Key locality and the photo-add guard.
+    - [completed] Policy recorded in script and docs: the key never leaves the owner's
+      machine — request headers to Google only, no CI secrets, no other services
+    - [completed] photos.ts now skips any photo without a prompt fingerprint, so a
+      photograph added by hand is never drawn over (the cleared fingerprint
+      previously marked the recipe *due*, the opposite of the documented promise)
+    - [completed] Nano Banana 2 and 2 Lite priced in, so the spend ceiling can
+      price them rather than refusing to run
 
 ---
 

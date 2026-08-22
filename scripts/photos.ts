@@ -3,9 +3,10 @@
  *
  * The same shape as `translate.ts` and for the same reason: this site is a
  * static export with nothing that can hold a key at read time. The call is made
- * here, by a person or by CI, the result is committed as a file, and the site
- * serves it like any other asset. Nothing costs anything when a recipe is read
- * and nothing can fail there either.
+ * here, on the owner's machine — the key lives in `.env` and never leaves that
+ * machine, so CI stays keyless forever and only ever sees the committed
+ * results. Nothing costs anything when a recipe is read and nothing can fail
+ * there either.
  *
  * ## These pictures are generated, and the site says so
  *
@@ -66,24 +67,25 @@ const PHOTOS_DIR = join("public", "photos");
  * Nano Banana, which is what everyone calls Google's image models and what the
  * request that led to this file said.
  *
- * Two of them exist and the choice is a real one:
+ * Four of them exist now and the choice is a real one (list / batch price per
+ * image, checked 2026-08-22 at ai.google.dev/gemini-api/docs/pricing):
  *
- *   - `gemini-3-pro-image` — Nano Banana Pro, general since June 2026 and the
- *     default since August 2026, when the owner asked for the collection to be
- *     drawn with it by name. About $0.134 an image at 1K/2K, half that through
- *     the Batch API, and visibly better at composition and at not inventing
- *     garnishes.
- *   - `gemini-2.5-flash-image` — the original, about $0.039 an image, kept for
- *     runs where cheap beats sharp. It **retires on 2 October 2026** and 404s
- *     from then on.
+ *   - `gemini-3-pro-image` — Nano Banana Pro, $0.134 / $0.067. The default:
+ *     asked for by name, and the best of them at composition and at not
+ *     inventing garnishes.
+ *   - `gemini-3.1-flash-image` — Nano Banana 2, $0.067 / $0.034.
+ *   - `gemini-3.1-flash-lite-image` — Nano Banana 2 Lite, $0.0336 / $0.0168:
+ *     the whole collection for about eighty cents, batched.
+ *   - `gemini-2.5-flash-image` — the original, $0.039 / $0.020. It **retires
+ *     on 2 October 2026** and 404s from then on.
  *
- * Neither model has a free tier (checked 2026-08-22 against the pricing page,
- * and confirmed the hard way: a key with no billing attached is refused with a
- * 429 whose quota is the free tier's, which for these models is zero). Every
- * image bills.
+ * None of them has a free tier. All four were probed with this project's key
+ * on 2026-08-22, and each one 429s a *first* request against a free-tier
+ * quota of zero — so a key with no billing attached generates nothing at all,
+ * and every image bills from the first.
  *
  * Override with GEMINI_IMAGE_MODEL rather than editing this line, so a run can
- * pick either without a commit.
+ * pick any of them without a commit.
  */
 const MODEL = process.env["GEMINI_IMAGE_MODEL"] ?? "gemini-3-pro-image";
 
@@ -98,6 +100,10 @@ const MODEL = process.env["GEMINI_IMAGE_MODEL"] ?? "gemini-3-pro-image";
 const PRICE_PER_IMAGE: Record<string, number> = {
   "gemini-2.5-flash-image": 0.039,
   "gemini-3-pro-image": 0.134,
+  // 1K rates; gemini-3.1-flash-image also sells a 0.5K tier ($0.045) that
+  // this script never requests — 512 px is below the 1200 px stored here.
+  "gemini-3.1-flash-image": 0.067,
+  "gemini-3.1-flash-lite-image": 0.0336,
 };
 
 /** The Batch API bills the same images at half list price (same page). */
@@ -114,7 +120,11 @@ const ENDPOINT = `${BASE}/models/${MODEL}:generateContent`;
  */
 const NICKNAME = MODEL.startsWith("gemini-3-pro-image")
   ? "Nano Banana Pro"
-  : "Nano Banana";
+  : MODEL.startsWith("gemini-3.1-flash-lite-image")
+    ? "Nano Banana 2 Lite"
+    : MODEL.startsWith("gemini-3.1-flash-image")
+      ? "Nano Banana 2"
+      : "Nano Banana";
 const CREDIT = `Generated image · Google ${MODEL} (${NICKNAME})`;
 
 /**
@@ -130,18 +140,19 @@ const QUALITY = 78;
 /**
  * The generation settings, which differ by model family.
  *
- * The pro model thinks in text before it draws, and its documented requests
- * ask for TEXT and IMAGE together; the text parts are read past and only the
- * image is kept. It also honours an aspect ratio, so the 16:9 the site stores
- * is requested rather than cut out of a square. Size stays at 1K deliberately:
- * 1K and 2K bill the same $0.134, but a 1K 16:9 frame is already wider than
- * the 1200 px stored here, and a whole collection of 2K PNGs quadruples the
- * batch download for pixels sharp would immediately throw away.
+ * The gemini-3 family (Pro, 2, 2 Lite) thinks in text before it draws, and
+ * its documented requests ask for TEXT and IMAGE together; the text parts are
+ * read past and only the image is kept. It also honours an aspect ratio, so
+ * the 16:9 the site stores is requested rather than cut out of a square. Size
+ * stays at 1K deliberately: on the pro model 1K and 2K bill the same, a 1K
+ * 16:9 frame is already wider than the 1200 px stored here, and a whole
+ * collection of 2K PNGs quadruples the batch download for pixels sharp would
+ * immediately throw away. 1K is also the largest size the 3.1 models sell.
  *
- * The flash model predates all of that: IMAGE alone, square output.
+ * The 2.5 flash model predates all of that: IMAGE alone, square output.
  */
 function generationConfig(): Record<string, unknown> {
-  return MODEL.startsWith("gemini-3-pro-image")
+  return /^gemini-3.*image/.test(MODEL)
     ? {
         responseModalities: ["TEXT", "IMAGE"],
         imageConfig: { aspectRatio: "16:9", imageSize: "1K" },
@@ -510,6 +521,14 @@ async function main(): Promise<void> {
       continue;
     }
     const recipe = parsed.recipe;
+    // A photograph a person supplied has a photo but no prompt fingerprint —
+    // photo-add clears it on purpose. It outranks generation permanently: not
+    // even --force redraws over it. To hand the slot back to the generator,
+    // delete the recipe's `photo:` line.
+    if (recipe.photo !== null && recipe.photoPrompt === null) {
+      skipped += 1;
+      continue;
+    }
     const prompt = promptFor(recipe);
     const fingerprint = hash(prompt);
     const out = join(PHOTOS_DIR, `${slug}.webp`);

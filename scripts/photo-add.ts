@@ -74,8 +74,10 @@ async function main(): Promise<void> {
       ...parsed.recipe,
       photo: `/photos/${slug}.webp`,
       // A real photograph gets whatever credit was asked for and nothing
-      // invented. Crucially the prompt fingerprint is cleared, so the next
-      // `npm run photos` does not decide this recipe is due a generated one.
+      // invented. The prompt fingerprint is cleared, and photos.ts treats a
+      // photo with no fingerprint as human-supplied and skips it, even under
+      // --force. (It once read the cleared fingerprint as "due for drawing",
+      // which would have billed money to overwrite the better picture.)
       photoCredit: credit ? { siteName: credit, pageUrl: null } : null,
       photoPrompt: null,
     }),
