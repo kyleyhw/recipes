@@ -228,8 +228,26 @@ async function generate(prompt: string, key: string): Promise<Buffer> {
   }
 }
 
+/**
+ * Reads `.env`, so the key can live in a file rather than a shell history.
+ *
+ * Node has done this natively since 20.12, so it costs no dependency. The file
+ * is optional: an environment that already has the key set — CI, or an inline
+ * `GEMINI_API_KEY=... npm run photos` — needs no file and is not overridden,
+ * because `loadEnvFile` does not replace variables that are already set.
+ */
+function loadDotEnv(): void {
+  if (!existsSync(".env")) return;
+  try {
+    process.loadEnvFile(".env");
+  } catch {
+    // A malformed .env should not stop a run whose key is already exported.
+  }
+}
+
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
+  loadDotEnv();
   const key = process.env["GEMINI_API_KEY"] ?? process.env["GOOGLE_API_KEY"] ?? "";
   if (!key && !args.dryRun) {
     console.error(
