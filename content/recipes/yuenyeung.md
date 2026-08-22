@@ -2,7 +2,7 @@
 title: Yuenyeung
 description: Coffee and milk tea in the same cup, seven to three. Named after the mandarin duck, which is always drawn as a pair that do not match.
 category: Drinks
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
 servings: 2

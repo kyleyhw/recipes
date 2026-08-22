@@ -2,7 +2,7 @@
 title: Ginger and Spring Onion Oil
 description: Smoking oil poured over raw ginger and spring onion. Thirty seconds of work, and it goes on everything for the rest of the week.
 category: Sauces & Condiments
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
 servings: 8

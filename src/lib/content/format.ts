@@ -63,6 +63,19 @@ const frontMatterSchema = z.object({
    * where the recipe already implies it.
    */
   cookLabel: z.string().nullish(),
+  /**
+   * Time the recipe takes while you are not in the kitchen.
+   *
+   * Chilling, proving, marinating, drying, freezing, resting. It is separated
+   * from `cookMinutes` rather than folded into it because the two answer
+   * opposite questions — cooking time is time you must be present for, waiting
+   * time is time you must merely have — but both are counted in the total,
+   * because a pudding that needs four hours in the fridge is a four-hour
+   * pudding to anyone deciding what to make tonight.
+   */
+  waitMinutes: z.number().int().nullish(),
+  /** The verb for `waitMinutes`: "chill", "prove", "marinate", "dry", "rest". */
+  waitLabel: z.string().nullish(),
   /** The address a web-sourced recipe came from. */
   source: z.string().nullish(),
   photo: z.string().nullish(),
@@ -101,8 +114,12 @@ export interface RecipeFile {
   servingLabel: string;
   prepMinutes: number | null;
   cookMinutes: number | null;
-  /** The verb for `cookMinutes`: "cook", "bake", "chill", "prove", "freeze". */
+  /** The verb for `cookMinutes`: "cook", "bake", "steam", "roast", "fry". */
   cookLabel: string;
+  /** Unattended time: chilling, proving, marinating, drying, resting. */
+  waitMinutes: number | null;
+  /** The verb for `waitMinutes`: "chill", "prove", "marinate", "dry", "rest". */
+  waitLabel: string;
   source: string | null;
   photo: string | null;
   photoCredit: { siteName: string | null; pageUrl: string | null } | null;
@@ -172,6 +189,8 @@ export interface RecipeTranslation {
   servingLabel: string | null;
   /** The verb for the cooking time, in this language. */
   cookLabel: string | null;
+  /** The verb for the waiting time, in this language. */
+  waitLabel: string | null;
   tags: string[];
   /** Ingredient names, aligned one-to-one with the base recipe's. */
   ingredientNames: string[];
@@ -220,6 +239,7 @@ const translationFrontMatterSchema = z.object({
   description: z.string().nullish(),
   servingLabel: z.string().nullish(),
   cookLabel: z.string().nullish(),
+  waitLabel: z.string().nullish(),
   tags: z.array(z.string()).nullish(),
   /** Which English content this was made from. See scripts/translate.ts. */
   sourceHash: z.string().nullish(),
@@ -275,6 +295,7 @@ export function parseTranslationFile(
       description: parsed.data.description ?? null,
       servingLabel: parsed.data.servingLabel ?? null,
       cookLabel: parsed.data.cookLabel ?? null,
+      waitLabel: parsed.data.waitLabel ?? null,
       tags: parsed.data.tags ?? [],
       ingredientNames,
       steps: sections.steps.map(stripListMarker).filter(Boolean),
@@ -339,6 +360,8 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
       // A recipe with a tin is baked in it — the tin is a stronger signal than
       // the category, which someone can file anywhere.
       cookLabel: parsed.data.cookLabel ?? (parsed.data.tin ? "bake" : "cook"),
+      waitMinutes: parsed.data.waitMinutes ?? null,
+      waitLabel: parsed.data.waitLabel ?? "chill",
       source: parsed.data.source ?? null,
       photo: parsed.data.photo ?? null,
       photoCredit: parsed.data.photoCredit
@@ -485,6 +508,11 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
   // stays as short as its recipe allows.
   if (recipe.cookLabel !== (recipe.tin ? "bake" : "cook")) {
     frontMatter["cookLabel"] = recipe.cookLabel;
+  }
+  if (recipe.waitMinutes !== null) frontMatter["waitMinutes"] = recipe.waitMinutes;
+  // Only when it is not the default, for the same reason as `cookLabel`.
+  if (recipe.waitMinutes !== null && recipe.waitLabel !== "chill") {
+    frontMatter["waitLabel"] = recipe.waitLabel;
   }
   if (recipe.source) frontMatter["source"] = recipe.source;
   if (recipe.photo) frontMatter["photo"] = recipe.photo;

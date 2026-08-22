@@ -2,7 +2,7 @@
 title: Ma Lai Gao
 description: The steamed brown sugar sponge off the dim sum trolley. No oven, no crust, no mixer — a bowl, a whisk and twenty-five minutes over a rolling boil.
 category: Baked Goods
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - freezes well
 servings: 8
@@ -10,6 +10,8 @@ servingLabel: wedge
 prepMinutes: 15
 cookMinutes: 25
 cookLabel: steam
+waitMinutes: 10
+waitLabel: cool
 tin:
   shape: round
   diameter: 18

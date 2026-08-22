@@ -2,7 +2,7 @@
 title: Hong Kong French Toast
 description: Sai do si. Two slices with peanut butter between them, crusts off, egg-dipped and shallow fried, with a pat of butter and golden syrup on top.
 category: Snacks
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
 servings: 2

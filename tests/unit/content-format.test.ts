@@ -38,6 +38,8 @@ function recipe(overrides: Partial<RecipeFile> = {}): RecipeFile {
     servingLabel: "slice",
     prepMinutes: 20,
     cookMinutes: 40,
+    waitMinutes: null,
+    waitLabel: "chill",
     cookLabel: "cook",
     source: "https://www.bbcgoodfood.com/recipes/butter-loaf",
     photo: null,

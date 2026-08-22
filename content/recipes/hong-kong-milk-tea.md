@@ -2,7 +2,7 @@
 title: Hong Kong Milk Tea
 description: Silk stocking milk tea. Ceylon boiled hard, pulled through a cloth bag until it is smooth, and cut with evaporated milk rather than fresh.
 category: Drinks
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
 servings: 2

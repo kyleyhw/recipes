@@ -10,6 +10,8 @@ servings: 4
 prepMinutes: 15
 cookMinutes: 5
 cookLabel: simmer
+waitMinutes: 720
+waitLabel: marinate
 ---
 
 ## Ingredients

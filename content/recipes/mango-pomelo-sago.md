@@ -2,13 +2,14 @@
 title: Mango Pomelo Sago
 description: Yeung chi gam lo. Mango purée, coconut and evaporated milk, tapioca pearls and citrus strands — the only thing you cook is the tapioca.
 category: Desserts
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - make ahead
 servings: 4
 prepMinutes: 20
 cookMinutes: 15
 cookLabel: boil
+waitMinutes: 120
 ---
 
 ## Ingredients

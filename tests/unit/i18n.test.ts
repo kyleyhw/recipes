@@ -68,7 +68,7 @@ describe("the tables", () => {
 
 describe("interpolation", () => {
   it("fills placeholders", () => {
-    expect(translate("en", "minPrep", { n: 20 })).toBe("20 min prep");
+    expect(translate("en", "minPrep", { d: "20 min" })).toBe("20 min prep");
   });
 
   it("fills the same placeholders in every language", () => {

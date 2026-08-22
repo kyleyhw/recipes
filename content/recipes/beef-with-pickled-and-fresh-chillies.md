@@ -8,6 +8,8 @@ tags:
 servings: 2
 prepMinutes: 15
 cookMinutes: 8
+waitMinutes: 10
+waitLabel: marinate
 source: 菠萝精呀 (Xiaohongshu)
 ---
 

@@ -2,13 +2,14 @@
 title: Mango Pudding
 description: Blend, dissolve, stir, chill. The dim sum trolley's set mango pudding, and the least cooking any dessert here asks of you.
 category: Desserts
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - make ahead
 servings: 4
 prepMinutes: 15
 cookMinutes: 5
 cookLabel: heat
+waitMinutes: 240
 ---
 
 ## Ingredients

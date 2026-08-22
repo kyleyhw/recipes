@@ -2,7 +2,7 @@
 title: Steamed Pork Patty with Chinese Sausage
 description: The sweet one. Lap cheung sliced thin over the top, whose fat renders down through the patty and turns the broth red and sweet.
 category: Mains
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
   - one pot

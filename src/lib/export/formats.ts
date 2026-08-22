@@ -27,6 +27,8 @@ export interface ExportRecipe {
   servingLabel: string;
   prepMinutes: number | null;
   cookMinutes: number | null;
+  waitMinutes: number | null;
+  waitLabel: string;
   source: string | null;
   photo: string | null;
   ingredients: ScalableIngredient[];
@@ -114,6 +116,8 @@ export function toJson(
     servingLabel: recipe.servingLabel,
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
+    waitMinutes: recipe.waitMinutes,
+    waitLabel: recipe.waitMinutes === null ? null : recipe.waitLabel,
     sourceUrl: recipe.source,
     addedBy: recipe.author ?? null,
     ingredients: scaled.ingredients.map((row) => ({
@@ -183,7 +187,12 @@ export function toJsonLd(
     recipeYield: `${servings} ${recipe.servingLabel}${servings === 1 ? "" : "s"}`,
     prepTime: isoDuration(recipe.prepMinutes),
     cookTime: isoDuration(recipe.cookMinutes),
-    totalTime: isoDuration((recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0)),
+    // Schema.org has no field for unattended time, so it goes into the total
+    // and nowhere else. An importer reading this gets the honest answer to
+    // "how long does this take", which is the only question totalTime asks.
+    totalTime: isoDuration(
+      (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0) + (recipe.waitMinutes ?? 0),
+    ),
     recipeIngredient: scaled.ingredients.map((row) =>
       row.passedThrough ? row.rawText : row.display,
     ),

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { RecipeView } from "@/components/recipe-view";
-import { T, TCategory, TContent } from "@/components/language";
+import { T, TCategory, TContent, TDuration } from "@/components/language";
 import { SourceLine } from "@/components/source-line";
 import { AttributionLine } from "@/components/attribution-line";
 import { Prose } from "@/components/prose";
@@ -12,6 +12,7 @@ import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { keepingNotes, prepareRecipe } from "@/lib/content/prepare";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 import { repoUrl } from "@/lib/site";
+import { totalMinutes } from "@/lib/duration";
 
 /**
  * One recipe.
@@ -57,7 +58,7 @@ export default async function RecipePage({
       })),
     ]);
   const glyph = categories.find((c) => c.name === recipe.category)?.glyph ?? "*";
-  const totalMinutes = (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
+  const total = totalMinutes(recipe);
   const file = recipeFilename(recipe.slug);
   const repo = repoUrl();
 
@@ -77,6 +78,34 @@ export default async function RecipePage({
   const cookLabels = field((t) => t.cookLabel);
   // Tags are a list, so they translate as a list: index by index, falling back
   // to the English tag where a translation has fewer.
+  // Prep, cook and wait, then their sum — and the sum includes the wait, so a
+  // recipe that needs a night in the fridge says so at the top rather than in
+  // step 9. The total is dropped when there is only one part, since repeating
+  // "20 min prep · 20 min total" tells nobody anything.
+  const waitLabels = field((t) => t.waitLabel);
+  const timeParts = [
+    recipe.prepMinutes ? <TDuration k="minPrep" minutes={recipe.prepMinutes} /> : null,
+    recipe.cookMinutes ? (
+      <TDuration
+        k="minCook"
+        minutes={recipe.cookMinutes}
+        label={recipe.cookLabel}
+        labelTranslations={cookLabels}
+      />
+    ) : null,
+    recipe.waitMinutes ? (
+      <TDuration
+        k="minCook"
+        minutes={recipe.waitMinutes}
+        label={recipe.waitLabel}
+        labelTranslations={waitLabels}
+      />
+    ) : null,
+  ].filter(Boolean);
+  if (timeParts.length > 1 && total !== null) {
+    timeParts.push(<TDuration k="minTotal" minutes={total} />);
+  }
+
   const tagAt = (index: number) =>
     Object.fromEntries(
       Object.entries(recipe.translations).map(([code, t]) => [
@@ -142,25 +171,14 @@ export default async function RecipePage({
           </p>
         ) : null}
 
-        {totalMinutes > 0 ? (
+        {total !== null && total > 0 ? (
           <p className="numeric mt-3 text-sm text-text-muted">
-            {recipe.prepMinutes ? (
-              <T k="minPrep" vars={{ n: recipe.prepMinutes }} />
-            ) : null}
-            {recipe.prepMinutes && recipe.cookMinutes ? " · " : null}
-            {recipe.cookMinutes ? (
-              <T
-                k="minCook"
-                vars={{ n: recipe.cookMinutes, label: recipe.cookLabel }}
-                labelTranslations={cookLabels}
-              />
-            ) : null}
-            {recipe.prepMinutes && recipe.cookMinutes ? (
-              <>
-                {" · "}
-                <T k="minTotal" vars={{ n: totalMinutes }} />
-              </>
-            ) : null}
+            {timeParts.map((part, index) => (
+              <span key={index}>
+                {index > 0 ? " · " : null}
+                {part}
+              </span>
+            ))}
           </p>
         ) : null}
 

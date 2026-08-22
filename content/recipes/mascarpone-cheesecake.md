@@ -10,6 +10,7 @@ servingLabel: slice
 prepMinutes: 30
 cookMinutes: 55
 cookLabel: bake
+waitMinutes: 480
 tin:
   shape: round
   diameter: 23

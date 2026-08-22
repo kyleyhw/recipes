@@ -5,6 +5,7 @@ import { TContent, useLanguage, useT } from "@/components/language";
 import type { RecipeSummary } from "@/lib/content/summary";
 import { decimal } from "@/lib/format";
 import { placeholderStyle } from "@/lib/photos/placeholder";
+import { formatDuration, totalMinutes } from "@/lib/duration";
 
 /**
  * A recipe in a listing.
@@ -30,18 +31,34 @@ export function RecipeCard({
 }) {
   const t = useT();
   const language = useLanguage();
-  // Prep and cook shown separately rather than summed: they answer different
-  // questions. "Can I start this now?" is prep; a cook can add two numbers for
-  // the total. A single figure hides which of the two a 90-minute recipe is.
-  const times = [
-    recipe.prepMinutes ? t("minPrep", { n: recipe.prepMinutes }) : null,
+  // The breakdown *and* the total, because they answer different questions and
+  // the total is the one a card is being scanned for. "Can I start this now?"
+  // is prep; "is this a tonight thing?" is the total — and the total has to
+  // include the fridge, or a four-hour pudding advertises itself as fifteen
+  // minutes and the card is simply lying.
+  const total = totalMinutes(recipe);
+  const parts = [
+    recipe.prepMinutes
+      ? t("minPrep", { d: formatDuration(recipe.prepMinutes, t) })
+      : null,
     recipe.cookMinutes
       ? t("minCook", {
-          n: recipe.cookMinutes,
+          d: formatDuration(recipe.cookMinutes, t),
           label: recipe.cookLabels[language] ?? recipe.cookLabel,
         })
       : null,
+    recipe.waitMinutes
+      ? t("minCook", {
+          d: formatDuration(recipe.waitMinutes, t),
+          label: recipe.waitLabels[language] ?? recipe.waitLabel,
+        })
+      : null,
   ].filter(Boolean);
+  // Only worth printing when it is not just one of the parts said again.
+  const times =
+    parts.length > 1 && total !== null
+      ? [...parts, t("minTotal", { d: formatDuration(total, t) })]
+      : parts;
 
   return (
     <Link

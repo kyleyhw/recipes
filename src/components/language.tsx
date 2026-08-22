@@ -9,6 +9,7 @@ import {
   type Language,
   type StringKey,
 } from "@/lib/i18n/strings";
+import { formatDuration } from "@/lib/duration";
 
 /**
  * Choosing the interface language.
@@ -136,6 +137,40 @@ export function T({
       ? { ...vars, label: labelTranslations[language] as string }
       : vars;
   return <>{translate(language, k, resolved)}</>;
+}
+
+/**
+ * A stretch of time, as an element.
+ *
+ * The same trick as `T`, one layer deeper. A duration has to be *formatted*
+ * before it can be interpolated — 240 minutes is "4 h" in English and
+ * "4 小時" in Chinese — so the phrase and the number inside it both depend on
+ * the language, and a server component cannot know it. This resolves both at
+ * once on the client.
+ */
+export function TDuration({
+  k,
+  minutes,
+  label,
+  labelTranslations,
+}: {
+  k: StringKey;
+  minutes: number;
+  label?: string;
+  labelTranslations?: Record<string, string | null | undefined>;
+}) {
+  const language = useLanguage();
+  const t = (key: StringKey, vars?: Record<string, string | number>) =>
+    translate(language, key, vars);
+  const resolved = labelTranslations?.[language] ?? label;
+  return (
+    <>
+      {translate(language, k, {
+        d: formatDuration(minutes, t),
+        ...(resolved ? { label: resolved } : {}),
+      })}
+    </>
+  );
 }
 
 /** A category name, translated where this collection's own table knows it. */

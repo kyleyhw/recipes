@@ -154,6 +154,29 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   Screenshot it. Every diagram that has gone wrong here has looked fine as an
   outline and looked wrong immediately as a picture.
 
+- **The time on the card is the time it takes**, waiting included. `prepMinutes`
+  and `cookMinutes` are the two stretches you have to be there for;
+  `waitMinutes` is the fridge, the prove, the marinade, the twelve hours of
+  drying — and the card adds all three and prints the total. A mango pudding is
+  fifteen minutes of work and nobody eats it for four hours, and advertising it
+  as twenty minutes is the card lying about the only question it is being
+  scanned for.
+
+  Two rules follow. Count only waiting that actually makes you wait: a marinade
+  sitting while something else simmers costs no wall-clock time and belongs in
+  the method alone. And the numbers must **add up exactly as printed** — the
+  parts and the total sit on one line, so any rounding that makes the sum
+  disagree with its addends is an arithmetic error a reader can see, and
+  `lib/duration.ts` is exact for that reason and no other.
+
+- **Say which China.** `cuisine` is what the filter offers, so it should be as
+  specific as the dish honestly allows — `Cantonese` for a dish that is one,
+  `Chinese` where it is genuinely pan-regional or where the honest answer is
+  that you are not sure. Twenty-five Cantonese recipes filed under `Chinese`
+  alongside a Sichuan mapo tofu is a filter that cannot answer the question
+  anybody is asking it. Guessing more precisely than you know is the other
+  failure: a dish nobody can place stays `Chinese`.
+
 - **Baked goods must state their tin**, and scale it. A cake batter doubled into
   the same tin is twice as deep and bakes wrongly: the outside sets before the
   middle is done. `lib/tin.ts` scales the tin with the recipe — area with the

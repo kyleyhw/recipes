@@ -7,6 +7,7 @@ tags:
   - make ahead
 servings: 8
 prepMinutes: 30
+waitMinutes: 360
 ---
 
 ## Ingredients

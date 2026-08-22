@@ -2,7 +2,7 @@
 title: Steamed Pork Patty with Preserved Bean Curd
 description: Pork mince stirred in one direction until it is sticky, mashed through with fermented bean curd, and steamed into a tender patty in its own broth. Twenty-five minutes, one dish, eaten over rice.
 category: Mains
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
   - one pot

@@ -9,6 +9,8 @@ servings: 10
 servingLabel: slice
 prepMinutes: 20
 cookMinutes: 60
+waitMinutes: 75
+waitLabel: cool
 tin:
   shape: loaf
   length: 23

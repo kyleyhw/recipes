@@ -2,13 +2,15 @@
 title: Ginger Milk Curd
 description: Hot milk poured onto raw ginger juice from a height and then left alone. It sets in ten minutes, by enzyme rather than by heat.
 category: Desserts
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
 servings: 2
 prepMinutes: 15
 cookMinutes: 5
 cookLabel: heat
+waitMinutes: 10
+waitLabel: set
 ---
 
 ## Ingredients

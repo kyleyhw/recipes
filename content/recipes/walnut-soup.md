@@ -2,13 +2,15 @@
 title: Walnut Soup
 description: Hap tou wu. Toasted walnuts and a spoonful of rice blended smooth and cooked into something the thickness of pouring cream.
 category: Desserts
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
 servings: 4
 prepMinutes: 15
 cookMinutes: 20
 cookLabel: simmer
+waitMinutes: 30
+waitLabel: soak
 ---
 
 ## Ingredients

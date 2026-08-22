@@ -2,7 +2,7 @@
 title: Chicken and Sweetcorn Soup
 description: Ten minutes from tin to bowl, thickened with cornflour and finished with egg poured in a thread.
 category: Soups & Stews
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
 servings: 2

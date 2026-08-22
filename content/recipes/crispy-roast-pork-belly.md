@@ -2,13 +2,15 @@
 title: Crispy Roast Pork Belly
 description: Siu yuk. Twelve hours of drying, a salt crust, and a hot blast — and the skin blisters into crackling you can hear from the next room.
 category: Mains
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - make ahead
 servings: 6
 prepMinutes: 30
 cookMinutes: 100
 cookLabel: roast
+waitMinutes: 740
+waitLabel: dry
 ---
 
 ## Ingredients

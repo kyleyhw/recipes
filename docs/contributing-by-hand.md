@@ -67,12 +67,14 @@ below is what makes a recipe good rather than merely valid.
 | `title` | As you would say it out loud. Title case. |
 | `description` | One sentence, shown on the card and under the title. Say what it *is*, not that it is delicious. |
 | `category` | Must match one in `content/categories.json`, or the recipe appears on no shelf. Mains, Sides, Desserts, Baked Goods, Breakfast, Soups & Stews, Sauces & Condiments, Drinks, Snacks. |
-| `cuisine` | Whose food it is. Free text, and it is what the cuisine filter offers. |
+| `cuisine` | Whose food it is. Free text, and it is what the cuisine filter offers. Be as specific as the dish honestly allows — `Cantonese` rather than `Chinese` for a dish that is one, and `Chinese` where it is genuinely pan-regional or you are not sure. |
 | `tags` | Cross-cutting labels a category cannot express: `quick`, `one pot`, `freezes well`, `make ahead`. |
 | `servings` | The number the quantities below are written for. Everything scales from it. |
 | `servingLabel` | What one serving is called, where "serving" is wrong: `slice`, `bowl`, `spoonful`. |
-| `prepMinutes` / `cookMinutes` | Hands-on and unattended. A 12-hour marinade is not `cookMinutes: 720` — put the stove time here and the wait in the method. |
-| `cookLabel` | The verb for `cookMinutes`: `bake`, `simmer`, `steam`, `roast`, `chill`, `prove`. Defaults to `bake` when a tin is set and `cook` otherwise. |
+| `prepMinutes` / `cookMinutes` | Hands-on time, and time at the stove. Neither includes waiting. |
+| `cookLabel` | The verb for `cookMinutes`: `bake`, `simmer`, `steam`, `roast`, `fry`. Defaults to `bake` when a tin is set and `cook` otherwise. |
+| `waitMinutes` | Time the recipe takes while you are not in the kitchen: chilling, proving, marinating, drying, resting. It is counted in the total the card advertises, because a pudding that needs four hours in the fridge is a four-hour pudding to anyone deciding what to make tonight. Count only waiting that makes you wait — a marinade that sits while something else simmers costs no wall-clock time and belongs in the method alone. |
+| `waitLabel` | The verb for `waitMinutes`: `chill`, `prove`, `marinate`, `dry`, `soak`, `rest`, `set`, `cool`. Defaults to `chill`. |
 | `source` | The address a web recipe came from. A recipe from a person goes in the Notes instead. |
 | `tin` | Required for anything baked. `shape` is `round`, `square`, `rectangular` or `loaf`, with `diameter` or `length`/`width`, and `depth`, in centimetres. |
 | `draft` | `true` while it is a proposal nobody has cooked. It shows a banner saying so. |

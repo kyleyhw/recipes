@@ -3,6 +3,7 @@ import type { LibraryIngredient } from "@/lib/content/library";
 import { prepareRecipe } from "@/lib/content/prepare";
 import type { StringKey } from "@/lib/i18n/strings";
 import { computeNutrition } from "@/lib/nutrition/compute";
+import { totalMinutes } from "@/lib/duration";
 
 /**
  * What a listing needs to know about a recipe.
@@ -34,6 +35,10 @@ export interface RecipeSummary {
   prepMinutes: number | null;
   cookMinutes: number | null;
   cookLabel: string;
+  /** Unattended time — chilling, proving, drying. Counted in the total. */
+  waitMinutes: number | null;
+  waitLabel: string;
+  waitLabels: Record<string, string>;
   photo: string | null;
   draft: boolean;
   /** Grams per serving. Null when nothing in the recipe resolved. */
@@ -79,6 +84,13 @@ export function summarise(
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
     cookLabel: recipe.cookLabel,
+    waitMinutes: recipe.waitMinutes,
+    waitLabel: recipe.waitLabel,
+    waitLabels: Object.fromEntries(
+      Object.entries(recipe.translations).flatMap(([code, t]) =>
+        t.waitLabel ? [[code, t.waitLabel]] : [],
+      ),
+    ),
     photo: recipe.photo,
     draft: recipe.draft,
     proteinPerServing: resolved ? nutrition.perServing.protein : null,
@@ -273,11 +285,13 @@ function withUnknownsLast(
   return compare(a, b);
 }
 
-/** Total time, for the prep sorts: what "quickest" actually means to a cook. */
-function totalMinutes(recipe: RecipeSummary): number | null {
-  if (recipe.prepMinutes === null && recipe.cookMinutes === null) return null;
-  return (recipe.prepMinutes ?? 0) + (recipe.cookMinutes ?? 0);
-}
+/**
+ * Total time, for the prep sorts: what "quickest" actually means to a cook.
+ *
+ * Waiting counts. A mango pudding is fifteen minutes of work and four hours
+ * before you can eat it, and sorting it above a stew that is done in ninety
+ * would be answering a question nobody asked.
+ */
 
 /**
  * Sorts a listing.

@@ -2,7 +2,7 @@
 title: Sweet Potato in Ginger Syrup
 description: Faan syu tong seui. Four ingredients, one pot, and nothing to get wrong except when the sugar goes in.
 category: Desserts
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
   - one pot

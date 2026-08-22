@@ -2,7 +2,7 @@
 title: Roast Meat Soy Dressing
 description: The thin soy sauce a siu mei shop ladles over a plate of rice. Sixty seconds in a small pan, and it is the difference between a takeaway box and a home plate.
 category: Sauces & Condiments
-cuisine: Chinese
+cuisine: Cantonese
 tags:
   - quick
   - make ahead

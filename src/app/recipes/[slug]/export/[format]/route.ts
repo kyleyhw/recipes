@@ -58,6 +58,8 @@ export async function GET(
     servingLabel: recipe.servingLabel,
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
+    waitMinutes: recipe.waitMinutes,
+    waitLabel: recipe.waitLabel,
     source: recipe.source,
     photo: recipe.photo,
     ingredients: prepared.scalable,
