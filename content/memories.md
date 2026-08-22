@@ -27,6 +27,13 @@ not be fine on a noticeboard.
   one with an image model — no third party's copyright, and no cost at read
   time, since the file is committed like everything else.
 
+  Money and a deadline, both written up in [docs/photos.md](../docs/photos.md):
+  the collection costs about $1.83 to draw at August 2026 prices, covered by the
+  $10/month of Cloud credits a Google AI Pro subscription carries — **and that
+  subscription ends at the end of August 2026**. The model in use retires on
+  2 October 2026. Every run prints its estimate first and refuses to pass a
+  spend ceiling that defaults to $5, so this cannot quietly become expensive.
+
   What it costs is that **the picture is not evidence**. A model has never
   cooked anything; what comes back matches the words, not the dish, and it was
   not made from this recipe by anyone. So every generated image carries a credit

@@ -12,6 +12,7 @@ Design and rationale for the recipe management application. Start with
 | [data-model.md](data-model.md) | Prisma schema, the reasoning behind each non-obvious column |
 | [self-hosting.md](self-hosting.md) | Running your own instance: local development and deployment |
 | [nutrition-pipeline.md](nutrition-pipeline.md) | Ingredient resolution, USDA lookup, macro panel interpretation |
+| [photos.md](photos.md) | Pictures: generating them, what they cost, the credit deadline, and keeping the key out of the repo |
 | [sharing-format.md](sharing-format.md) | The portable recipe bundle and cross-instance import |
 | [claude-integration.md](claude-integration.md) | The model features, the spend ceiling, and every failure mode |
 | [log-and-history.md](log-and-history.md) | Per-recipe notes, revising by message, snapshots and restore |

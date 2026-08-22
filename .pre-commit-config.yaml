@@ -21,8 +21,10 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
-        # Recipe photos are resized before storage and never committed; a large
-        # file in a commit is almost always an accident.
+        # Recipe photos ARE committed — a static site has no blob store, so
+        # public/photos/ is the deployed artefact. They are cropped to
+        # 1200x675 WebP first and land around 100-200 kB, so anything over
+        # half a megabyte is a full-size camera file that skipped the resize.
         args: ["--maxkb=512"]
       - id: check-merge-conflict
       - id: check-yaml
@@ -45,6 +47,16 @@ repos:
   # mirror, so the versions used here are exactly those in package-lock.json.
   - repo: local
     hooks:
+      # First, and deliberately not dependent on anything being fetched. Every
+      # other hook here comes from a pinned GitHub repo, so a machine that
+      # cannot reach GitHub installs none of them; this one is a file in the
+      # repository and runs regardless.
+      - id: no-api-keys
+        name: no API keys
+        entry: scripts/no-api-keys.sh
+        language: system
+        types: [text]
+
       - id: prettier
         name: prettier
         entry: npx prettier --write

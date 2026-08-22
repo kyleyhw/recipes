@@ -35,6 +35,7 @@
  *   GEMINI_API_KEY=... GEMINI_IMAGE_MODEL=gemini-2.5-flash-image npm run photos
  *   GEMINI_API_KEY=... npm run photos -- --force --limit 5
  *   GEMINI_API_KEY=... npm run photos -- --throttle 0     # paid key, no waiting
+ *   GEMINI_API_KEY=... npm run photos -- --max-spend 2     # refuse to go over $2
  *   GEMINI_API_KEY=... npm run photos -- --dry-run
  */
 
@@ -109,6 +110,8 @@ interface Args {
   limit: number | null;
   /** Seconds to wait between images, to stay under a free key's rate limit. */
   throttle: number;
+  /** Dollars this run refuses to exceed. */
+  maxSpend: number;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -119,6 +122,7 @@ function parseArgs(argv: string[]): Args {
   };
   const limit = value("--limit");
   const throttle = value("--throttle");
+  const maxSpend = value("--max-spend");
   return {
     force: at("--force") !== -1,
     dryRun: at("--dry-run") !== -1,
@@ -128,6 +132,10 @@ function parseArgs(argv: string[]): Args {
     // costs four minutes across the whole collection and removes the commonest
     // reason a run half-fails.
     throttle: throttle === null ? 6 : Number(throttle),
+    // Five dollars against a ten dollar credit. The whole collection is under
+    // two, so this only ever fires when something is wrong — a model priced
+    // differently than expected, or a loop that is not stopping.
+    maxSpend: maxSpend === null ? 5 : Number(maxSpend),
   };
 }
 
@@ -268,17 +276,33 @@ async function main(): Promise<void> {
   const price = PRICE_PER_IMAGE[MODEL];
   const due = files.filter((file) => !args.only || file === `${args.only}.md`).length;
   if (!args.dryRun) {
-    const cost = price === undefined ? "unknown" : `$${(due * price).toFixed(2)}`;
+    const estimate = price === undefined ? null : due * price;
     console.log(
-      `${MODEL}: up to ${due} images, about ${cost} at list price.\n` +
+      `${MODEL}: up to ${due} images, about ` +
+        `${estimate === null ? "an unknown amount" : `$${estimate.toFixed(2)}`} at list price.\n` +
         `Already-current recipes are skipped, so the real number is usually lower.\n`,
     );
+    if (estimate !== null && estimate > args.maxSpend) {
+      console.error(
+        `That is over the --max-spend ceiling of $${args.maxSpend.toFixed(2)}, so nothing has run.\n` +
+          `Raise it deliberately, or use --limit to do part of the collection.`,
+      );
+      process.exit(1);
+    }
+    if (price === undefined) {
+      console.error(
+        `No published price is recorded for ${MODEL}, so this run cannot check itself\n` +
+          `against the ceiling. Add it to PRICE_PER_IMAGE, or run with --dry-run first.`,
+      );
+      process.exit(1);
+    }
   }
 
   let done = 0;
   let skipped = 0;
   let failed = 0;
   let first = true;
+  let spent = 0;
 
   for (const file of files) {
     const slug = file.replace(/\.md$/, "");
@@ -308,6 +332,18 @@ async function main(): Promise<void> {
       continue;
     }
 
+    // Checked before each image rather than only at the start, because the
+    // estimate assumes every recipe is due and a resumed run is cheaper than
+    // that — but a mistake in the other direction should still stop here
+    // rather than at the end, when the money is already gone.
+    if (price !== undefined && spent + price > args.maxSpend) {
+      console.error(
+        `\nStopping at $${spent.toFixed(2)}: one more image would pass the ` +
+          `$${args.maxSpend.toFixed(2)} ceiling.`,
+      );
+      break;
+    }
+
     try {
       // Between images, not before the first: a one-recipe run should not sit
       // there for six seconds doing nothing.
@@ -329,7 +365,8 @@ async function main(): Promise<void> {
         }),
       );
       const kb = Math.round(readFileSync(out).byteLength / 1024);
-      console.log(`${slug}: ${kb} kB`);
+      spent += price ?? 0;
+      console.log(`${slug}: ${kb} kB  ($${spent.toFixed(2)} so far)`);
       done += 1;
     } catch (error) {
       console.error(`${slug}: ${(error as Error).message}`);
@@ -337,7 +374,10 @@ async function main(): Promise<void> {
     }
   }
 
-  console.log(`\n${done} generated, ${skipped} unchanged, ${failed} failed.`);
+  console.log(
+    `\n${done} generated, ${skipped} unchanged, ${failed} failed. ` +
+      `About $${spent.toFixed(2)} at list price.`,
+  );
   if (failed > 0) process.exit(1);
 }
 
