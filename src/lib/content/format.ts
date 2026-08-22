@@ -85,6 +85,14 @@ const frontMatterSchema = z.object({
       pageUrl: z.string().nullish(),
     })
     .nullish(),
+  /**
+   * Fingerprint of the prompt a generated photo was made from.
+   *
+   * Only `scripts/photos.ts` reads it, to skip a recipe whose picture is still
+   * the one its words ask for. It is here rather than in a sidecar file so that
+   * a recipe stays one file, which is the whole format.
+   */
+  photoPrompt: z.string().nullish(),
   /** DRAFT recipes are Claude's proposals, not yet cooked here. */
   draft: z.boolean().nullish(),
   /**
@@ -123,6 +131,8 @@ export interface RecipeFile {
   source: string | null;
   photo: string | null;
   photoCredit: { siteName: string | null; pageUrl: string | null } | null;
+  /** Prompt fingerprint, when the photo was generated. See scripts/photos.ts. */
+  photoPrompt: string | null;
   draft: boolean;
   /** The tin this is baked in, when it is baked. */
   tin: Tin | null;
@@ -370,6 +380,7 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
             pageUrl: parsed.data.photoCredit.pageUrl ?? null,
           }
         : null,
+      photoPrompt: parsed.data.photoPrompt ?? null,
       draft: parsed.data.draft ?? false,
       tin: parsed.data.tin
         ? {
@@ -522,6 +533,7 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
       ...(recipe.photoCredit.pageUrl ? { pageUrl: recipe.photoCredit.pageUrl } : {}),
     };
   }
+  if (recipe.photoPrompt) frontMatter["photoPrompt"] = recipe.photoPrompt;
   if (recipe.draft) frontMatter["draft"] = true;
   if (recipe.tin) {
     frontMatter["tin"] = {
@@ -535,7 +547,14 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
 
   const parts = [
     "---",
-    stringifyYaml(frontMatter).trimEnd(),
+    // `lineWidth: 0` disables wrapping. The default folds anything past 80
+    // columns onto a continuation line, which is valid YAML and reads the same
+    // — but it means `serialise(parse(file))` is not `file` for any recipe with
+    // a long description, so a script that rewrites one file reflows the front
+    // matter of every file it touches. Forty-five of forty-seven recipes were
+    // in that state before this line existed, and no test saw it because the
+    // fixture's description was short enough to fit.
+    stringifyYaml(frontMatter, { lineWidth: 0 }).trimEnd(),
     "---",
     "",
     "## Ingredients",

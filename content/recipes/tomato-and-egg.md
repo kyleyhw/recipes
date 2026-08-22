@@ -3,7 +3,6 @@ title: Tomato and Egg
 description: Fan qie chao dan. Eggs scrambled soft and taken out, tomatoes cooked down to a sauce, and the two folded back together. The dish every Chinese household cooks.
 category: Mains
 cuisine: Chinese
-source: https://thewoksoflife.com/stir-fried-tomato-and-egg/
 tags:
   - quick
   - one pot
@@ -11,6 +10,7 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 8
 cookLabel: stir-fry
+source: https://thewoksoflife.com/stir-fried-tomato-and-egg/
 ---
 
 ## Ingredients

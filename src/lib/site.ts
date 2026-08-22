@@ -25,3 +25,18 @@ export function repoUrl(): string | null {
 export function repoSlug(): string | null {
   return process.env["NEXT_PUBLIC_REPO"] ?? null;
 }
+
+/**
+ * A path to something in `public/`, as the browser must ask for it.
+ *
+ * A project page is served from a subdirectory, so `/photos/x.webp` is really
+ * `/recipes/photos/x.webp`. Next rewrites the URLs it generates itself, but an
+ * `<img src>` written by this application is a string it never sees — so the
+ * prefix is applied here, once, on the way out of the content layer. Baked at
+ * build time, like everything else on a site with no server.
+ */
+export function assetUrl(path: string | null): string | null {
+  if (!path) return null;
+  const base = process.env["PAGES_BASE_PATH"] ?? "";
+  return base && path.startsWith("/") ? `${base}${path}` : path;
+}

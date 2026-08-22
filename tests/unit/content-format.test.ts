@@ -44,6 +44,7 @@ function recipe(overrides: Partial<RecipeFile> = {}): RecipeFile {
     source: "https://www.bbcgoodfood.com/recipes/butter-loaf",
     photo: null,
     photoCredit: null,
+    photoPrompt: null,
     draft: false,
     tin: null,
     ingredients: ["220 g butter", "300 g plain flour", "2 eggs"],

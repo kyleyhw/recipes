@@ -3,7 +3,6 @@ title: Garlic Stir-Fried Greens
 description: Choy sum, a lot of garlic and a very hot wok. Six minutes from fridge to table, and the stems still snap.
 category: Sides
 cuisine: Cantonese
-source: https://www.madewithlau.com/recipes/choy-sum-with-garlic
 tags:
   - quick
   - one pot
@@ -11,6 +10,7 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 5
 cookLabel: stir-fry
+source: https://www.madewithlau.com/recipes/choy-sum-with-garlic
 ---
 
 ## Ingredients

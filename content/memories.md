@@ -20,11 +20,19 @@ not be fine on a noticeboard.
   burned — not a diary.
 - **Credit what came from elsewhere.** A recipe taken off a website records its
   `source`, and one taken from a person records who.
-- **Photographs are the open question.** Sourcing them automatically was
-  decided when this was a private collection for personal use. A public
-  repository redistributes whatever it holds, and that is a different question
-  from looking at a picture at home. Anything added now should be a photo taken
-  here or one whose licence permits redistribution.
+- **Photographs are generated, and the page says so.** Sourcing them from the
+  web was decided when this was a private collection; a public repository
+  redistributes whatever it holds, which is a different question from looking at
+  a picture at home. The answer taken instead is `npm run photos`, which draws
+  one with an image model — no third party's copyright, and no cost at read
+  time, since the file is committed like everything else.
+
+  What it costs is that **the picture is not evidence**. A model has never
+  cooked anything; what comes back matches the words, not the dish, and it was
+  not made from this recipe by anyone. So every generated image carries a credit
+  saying it was generated, in the place a photographer would have been credited,
+  and that line is not optional. A photograph actually taken here is better than
+  any of them and should replace one whenever it exists.
 
 ## Recipes are attributed from git
 

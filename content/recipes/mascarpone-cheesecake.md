@@ -9,7 +9,6 @@ servings: 12
 servingLabel: slice
 prepMinutes: 30
 cookMinutes: 55
-cookLabel: bake
 waitMinutes: 480
 tin:
   shape: round

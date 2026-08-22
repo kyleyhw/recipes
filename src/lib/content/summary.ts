@@ -4,6 +4,7 @@ import { prepareRecipe } from "@/lib/content/prepare";
 import type { StringKey } from "@/lib/i18n/strings";
 import { computeNutrition } from "@/lib/nutrition/compute";
 import { totalMinutes } from "@/lib/duration";
+import { assetUrl } from "@/lib/site";
 
 /**
  * What a listing needs to know about a recipe.
@@ -91,7 +92,7 @@ export function summarise(
         t.waitLabel ? [[code, t.waitLabel]] : [],
       ),
     ),
-    photo: recipe.photo,
+    photo: assetUrl(recipe.photo),
     draft: recipe.draft,
     proteinPerServing: resolved ? nutrition.perServing.protein : null,
     kcalPerServing: resolved ? nutrition.perServing.kcal : null,

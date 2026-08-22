@@ -11,7 +11,7 @@ import { buildDiagram } from "@/lib/content/diagram";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { keepingNotes, prepareRecipe } from "@/lib/content/prepare";
 import { placeholderStyle } from "@/lib/photos/placeholder";
-import { repoUrl } from "@/lib/site";
+import { assetUrl, repoUrl } from "@/lib/site";
 import { totalMinutes } from "@/lib/duration";
 
 /**
@@ -120,7 +120,7 @@ export default async function RecipePage({
         {recipe.photo ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={recipe.photo}
+            src={assetUrl(recipe.photo) ?? undefined}
             alt={recipe.title}
             className="h-full w-full object-cover"
           />
@@ -135,17 +135,24 @@ export default async function RecipePage({
         )}
       </div>
 
-      {recipe.photoCredit?.pageUrl ? (
+      {/* A credit with no link is still a credit, and the case that matters:
+          a generated picture has no page to point at, and saying nothing about
+          where an image came from is the one thing this line exists to stop. */}
+      {recipe.photoCredit?.pageUrl || recipe.photoCredit?.siteName ? (
         <p className="text-xs text-text-muted">
           <T k="photoBy" />:{" "}
-          <a
-            href={recipe.photoCredit.pageUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="underline hover:text-text"
-          >
-            {recipe.photoCredit.siteName ?? "source"}
-          </a>
+          {recipe.photoCredit.pageUrl ? (
+            <a
+              href={recipe.photoCredit.pageUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="underline hover:text-text"
+            >
+              {recipe.photoCredit.siteName ?? "source"}
+            </a>
+          ) : (
+            recipe.photoCredit.siteName
+          )}
         </p>
       ) : null}
 
