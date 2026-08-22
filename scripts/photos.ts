@@ -34,6 +34,7 @@
  *   GEMINI_API_KEY=... npm run photos -- --only mango-pudding
  *   GEMINI_API_KEY=... GEMINI_IMAGE_MODEL=gemini-2.5-flash-image npm run photos
  *   GEMINI_API_KEY=... npm run photos -- --force --limit 5
+ *   GEMINI_API_KEY=... npm run photos -- --throttle 0     # paid key, no waiting
  *   GEMINI_API_KEY=... npm run photos -- --dry-run
  */
 
@@ -56,17 +57,31 @@ const PHOTOS_DIR = join("public", "photos");
  *
  * Two of them exist and the choice is a real one:
  *
+ *   - `gemini-2.5-flash-image` — the original, about $0.039 an image, and the
+ *     default because it is a third of the price and this collection is 47
+ *     pictures of dinner rather than a print campaign. It **retires on
+ *     2 October 2026**, and on that day this script starts failing with a 404
+ *     until the line below is changed. That is a deliberate trade: cheap now,
+ *     one edit later.
  *   - `gemini-3-pro-image` — Nano Banana Pro, general since June 2026, about
- *     $0.134 an image. The default, because it is the one that will still be
- *     here next year.
- *   - `gemini-2.5-flash-image` — the original, about $0.039 an image and inside
- *     the free tier's rate limits, but **retired on 2 October 2026**. Worth
- *     setting until then; after that it stops answering.
+ *     $0.134 an image, sharper and much better at text. What to switch to in
+ *     October, or sooner if the cheap one disappoints.
  *
  * Override with GEMINI_IMAGE_MODEL rather than editing this line, so a run can
- * pick the cheap one without a commit.
+ * pick either without a commit.
  */
-const MODEL = process.env["GEMINI_IMAGE_MODEL"] ?? "gemini-3-pro-image";
+const MODEL = process.env["GEMINI_IMAGE_MODEL"] ?? "gemini-2.5-flash-image";
+
+/**
+ * Published price per image, for the estimate printed before a run.
+ *
+ * Not authoritative and not used for anything but that line — it exists so the
+ * run says what it is about to cost before it costs it, rather than after.
+ */
+const PRICE_PER_IMAGE: Record<string, number> = {
+  "gemini-2.5-flash-image": 0.039,
+  "gemini-3-pro-image": 0.134,
+};
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
 /**
@@ -92,6 +107,8 @@ interface Args {
   dryRun: boolean;
   only: string | null;
   limit: number | null;
+  /** Seconds to wait between images, to stay under a free key's rate limit. */
+  throttle: number;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -101,11 +118,16 @@ function parseArgs(argv: string[]): Args {
     return index === -1 ? null : (argv[index + 1] ?? null);
   };
   const limit = value("--limit");
+  const throttle = value("--throttle");
   return {
     force: at("--force") !== -1,
     dryRun: at("--dry-run") !== -1,
     only: value("--only"),
     limit: limit === null ? null : Number(limit),
+    // Six seconds is ten requests a minute, under the free tier's floor. It
+    // costs four minutes across the whole collection and removes the commonest
+    // reason a run half-fails.
+    throttle: throttle === null ? 6 : Number(throttle),
   };
 }
 
@@ -169,19 +191,41 @@ function imageFrom(body: unknown): Buffer {
   );
 }
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * One image, with the free tier in mind.
+ *
+ * A key with no billing attached is rate limited to single-digit requests a
+ * minute, and forty-seven recipes in a loop will walk straight into that. A 429
+ * there is not a failure, it is the tier working as designed — so it is waited
+ * out rather than reported, with the delay doubling each time. Four attempts
+ * covers a couple of minutes of backoff, which is longer than any per-minute
+ * window.
+ *
+ * 500 and 503 get the same treatment for a different reason: they are the
+ * shapes a busy image model returns, and they clear on their own.
+ */
 async function generate(prompt: string, key: string): Promise<Buffer> {
-  const response = await fetch(ENDPOINT, {
-    method: "POST",
-    headers: { "content-type": "application/json", "x-goog-api-key": key },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseModalities: ["IMAGE"] },
-    }),
-  });
-  if (!response.ok) {
-    throw new Error(`${response.status} ${(await response.text()).slice(0, 300)}`);
+  let wait = 8_000;
+  for (let attempt = 1; ; attempt += 1) {
+    const response = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": key },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseModalities: ["IMAGE"] },
+      }),
+    });
+    if (response.ok) return imageFrom(await response.json());
+
+    const retryable = response.status === 429 || response.status >= 500;
+    const body = (await response.text()).slice(0, 300);
+    if (!retryable || attempt >= 4) throw new Error(`${response.status} ${body}`);
+    console.log(`  ${response.status}, waiting ${wait / 1000}s`);
+    await sleep(wait);
+    wait *= 2;
   }
-  return imageFrom(await response.json());
 }
 
 async function main(): Promise<void> {
@@ -203,9 +247,20 @@ async function main(): Promise<void> {
     .filter((name) => name.endsWith(".md") && name.split(".").length === 2)
     .sort();
 
+  const price = PRICE_PER_IMAGE[MODEL];
+  const due = files.filter((file) => !args.only || file === `${args.only}.md`).length;
+  if (!args.dryRun) {
+    const cost = price === undefined ? "unknown" : `$${(due * price).toFixed(2)}`;
+    console.log(
+      `${MODEL}: up to ${due} images, about ${cost} at list price.\n` +
+        `Already-current recipes are skipped, so the real number is usually lower.\n`,
+    );
+  }
+
   let done = 0;
   let skipped = 0;
   let failed = 0;
+  let first = true;
 
   for (const file of files) {
     const slug = file.replace(/\.md$/, "");
@@ -236,6 +291,10 @@ async function main(): Promise<void> {
     }
 
     try {
+      // Between images, not before the first: a one-recipe run should not sit
+      // there for six seconds doing nothing.
+      if (!first && args.throttle > 0) await sleep(args.throttle * 1000);
+      first = false;
       const png = await generate(prompt, key);
       await sharp(png)
         .resize(WIDTH, HEIGHT, { fit: "cover", position: "centre" })
