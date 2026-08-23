@@ -74,6 +74,13 @@ the bottom. Chicken stock in place of the water makes a richer custard and a
 less delicate one — worth doing once to see which you prefer, though the plain
 version is the one people go back to.
 
+Chawanmushi is the Japanese one, and the two are worth cooking a week apart.
+Same technique exactly — strain, cover, lowest heat — and two different dishes
+out of it: this is one part egg to one and a half of water and sets firm enough
+to eat with rice; that is one part egg to three of dashi and sets so softly it
+is nearly drunk. Changing what the egg is diluted with, and by how much, is the
+whole difference.
+
 Eaten alongside a steamed patty, this is the standard Cantonese pair: Steamed
 Pork Patty with Preserved Bean Curd or Steamed Pork Patty with Salted Egg on one
 side, the custard on the other, and a lot of rice.
