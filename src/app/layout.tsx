@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Fragment } from "react";
 import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
@@ -95,87 +96,101 @@ export default function RootLayout({
       </head>
       <body className="min-h-dvh bg-bg text-text antialiased">
         <LanguageDocumentSync />
-        <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 sm:px-6">
-          {/* nowrap + scroll: at phone width the link set is wider than the
-              viewport, and wrapping pushed the last link onto its own line. */}
-          <header className="flex items-center gap-4 overflow-x-auto border-b border-border py-4 whitespace-nowrap">
-            {/* The navigation is the collection's own shape: the categories
-                that actually hold recipes, in the order the collection defines.
-                An empty category is not a place to go, so it is not offered.
+        <div className="flex min-h-dvh flex-col">
+          {/* Full-bleed, unlike everything below it.
+              The reading column is capped at max-w-5xl because a line of method
+              longer than that is hard to track back from. Navigation is not
+              read that way — it is scanned — so capping it only crowded ten
+              shelves into two thirds of a wide screen while the other third sat
+              empty. The rule under it now runs edge to edge, which is also what
+              says "this is the top of the window", not "this is a panel". */}
+          <header className="border-b border-border">
+            {/* nowrap + scroll: at phone width the link set is wider than the
+                viewport, and wrapping pushed the last link onto its own line. */}
+            <div className="flex items-center gap-4 overflow-x-auto px-4 py-4 whitespace-nowrap sm:px-6">
+              {/* The navigation is the collection's own shape: the categories
+                  that actually hold recipes, in the order the collection defines.
+                  An empty category is not a place to go, so it is not offered.
 
-                Separated by rules rather than by space alone — words in a row
-                read as a heading, words divided read as a set of choices. */}
-            <nav className="flex flex-1 items-center gap-3 text-sm">
-              <Pipe />
-              <Link href="/" className="font-semibold hover:text-accent">
-                <T k="all" />
-              </Link>
-              {categories.map((category) => (
-                <span key={category.slug} className="flex items-center gap-3">
-                  <Pipe />
-                  <Link
-                    href={`/category/${category.slug}`}
-                    className="text-text-muted hover:text-accent"
-                  >
-                    <TCategory name={category.name} />
-                  </Link>
-                </span>
-              ))}
-              {/* Closes the set. Every other item in this row is preceded by a
-                  rule, so without one at the end the last category is the only
-                  one with an open side — and at wide widths, where `flex-1`
-                  pushes the right-hand group away, that open side is a gap
-                  rather than a boundary. */}
-              <Pipe />
-            </nav>
-            {/* One rule closes the categories and opens these two, rather than
-                a pipe and a border sitting side by side looking like a stutter.
-                The wider gap before it is what says these are a different kind
-                of thing from the shelves. */}
-            <div className="ml-3 flex items-center gap-3 text-sm">
-              <Pipe />
-              <IngredientSidebar ingredients={ingredients} />
-              <Pipe />
-              <Link href="/about" className="text-text-muted hover:text-accent">
-                <T k="about" />
-              </Link>
-              <Pipe />
+                  Separated by rules rather than by space alone — words in a row
+                  read as a heading, words divided read as a set of choices.
+
+                  Every rule and every link is a direct child of this row rather
+                  than a link bundled with its own rule, and that is what makes
+                  `justify-between` come out even: the free space on a wide
+                  screen is dealt out between all of them, so each shelf sits
+                  midway between its two rules instead of clinging to one of
+                  them. On a phone the row overflows, there is no free space to
+                  deal out, and the same markup simply packs to the left and
+                  scrolls. */}
+              <nav className="flex flex-1 items-center gap-3 text-sm sm:justify-between">
+                <Pipe />
+                <Link href="/" className="font-semibold hover:text-accent">
+                  <T k="all" />
+                </Link>
+                {categories.map((category) => (
+                  <Fragment key={category.slug}>
+                    <Pipe />
+                    <Link
+                      href={`/category/${category.slug}`}
+                      className="text-text-muted hover:text-accent"
+                    >
+                      <TCategory name={category.name} />
+                    </Link>
+                  </Fragment>
+                ))}
+              </nav>
+              {/* One rule closes the categories and opens these two, rather than
+                  a pipe and a border sitting side by side looking like a stutter.
+                  The wider gap before it is what says these are a different kind
+                  of thing from the shelves. */}
+              <div className="ml-3 flex items-center gap-3 text-sm">
+                <Pipe />
+                <IngredientSidebar ingredients={ingredients} />
+                <Pipe />
+                <Link href="/about" className="text-text-muted hover:text-accent">
+                  <T k="about" />
+                </Link>
+                <Pipe />
+              </div>
             </div>
           </header>
 
-          <main className="flex-1 py-6">{children}</main>
+          <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 sm:px-6">
+            <main className="flex-1 py-6">{children}</main>
 
-          {/* The theme and the repository live at the bottom. Neither is part
+            {/* The theme and the repository live at the bottom. Neither is part
               of browsing: one is set once and never touched again, and the
               other is where you go when you have stopped reading recipes and
               started reading the thing that holds them. */}
-          <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 text-xs text-text-muted">
-            <span>
-              <T k="footerNote" />
-            </span>
-            <div className="flex items-center gap-3">
-              {repo ? (
-                <>
-                  <a
-                    href={repo}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="hover:text-text"
-                  >
-                    <T k="source" />
-                  </a>
-                  <span aria-hidden="true" className="text-border">
-                    |
-                  </span>
-                </>
-              ) : null}
-              <LanguageMenu />
-              <span aria-hidden="true" className="text-border">
-                |
+            <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 text-xs text-text-muted">
+              <span>
+                <T k="footerNote" />
               </span>
-              <ThemeToggle />
-            </div>
-          </footer>
+              <div className="flex items-center gap-3">
+                {repo ? (
+                  <>
+                    <a
+                      href={repo}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="hover:text-text"
+                    >
+                      <T k="source" />
+                    </a>
+                    <span aria-hidden="true" className="text-border">
+                      |
+                    </span>
+                  </>
+                ) : null}
+                <LanguageMenu />
+                <span aria-hidden="true" className="text-border">
+                  |
+                </span>
+                <ThemeToggle />
+              </div>
+            </footer>
+          </div>
         </div>
       </body>
     </html>
