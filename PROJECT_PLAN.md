@@ -197,9 +197,54 @@ functions with the reasoning in their own comments.
 
 ## Status
 
-All nine phases are complete: every recipe carries a generated photograph,
-credited as such. The one substantial gap in verification is
+All nine planned phases are complete: every recipe carries a generated
+photograph, credited as such. Complete is not the same as finished — what is
+still open is listed below. The one substantial gap in verification is
 recorded in [`tests/reports/phase-7-claude.md`](tests/reports/phase-7-claude.md)
 §6 and restated in the phase 8 report: no Anthropic API key was available, so
 nothing downstream of a successful model response — including the recipe
 revision this phase adds — has been exercised against the live service.
+
+---
+
+## Still open
+
+Not phases, and none of them block anything. They are here because otherwise
+they live only in somebody's memory of a conversation, which is the one place
+this repository has consistently refused to keep things.
+
+1. [pending] **Translations for 45 of the 47 recipes.** Only banana bread and
+   the mussels spaghetti have them; every other recipe falls back to English in
+   the three non-English languages, field by field, which is visibly incomplete
+   rather than wrong. `npm run translate` does it and needs an
+   `ANTHROPIC_API_KEY`, which no machine this has run on has had.
+
+2. [pending] **Thirty ingredient rows are not USDA-sourced.** Listed by
+   `content/ingredients.json`'s `source: MANUAL`. Most are genuinely absent from
+   USDA — zha cai, doubanjiang, lap cheung, hot pot base paste, preserved egg —
+   and their notes say where the figures came from instead. A handful could be
+   upgraded: rice vinegar, msg, baby corn, bicarbonate of soda, savoiardi,
+   marsala, dark soy sauce. Verify against the record rather than an aggregator:
+   guanciale was nearly corrected to pancetta's composition by a summary that
+   confidently averaged the wrong food.
+
+3. [pending] **No `LICENSE` file.** The repository is public and has none, so
+   strictly nobody may reuse any of it. Recipes are not copyrightable as such;
+   the prose, photographs and code are.
+
+4. [pending] **`OFL.txt` is missing from `src/app/fonts/`.** The font is
+   redistributed under the SIL Open Font License, which requires the licence to
+   travel with it. [`NOTICE.md`](src/app/fonts/NOTICE.md) in that directory says
+   so and is explicit that it is not itself a substitute for the file.
+
+5. [pending] **The ginger scallion oil photograph shows charred flecks.** The
+   dish is raw ginger and scallion with hot oil poured over; nothing in it
+   should look scorched. One image to redraw — see
+   [`docs/photos.md`](docs/photos.md) — and worth adding "nothing browned or
+   charred" to that prompt if it recurs.
+
+6. [shelved] **AI substitutions and the on-page chat box.** Designed and costed
+   in [`docs/claude-integration.md`](docs/claude-integration.md), then shelved
+   deliberately. The blocker is structural rather than technical: a static site
+   has nowhere to hold a key, so it needs a proxy — a Cloudflare Worker was the
+   recommendation — before any of it can ship.
