@@ -8,6 +8,10 @@ tags:
 servings: 8
 prepMinutes: 30
 waitMinutes: 360
+photo: /photos/tiramisu.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: f57ce0158835e43b
 ---
 
 ## Ingredients

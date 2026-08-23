@@ -11,6 +11,10 @@ prepMinutes: 20
 cookMinutes: 60
 waitMinutes: 75
 waitLabel: cool
+photo: /photos/banana-bread.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 1de81bee557b21db
 tin:
   shape: loaf
   length: 23

@@ -11,6 +11,10 @@ servingLabel: spoonful
 prepMinutes: 2
 cookMinutes: 2
 cookLabel: simmer
+photo: /photos/roast-meat-soy-dressing.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 0c11a34db32a4659
 ---
 
 ## Ingredients

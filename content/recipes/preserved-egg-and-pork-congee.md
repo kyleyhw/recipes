@@ -10,6 +10,10 @@ prepMinutes: 20
 cookMinutes: 70
 cookLabel: simmer
 source: https://www.madewithlau.com/recipes/century-egg-and-pork-congee
+photo: /photos/preserved-egg-and-pork-congee.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: c2b8201b55593e2e
 ---
 
 ## Ingredients

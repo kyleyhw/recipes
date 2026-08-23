@@ -11,6 +11,10 @@ cookMinutes: 8
 waitMinutes: 10
 waitLabel: marinate
 source: 菠萝精呀 (Xiaohongshu)
+photo: /photos/beef-with-pickled-and-fresh-chillies.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: e4e2d889a2d98472
 ---
 
 ## Ingredients

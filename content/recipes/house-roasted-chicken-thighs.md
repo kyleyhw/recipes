@@ -10,6 +10,10 @@ servings: 4
 prepMinutes: 5
 cookMinutes: 30
 cookLabel: roast
+photo: /photos/house-roasted-chicken-thighs.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: ccc55d7c4d38a11e
 ---
 
 ## Ingredients

@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 6
 cookLabel: fry
+photo: /photos/hong-kong-french-toast.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 618473e911629eea
 ---
 
 ## Ingredients

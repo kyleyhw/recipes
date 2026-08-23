@@ -10,6 +10,10 @@ prepMinutes: 20
 cookMinutes: 15
 cookLabel: boil
 waitMinutes: 120
+photo: /photos/mango-pomelo-sago.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: dcab91faa225e4e7
 ---
 
 ## Ingredients

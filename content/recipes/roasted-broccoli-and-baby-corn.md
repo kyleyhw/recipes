@@ -10,6 +10,10 @@ servings: 4
 prepMinutes: 5
 cookMinutes: 15
 cookLabel: roast
+photo: /photos/roasted-broccoli-and-baby-corn.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 2954a530b6fd6109
 ---
 
 ## Ingredients

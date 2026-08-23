@@ -10,6 +10,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 15
 cookLabel: steam
+photo: /photos/steamed-pork-patty-with-chinese-sausage.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 8ef94a8bf9f7f8db
 ---
 
 ## Ingredients

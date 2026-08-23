@@ -10,6 +10,10 @@ servings: 6
 prepMinutes: 30
 cookMinutes: 130
 cookLabel: simmer
+photo: /photos/borscht.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 7a5f8e3d8a6da222
 ---
 
 ## Ingredients

@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 15
 cookMinutes: 35
 cookLabel: simmer
+photo: /photos/coconut-taro-sago.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: b2e50f037939e06a
 ---
 
 ## Ingredients

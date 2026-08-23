@@ -11,6 +11,10 @@ cookMinutes: 5
 cookLabel: heat
 waitMinutes: 10
 waitLabel: set
+photo: /photos/ginger-milk-curd.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 7a0bbb8eb9d7900e
 ---
 
 ## Ingredients

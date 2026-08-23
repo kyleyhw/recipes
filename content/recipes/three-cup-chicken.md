@@ -8,6 +8,10 @@ tags:
 servings: 4
 prepMinutes: 10
 cookMinutes: 25
+photo: /photos/three-cup-chicken.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 2d481bb66fe96b71
 ---
 
 ## Ingredients

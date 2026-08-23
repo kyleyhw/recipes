@@ -8,6 +8,10 @@ tags:
 servings: 2
 prepMinutes: 5
 cookMinutes: 10
+photo: /photos/chicken-and-sweetcorn-soup.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 3af55184c4a55157
 ---
 
 ## Ingredients

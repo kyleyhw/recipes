@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 10
 cookMinutes: 30
 cookLabel: bake
+photo: /photos/yoghurt-baked-chicken-with-chilli-broccoli.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 748c82ac172ce0c0
 ---
 
 ## Ingredients

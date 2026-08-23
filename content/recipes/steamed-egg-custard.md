@@ -10,6 +10,10 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 12
 cookLabel: steam
+photo: /photos/steamed-egg-custard.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 89750d758c35554a
 ---
 
 ## Ingredients

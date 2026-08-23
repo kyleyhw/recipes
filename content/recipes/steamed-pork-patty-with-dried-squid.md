@@ -11,6 +11,10 @@ cookMinutes: 15
 cookLabel: steam
 waitMinutes: 120
 waitLabel: soak
+photo: /photos/steamed-pork-patty-with-dried-squid.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 6089be87c94a0d53
 ---
 
 ## Ingredients

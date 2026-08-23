@@ -8,6 +8,10 @@ tags:
 servings: 2
 prepMinutes: 10
 cookMinutes: 15
+photo: /photos/spaghetti-alla-carbonara.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: ca583079795f6253
 ---
 
 ## Ingredients

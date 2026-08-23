@@ -11,6 +11,10 @@ prepMinutes: 5
 cookMinutes: 5
 cookLabel: stir-fry
 source: https://www.madewithlau.com/recipes/choy-sum-with-garlic
+photo: /photos/garlic-stir-fried-greens.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 5e946b65096d3dbb
 ---
 
 ## Ingredients

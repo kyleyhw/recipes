@@ -11,6 +11,10 @@ cookMinutes: 100
 cookLabel: roast
 waitMinutes: 740
 waitLabel: dry
+photo: /photos/crispy-roast-pork-belly.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: e21ded7845af3935
 ---
 
 ## Ingredients

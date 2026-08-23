@@ -8,6 +8,10 @@ tags:
 servings: 3
 prepMinutes: 10
 cookMinutes: 10
+photo: /photos/pork-larb.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: d24f4f288c006ad2
 ---
 
 ## Ingredients

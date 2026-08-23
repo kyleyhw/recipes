@@ -11,6 +11,10 @@ cookMinutes: 20
 cookLabel: simmer
 waitMinutes: 30
 waitLabel: soak
+photo: /photos/walnut-soup.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 600816c4e6f69210
 ---
 
 ## Ingredients

@@ -10,6 +10,10 @@ servingLabel: tart
 prepMinutes: 30
 cookMinutes: 20
 cookLabel: bake
+photo: /photos/macau-egg-tarts.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 3dd04337ea4e5aa8
 ---
 
 ## Ingredients

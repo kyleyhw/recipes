@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 10
 cookLabel: brew
+photo: /photos/yuenyeung.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 29f29dec3cd41045
 ---
 
 ## Ingredients

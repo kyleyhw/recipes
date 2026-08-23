@@ -10,6 +10,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 15
 cookLabel: steam
+photo: /photos/steamed-pork-patty-with-salted-fish.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 0dae92548b8b06d0
 ---
 
 ## Ingredients

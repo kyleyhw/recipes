@@ -11,6 +11,10 @@ prepMinutes: 5
 cookMinutes: 8
 cookLabel: stir-fry
 source: https://thewoksoflife.com/stir-fried-tomato-and-egg/
+photo: /photos/tomato-and-egg.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: ac0fd33c84a29122
 ---
 
 ## Ingredients

@@ -8,6 +8,10 @@ tags:
 servings: 2
 prepMinutes: 5
 cookMinutes: 25
+photo: /photos/chicken-and-rice-soup.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 65f90a19f48bf67d
 ---
 
 ## Ingredients

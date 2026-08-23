@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 20
 cookLabel: bake
+photo: /photos/mustard-and-herb-crusted-turkey.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: cf9822d9a8a4a1c8
 ---
 
 ## Ingredients

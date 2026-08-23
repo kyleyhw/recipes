@@ -10,6 +10,10 @@ servingLabel: spoonful
 prepMinutes: 5
 cookMinutes: 3
 cookLabel: heat
+photo: /photos/ginger-scallion-oil.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 6cdc2a2b844d2238
 ---
 
 ## Ingredients

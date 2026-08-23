@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 10
 cookMinutes: 30
 cookLabel: bake
+photo: /photos/chicken-thigh-fajitas.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 522a104d58fe79cc
 ---
 
 ## Ingredients

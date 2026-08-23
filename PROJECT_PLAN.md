@@ -176,14 +176,14 @@ functions with the reasoning in their own comments.
     - [completed] Canary test: `no-api-keys.sh` catches Google- and Anthropic-shaped keys in
       all three tried forms; detect-secrets alone caught only the quoted form
     - [completed] GitHub secret scanning and push protection enabled on the repository
-43. [pending] Generate all 47 card photos: `npm run photos -- --batch` (~$3.15).
-    - Blocked on billing: the key's project is on the free tier and no image model
-      has one — all four probed at quota zero, 2026-08-22. Attach billing; the
-      Google AI Pro credits then cover the run until they lapse at the end of
-      August 2026.
-    - Cheaper once billing exists: Nano Banana 2 at ~$1.60 batched, Nano Banana 2
-      Lite at ~$0.79. Free without billing: hand-generation in AI Studio ingested
-      by `photo:add`, or real photographs (docs/photos.md).
+43. [completed] Generate all 47 card photos with Nano Banana Pro (2026-08-23).
+    - [completed] One interactive proof image first ($0.13), validating billing and the
+      request shape before committing the rest
+    - [completed] The other 46 as a single Batch API job: three minutes, zero failures,
+      $3.08 at the half-price batch rate — $3.22 total against the August credit
+    - [completed] Every file 39–149 kB, inside the 512 kB commit ceiling; spot-checked
+      visually, including the six steamed pork patties, which came out distinct
+      as the description-and-final-step prompt design intended
 44. [completed] Key locality and the photo-add guard.
     - [completed] Policy recorded in script and docs: the key never leaves the owner's
       machine — request headers to Google only, no CI secrets, no other services
@@ -197,8 +197,8 @@ functions with the reasoning in their own comments.
 
 ## Status
 
-Phases 1–8 are complete. Phase 9 waits on billing being attached to the
-Gemini key's project; everything up to the paid call is built and tested. The one substantial gap in verification is
+All nine phases are complete: every recipe carries a generated photograph,
+credited as such. The one substantial gap in verification is
 recorded in [`tests/reports/phase-7-claude.md`](tests/reports/phase-7-claude.md)
 §6 and restated in the phase 8 report: no Anthropic API key was available, so
 nothing downstream of a successful model response — including the recipe

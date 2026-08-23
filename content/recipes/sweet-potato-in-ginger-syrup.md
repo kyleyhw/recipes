@@ -10,6 +10,10 @@ servings: 4
 prepMinutes: 10
 cookMinutes: 35
 cookLabel: simmer
+photo: /photos/sweet-potato-in-ginger-syrup.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: b4632bf1ae64671b
 ---
 
 ## Ingredients

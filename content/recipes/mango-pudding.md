@@ -10,6 +10,10 @@ prepMinutes: 15
 cookMinutes: 5
 cookLabel: heat
 waitMinutes: 240
+photo: /photos/mango-pudding.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 6ffd33616e40cb6e
 ---
 
 ## Ingredients

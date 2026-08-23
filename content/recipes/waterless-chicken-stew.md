@@ -10,6 +10,10 @@ servings: 4
 prepMinutes: 10
 cookMinutes: 90
 cookLabel: simmer
+photo: /photos/waterless-chicken-stew.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: c6bb62a1ffb0908e
 ---
 
 ## Ingredients

@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 5
 cookLabel: fry
+photo: /photos/hong-kong-scrambled-eggs.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: f451c953b533f42a
 ---
 
 ## Ingredients

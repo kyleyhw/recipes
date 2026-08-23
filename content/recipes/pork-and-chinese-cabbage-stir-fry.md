@@ -8,6 +8,10 @@ tags:
 servings: 2
 prepMinutes: 10
 cookMinutes: 10
+photo: /photos/pork-and-chinese-cabbage-stir-fry.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 4ea8630e3268bac3
 ---
 
 ## Ingredients

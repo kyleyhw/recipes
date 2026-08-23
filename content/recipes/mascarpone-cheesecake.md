@@ -10,6 +10,10 @@ servingLabel: slice
 prepMinutes: 30
 cookMinutes: 55
 waitMinutes: 480
+photo: /photos/mascarpone-cheesecake.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: d87c8d0b1246df0c
 tin:
   shape: round
   diameter: 23

@@ -12,6 +12,10 @@ cookMinutes: 5
 cookLabel: simmer
 waitMinutes: 720
 waitLabel: marinate
+photo: /photos/mayak-tofu.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 07a2e33e978a26a6
 ---
 
 ## Ingredients

@@ -10,6 +10,10 @@ servings: 4
 prepMinutes: 20
 cookMinutes: 20
 source: https://www.thekitchn.com/white-wine-spaghetti-with-mussels-and-clams-23185965
+photo: /photos/white-wine-spaghetti-with-mussels-and-clams.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 89a71f522bf0de4a
 ---
 
 ## Ingredients

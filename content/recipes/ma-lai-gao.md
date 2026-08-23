@@ -12,6 +12,10 @@ cookMinutes: 25
 cookLabel: steam
 waitMinutes: 10
 waitLabel: cool
+photo: /photos/ma-lai-gao.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 128d0f433da1d4ab
 tin:
   shape: round
   diameter: 18

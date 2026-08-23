@@ -8,6 +8,10 @@ tags:
 servings: 4
 prepMinutes: 10
 cookMinutes: 15
+photo: /photos/mapo-tofu.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 8c6b2e14da662e9f
 ---
 
 ## Ingredients

@@ -9,6 +9,10 @@ tags:
 servings: 1
 prepMinutes: 10
 cookMinutes: 15
+photo: /photos/spicy-and-sour-rice-noodles.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: aba6f74b50cc7f46
 ---
 
 ## Ingredients

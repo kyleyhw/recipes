@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 10
 cookMinutes: 35
 cookLabel: bake
+photo: /photos/ginger-and-wine-chicken-with-rice.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: a0bf331ecb5de6fb
 ---
 
 ## Ingredients
