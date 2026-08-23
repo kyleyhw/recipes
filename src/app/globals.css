@@ -140,3 +140,50 @@ article p {
 .numeric {
   font-variant-numeric: tabular-nums;
 }
+
+/*
+ * The header's category row.
+ *
+ * It scrolls sideways, and the scrollbar under it was the only piece of chrome
+ * on a page that is otherwise words and rules. Worse, it was a bad signal: on a
+ * phone it does not appear until you already know to swipe, and on a desktop it
+ * appeared under a row that had not moved and never would. The row says what it
+ * has instead — a fade at whichever edge is hiding something, drawn in the page
+ * colour so the links dissolve into the margin rather than stopping at a clip.
+ *
+ * `overflow-x: auto` stays: hiding the bar does not take away the scrolling,
+ * the swipe, the trackpad flick, or the keyboard, all of which still work.
+ */
+.scroll-row {
+  scrollbar-width: none;
+}
+
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-fade-left {
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+
+.scroll-fade-right {
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
+/*
+ * Shown only to a pointer that cannot scroll sideways by itself.
+ *
+ * A touch screen swipes and a trackpad flicks; a plain mouse has neither, and
+ * its wheel scrolls the page rather than the row. So the arrows are drawn for
+ * that case alone — keyed on the input device, which is the thing that actually
+ * differs, rather than on the screen width, which only correlates with it.
+ */
+.pointer-only {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pointer-only {
+    display: flex;
+  }
+}

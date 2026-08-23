@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Fragment } from "react";
 import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
@@ -13,6 +12,7 @@ import {
   TCategory,
 } from "@/components/language";
 import { IngredientSidebar } from "@/components/ingredient-sidebar";
+import { HeaderScroller } from "@/components/header-scroller";
 import { loadCollection } from "@/lib/content/library";
 
 /**
@@ -105,31 +105,27 @@ export default function RootLayout({
               empty. The rule under it now runs edge to edge, which is also what
               says "this is the top of the window", not "this is a panel". */}
           <header className="border-b border-border">
-            {/* nowrap + scroll: at phone width the link set is wider than the
-                viewport, and wrapping pushed the last link onto its own line. */}
-            <div className="flex items-center gap-4 overflow-x-auto px-4 py-4 whitespace-nowrap sm:px-6">
+            {/* The row scrolls rather than wrapping, and says so with a fade at
+                whichever edge is hiding something — plus an arrow, for a plain
+                mouse that has no sideways gesture of its own. */}
+            <HeaderScroller>
               {/* The navigation is the collection's own shape: the categories
                   that actually hold recipes, in the order the collection defines.
                   An empty category is not a place to go, so it is not offered.
 
                   Separated by rules rather than by space alone — words in a row
-                  read as a heading, words divided read as a set of choices.
-
-                  Every rule and every link is a direct child of this row rather
-                  than a link bundled with its own rule, and that is what makes
-                  `justify-between` come out even: the free space on a wide
-                  screen is dealt out between all of them, so each shelf sits
-                  midway between its two rules instead of clinging to one of
-                  them. On a phone the row overflows, there is no free space to
-                  deal out, and the same markup simply packs to the left and
-                  scrolls. */}
-              <nav className="flex flex-1 items-center gap-3 text-sm sm:justify-between">
+                  read as a heading, words divided read as a set of choices. The
+                  spacing between them is even and fixed; it is not stretched to
+                  fill a wide window, because a link is bound to the rules on
+                  either side of it and dealing the slack out between them pulls
+                  that grouping apart. Slack belongs at the end of the row. */}
+              <nav className="flex flex-1 items-center gap-3 text-sm">
                 <Pipe />
                 <Link href="/" className="font-semibold hover:text-accent">
                   <T k="all" />
                 </Link>
                 {categories.map((category) => (
-                  <Fragment key={category.slug}>
+                  <span key={category.slug} className="flex items-center gap-3">
                     <Pipe />
                     <Link
                       href={`/category/${category.slug}`}
@@ -137,8 +133,14 @@ export default function RootLayout({
                     >
                       <TCategory name={category.name} />
                     </Link>
-                  </Fragment>
+                  </span>
                 ))}
+                {/* Closes the set. Every other item in this row is preceded by a
+                    rule, so without one at the end the last category is the only
+                    one with an open side — and at wide widths, where `flex-1`
+                    pushes the right-hand group away, that open side is a gap
+                    rather than a boundary. */}
+                <Pipe />
               </nav>
               {/* One rule closes the categories and opens these two, rather than
                   a pipe and a border sitting side by side looking like a stutter.
@@ -153,7 +155,7 @@ export default function RootLayout({
                 </Link>
                 <Pipe />
               </div>
-            </div>
+            </HeaderScroller>
           </header>
 
           <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 sm:px-6">
