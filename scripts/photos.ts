@@ -398,14 +398,14 @@ async function awaitBatch(name: string, key: string): Promise<unknown> {
     if (state !== lastState) {
       const minutes = Math.round((Date.now() - started) / 60_000);
       console.log(
-        `  ${state.replace("JOB_STATE_", "").toLowerCase()}, ${minutes} min in`,
+        `  ${state.replace(/^(JOB|BATCH)_STATE_/, "").toLowerCase()}, ${minutes} min in`,
       );
       lastState = state;
     }
-    if (state === "JOB_STATE_SUCCEEDED") return body;
-    if (
-      ["JOB_STATE_FAILED", "JOB_STATE_CANCELLED", "JOB_STATE_EXPIRED"].includes(state)
-    ) {
+    // The docs' examples spell these JOB_STATE_*; the live API answers
+    // BATCH_STATE_* (seen 2026-08-23). Matching the suffix serves both.
+    if (state.endsWith("_SUCCEEDED")) return body;
+    if (["_FAILED", "_CANCELLED", "_EXPIRED"].some((suffix) => state.endsWith(suffix))) {
       throw new Error(`batch ended ${state}: ${JSON.stringify(body).slice(0, 300)}`);
     }
     await sleep(30_000);
