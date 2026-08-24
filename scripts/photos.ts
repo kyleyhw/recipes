@@ -40,6 +40,7 @@
  *
  * Usage:
  *   npm run photos                          # every stale recipe, interactive
+ *   npm run photos -- --missing             # only recipes with no picture yet
  *   npm run photos -- --batch               # the same images at half price
  *   npm run photos -- --harvest batches/…   # collect an earlier --batch run
  *   npm run photos -- --only mango-pudding
@@ -59,6 +60,7 @@ import {
   serialiseRecipeFile,
   type RecipeFile,
 } from "../src/lib/content/format";
+import { parseIngredientLine } from "../src/lib/ingredient-parser";
 
 const RECIPES_DIR = join("content", "recipes");
 const PHOTOS_DIR = join("public", "photos");
@@ -173,6 +175,8 @@ interface Args {
   throttle: number;
   /** Dollars this run refuses to exceed. */
   maxSpend: number;
+  /** Only draw recipes with no picture at all, whatever the prompt now says. */
+  missing: boolean;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -201,7 +205,63 @@ function parseArgs(argv: string[]): Args {
     // decision — as well as anything genuinely wrong, like a model priced
     // differently than expected or a loop that is not stopping.
     maxSpend: maxSpend === null ? 5 : Number(maxSpend),
+    missing: at("--missing") !== -1,
   };
+}
+
+/** The vessel a category's food sits in. Material and light never vary — only this. */
+const VESSEL: Record<string, string> = {
+  "Sauces & Condiments":
+    "in a small plain matte ceramic bowl, as a condiment, with nothing else in the frame",
+  Drinks: "in a plain matte ceramic cup",
+  "Baked Goods":
+    "whole on a plain matte ceramic plate, with one slice or piece cut and set beside it",
+  "Soups & Stews": "in one deep plain matte ceramic bowl",
+};
+const DEFAULT_VESSEL = "on one plain matte ceramic plate or in one shallow bowl";
+
+/**
+ * Things that go in at the end but cannot be seen, so are not a garnish.
+ *
+ * The diagram cannot tell a scattering of spring onion from a spoon of sugar
+ * stirred into a cup of tea — both are leaves on the root. Listing the second
+ * as a finish invites the model to draw sugar crystals on top of the drink.
+ */
+const INVISIBLE_FINISH = new Set([
+  "salt",
+  "granulated sugar",
+  "caster sugar",
+  "brown sugar",
+  "water",
+  "msg",
+]);
+
+/** Words whose absence from a method means nothing in the dish is browned. */
+const BROWNING =
+  /\b(fry|fried|frying|sear|seared|brown|browned|browning|roast|roasted|char|charred|grill|grilled|caramelis|toast|toasted|bake|baked)\b/i;
+
+/**
+ * The ingredients that go on at the end, taken from the diagram.
+ *
+ * The root operation's leaf children are the garnish by construction — that is
+ * what the outline means — so this is exact where reading it out of the last
+ * method step is merely lucky. See the recipe-photos skill for the two
+ * photographs that went wrong before this existed.
+ */
+export function garnishesFrom(diagram: readonly string[]): string[] {
+  const rows = diagram
+    .map((line) => ({
+      depth: (line.match(/^ */)?.[0].length ?? 0) / 2,
+      text: line.replace(/^\s*-\s*/, "").trim(),
+    }))
+    .filter((row) => row.text !== "");
+  return rows
+    .filter(
+      (row, index) => row.depth === 1 && (rows[index + 1]?.depth ?? 0) <= 1,
+      // depth 1 is a direct child of the root; nothing deeper beneath it means
+      // it is a leaf, and a leaf at that depth is something added at the end.
+    )
+    .map((row) => row.text.replace(/^\d+\/\d+\s+/, ""));
 }
 
 /**
@@ -210,9 +270,13 @@ function parseArgs(argv: string[]): Args {
  * Built from the recipe rather than from its title alone, because a title is
  * not a description of a plate: "Steamed Pork Patty with Zha Cai" and "Steamed
  * Pork Patty with Salted Fish" differ by one ingredient and would otherwise
- * come back as the same picture. The description and the finishing step carry
- * what the dish actually looks like when it is done, which is the thing being
- * asked for.
+ * come back as the same picture.
+ *
+ * The ingredient list is passed because without it the model invents plausible
+ * contents — the first banana bread came back with chocolate chips in it. The
+ * garnish comes from the diagram because the last method step is only sometimes
+ * about plating. Both faults, and the reasoning, are written up in the
+ * recipe-photos skill.
  *
  * The instructions at the end are all negative for a reason: left alone, food
  * models produce restaurant styling — garnishes nobody listed, props, steam
@@ -220,20 +284,49 @@ function parseArgs(argv: string[]): Args {
  * pan in a domestic kitchen.
  */
 export function promptFor(recipe: RecipeFile): string {
-  const finish = recipe.steps.at(-1) ?? "";
+  // Brackets are a note to the reader — "walnuts (a small handful)" — and an
+  // image model reads them as something to draw.
+  const clean = (name: string) =>
+    name
+      .replace(/\(.*?\)/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  const ingredients = [
+    ...new Set(recipe.ingredients.map((line) => clean(parseIngredientLine(line).name))),
+  ];
+  const garnish = garnishesFrom(recipe.diagram)
+    .map(clean)
+    .filter((name) => !INVISIBLE_FINISH.has(name.toLowerCase()));
+  const method = recipe.steps.join(" ");
+  const vessel = VESSEL[recipe.category] ?? DEFAULT_VESSEL;
+  // Only where a step actually names one; otherwise the frame holds one dish.
+  const accompaniment = /\bwith (plain |hot |steamed )?rice\b/i.test(method)
+    ? "A small bowl of plain white rice may sit beside it."
+    : "";
+
   const lines = [
     `A photograph of one dish: ${recipe.title}.`,
     recipe.cuisine ? `${recipe.cuisine} home cooking.` : "",
     recipe.description ? `The dish: ${recipe.description}` : "",
-    `How it is served: ${finish}`,
+    `It contains only these things and nothing else: ${ingredients.join(", ")}.`,
+    garnish.length > 0 ? `Finished at the last moment with: ${garnish.join(", ")}.` : "",
+    BROWNING.test(method)
+      ? ""
+      : "Nothing in this dish is browned, charred or coloured by heat — it should look pale and freshly made.",
     "",
-    "Shot from a slight overhead angle on a plain matte ceramic plate or bowl,",
+    `Shot from a slight overhead angle, ${vessel},`,
     "on a plain wooden or stone surface, in soft daylight from one side.",
     "Photographed as it would look cooked at home, not styled for a restaurant.",
+    accompaniment,
+    "",
+    "Compose it centred and filling the frame. Keep the dish and anything else",
+    "that matters out of the outer eighth of the left and right edges, which is",
+    "cropped away when the picture is shown as a card.",
     "",
     "Do not include: text, labels, watermarks, hands, people, cutlery arranged",
-    "decoratively, branded packaging, garnishes the dish does not call for,",
-    "artificial steam, or more than one dish in the frame.",
+    "decoratively, branded packaging, any ingredient not listed above, garnishes",
+    "the dish does not call for, artificial steam, or more than one dish in the",
+    "frame.",
   ];
   return lines.filter((line) => line !== "").join("\n");
 }
@@ -532,6 +625,14 @@ async function main(): Promise<void> {
     const prompt = promptFor(recipe);
     const fingerprint = hash(prompt);
     const out = join(PHOTOS_DIR, `${slug}.webp`);
+    // --missing fills the gaps and touches nothing else. It exists because
+    // editing the prompt changes every recipe's fingerprint at once, so the
+    // ordinary staleness rule then declares the whole book due — which is
+    // right when you mean to regenerate and expensive when you do not.
+    if (args.missing && existsSync(out)) {
+      skipped += 1;
+      continue;
+    }
     if (!args.force && recipe.photoPrompt === fingerprint && existsSync(out)) {
       skipped += 1;
       continue;

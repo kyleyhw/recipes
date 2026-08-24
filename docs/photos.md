@@ -208,6 +208,12 @@ line, which is right for your own photograph on your own site.
 
 ## How the prompt is built
 
+> The rules behind it, and the five faults in the first batch that produced
+> them, are in the repo-local skill at
+> [`.claude/skills/recipe-photos/SKILL.md`](../.claude/skills/recipe-photos/SKILL.md).
+> Read that before changing anything here.
+
+
 From the recipe's description and its **final step**, not its title. Six steamed
 pork patties differ by one ingredient and would otherwise all come back as the
 same photograph; the last step is where a recipe says what the dish looks like
