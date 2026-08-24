@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 15
 cookMinutes: 20
 cookLabel: braise
+photo: /photos/braised-egg-tofu-with-minced-pork.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 96d55a37fd3d7dfe
 ---
 
 ## Ingredients

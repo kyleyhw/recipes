@@ -94,14 +94,34 @@ is generated in batches, and a batch that looks different from the last one is
 worse than a batch with a fault in it — one is a book, the other is a pile.
 
 So when changing the prompt, **change what is in the frame, never how it is
-photographed.** The style sentences below are load-bearing and should move
-verbatim from one version of the prompt to the next:
+photographed.**
+
+The thing that must not change is the **look**, described below. The *words*
+that produce it are a means to it, and they are allowed — sometimes required —
+to change in order to keep it. The first 47 were drawn by these five:
 
 - slight overhead angle
 - plain matte ceramic
 - plain wood or stone surface
 - soft daylight from one side
 - as it would look cooked at home, not styled for a restaurant
+
+Three of those no longer hold the look on their own, because the prompt around
+them grew (see *Two ways the prompt has broken this style* below). They now
+read:
+
+- slight overhead angle
+- **speckled oatmeal-grey matte stoneware**
+- **a weathered warm-brown wooden surface with visible grain, filling the
+  background**
+- **soft daylight from the left**
+- as it would look cooked at home, not styled for a restaurant
+
+That is not a new style. Every one of those phrases is a description of what the
+first 47 already look like; they were made specific because the generic version
+stopped reaching the model. If a future prompt grows again and the look drifts
+again, the answer is the same: describe the existing photographs more exactly,
+never invent a new treatment.
 
 Two consequences worth stating:
 
@@ -115,9 +135,25 @@ Two consequences worth stating:
 
 ## The house style, which is working and should not be changed
 
-Slight overhead angle. Plain matte ceramic. Plain wood or stone surface. Soft
-daylight from one side. Photographed as it would look cooked at home, not styled
-for a restaurant.
+The five sentences above are what the prompt *says*. This is what they actually
+produce — written down from the first 47 so a new picture can be judged against
+it without opening all of them:
+
+- **Surface** — a weathered warm-brown wooden table or plank top, grain and
+  knots visible, filling the background; sometimes a plank edge cuts across a
+  corner. Never a clean modern tabletop, never a pale flat one, and never an
+  isolated chopping board with a counter showing behind it.
+- **Vessel** — speckled oatmeal-grey stoneware, matte, with an unglazed or
+  lightly glazed rim that reads as slightly rough. Not bright white, not glossy.
+- **Light** — soft daylight raking in from the **left**, shadows falling gently
+  to the right. A pale window frame or sill is often visible at the left edge,
+  and is part of the look rather than an intrusion.
+- **Angle** — slight overhead, roughly 30–45° from horizontal. Wetter or flatter
+  dishes (custards, soups) sit higher, nearer 60°, but nothing is ever a flat
+  top-down shot.
+- **Framing** — the vessel centred and filling most of the frame. Where a rice
+  bowl is present it sits at the right edge, cropped by the card (see rule 3).
+- **Grade** — warm and slightly desaturated. No props, no styling, no cloth.
 
 Banned outright: text, labels, watermarks, hands, people, decoratively arranged
 cutlery, branded packaging, artificial steam, more than one dish, and any
@@ -127,22 +163,85 @@ All 47 of the first batch share this and look like one book. That consistency is
 the most valuable thing about them and is worth more than any individual
 improvement.
 
+### Four ways the prompt has broken this style by accident
+
+All four were found by drawing three pictures, looking at them beside the first
+47, changing one thing, and drawing them again. None was visible in the prompt
+by reading it — each one looked perfectly clear until a picture came back.
+
+**An adjective with no owner.** Rule 4's sentence ended "— it should look pale
+and freshly made". "It" is anchored to nothing, and the model applied *pale* to
+the entire frame.
+
+> Chawanmushi was the only one of the three carrying that sentence, and the only
+> one whose wood came back pale flat tan, whose bowl went white and whose side
+> light flattened into frontal fill. Rewritten as "The food itself is pale —
+> nothing in it is browned", its weathered surface and left-hand light came
+> straight back.
+
+Adjectives describing the food must be bound to the food as their grammatical
+subject, or they leak onto the surface, the ceramic and the light.
+
+**A generic phrase that stopped scaling.** "Plain matte ceramic" is an accurate
+description of the first 47 and drew every one of them. It stopped working when
+the prompt grew a long ingredient list and a composition paragraph around it:
+the model started reading *plain* as *plain white*.
+
+> Two of the first three came back in bright white glossy bowls. Qualifying both
+> nouns in the default vessel string — the bare "or in one shallow bowl" — did
+> not fix it; the next attempt was white again. Naming the glaze outright,
+> "speckled oatmeal-grey matte stoneware", fixed all three at once.
+
+This is the important one, because it is not a mistake in the old wording. **A
+phrase that is specific enough in a short prompt can be too vague in a long one**,
+and the failure appears when something elsewhere grows, not when the phrase is
+edited.
+
+**An alternative the collection never takes.** "A plain wooden or stone surface"
+offered a branch none of the 47 ever took, and a pale flat stone slab is exactly
+what came back when the model took it. Offer one option, not two.
+
+**A noun that names an object instead of a setting.** Replacing "surface" with
+"board" to get the weathered look produced a literal chopping board — an object
+with edges, sitting on a white kitchen counter that then showed at the frame's
+edge.
+
+> Two of three came back that way. "Surface … filling the background" is the
+> phrasing that holds: it describes what fills the frame rather than a thing
+> that could sit in it.
+
+The general rule all four point at: **a line that describes how something
+*looks* is a style instruction whether or not you meant it as one.** The style
+sentences are short and the content lines are long, so anything ambiguous
+anywhere in the prompt is competing with them, and often winning.
+
 ---
 
 ## Reviewing a generated picture
 
-Open it and ask, in this order:
+Open it **beside an existing one** — the whole judgement is comparative, and
+faults invisible on their own are obvious in a pair. Pick the nearest existing
+dish: `steamed-egg-custard` for a custard, `mapo-tofu` for a plated Chinese
+dish, `spicy-and-sour-rice-noodles` for a noodle bowl. Then ask, in this order:
 
-1. **Is anything in it that is not in the ingredient list?**
-2. **Is anything missing that the diagram says goes on at the end?**
-3. **Would it survive being cropped to 4:3?** Cover the outer eighth of each
+1. **Does it match the house style?** Weathered warm wooden surface filling the
+   background, speckled oatmeal-grey matte stoneware, daylight from the left,
+   30–45° overhead, warm grade. This is first because it is the one fault that
+   makes the collection worse rather than just making one picture worse.
+2. **Is anything in it that is not in the ingredient list?**
+3. **Is anything missing that the diagram says goes on at the end?**
+4. **Would it survive being cropped to 4:3?** Cover the outer eighth of each
    side with your thumbs and see what is lost.
-4. **Is anything browned that the method never browns?**
-5. **Does it look like the category** — a sauce like a sauce, a drink like a
+5. **Is anything browned that the method never browns?**
+6. **Does it look like the category** — a sauce like a sauce, a drink like a
    drink?
 
-A picture that fails 1 or 2 is wrong and should be regenerated. Failing 3, 4 or
-5 is a judgement call at about seven pence an image.
+A picture that fails 1, 2 or 3 is wrong and should be regenerated. Failing 4, 5
+or 6 is a judgement call at about seven pence an image.
+
+**Check the first three of any batch before releasing the rest.** `--limit 3`
+costs about twenty pence and is the only thing standing between a prompt edit
+and thirty pictures that do not match the book.
 
 ---
 

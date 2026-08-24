@@ -209,16 +209,29 @@ function parseArgs(argv: string[]): Args {
   };
 }
 
+/**
+ * The one ceramic the whole collection is served in, named here so that no
+ * category string can drift and so that changing it is a single deliberate act.
+ *
+ * It used to read "plain matte ceramic", which is what drew the first 47 and is
+ * accurate about them. It stopped working when the prompt grew: against a long
+ * ingredient list and a composition paragraph the model reads "plain" as "plain
+ * white" and returns bright smooth bowls. Naming the glaze these bowls actually
+ * have pins it where the generic phrase no longer does — see the recipe-photos
+ * skill for the pictures that established this.
+ */
+const CERAMIC = "speckled oatmeal-grey matte stoneware";
+
 /** The vessel a category's food sits in. Material and light never vary — only this. */
 const VESSEL: Record<string, string> = {
-  "Sauces & Condiments":
-    "in a small plain matte ceramic bowl, as a condiment, with nothing else in the frame",
-  Drinks: "in a plain matte ceramic cup",
-  "Baked Goods":
-    "whole on a plain matte ceramic plate, with one slice or piece cut and set beside it",
-  "Soups & Stews": "in one deep plain matte ceramic bowl",
+  "Sauces & Condiments": `in a small ${CERAMIC} bowl, as a condiment, with nothing else in the frame`,
+  Drinks: `in a ${CERAMIC} cup`,
+  "Baked Goods": `whole on a ${CERAMIC} plate, with one slice or piece cut and set beside it`,
+  "Soups & Stews": `in one deep ${CERAMIC} bowl`,
 };
-const DEFAULT_VESSEL = "on one plain matte ceramic plate or in one shallow bowl";
+// Both nouns carry the material. Qualifying only the first one leaves "shallow
+// bowl" free to be any bowl, and the model picks a bright white glazed one.
+const DEFAULT_VESSEL = `on one ${CERAMIC} plate or in one shallow ${CERAMIC} bowl`;
 
 /**
  * Things that go in at the end but cannot be seen, so are not a garnish.
@@ -310,12 +323,26 @@ export function promptFor(recipe: RecipeFile): string {
     recipe.description ? `The dish: ${recipe.description}` : "",
     `It contains only these things and nothing else: ${ingredients.join(", ")}.`,
     garnish.length > 0 ? `Finished at the last moment with: ${garnish.join(", ")}.` : "",
+    // "it should look pale" gives the adjective no owner, and the model reads
+    // it as governing the picture: the surface goes pale flat tan, the ceramic
+    // goes white and the side light flattens out. Binding "pale" to the food as
+    // its subject keeps the instruction on the plate, where rule 4 wants it.
     BROWNING.test(method)
       ? ""
-      : "Nothing in this dish is browned, charred or coloured by heat — it should look pale and freshly made.",
+      : "The food itself is pale — nothing in it is browned, charred or coloured by heat.",
     "",
+    // "wooden or stone" offered a branch none of the first 47 ever took, and a
+    // pale flat stone slab is exactly the surface that came back when the model
+    // took it. "One side" is likewise a choice the collection never varies: the
+    // light rakes in from the left in all 47. Neither is a new look — both name
+    // the one the collection already has and close the door on the other.
+    //
+    // It must stay "surface". "Board" reads as a chopping board: an object with
+    // edges, sitting on a white counter that then shows at the frame's edge. Two
+    // of three test pictures came back that way before this word went back.
     `Shot from a slight overhead angle, ${vessel},`,
-    "on a plain wooden or stone surface, in soft daylight from one side.",
+    "on a weathered warm-brown wooden surface with visible grain, filling the",
+    "background, in soft daylight from the left.",
     "Photographed as it would look cooked at home, not styled for a restaurant.",
     accompaniment,
     "",

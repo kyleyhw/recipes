@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 20
 cookMinutes: 15
 cookLabel: steam
+photo: /photos/chawanmushi.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 4f817aa16b79929b
 ---
 
 ## Ingredients

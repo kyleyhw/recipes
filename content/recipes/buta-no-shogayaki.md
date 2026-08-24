@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 10
 cookLabel: fry
+photo: /photos/buta-no-shogayaki.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 24bdd4bd134caa9d
 ---
 
 ## Ingredients
