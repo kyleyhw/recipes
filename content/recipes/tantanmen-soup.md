@@ -72,8 +72,8 @@ and it is worth cooking them a week apart.
 
 Tantanmen is Japan's version of Sichuan dan dan noodles, which have almost no
 liquid at all and no sesame in some versions. The soup, the emulsion and the
-volume of it are all Japanese — Tantanmen (Dry) is the same sauce with the soup
-taken back out again, and is the closer of the two to the original.
+volume of it are all Japanese — Dan Dan Noodles, in this collection, is the
+Chengdu dish this one descends from, and the two eat nothing alike.
 
 The panel is high in fat and it is nearly all the sesame paste and chilli oil,
 which are the dish. There is no version of this that is not rich.
@@ -121,3 +121,4 @@ ruined by morning.
 
 - 2026-08-22: Added. The broth is emulsified in the bowl with a first ladle of stock rather than whisked into the pan, which is the step that decides whether it comes together at all.
 - 2026-08-22: Renamed from Tantanmen to Tantanmen (Soup), once the dry one existed and the bare name stopped saying which.
+- 2026-08-24: The note about the Sichuan original now points at Dan Dan Noodles, which used to be Tantanmen (Dry) and is no longer Japanese. This one keeps the (Soup) in its name: it earns the distinction against the dish it came from rather than against a sibling.
