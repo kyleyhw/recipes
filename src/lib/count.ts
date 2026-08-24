@@ -122,11 +122,16 @@ export interface MadeUpFrom extends NamedUnit {
 /**
  * How many packets a volume of reconstituted liquid takes.
  *
- * Same rounding as `renderCount` and for the same reason — a sachet is a
- * physical object — but with no lower cut-off beyond a half. Half a dashi
- * packet is a real instruction: the bag is a teabag of powder and it can be
- * cut open and shared between two pans. A quarter of one cannot, which is why
- * the floor is a half rather than a quarter.
+ * Whole packets only, and never fewer than one. Unlike a cabbage, a dashi
+ * sachet cannot be halved: it is a sealed teabag of kombu and katsuobushi, and
+ * "½ sachet" is an instruction nobody can follow with the thing in their hand.
+ * So this rounds to an integer where `renderCount` rounds to a half.
+ *
+ * The floor of one is the honest end of that. A recipe wanting less than a
+ * packet's worth still needs a packet, and the dashi it makes is stronger than
+ * the row's figures describe — which is what the row's note is for. Rounding to
+ * zero would be arithmetically closer and would tell a cook to make dashi out
+ * of nothing.
  *
  * The water is not computed. It is the recipe's own volume, because you brew
  * what the recipe asks for; the count is what has to move.
@@ -136,19 +141,11 @@ export function renderMadeUp(ml: number, madeUp: MadeUpFrom): RenderedCount | nu
   if (!Number.isFinite(madeUp.perMl) || madeUp.perMl <= 0) return null;
 
   const exact = ml / madeUp.perMl;
-  const count = Math.max(0.5, exact < 3 ? Math.round(exact * 2) / 2 : Math.round(exact));
-
-  const whole = Math.floor(count);
-  const text = formatFraction({
-    whole,
-    numerator: count - whole > 0 ? 1 : 0,
-    denominator: 2,
-    relativeError: 0,
-  });
+  const count = Math.max(1, Math.round(exact));
 
   return {
     count,
-    text: `${text} ${nameFor(count, madeUp)}`,
+    text: `${count} ${nameFor(count, madeUp)}`,
     approximate: Math.abs(count - exact) / exact > 0.1,
   };
 }

@@ -111,14 +111,32 @@ describe("packets of a reconstituted liquid", () => {
   });
 
   /**
-   * The floor is half a packet, not a quarter. A dashi bag is a teabag of
-   * powder and can be cut open and shared between two pans; a quarter of one
-   * cannot be measured out of a sealed sachet by anybody.
+   * The difference from `renderCount`, and the reason the two round
+   * differently: a dashi sachet is a sealed teabag. A cabbage can be halved and
+   * a sachet cannot, so no output here may carry a fraction.
    */
-  it("floors at half a packet rather than disappearing", () => {
-    expect(renderMadeUp(200, SACHET)?.text).toBe("½ sachet");
-    expect(renderMadeUp(20, SACHET)?.text).toBe("½ sachet");
+  it("gives whole packets only", () => {
+    for (const ml of [50, 200, 350, 600, 700, 900, 1250, 1800]) {
+      const rendered = renderMadeUp(ml, SACHET);
+      expect(rendered).not.toBeNull();
+      expect(Number.isInteger(rendered?.count)).toBe(true);
+      expect(rendered?.text).not.toMatch(/[½¼¾⅓⅔⅛⅜⅝⅞/]/);
+    }
+  });
+
+  /**
+   * A recipe wanting less than a packet's worth still needs a packet. Rounding
+   * to zero would be arithmetically closer and would tell a cook to make stock
+   * out of nothing — so the floor is one, and the figure says it is a long way
+   * from exact.
+   */
+  it("floors at one packet and admits how far that is from the figure", () => {
+    expect(renderMadeUp(200, SACHET)?.text).toBe("1 sachet");
+    expect(renderMadeUp(20, SACHET)?.text).toBe("1 sachet");
     expect(renderMadeUp(20, SACHET)?.approximate).toBe(true);
+    // A volume that is a whole number of packets is not approximate at all.
+    expect(renderMadeUp(500, SACHET)?.approximate).toBe(false);
+    expect(renderMadeUp(1000, SACHET)?.approximate).toBe(false);
   });
 
   it("gives nothing for a volume that is not one", () => {

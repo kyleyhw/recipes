@@ -28,6 +28,9 @@ import { decimal, decimalOrDash } from "@/lib/format";
 interface LibraryControl {
   /** Opens the drawer, optionally filtered to one ingredient by library name. */
   open: (name?: string) => void;
+  /** Closes it. Following a link out of the drawer has to, or the panel and its
+      scrim sit over the recipe you just asked for. */
+  close: () => void;
 }
 
 const LibraryContext = createContext<LibraryControl | null>(null);
@@ -58,6 +61,7 @@ export function IngredientLibraryProvider({
 
   const control = useMemo<LibraryControl>(
     () => ({
+      close: () => setOpen(false),
       open: (name?: string) => {
         // Opening at an ingredient sets the search box rather than scrolling to
         // a row, and does it visibly. A drawer that silently jumped to one entry
@@ -267,6 +271,7 @@ function LibraryDrawer({
  */
 export function UsedIn({ uses }: { uses: readonly IngredientUse[] }) {
   const t = useT();
+  const library = useIngredientLibrary();
 
   if (uses.length === 0) {
     return <p className="mt-1 text-xs text-text-muted/70">{t("usedInNothing")}</p>;
@@ -277,10 +282,19 @@ export function UsedIn({ uses }: { uses: readonly IngredientUse[] }) {
       <summary className="cursor-pointer marker:text-text-muted/60 hover:text-accent">
         {t("usedIn", { n: String(uses.length) })}
       </summary>
-      <ul className="mt-1 ml-4 flex flex-col gap-0.5">
+      <ul className="mt-1 ml-4 flex flex-col gap-1">
         {uses.map((use) => (
           <li key={use.slug}>
-            <Link href={`/recipes/${use.slug}`} className="hover:text-accent">
+            {/* Underlined, and in the text colour rather than the muted one.
+                These were anchors from the start and read as a plain list,
+                which is the same as not being links at all: a link nobody can
+                see is a link nobody clicks. Marked the way the ingredient
+                lines on a recipe page are, since they do the same job. */}
+            <Link
+              href={`/recipes/${use.slug}`}
+              onClick={() => library?.close()}
+              className="text-text underline decoration-border decoration-dotted underline-offset-4 hover:text-accent hover:decoration-accent"
+            >
               {use.title}
             </Link>
           </li>

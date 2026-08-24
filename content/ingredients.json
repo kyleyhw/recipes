@@ -685,7 +685,7 @@
     "madeUp": {
       "unitName": "cube",
       "perMl": 500,
-      "note": "One Knorr-sized cube to 500 ml of boiling water, which is what this count assumes. An Oxo cube is smaller and its packet says 190 ml — using Oxo at this rate gives stock about a third of the strength intended. Stock from a cube also carries several times the sodium of the ready-made stock this row's figures describe."
+      "note": "One Knorr-sized cube to 500 ml of boiling water, which is what this count assumes. An Oxo cube is smaller and its packet says 190 ml — using Oxo at this rate gives stock about a third of the strength intended. Stock from a cube also carries several times the sodium of the ready-made stock this row's figures describe. Cubes are whole things, so a recipe wanting 200 ml still counts as one cube; use half of it, or make the full 500 ml and keep the rest."
     },
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 174538, ready-to-serve chicken stock. rho 1.0 g/ml. Stock made from a cube runs several times this in sodium.",
@@ -1075,7 +1075,7 @@
     "madeUp": {
       "unitName": "sachet",
       "perMl": 500,
-      "note": "A dashi packet is about 8 g of kombu and katsuobushi in a bag. Drop it into the cold water, bring it to the boil, simmer 3 to 5 minutes, lift it out and squeeze it. Brands differ over how far one goes — 400 to 500 ml is the usual range, and this row takes the generous end, so a strong-tasting packet wants a little more water than the count says. Instant granules are the other route: about 1 tsp to 200 ml, and far saltier than the brewed figures in this row."
+      "note": "A dashi packet is about 8 g of kombu and katsuobushi in a bag. Drop it into the cold water, bring it to the boil, simmer 3 to 5 minutes, lift it out and squeeze it. Brands differ over how far one goes — 400 to 500 ml is the usual range, and this row takes the generous end, so a strong-tasting packet wants a little more water than the count says. A packet cannot be halved, so a recipe wanting less than one packet’s worth still counts as one and the dashi comes out stronger than the figures in this row — brew the full 500 ml and freeze the rest in an ice cube tray, which is what the keeping note is for. Instant granules are the other route: about 1 tsp to 200 ml, and far saltier than the brewed figures in this row."
     },
     "source": "MANUAL",
     "sourceNote": "Awase dashi — kombu and katsuobushi — as the brewed liquid, which is the convention this library already uses for black tea and espresso: a recipe lists millilitres and its method says what made them. USDA has no record. These are the middle of the published analyses, which run 9 kcal, 1.7 to 2 g protein and 25 to 41 mg of sodium per 100 ml; the spread is real, because how much kombu and how long it steeped is the whole variable. Instant dashi powder is far saltier — often ten times this — and a recipe using it should expect the sodium figure to be a serious underestimate.",
