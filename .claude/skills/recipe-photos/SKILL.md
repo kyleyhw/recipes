@@ -107,7 +107,7 @@ to change in order to keep it. The first 47 were drawn by these five:
 - as it would look cooked at home, not styled for a restaurant
 
 Three of those no longer hold the look on their own, because the prompt around
-them grew (see *Two ways the prompt has broken this style* below). They now
+them grew (see *Four ways the prompt has broken this style* below). They now
 read:
 
 - slight overhead angle
