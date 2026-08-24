@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { RecipeView } from "@/components/recipe-view";
 import { T, TCategory, TContent, TDuration } from "@/components/language";
+import type { StringKey } from "@/lib/i18n/strings";
 import { SourceLine } from "@/components/source-line";
 import { AttributionLine } from "@/components/attribution-line";
 import { Prose } from "@/components/prose";
@@ -9,7 +10,8 @@ import { recipeFilename, type RecipeTranslation } from "@/lib/content/format";
 import { loadCollection } from "@/lib/content/library";
 import { buildDiagram } from "@/lib/content/diagram";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
-import { keepingNotes, prepareRecipe } from "@/lib/content/prepare";
+import { dietTags, keepingNotes, prepareRecipe } from "@/lib/content/prepare";
+import { dietsFor } from "@/lib/content/diet";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 import { assetUrl, repoUrl } from "@/lib/site";
 import { totalMinutes } from "@/lib/duration";
@@ -45,6 +47,10 @@ export default async function RecipePage({
 
   const prepared = prepareRecipe(recipe, ingredients);
   const keeping = keepingNotes(recipe, ingredients);
+  // Worked out from the ingredient list every build, never written into the
+  // file. See lib/content/diet.ts for why, and for what this is not.
+  const diet = dietTags(recipe, ingredients);
+  const diets = dietsFor(diet.tags, { unknown: diet.unknown });
   // Every recipe's name, in every language it has one in, so that a note naming
   // another recipe links to it — see lib/content/cross-links.ts. This recipe is
   // left out: a page that links to itself is a page that looks broken.
@@ -206,6 +212,40 @@ export default async function RecipePage({
             ))}
           </ul>
         ) : null}
+
+        {/* Folded, like the ingredient library's "used in": a recipe that suits
+            ten dietary filters would otherwise open with a wall of things it
+            does not contain, which is not what anybody came to read. Whoever
+            needs it knows to look, and a `<details>` opens with no JavaScript.
+
+            The caveat is inside rather than beside it, because it is part of
+            the answer and not a footnote to it. */}
+        <details className="mt-3 text-xs text-text-muted">
+          <summary className="cursor-pointer marker:text-text-muted/60 hover:text-accent">
+            {diets.length === 0 ? (
+              <T k="dietUnknown" />
+            ) : (
+              <>
+                <T k="dietSuits" /> <span className="numeric">{diets.length}</span>
+              </>
+            )}
+          </summary>
+          {diets.length > 0 ? (
+            <ul className="mt-2 flex flex-wrap gap-1.5">
+              {diets.map((key) => (
+                <li
+                  key={key}
+                  className="rounded-full bg-surface-2 px-2 py-0.5 text-text-muted"
+                >
+                  <T k={`diet.${key}` as StringKey} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <p className="mt-2 max-w-prose">
+            <T k="dietNote" />
+          </p>
+        </details>
       </header>
 
       <RecipeView

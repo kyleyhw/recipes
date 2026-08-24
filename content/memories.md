@@ -135,6 +135,27 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   away; the pack is 200 g. A figure nobody looks at is a figure nobody
   corrects.
 
+- **What a recipe rules out is derived, and lives on the ingredient.** Every
+  row in `content/ingredients.json` can carry an `excludes` list — `pork`,
+  `fish`, `dairy`, `sesame`, `gluten` and the rest — and a recipe's dietary
+  filters are worked out from its ingredients at build time. Never add a
+  `vegetarian:` field to a recipe. A field like that is a claim somebody typed
+  once and nobody checks again; add oyster sauce two months later and it still
+  says vegetarian.
+
+  **Adding an ingredient means asking what it rules out**, and the answer is
+  usually nothing — vegetables, spices, sugar and water carry no tags. The ones
+  that matter are the ones nobody sees coming: dashi is a fish stock, oyster
+  sauce is shellfish, gelatine is boiled from hide, soy sauce is brewed with
+  wheat, Parmigiano Reggiano is made with calf rennet, and crisp chilli oil has
+  peanuts in it. Where the tag depends on the brand, take the common case and
+  say so in the row's `sourceNote`.
+
+  **It is not an allergen guarantee and must never be written as one.** It
+  reads an ingredient list in a Markdown file, not a label on a jar, and the
+  wording on the site says exactly that. An unresolved ingredient makes a
+  recipe satisfy no diet rather than all of them.
+
 - **Time is written as a sum**: `10 min prep + 15 min drain = 25 min total`,
   not a row of middots. The parts add up to the total, so the line says so, and
   the equals sign invites the reader to check it — which is why

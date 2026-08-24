@@ -118,6 +118,21 @@ const ingredientSchema = z.object({
     })
     .nullish(),
 
+  /**
+   * What this ingredient rules out, from `DIET_TAGS` in lib/content/diet.ts.
+   *
+   * Absent or empty means it rules nothing out, which is the answer for most of
+   * this library — vegetables, spices, sugar, water. It is about the substance
+   * and not about any diet: a row says `pork`, not `not-halal`, and the diets
+   * are assembled from the tags in one place rather than restated on 166 rows.
+   *
+   * Where a tag depends on the brand — soy sauce brewed with wheat, a curry
+   * roux that may or may not declare milk — the tag takes the common case and
+   * the row's `sourceNote` says so. That is also why nothing here is an
+   * allergen guarantee, and why the site says as much wherever it shows one.
+   */
+  excludes: z.array(z.string()).nullish(),
+
   usdaFdcId: z.string().nullish(),
   source: z.enum(["USDA", "CLAUDE", "MANUAL"]).default("USDA"),
   sourceNote: z.string().nullish(),

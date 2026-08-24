@@ -22,6 +22,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 25,
     "unitName": "sheet",
+    "excludes": ["soy"],
     "source": "MANUAL",
     "sourceNote": "Thin deep-fried tofu sheets, from the Japanese standard composition tables for abura-age. USDA carries a record called 'tofu, fried' at 270 kcal with 20 g of fat, and it is a different product — thicker, less thoroughly fried, and with carbohydrate this has almost none of — so the Japanese figure is the right one here. Published values scatter from 190 to 386 kcal for much the same reason. Treat this as an upper bound: any recipe that blanches the sheets in boiling water first, as the kitsune udon here does, pours a measurable amount of that 34 g of fat down the sink. mu 25 g is one sheet.",
     "keeping": "A week in the fridge in its packet, and it freezes for three months — freezing is the normal way to keep it, and the sheets separate from frozen with no thawing needed. The fat is what goes off: an old sheet smells of stale oil, tastes bitter, and no amount of simmering in dashi hides it. Once simmered in seasoning it keeps four days in its liquid and is arguably better on the second day."
@@ -51,6 +52,7 @@
     "folateUg100g": 183,
     "densityGPerMl": 0.5,
     "gramsPerUnit": null,
+    "excludes": ["gluten"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 168894; rho from King Arthur, 120 g per cup spooned and levelled. Folate is total folate; the DFE figure for enriched flour is 291 ug."
   },
@@ -240,6 +242,7 @@
     "folateUg100g": 5,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy, beef brisket raw, lean and fat together. Bought on the bone the figures are for the meat you get off it, not the weight you paid for — reckon on a third of a bone-in piece being bone."
   },
@@ -265,6 +268,7 @@
     "folateUg100g": 6,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 168608, beef top sirloin, raw, trimmed to 1/8 inch fat.",
     "keeping": "Three days in the fridge, unwrapped from plastic and loosely covered on a plate — plastic film traps moisture against the surface and it goes slimy. Freezes 6 months whole, and it slices far more neatly half-frozen."
@@ -442,8 +446,9 @@
     "sodiumMg100g": 900,
     "densityGPerMl": 1.01,
     "gramsPerUnit": null,
+    "excludes": ["gluten"],
     "source": "MANUAL",
-    "sourceNote": "Chinkiang black vinegar. FoodData Central has no record of it, and it is nothing like the balsamic and red wine vinegars it does hold, so these are the declared values from a typical bottle rather than a measurement. Energy and sodium vary noticeably between brands; the rest are unknown and left so. Removed from this library in August 2026 when no recipe used it, and restored when the dry tantanmen wanted it — the note about buyability rather than presence in memories.md is exactly this case. The figures are the ones it had before, unchanged.",
+    "sourceNote": "Chinkiang black vinegar. FoodData Central has no record of it, and it is nothing like the balsamic and red wine vinegars it does hold, so these are the declared values from a typical bottle rather than a measurement. Energy and sodium vary noticeably between brands; the rest are unknown and left so. Removed from this library in August 2026 when no recipe used it, and restored when the dry tantanmen wanted it — the note about buyability rather than presence in memories.md is exactly this case. The figures are the ones it had before, unchanged. Tagged `gluten`: Chinkiang vinegar is brewed from glutinous rice with wheat bran.",
     "keeping": "Indefinitely in the cupboard, tightly capped. It is already an acid and there is nothing in it to spoil; what it loses over a year or two is aroma rather than safety. Sediment at the bottom of an aged bottle is normal and is worth not pouring in. Do not refrigerate — cold flattens it."
   },
   {
@@ -470,6 +475,7 @@
     "folateUg100g": 3.5,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 171076, raw chicken thigh meat and skin, multiplied by a 70% edible yield because a recipe states bone-in thighs by the weight you buy. The yield is the assumption in this row; it runs 65-75% by size. Weigh the meat and use a gram override if it matters.",
     "keeping": "Two days in the fridge, on the bottom shelf. Freeze 4 months. If you are only using the meat, freeze the bones separately in a bag and add to it — six sets make a stock."
@@ -629,6 +635,7 @@
     "sodiumMg100g": 19000,
     "densityGPerMl": 0.6,
     "gramsPerUnit": null,
+    "excludes": ["meat"],
     "source": "MANUAL",
     "sourceNote": "Chinese chicken bouillon powder (鸡精), from a typical label rather than FoodData Central. It is mostly salt and MSG; the sodium figure is the only one that matters here and it dominates the dish's total."
   },
@@ -657,6 +664,7 @@
     "folateUg100g": 4,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 171477 (skinless, roasted)",
     "keeping": "Two days in the fridge, on the bottom shelf so nothing under it catches a drip. Freeze in single pieces rather than a block, 4 months."
@@ -687,6 +695,7 @@
       "perMl": 500,
       "note": "One Knorr-sized cube to 500 ml of boiling water, which is what this count assumes. An Oxo cube is smaller and its packet says 190 ml — using Oxo at this rate gives stock about a third of the strength intended. Stock from a cube also carries several times the sodium of the ready-made stock this row's figures describe. Cubes are whole things, so a recipe wanting 200 ml still counts as one cube; use half of it, or make the full 500 ml and keep the rest."
     },
+    "excludes": ["meat"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 174538, ready-to-serve chicken stock. rho 1.0 g/ml. Stock made from a cube runs several times this in sodium.",
     "keeping": "Four days in the fridge once the carton is open, or freeze it — 250 ml portions in a bag, laid flat, are the useful unit. Home-made stock keeps 3 days and freezes for 6 months."
@@ -716,6 +725,7 @@
     "folateUg100g": 8,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 171479 (skinless, roasted)",
     "keeping": "Two days in the fridge. Thighs freeze better than breast — 4 months, and they come back juicy where breast comes back stringy."
@@ -764,8 +774,9 @@
     "ironMg100g": 3.0,
     "densityGPerMl": 0.9,
     "gramsPerUnit": null,
+    "excludes": ["peanut"],
     "source": "MANUAL",
-    "sourceNote": "Crispy chilli oil of the Lao Gan Ma type, from a typical jar rather than FoodData Central. It is roughly two-thirds oil and one-third fried solids, so a spoonful is mostly fat and the sodium is real. Plain chilli oil with no solids is nearer 880 kcal and carries almost no sodium — a different row if you use it.",
+    "sourceNote": "Crispy chilli oil of the Lao Gan Ma type, from a typical jar rather than FoodData Central. It is roughly two-thirds oil and one-third fried solids, so a spoonful is mostly fat and the sodium is real. Plain chilli oil with no solids is nearer 880 kcal and carries almost no sodium — a different row if you use it. Tagged `peanut` for the dietary filters. Lao Gan Ma's crisp chilli oil contains peanuts as visible pieces, which is a genuine surprise in a jar most people think of as chilli and oil. Chilli oils without them exist; the label is the authority.",
     "keeping": "Three months in the cupboard, six in the fridge, cap on. The oil goes rancid before the chilli does. If it was made at home with fresh aromatics — garlic, ginger, shallot — the fridge is not optional and a month is the limit."
   },
   {
@@ -873,6 +884,7 @@
     "folateUg100g": 4.0,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["shellfish"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 171975, raw clam meat, multiplied by a 25% meat yield because a recipe states clams by the weight you buy, which is mostly shell. The yield is the assumption in this row: it runs 20-30% by species and size, so read these figures to within about a fifth of themselves. Weigh the shelled meat and use a gram override if it matters.",
     "keeping": "Cook them the day you buy them. Until then: in the fridge in a bowl, covered with a damp cloth, never sealed in a bag and never sitting in water — they are alive and both suffocate them. Throw out any that will not close when tapped."
@@ -924,7 +936,7 @@
     "gramsPerUnit": 400,
     "unitName": "tin",
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 170173, coconut milk, canned — the thick tinned kind pressed from grated flesh, not the thin cartoned drink sold beside the dairy milk, which is a tenth of the fat and is not a substitute. mu 400 g is one standard tin. Almost all of the fat is saturated, which is why a tin of this reads alarmingly next to double cream and tastes lighter than it.",
+    "sourceNote": "USDA SR Legacy 170173, coconut milk, canned — the thick tinned kind pressed from grated flesh, not the thin cartoned drink sold beside the dairy milk, which is a tenth of the fat and is not a substitute. mu 400 g is one standard tin. Almost all of the fat is saturated, which is why a tin of this reads alarmingly next to double cream and tastes lighter than it. Not tagged as a nut. UK and EU allergen labelling treats coconut as a fruit; the US FDA classifies it as a tree nut. Anyone filtering on nuts because of a US label should know the two disagree.",
     "keeping": "Two years unopened in the cupboard. Once open, three days in the fridge and out of the tin. It separates into a thick cap and a watery layer both in the tin and in the fridge, which is not a fault — warm it gently and stir, or shake the tin hard before opening. Freezes for three months in an ice cube tray and comes back grainy, which disappears the moment it is stirred into anything hot."
   },
   {
@@ -1048,8 +1060,9 @@
     "sodiumMg100g": 6000,
     "densityGPerMl": 1.2,
     "gramsPerUnit": null,
+    "excludes": ["soy", "gluten"],
     "source": "MANUAL",
-    "sourceNote": "From a Pearl River Bridge superior dark soy bottle: 20 kcal, 4 g carbohydrate and 1 g protein per 15 ml tablespoon, scaled to 100 ml. Dark soy is thicker and sweeter than light and is used by the spoon rather than the splash. The sodium is the weakest figure here — brands run 5000 to 7000 mg per 100 ml and few of them print it — so treat it as an estimate. Not interchangeable with `light soy sauce`, which is saltier and thinner.",
+    "sourceNote": "From a Pearl River Bridge superior dark soy bottle: 20 kcal, 4 g carbohydrate and 1 g protein per 15 ml tablespoon, scaled to 100 ml. Dark soy is thicker and sweeter than light and is used by the spoon rather than the splash. The sodium is the weakest figure here — brands run 5000 to 7000 mg per 100 ml and few of them print it — so treat it as an estimate. Not interchangeable with `light soy sauce`, which is saltier and thinner. Tagged `gluten` for the same reason as light soy sauce: it is brewed with wheat.",
     "keeping": "As for light soy — safe in the cupboard, better in the fridge if the bottle lasts more than a few months. It thickens in the cold, which is not a problem for a teaspoon at a time."
   },
   {
@@ -1077,8 +1090,9 @@
       "perMl": 500,
       "note": "A dashi packet is about 8 g of kombu and katsuobushi in a bag. Drop it into the cold water, bring it to the boil, simmer 3 to 5 minutes, lift it out and squeeze it. Brands differ over how far one goes — 400 to 500 ml is the usual range, and this row takes the generous end, so a strong-tasting packet wants a little more water than the count says. A packet cannot be halved, so a recipe wanting less than one packet’s worth still counts as one and the dashi comes out stronger than the figures in this row — brew the full 500 ml and freeze the rest in an ice cube tray, which is what the keeping note is for. Instant granules are the other route: about 1 tsp to 200 ml, and far saltier than the brewed figures in this row."
     },
+    "excludes": ["fish"],
     "source": "MANUAL",
-    "sourceNote": "Awase dashi — kombu and katsuobushi — as the brewed liquid, which is the convention this library already uses for black tea and espresso: a recipe lists millilitres and its method says what made them. USDA has no record. These are the middle of the published analyses, which run 9 kcal, 1.7 to 2 g protein and 25 to 41 mg of sodium per 100 ml; the spread is real, because how much kombu and how long it steeped is the whole variable. Instant dashi powder is far saltier — often ten times this — and a recipe using it should expect the sodium figure to be a serious underestimate.",
+    "sourceNote": "Awase dashi — kombu and katsuobushi — as the brewed liquid, which is the convention this library already uses for black tea and espresso: a recipe lists millilitres and its method says what made them. USDA has no record. These are the middle of the published analyses, which run 9 kcal, 1.7 to 2 g protein and 25 to 41 mg of sodium per 100 ml; the spread is real, because how much kombu and how long it steeped is the whole variable. Instant dashi powder is far saltier — often ten times this — and a recipe using it should expect the sodium figure to be a serious underestimate. Tagged `fish` for the dietary filters, which is the one worth knowing: nothing about the words kitsune udon says the bowl is built on a fish stock. Kombu dashi, made from the seaweed alone, is the vegan version and is what a shojin kitchen uses.",
     "keeping": "Three days in the fridge in a covered jar, and it is genuinely better on the day it is made — the aroma is the point and it is the first thing to go. Freezes for a month in an ice cube tray, which is the sensible way to keep it, since most recipes want 200 ml rather than a litre. Spent kombu and katsuobushi make a second, weaker batch (niban dashi) good for simmering, and then go in the bin."
   },
   {
@@ -1102,6 +1116,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 13.5,
     "unitName": "biscuit",
+    "excludes": ["gluten"],
     "source": "MANUAL",
     "sourceNote": "McVitie's own published figures for the Original digestive, August 2026: 483 kcal, 21 g fat of which 10 saturated, 64 g carbohydrate of which 15 sugars, 7 g protein, 3.7 g fibre and 1.3 g salt per 100 g. Sodium here is that salt figure divided by 2.5. Sainsbury's own-brand is close enough to stand in either direction. gramsPerUnit 13.5 is one biscuit, so a 150 g base is eleven of them."
   },
@@ -1175,8 +1190,9 @@
     "folateUg100g": 20,
     "densityGPerMl": 1.1,
     "gramsPerUnit": null,
+    "excludes": ["soy", "gluten"],
     "source": "MANUAL",
-    "sourceNote": "Pixian chilli bean paste, from jar labels. rho 1.1 g/ml, from a tablespoon at 17 g. Brands differ by more than any figure here suggests: an aged Pixian paste is drier, saltier and less sweet than a supermarket doubanjiang, and the sodium spread across the shelf is roughly 5000 to 7000 mg per 100 g.",
+    "sourceNote": "Pixian chilli bean paste, from jar labels. rho 1.1 g/ml, from a tablespoon at 17 g. Brands differ by more than any figure here suggests: an aged Pixian paste is drier, saltier and less sweet than a supermarket doubanjiang, and the sodium spread across the shelf is roughly 5000 to 7000 mg per 100 g. Tagged `gluten` for the dietary filters. Pixian doubanjiang is fermented with wheat flour as well as broad beans; a few brands are wheat-free and say so.",
     "keeping": "Fridge once opened, where it keeps a year. Level the surface after each use and pour a film of oil over it: what spoils a bean paste is the air on the top, not the age of the jar. Always a clean dry spoon."
   },
   {
@@ -1282,6 +1298,7 @@
     "folateUg100g": 30,
     "densityGPerMl": null,
     "gramsPerUnit": 0.5,
+    "excludes": ["shellfish"],
     "source": "MANUAL",
     "sourceNote": "Xia mi — small salted dried shrimp. USDA has no record and the published figures disagree: energy runs 198 to 253 kcal and protein 43 to 62 g per 100 g, depending mostly on how dry and how salted the batch is. This row takes 253 kcal with 58 g of protein and 2.5 g of fat, which is the top of that range and is at least self-consistent through the Atwater factors. Sodium is the figure to hold loosely: 2500 mg is a middle value in a range that runs past 4800, because salt is the preservative and brands differ enormously. A tablespoon is about 8 g, so even the low end puts 200 mg into a dish. Soak them and the soaking water carries a good deal of that salt away with it.",
     "keeping": "Six months in a sealed jar in the fridge rather than the cupboard, which is where they keep their colour and their smell — at room temperature they go from pink to grey-brown and develop a hard, fishy edge. A year in the freezer, and they can be used straight from it. They should smell of the sea and faintly sweet; a sharp ammoniac smell means they are past it."
@@ -1307,6 +1324,7 @@
     "folateUg100g": 10,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["shellfish"],
     "source": "MANUAL",
     "sourceNote": "You you gan, from the Chinese food composition table. These are the figures for the dry squid as weighed, which is how a recipe measures it — it takes up about three times its weight in water on soaking, so a soaked figure would be a third of these. The cholesterol is genuinely that high; squid is one of the densest sources of it in any kitchen."
   },
@@ -1356,6 +1374,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 100,
     "unitName": "portion",
+    "excludes": ["gluten"],
     "source": "MANUAL",
     "sourceNote": "Plain Chinese dried wheat noodles (gua mian) — flour, water and salt, no egg — weighed dry as a recipe lists them. FoodData Central has no record of them; its Chinese noodle entries are all fried chow mein, which is a different food. These are the middle of the published brand labels, which cluster at 355 to 375 kcal and 11 to 13 g of protein. The figure worth knowing is the sodium: salt goes into the dough, so a dry Chinese noodle carries several hundred milligrams per 100 g where dry Italian pasta carries six, and most of that stays in the noodle rather than leaving in the water. 400 mg is a middling label and brands run from 300 to well over 1000, so check the packet if it matters. A different row from `egg noodles`, which are yellow, springy and Cantonese, and from `spaghetti`, which is durum and holds its bite differently. mu 100 g is one portion. They roughly double in weight boiled.",
     "keeping": "A year in the packet in a dry cupboard, and the packet is worth closing properly with a clip — dried noodles take up damp and then dry out warped and brittle. Cooked and drained they keep two days in the fridge tossed with a little oil so they do not weld into a block, and they come back in 20 seconds of boiling water."
@@ -1406,6 +1425,7 @@
     "folateUg100g": 1,
     "densityGPerMl": 0.99,
     "gramsPerUnit": null,
+    "excludes": ["alcohol"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 174837, table white wine. rho 0.99 g/ml. Most of the energy is alcohol, and most of the alcohol boils off in a sauce reduced hard, so treat the kcal as an upper bound rather than a figure.",
     "keeping": "Three days in the fridge with the cap on once opened, and a week if you pour it into a smaller bottle so there is less air on top. Past that it is vinegar in slow motion — still usable in a braise, no longer usable in a sauce."
@@ -1434,6 +1454,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 180,
     "unitName": "breast",
+    "excludes": ["meat"],
     "source": "MANUAL",
     "sourceNote": "Raw duck breast with the skin on, from supermarket labels rather than FoodData Central, because USDA's two nearest records bracket it uselessly: 'meat only' is 135 kcal and 'meat and skin' for a whole duck is 404, and a breast sits between them since its skin covers proportionally less meat than a whole bird's does. Read the figure as an upper bound — the fat is almost all in the skin and the cap, and rendering it out over low heat, which is the only sensible way to cook a duck breast, leaves a good deal of it in the pan. mu 180 g is one supermarket breast.",
     "keeping": "Three days in the fridge on a plate, and better uncovered on the bottom shelf if there is room — a dry skin is the whole game with duck and a day uncovered scores it far better than any amount of patting. Three months frozen; defrost in the fridge overnight. Rendered duck fat is the by-product worth keeping: strain it into a jar and it lasts six months in the fridge and roasts the best potatoes you will make."
@@ -1464,6 +1485,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 50,
     "unitName": "egg",
+    "excludes": ["egg"],
     "source": "USDA",
     "sourceNote": "USDA Foundation 748967 (whole, raw); mu 50 g, USDA large egg without shell",
     "keeping": "Three weeks in the fridge, pointed end down so the yolk stays centred. To test one, put it in a bowl of water: it lies flat when fresh, stands on end at about three weeks, and floats when it should be thrown away. Whites freeze perfectly, yolks do not."
@@ -1492,6 +1514,7 @@
     "folateUg100g": 247,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["egg", "gluten"],
     "source": "USDA",
     "sourceNote": "USDA record for noodles, egg, dry, enriched — weighed dry, as a recipe lists them. They roughly double in weight boiled. This covers both the medium egg noodles every UK supermarket sells and the thin wonton noodles from an Asian supermarket, which differ in thickness rather than in composition; the thin ones cook in 90 seconds and the medium in four minutes. Enriched noodles carry added iron and folate, which is why those two columns look high for a plain wheat product.",
     "keeping": "Two years in the packet in a dry cupboard. Fresh egg noodles from the chiller are a different thing entirely: five days in the fridge, three months frozen, and they go into boiling water straight from the freezer. Cooked noodles keep two days in the fridge tossed with a teaspoon of oil to stop them welding, and never in soup."
@@ -1521,6 +1544,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 250,
     "unitName": "tube",
+    "excludes": ["egg", "soy"],
     "source": "MANUAL",
     "sourceNote": "Japanese standard composition tables for tamago-dofu: 79 kcal, 6.5 g protein and 5.3 g fat per 100 g. USDA has no record. Two related products share the name and this row is a compromise between them — Japanese tamago-dofu is egg set with dashi and eaten cold, while the yellow tube sold as egg tofu or Japanese tofu in Chinese supermarkets is soy milk and egg together, usually with a little starch, so it runs slightly lower in protein and higher in carbohydrate. The tube is what the recipes here use and its own label is the better guide. Sodium is the least certain figure: it is seasoned in the making, published values scatter widely by brand, and 390 mg is the middle of them. mu 250 g is one standard tube, though they run from 150 g to 300 g.",
     "keeping": "Unopened, up to the date on the tube — a month or so — in the fridge, and it must stay cold. Once opened it is two days, submerged in cold water in a covered box with the water changed daily, exactly as for silken tofu. It does not freeze: the egg and soy protein separate and it thaws into a spongy, weeping thing with none of the texture that was the point. Buy the tube intact; one that has gone soft or is swollen at the ends has fermented and goes in the bin."
@@ -1548,6 +1572,7 @@
     "densityGPerMl": 1.03,
     "gramsPerUnit": 33,
     "unitName": "egg white",
+    "excludes": ["egg"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 172184, raw egg white. gramsPerUnit 33 is the white of one large egg. The counterpart to the `egg yolk` row and just as necessary: the white is where nearly all an egg's sodium is and none of its fat or cholesterol, so a recipe that separates them cannot be counted in whole eggs."
   },
@@ -1577,6 +1602,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 17,
     "unitName": "yolk",
+    "excludes": ["egg"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 172183, raw fresh egg yolk. gramsPerUnit 17 is the yolk of one large egg. A separate row from `egg` because they are not interchangeable in a panel: gram for gram the yolk carries six times the fat of a whole egg and nearly all of its cholesterol, so a recipe using three yolks and one whole egg counted as four eggs would understate both by a wide margin."
   },
@@ -1629,6 +1655,7 @@
     "densityGPerMl": 1.07,
     "gramsPerUnit": null,
     "usdaFdcId": "170878",
+    "excludes": ["dairy"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 170878, milk, canned, evaporated — unsweetened. Sweetened condensed milk is a different tin with four times the sugar and is not a substitute. rho 1.07 g/ml, denser than milk because that is what it is: whole milk with about 60% of its water boiled off, so every figure here runs about 2.2 times the corresponding one for milk.",
     "keeping": "Unopened, two years in the cupboard. Once the tin is open, four days in the fridge and not in the tin — decant it into a jar, because the exposed metal taints it. It freezes for three months in a tub and comes back slightly grainy, which does not matter in a batter."
@@ -1655,6 +1682,7 @@
     "folateUg100g": 4,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat", "pork"],
     "source": "USDA",
     "sourceNote": "Interpolated between USDA SR Legacy 168318 (96% lean) and 168333 (84% lean) to give 10% fat, which is what a stir-fry wants — 5% mince gives up no fat to fry the aromatics in. A 20% mince runs nearer 250 kcal.",
     "keeping": "Two days in the coldest part of the fridge, in the bottom of the packet on a plate in case it leaks. Mince spoils faster than a whole cut because grinding puts the surface everywhere. Freeze it flat in a bag on the day you buy it — 3 months, and it defrosts in an hour rather than overnight."
@@ -1679,6 +1707,7 @@
     "folateUg100g": 30,
     "densityGPerMl": 0.8,
     "gramsPerUnit": null,
+    "excludes": ["soy"],
     "source": "MANUAL",
     "sourceNote": "Douchi, the dry salted black soybean sold in bags and tubs. Figures are a soybean base adjusted for the salt it is cured in; no USDA entry exists for it. The sodium is the load-bearing number and it is high enough that rinsing before use is standard — this row is for unrinsed beans, so treat it as a ceiling. rho 0.8 g/ml, from a tablespoon at 12 g.",
     "keeping": "A year in a sealed jar in the cupboard, and longer in the fridge. They are salted and dry, so what ruins them is damp — a wet spoon or a bag left open makes them clump and mould."
@@ -1730,6 +1759,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 400,
     "unitName": "block",
+    "excludes": ["soy"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 172475, tofu raw firm prepared with calcium sulfate. The calcium is the coagulant, not the bean: a nigari-set block runs nearer 130 mg per 100 g, so treat 683 as specific to calcium-sulfate tofu and read the packet. gramsPerUnit 400 is a supermarket block. Figures were read off aggregators of that entry rather than FoodData Central itself, which could not be reached from the machine this row was written on; they cross-check against its 126 g serving (iron 3.35 mg, potassium 299 mg, sodium 18 mg).",
     "keeping": "Once the packet is open: submerged in fresh cold water in a box, in the fridge, water changed every day, 4 days. Out of water it dries and sours in two. It also freezes — it comes back spongy and full of holes, which is a fault in this recipe and a virtue in a braise."
@@ -1755,6 +1785,7 @@
     "folateUg100g": 15,
     "densityGPerMl": 1.2,
     "gramsPerUnit": null,
+    "excludes": ["fish"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 174288. rho 1.2 g/ml. The sodium is not a misprint and it dominates any dish using it.",
     "keeping": "The cupboard is fine and it keeps a year, though it darkens. The white crystals that appear at the bottom or round the cap are salt, not spoilage."
@@ -1904,8 +1935,9 @@
     "gramsPerUnit": 1.7,
     "unitName": "leaf",
     "unitNamePlural": "leaves",
+    "excludes": ["meat", "pork"],
     "source": "USDA",
-    "sourceNote": "USDA figures for gelatins, dry powder, unsweetened: 85.6 g of protein and essentially nothing else, which is what makes the energy figure misleading — 10 g of it sets a litre and contributes 34 kcal to four servings. mu 1.7 g is one leaf, so five leaves are 8.5 g and a British sachet is about 12 g. The id is left off rather than guessed, since USDA carries several gelatin records and the sweetened dessert-powder ones are a different food entirely. Leaves and powder are interchangeable by weight; leaves are easier to measure and dissolve more reliably."
+    "sourceNote": "USDA figures for gelatins, dry powder, unsweetened: 85.6 g of protein and essentially nothing else, which is what makes the energy figure misleading — 10 g of it sets a litre and contributes 34 kcal to four servings. mu 1.7 g is one leaf, so five leaves are 8.5 g and a British sachet is about 12 g. The id is left off rather than guessed, since USDA carries several gelatin records and the sweetened dessert-powder ones are a different food entirely. Leaves and powder are interchangeable by weight; leaves are easier to measure and dissolve more reliably. Tagged `meat` and `pork` for the dietary filters: gelatine is boiled from hide and bone, and the leaf gelatine sold in British supermarkets is porcine unless it says otherwise. Beef and fish gelatines exist and agar is the vegetarian substitute, which sets firmer and does not melt in the mouth the same way."
   },
   {
     "name": "ginger",
@@ -2080,6 +2112,7 @@
     "folateUg100g": 7,
     "densityGPerMl": 1.04,
     "gramsPerUnit": null,
+    "excludes": ["dairy"],
     "source": "USDA",
     "sourceNote": "USDA 330137 (plain, nonfat); rho 1.04 g/ml",
     "keeping": "A week after opening. Pour off the whey that gathers on top rather than stirring it in if you want it thick, and keep the spoon that goes in clean — yogurt spoils from what is put into it."
@@ -2205,6 +2238,7 @@
     "folateUg100g": 2,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat", "pork"],
     "source": "MANUAL",
     "sourceNote": "Cured pork jowl. No USDA entry exists for it. Checked in August 2026 against Italian product labels, which give 655 to 691 kcal and about 71 g of fat per 100 g — this row's 655 and 69 are the bottom of that range, so if anything it understates. Protein is the figure that moves most between producers, from 6.5 g to 12 g depending on how long it was hung. Beware the English-language nutrition aggregators here: several report guanciale at around 400 kcal and 30 g fat, which is pancetta's composition, not jowl's. Pancetta is the substitute, and it is leaner."
   },
@@ -2228,8 +2262,9 @@
     "folateUg100g": 5,
     "densityGPerMl": 1.0,
     "gramsPerUnit": null,
+    "excludes": ["meat", "soy"],
     "source": "MANUAL",
-    "sourceNote": "Spicy Sichuan hot pot base, the solid block sold for making hot pot broth, from packet labels. It is mostly beef tallow and chilli, which is why it is half fat and a fifth of that saturated. rho 1.0 g/ml is nominal: it is a solid at room temperature and a spoon of it is packed rather than poured.",
+    "sourceNote": "Spicy Sichuan hot pot base, the solid block sold for making hot pot broth, from packet labels. It is mostly beef tallow and chilli, which is why it is half fat and a fifth of that saturated. rho 1.0 g/ml is nominal: it is a solid at room temperature and a spoon of it is packed rather than poured. Tagged `meat` for the dietary filters: a Chongqing base is built on beef tallow, which is why it sets solid. Vegetarian bases are sold alongside and are usually labelled so in English.",
     "keeping": "Fridge once opened, 3 months, or freeze the block in portions the size you use — it is mostly beef tallow, so it cuts cleanly from frozen. Rancid fat is what fails first here, and it smells of old crayons."
   },
   {
@@ -2276,8 +2311,9 @@
     "densityGPerMl": null,
     "gramsPerUnit": 20,
     "unitName": "block",
+    "excludes": ["soy", "gluten", "dairy"],
     "source": "MANUAL",
-    "sourceNote": "A block of S&B Golden Curry, from the box: 462 kcal, 28 g of fat of which 17 saturated, and 45 g of carbohydrate per 100 g. Sodium is worked out from the per-serving figures rather than the per-100 g salt line, and deliberately so — the label's per-serving numbers for energy, fat and carbohydrate all scale cleanly to its per-100 g ones, and its 2.2 g of salt per 18.4 g block scales to about 12 g per 100 g, while a '1.882 g per 100 g' figure that circulates online reconciles with nothing. Twelve grams of salt is 4760 mg of sodium, which makes this the second saltiest thing in this library after soy sauce. It is used 20 g at a time, so a portion carries about 950 mg. Brands and heat levels differ; the box is the authority, not this row. mu 20 g is one block, though they run 18 to 25 g.",
+    "sourceNote": "A block of S&B Golden Curry, from the box: 462 kcal, 28 g of fat of which 17 saturated, and 45 g of carbohydrate per 100 g. Sodium is worked out from the per-serving figures rather than the per-100 g salt line, and deliberately so — the label's per-serving numbers for energy, fat and carbohydrate all scale cleanly to its per-100 g ones, and its 2.2 g of salt per 18.4 g block scales to about 12 g per 100 g, while a '1.882 g per 100 g' figure that circulates online reconciles with nothing. Twelve grams of salt is 4760 mg of sodium, which makes this the second saltiest thing in this library after soy sauce. It is used 20 g at a time, so a portion carries about 950 mg. Brands and heat levels differ; the box is the authority, not this row. mu 20 g is one block, though they run 18 to 25 g. Tagged `gluten`, `soy` and `dairy` for the dietary filters. The box is the authority and this is the common case: the roux is a wheat-flour roux, most brands declare soy, and many declare milk. Vegetarian and allergen-free roux blocks are sold and are labelled clearly.",
     "keeping": "A year in the box in a dry cupboard, and the foil tray inside keeps unused blocks fine once it is opened — fold the flap down and put the box back. The fat can bloom to a pale surface film in a warm kitchen, which looks wrong and is harmless. Do not refrigerate: the block sweats and then crumbles."
   },
   {
@@ -2326,8 +2362,9 @@
     "densityGPerMl": null,
     "gramsPerUnit": 50,
     "unitName": "sausage",
+    "excludes": ["meat", "pork", "soy"],
     "source": "MANUAL",
-    "sourceNote": "Cantonese cured sausage, from the Chinese food composition table's entry for guang shi xiang chang and checked against packet labels. gramsPerUnit 50 is one link. The sugar is not an error: lap cheung is cured with a great deal of it, which is why it caramelises where it touches the pan and why a recipe using it wants less sugar elsewhere."
+    "sourceNote": "Cantonese cured sausage, from the Chinese food composition table's entry for guang shi xiang chang and checked against packet labels. gramsPerUnit 50 is one link. The sugar is not an error: lap cheung is cured with a great deal of it, which is why it caramelises where it touches the pan and why a recipe using it wants less sugar elsewhere. Tagged `soy` as well as `meat` and `pork`: nearly every brand is cured with soy sauce, and most with rose wine too, so anyone avoiding alcohol should read the packet."
   },
   {
     "name": "lean pork",
@@ -2354,6 +2391,7 @@
     "folateUg100g": 5,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat", "pork"],
     "source": "USDA",
     "sourceNote": "USDA figures for pork, fresh, loin, whole, separable lean only, raw — the cut sold as lean pork and what a Cantonese recipe means by shou rou. Vitamin D is left blank on purpose: the figure the sources returned was 22 ug per 100 g, roughly forty times what any pork contains and plainly a unit error, and a blank is better than a wrong number. Pork shoulder trimmed of its fat is a little fattier than this and behaves the same way.",
     "keeping": "Three days in the fridge on a plate on the bottom shelf, loosely covered so the surface dries rather than sweats. Six months frozen, and better sliced first and frozen flat in a bag — it defrosts in twenty minutes that way and takes a marinade straight after. Slicing thinly is easiest when the meat is half frozen, which is worth arranging on purpose. Defrost in the fridge, never on the counter."
@@ -2491,8 +2529,9 @@
     "folateUg100g": 14,
     "densityGPerMl": 1.08,
     "gramsPerUnit": null,
+    "excludes": ["soy", "gluten"],
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 172443, soy sauce from soy and wheat (shoyu). rho 1.08 g/ml, from a tablespoon at 16 g. Chinese light soy sauce (sheng chou) is saltier than Japanese shoyu, so treat the sodium as a floor.",
+    "sourceNote": "USDA SR Legacy 172443, soy sauce from soy and wheat (shoyu). rho 1.08 g/ml, from a tablespoon at 16 g. Chinese light soy sauce (sheng chou) is saltier than Japanese shoyu, so treat the sodium as a floor. Tagged `gluten` for the dietary filters: soy sauce is brewed from soy *and wheat*, and it is the commonest thing to forget on a gluten-free diet. Japanese tamari is the wheat-free one and most Chinese soy sauces are not.",
     "keeping": "The cupboard is safe indefinitely, but flavour is a different question: an open bottle oxidises and flattens over about six months. If you get through it slowly, keep it in the fridge, where it holds for a year."
   },
   {
@@ -2597,6 +2636,7 @@
     "folateUg100g": 0,
     "densityGPerMl": 1.0,
     "gramsPerUnit": null,
+    "excludes": ["alcohol"],
     "source": "MANUAL",
     "sourceNote": "Sweet marsala, read across from USDA's sweet dessert wine entry and a bottle label. Most of the energy is the alcohol rather than the sugar. Dry marsala runs about a third fewer calories and would be a different row; the sweet kind is what a dessert uses."
   },
@@ -2624,6 +2664,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 250,
     "unitName": "tub",
+    "excludes": ["dairy"],
     "source": "MANUAL",
     "sourceNote": "From a supermarket tub label, checked in August 2026 against published figures for the cheese, which cluster at 430 to 437 kcal, 5 g protein and 42 to 44 g fat — this row sits inside that spread and its energy reconciles with its own macros, so the macros are left alone; calcium and sodium were the two that were wrong and are corrected here. USDA has no mascarpone record at all, only branded items, which is why this stays a label figure. Mascarpone is barely a cheese — cream soured with acid and drained — which is why it is 44% fat where full-fat cream cheese is nearer 34%, and why a cheesecake made with it needs the acid put back. gramsPerUnit 250 is one standard tub."
   },
@@ -2673,6 +2714,7 @@
     "folateUg100g": 0,
     "densityGPerMl": 1.13,
     "gramsPerUnit": null,
+    "excludes": ["alcohol"],
     "source": "MANUAL",
     "sourceNote": "Hon-mirin, from the Japanese standard composition tables: 241 kcal and 43.2 g of carbohydrate per 100 g at about 14% alcohol. The macros do not add up to the energy and are not meant to — roughly a third of it is the alcohol, which this library has no column for, the same as the wine rows. Most of it boils off in a sauce reduced hard, so treat the figure as an upper bound. Published numbers for mirin range from 150 to 258 kcal because two different products share the name: hon-mirin is brewed and alcoholic, while aji-mirin or 'mirin-style seasoning' is a sweetened syrup at 1% alcohol with corn syrup in it. This row is the real one; the substitute is sweeter and flatter and worth avoiding.",
     "keeping": "Three months in a cool cupboard once opened, or a year in the fridge, which is where hon-mirin belongs after opening. The sugar crystallises at the neck and welds the cap on — wipe it. Aji-mirin has preservatives and keeps longer, which is the only argument in its favour."
@@ -2717,6 +2759,7 @@
     "folateUg100g": 13.86,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["shellfish"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 174219, raw blue mussel meat, multiplied by a 33% meat yield for the same reason as the clams. Mussels shell out higher than clams and vary with the season; the yield is the assumption in this row.",
     "keeping": "The same day. Fridge, in a bowl under a damp cloth, not in water and not in a sealed bag. Debearded mussels die faster than bearded ones, so pull the beards just before cooking."
@@ -2844,8 +2887,9 @@
     "folateUg100g": 6,
     "densityGPerMl": 1.2,
     "gramsPerUnit": null,
+    "excludes": ["shellfish", "gluten"],
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 172234. rho 1.2 g/ml, from a tablespoon at 18 g.",
+    "sourceNote": "USDA SR Legacy 172234. rho 1.2 g/ml, from a tablespoon at 18 g. Tagged `shellfish` and `gluten`: the major brands thicken it with wheat flour as well as cornstarch. Vegetarian 'oyster' sauce made from mushrooms is a straight substitution and carries neither.",
     "keeping": "Fridge once opened, and it says so on the bottle. Six months, and use a clean spoon: it is thick enough that anything dropped into it sits there."
   },
   {
@@ -2871,8 +2915,9 @@
     "folateUg100g": 7,
     "densityGPerMl": 0.4,
     "gramsPerUnit": null,
+    "excludes": ["dairy", "meat"],
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171247, hard grated parmesan. rho 0.4 g/ml grated.",
+    "sourceNote": "USDA SR Legacy 171247, hard grated parmesan. rho 0.4 g/ml grated. Tagged `meat` as well as `dairy`, which surprises people: Parmigiano Reggiano's DOP rules require calf rennet, so the real thing is not vegetarian. Hard cheeses made with microbial rennet and sold as Italian-style hard cheese are, and are the substitution.",
     "keeping": "Six weeks in the fridge wrapped in baking paper and then loosely in foil. Cling film suffocates it and it sweats; paper lets it breathe. Freeze the rinds in a bag and drop one into a soup or a stock."
   },
   {
@@ -2895,6 +2940,7 @@
     "folateUg100g": 87,
     "densityGPerMl": 1.07,
     "gramsPerUnit": null,
+    "excludes": ["peanut"],
     "source": "USDA",
     "sourceNote": "USDA, peanut butter, smooth style, with salt. USDA carries salted and unsalted smooth-style records that differ by little except sodium — 486 mg against about 17 — and this is the salted one, because that is what goes inside a Hong Kong French toast. The id is left off rather than guessed: the two records are easy to confuse and a wrong id is worse than none. rho 1.07 g/ml, from 258 g per cup. A no-added-sugar jar is the same energy with the 9 g of sugar moved into the peanut column."
   },
@@ -2913,8 +2959,9 @@
     "vitaminEMg100g": 15.7,
     "densityGPerMl": 0.914,
     "gramsPerUnit": null,
+    "excludes": ["peanut"],
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy, peanut oil (salad or cooking). rho 0.914 g/ml at 20 C.",
+    "sourceNote": "USDA SR Legacy, peanut oil (salad or cooking). rho 0.914 g/ml at 20 C. Tagged `peanut` for the dietary filters. Refined groundnut oil is usually tolerated by people with a peanut allergy and is excluded from allergen labelling in the UK for that reason — but cold-pressed and aromatic peanut oils are not, and this row does not know which is in the bottle.",
     "keeping": "A year in a dark cupboard. Once it has been used for frying, strain it through a coffee filter while it is still warm and keep it in the fridge; it will take two or three more fryings before it starts to smell fishy, which is when it goes."
   },
   {
@@ -2941,8 +2988,9 @@
     "folateUg100g": 8,
     "densityGPerMl": 0.4,
     "gramsPerUnit": null,
+    "excludes": ["dairy", "meat"],
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 171246, romano cheese. Real Pecorino Romano DOP is saltier than this row says — 1600 mg per 100 g and upwards, since it is brined for months — so treat 1200 as a floor and taste before salting anything it goes into. rho 0.4 g/ml, from a tablespoon of finely grated at 6 g.",
+    "sourceNote": "USDA SR Legacy 171246, romano cheese. Real Pecorino Romano DOP is saltier than this row says — 1600 mg per 100 g and upwards, since it is brined for months — so treat 1200 as a floor and taste before salting anything it goes into. rho 0.4 g/ml, from a tablespoon of finely grated at 6 g. Tagged `meat` as well as `dairy`: Pecorino Romano DOP is made with lamb rennet and is not vegetarian. An Italian-style hard sheep's cheese with microbial rennet is the substitution, and it is milder.",
     "keeping": "A month in the fridge wrapped in baking paper and then loosely in foil, never in cling film, which suffocates it and turns the surface slimy. Buy it in a piece and grate it as you need it: pre-grated pecorino is dry within a week and will not melt into a sauce. Surface mould on a hard cheese is cut off with a centimetre of cheese around it and the rest is fine."
   },
   {
@@ -3008,6 +3056,7 @@
     "folateUg100g": 2,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat", "pork"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy, pork fresh belly raw, skin on. Half fat by weight, which is what the cut is — and the figure is for the belly as it goes into the oven. A good deal of that fat renders into the tray during a roast and is poured away, so on a roasted recipe this row overstates what reaches the plate. It is the honest number for the ingredient and the wrong one for the dinner; the recipes that use it say so."
   },
@@ -3033,6 +3082,7 @@
     "folateUg100g": 4,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat", "pork"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 168318, lean raw ground pork, interpolated to 5% fat. Fattier mince changes the energy sharply — 20% mince is nearly twice this.",
     "keeping": "Two days in the fridge, or freeze flat in a bag for 3 months. Grey on the surface with no smell is oxygen and is fine; grey with a sour smell is not."
@@ -3094,6 +3144,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 12,
     "unitName": "prawn",
+    "excludes": ["shellfish"],
     "source": "USDA",
     "sourceNote": "USDA record for crustaceans, shrimp, mixed species, raw — weighed peeled. The sodium is the figure to understand rather than distrust: 566 mg per 100 g looks enormous for a fresh ingredient and is real, because almost all prawns sold peeled have been treated with sodium tripolyphosphate to hold water. Untreated ones run nearer 150 mg. That treatment is also why the protein reads 13.6 g rather than the 20 g an untreated prawn gives: some of what you buy is brine. If the packet says 'prawns' and nothing else, this row is right; if it lists no additives, halve the sodium and expect more protein. mu 12 g is one raw peeled king prawn.",
     "keeping": "A day in the fridge, on ice if you have it, in the coldest part — prawns go off faster than almost anything else in this collection and the first sign is a smell of ammonia, at which point they are finished. Most 'fresh' prawns at a counter were frozen at sea and thawed for display, and those must not be refrozen. Frozen raw, three months; defrost in the fridge overnight or in a colander under cold running water for ten minutes, never in warm water. Cook them the day they thaw."
@@ -3121,6 +3172,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 12,
     "unitName": "cube",
+    "excludes": ["soy"],
     "source": "USDA",
     "sourceNote": "Fu yu, the fermented tofu sold in jars of brine — USDA SR Legacy 174280, salted and fermented tofu. gramsPerUnit 12 is one cube. Its brine is the same product with more water in it, so a recipe that uses a spoonful of the liquid can count it as more of the cube without introducing a real error. The red kind (nan ru, cured with red yeast rice) is sweeter and deeper and would want its own row if a recipe called for it.",
     "keeping": "A year in the fridge once opened, as long as the cubes stay under the brine. Top the jar up with a splash of shaoxing wine rather than water if the level drops."
@@ -3140,6 +3192,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 60,
     "unitName": "egg",
+    "excludes": ["egg"],
     "source": "MANUAL",
     "sourceNote": "Pidan, the century egg. USDA has no record for it. Protein 13.1 g, fat 10.7 g and carbohydrate 2.25 g per 100 g come from the peer-reviewed comparison of pidan against fresh and salted duck egg (PubMed 26760738); the energy figure is those three put through the Atwater factors rather than measured. Sodium, cholesterol and iron are converted from a shelled preserved duck egg product panel quoting a 60 g egg, which is also where mu 60 g comes from. Saturated fat is derived: raw duck egg is 26.7% of its fat saturated, applied to pidan's 10.7 g. Everything else is deliberately blank — curing in alkali and salt for weeks changes an egg's minerals in ways nobody has published a full table for, and a blank column is honest where a copied duck-egg figure would not be.",
     "keeping": "Three months in the cupboard unopened, in the clay or the vacuum pack they came in — they are already preserved, which is the whole point of them, and the fridge does nothing for them. Once peeled, two days in the fridge in a covered bowl. A good one has a translucent amber-brown white that yields like firm jelly and a dark green-grey yolk still soft at the centre; throw away any whose white has gone opaque and crumbly, or that smells strongly of ammonia rather than faintly of it."
@@ -3165,6 +3218,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 320,
     "unitName": "sheet",
+    "excludes": ["gluten", "dairy"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 172790, puff pastry, frozen, ready-to-bake — raw, as bought. mu 320 g is one standard rolled sheet. The saturated fat is the figure to hold loosely: this record is a vegetable-shortening pastry, high in polyunsaturated fat, and an all-butter puff of the same energy carries roughly twice the saturated fat. All-butter is what an egg tart wants, so read that column as a floor.",
     "keeping": "Two days in the fridge in its own paper, and it must stay cold — pastry that has warmed enough to feel greasy has had its butter layers merge and will not rise. A month in the freezer, and it defrosts in the fridge overnight, never on the counter. Do not refreeze a sheet you have thawed; roll the offcuts into a block rather than a ball, so the layers stay stacked, and it will still puff on a second use."
@@ -3206,6 +3260,7 @@
     "folateUg100g": 0,
     "densityGPerMl": 0.99,
     "gramsPerUnit": null,
+    "excludes": ["alcohol"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 167723, alcoholic beverage, rice (sake). As with the wine rows, most of the energy is alcohol rather than the 5 g of carbohydrate, so the macros will not sum to it and most of it boils off anyway. Cooking sake sold as ryorishu is salted, which this row is not; if that is what is in the cupboard, count roughly 200 mg of sodium per 100 ml and take it off the salt elsewhere. Dry sherry is the usual substitute and is close enough.",
     "keeping": "Unopened, a year somewhere cool and dark. Once open it oxidises like wine: a month in the fridge for cooking, though a drinking sake is past its best within days. It does not go dangerous, it goes flat and faintly sherried, which for a braise matters much less than for a glass."
@@ -3263,6 +3318,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 60,
     "unitName": "egg",
+    "excludes": ["egg"],
     "source": "MANUAL",
     "sourceNote": "Whole salted duck egg, shell off — white and yolk together. Energy, protein, fat and cholesterol from the Chinese food composition table's entry for xian ya dan; the cholesterol is high because a duck yolk is large and this is most of one. gramsPerUnit 60 is the edible part of one egg, of which roughly 18 g is yolk. The sodium is the weak figure and deliberately a middle one: sources run from 1300 to 2700 mg per 100 g depending on how long the egg was cured, so a recipe using these will be within a factor of two rather than exact. A recipe that uses only the yolks is saltier per gram than this row and less so per egg, since most of the salt is in the white.",
     "keeping": "Two months uncooked in the fridge, still in their coating if they came in one. They are cured, so they are far more forgiving than a fresh egg — but once cooked they keep only 4 days."
@@ -3288,6 +3344,7 @@
     "folateUg100g": 5,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["fish"],
     "source": "MANUAL",
     "sourceNote": "Chinese salted fish — mackerel or threadfin, salted and dried. Figures from the Chinese food composition table's entry for xian yu; no USDA equivalent exists. The sodium is the load-bearing number and the least certain: curing time and whether the fish was rinsed both move it, and 6000 mg per 100 g is a middle value across a wide spread."
   },
@@ -3313,6 +3370,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 8.5,
     "unitName": "sponge finger",
+    "excludes": ["egg", "gluten"],
     "source": "MANUAL",
     "sourceNote": "Italian ladyfingers, from packet labels. gramsPerUnit 8.5 is one biscuit, so a 200 g box is about 24. The cholesterol is high for a biscuit because savoiardi are largely egg — which is also why they are dry and crisp enough to take up coffee without collapsing, where a soft sponge finger cannot."
   },
@@ -3331,6 +3389,7 @@
     "vitaminEMg100g": 1.4,
     "densityGPerMl": 0.92,
     "gramsPerUnit": null,
+    "excludes": ["sesame"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 171029. rho 0.92 g/ml. Toasted sesame oil is used as a seasoning here rather than a frying medium, except in the three-cup chicken where it is both.",
     "keeping": "Six months in a dark cupboard once opened, a year in the fridge. Toasted sesame oil goes rancid faster than most oils, and since it is used a teaspoon at a time the bottle usually outlives its flavour."
@@ -3358,6 +3417,7 @@
     "folateUg100g": 98,
     "densityGPerMl": 1.05,
     "gramsPerUnit": null,
+    "excludes": ["sesame"],
     "source": "USDA",
     "sourceNote": "USDA record for sesame butter or paste, made from whole seeds — which is what Chinese sesame paste is. It is not tahini: tahini is ground from hulled and usually unroasted seeds and is paler, thinner and much milder, and swapping it into a tantanmen gives a broth that tastes of nothing. The two are close enough in composition that these figures stand for either. Calcium is 960 mg per 100 g, which is real and comes from the hulls. rho 1.05 g/ml.",
     "keeping": "A year unopened in the cupboard, six months in the fridge once open. It separates into a hard cake under a layer of oil and that is normal — stand the jar in warm water and stir it back with a knife, and store it upside down between uses so the oil migrates the other way. Rancid sesame paste smells sharp and paint-like and there is no rescuing it."
@@ -3403,8 +3463,9 @@
     "sodiumMg100g": 800,
     "densityGPerMl": 0.99,
     "gramsPerUnit": null,
+    "excludes": ["alcohol", "gluten"],
     "source": "MANUAL",
-    "sourceNote": "Shaoxing rice wine, from a typical bottle rather than FoodData Central. Cooking grades are salted, which is where the sodium comes from; drinking grades are not. Most of the alcohol boils off in step 9, so treat the energy as an upper bound.",
+    "sourceNote": "Shaoxing rice wine, from a typical bottle rather than FoodData Central. Cooking grades are salted, which is where the sodium comes from; drinking grades are not. Most of the alcohol boils off in step 9, so treat the energy as an upper bound. Tagged `alcohol` and `gluten`: shaoxing is fermented with a wheat starter as well as rice. Dry sherry is the usual substitute and is wheat-free; for a no-alcohol version, use stock with a splash of rice vinegar and accept that it is a different dish.",
     "keeping": "The cupboard, a year, cap on. It is a fortified cooking wine and does not turn the way a table wine does — it just gets duller, and a bottle that has been open two years is worth replacing."
   },
   {
@@ -3476,6 +3537,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 300,
     "unitName": "block",
+    "excludes": ["soy"],
     "source": "USDA",
     "sourceNote": "USDA soft silken tofu. A third of the protein and a twentieth of the calcium of the `firm tofu` row, because silken tofu is barely pressed and is set with GDL or nigari rather than calcium sulfate — the two are not interchangeable in a recipe or in this table. gramsPerUnit 300 is a standard tube or box.",
     "keeping": "Use it the day you open it. Submerged in water in the fridge it holds for 2 days, and it will have wept and softened by then. Never freeze it."
@@ -3527,8 +3589,9 @@
     "densityGPerMl": null,
     "gramsPerUnit": 100,
     "unitName": "portion",
+    "excludes": ["gluten"],
     "source": "MANUAL",
-    "sourceNote": "Dried buckwheat noodles, weighed dry. Published figures cluster at 336 to 353 kcal and this takes the bottom of that, which reconciles with its own macros. The real variable is not the brand's arithmetic but its buckwheat content: cheap soba can be 30% buckwheat and 70% wheat, juwari soba is 100% buckwheat and costs four times as much, and the protein and mineral columns move with that. Check the packet if it matters to you. Sodium is low here because it is a Japanese dried noodle salted in the dough; some brands run several times this. mu 100 g is one portion.",
+    "sourceNote": "Dried buckwheat noodles, weighed dry. Published figures cluster at 336 to 353 kcal and this takes the bottom of that, which reconciles with its own macros. The real variable is not the brand's arithmetic but its buckwheat content: cheap soba can be 30% buckwheat and 70% wheat, juwari soba is 100% buckwheat and costs four times as much, and the protein and mineral columns move with that. Check the packet if it matters to you. Sodium is low here because it is a Japanese dried noodle salted in the dough; some brands run several times this. mu 100 g is one portion. Tagged `gluten`: most soba is 30 to 70% wheat. Juwari soba is 100% buckwheat and is the exception, and it says so on the packet.",
     "keeping": "A year in the packet in a dry cupboard. Cooked soba is the least forgiving noodle in this collection: rinsed and iced it is good for an hour, and after that it stiffens and goes chalky whatever you do. Cook it to order."
   },
   {
@@ -3555,6 +3618,7 @@
     "folateUg100g": 11,
     "densityGPerMl": 0.96,
     "gramsPerUnit": null,
+    "excludes": ["dairy"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 171256, cultured sour cream, full fat. rho 0.96 g/ml. Crème fraîche is the richer substitute at about 40% fat against this 19%, and swapping one for the other changes a filling's energy by more than the difference looks."
   },
@@ -3582,6 +3646,7 @@
     "folateUg100g": 18,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["gluten"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 168927, dry unenriched pasta. Enriched pasta carries considerably more iron and folate; check the packet if either matters."
   },
@@ -3663,8 +3728,9 @@
     "densityGPerMl": null,
     "gramsPerUnit": 300,
     "unitName": "packet",
+    "excludes": ["soy"],
     "source": "MANUAL",
-    "sourceNote": "A packet of Sichuan pickled cabbage fish seasoning. Baijia (bai jia) sells a 300 g one in British Chinese supermarkets for a little over two pounds, and Haorenjia, Qiaotou and Tianwei make the same thing. Inside are three sachets: the pickled mustard greens, which are the bulk of the weight, a small seasoning oil, and a smaller powder for marinating the fish. **No manufacturer publishes a nutrition panel for these in a form that could be verified here**, so this row is built rather than read. Taking the greens at this library's own pickled mustard greens row (25 kcal, 2000 mg of sodium) and the oil-and-powder sachets at roughly 300 kcal and 3800 mg, a packet that is 70% greens by weight comes to about 108 kcal and 2540 mg per 100 g, which is what is recorded. The greens share is the uncertain part and runs from about 60% to 90% between brands — most packets print the sachet weights on the front, so a specific one can be worked out exactly. Read any panel using this as indicative. What is not in doubt is that the sodium is high: a packet seasons a kilo of food and is mostly salt and pickle. mu 300 g is one packet.",
+    "sourceNote": "A packet of Sichuan pickled cabbage fish seasoning. Baijia (bai jia) sells a 300 g one in British Chinese supermarkets for a little over two pounds, and Haorenjia, Qiaotou and Tianwei make the same thing. Inside are three sachets: the pickled mustard greens, which are the bulk of the weight, a small seasoning oil, and a smaller powder for marinating the fish. **No manufacturer publishes a nutrition panel for these in a form that could be verified here**, so this row is built rather than read. Taking the greens at this library's own pickled mustard greens row (25 kcal, 2000 mg of sodium) and the oil-and-powder sachets at roughly 300 kcal and 3800 mg, a packet that is 70% greens by weight comes to about 108 kcal and 2540 mg per 100 g, which is what is recorded. The greens share is the uncertain part and runs from about 60% to 90% between brands — most packets print the sachet weights on the front, so a specific one can be worked out exactly. Read any panel using this as indicative. What is not in doubt is that the sodium is high: a packet seasons a kilo of food and is mostly salt and pickle. mu 300 g is one packet. Tagged `soy` for the dietary filters, from the seasoning sachets rather than the greens; as with everything else about this packet, the printed panel is the authority.",
     "keeping": "A year in the sealed packet in a cupboard. Once open the sachets should be used at once: the greens ferment on in the fridge and go soft and unpleasantly sour within a week, and the oil sachet has nothing to keep it in. If you only want half a packet, freeze the rest of the greens in their liquid, which works, and accept that the oil sachet does not divide neatly."
   },
   {
@@ -3826,6 +3892,7 @@
     "folateUg100g": 98,
     "densityGPerMl": 0.6,
     "gramsPerUnit": null,
+    "excludes": ["sesame"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 170151, whole sesame seeds roasted and toasted. rho 0.6 g/ml, from a tablespoon at 9 g. The calcium is in the hull, so hulled (decorticated) seeds carry roughly a tenth of it — this row is for the unhulled kind sold for sprinkling.",
     "keeping": "Six months in a sealed jar in the cupboard, a year in the freezer. They are half fat and they are already toasted, so rancidity is what ends them: a sharp, crayon-like smell means throw them out."
@@ -3908,6 +3975,7 @@
     "folateUg100g": 5,
     "densityGPerMl": null,
     "gramsPerUnit": null,
+    "excludes": ["meat"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 171506, raw skinless turkey breast.",
     "keeping": "Two days in the fridge. Cooked turkey keeps 3 days and is drier every one of them; slice what is left, cover it with its own juices or a little stock, and it stays edible to the third."
@@ -3933,6 +4001,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 200,
     "unitName": "portion",
+    "excludes": ["gluten"],
     "source": "MANUAL",
     "sourceNote": "Boiled udon — the pre-cooked vacuum-packed or frozen kind a recipe drops straight into a bowl, which is what the weight in a recipe here refers to. Japanese standard composition tables give 95 to 105 kcal for it and English-language sources run to 124; this row takes 105, which reconciles with its own macros. **Dried udon is a different row's worth of numbers** — about three times the energy per gram before it is cooked — so weigh what goes in the bowl, not what comes out of the packet. The sodium is real and is in the noodle rather than the soup: udon dough is salted, which is what gives it the bite. mu 150 g is the single-serving pack. mu 200 g is one vacuum-packed or frozen sanuki portion, which is the pack size every British Asian supermarket sells — Yutaka, TS Tanoshiya and the frozen brands are all 200 g. It was recorded as 150 g here until the count started being shown on the recipe line, where it read as two and a half portions for a two-portion dish and gave itself away.",
     "keeping": "Vacuum-packed, up to the date on the pack in the fridge, and they are best frozen — frozen udon is the better product anyway, thicker and chewier than chilled, and goes into boiling water straight from the freezer. Once the pack is open they dry at the surface within a day, so cook the lot. Cooked and left in soup they turn to paste within an hour, which is why the soup and the noodles are kept apart in this collection."
@@ -3962,6 +4031,7 @@
     "folateUg100g": 3,
     "densityGPerMl": 0.946,
     "gramsPerUnit": null,
+    "excludes": ["dairy"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 173430; rho from the 227 g (2-stick) US cup",
     "keeping": "A month in the fridge, wrapped, and 6 months in the freezer. Butter takes up smells through its wrapper, so it does not go next to the garlic or the fish; a stale, cheesy smell at the surface is rancidity and does not cook out."
@@ -3987,8 +4057,9 @@
     "folateUg100g": 0,
     "densityGPerMl": 0.88,
     "gramsPerUnit": null,
+    "excludes": ["alcohol"],
     "source": "USDA",
-    "sourceNote": "USDA SR Legacy 173470. Most of the 288 kcal is the alcohol it is extracted into. rho 0.88 g/ml, from a teaspoon at 4.2 g — and at a teaspoon a time it cannot move a panel, which is the case for entering it at all rather than leaving it as a coverage gap."
+    "sourceNote": "USDA SR Legacy 173470. Most of the 288 kcal is the alcohol it is extracted into. rho 0.88 g/ml, from a teaspoon at 4.2 g — and at a teaspoon a time it cannot move a panel, which is the case for entering it at all rather than leaving it as a coverage gap. Tagged `alcohol`: real extract is vanilla macerated in roughly 35% alcohol, and while a baked cake drives most of it off, a no-alcohol filter is usually asked about the ingredient rather than the chemistry. Alcohol-free vanilla flavouring exists."
   },
   {
     "name": "wakame",
@@ -4040,6 +4111,7 @@
     "folateUg100g": 98,
     "densityGPerMl": 0.5,
     "gramsPerUnit": null,
+    "excludes": ["nuts"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 170187, English walnuts. rho 0.5 g/ml for roughly chopped halves, 120 g per cup.",
     "keeping": "The freezer, in a bag, a year — this is one of the few things genuinely worth freezing by default. Walnuts have the most fragile fat of any common nut and go bitter in a cupboard within about two months of opening."
@@ -4085,6 +4157,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 30,
     "unitName": "slice",
+    "excludes": ["gluten"],
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 172686, bread, white, commercially prepared. mu 30 g is one ordinary supermarket slice; the thick-cut sort a Hong Kong French toast wants is nearer 40 g, so a recipe calling for thick slices by weight rather than by count is telling the truth and one calling for four slices is estimating. UK sliced white runs lower in sodium than this American record — about 360 mg per 100 g against 477 — because the salt reduction targets here are stricter.",
     "keeping": "Three days in the bread bin at room temperature, in paper or its own bag but never the fridge, which stales bread faster than the counter does — the starch retrogrades quickest just above zero. Three months sliced and frozen, and it toasts straight from frozen. Stale bread is not waste: it is what French toast, breadcrumbs and a bread pudding are actually for, and it soaks custard better than fresh."
@@ -4140,6 +4213,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 150,
     "unitName": "fillet",
+    "excludes": ["fish"],
     "source": "MANUAL",
     "sourceNote": "A deliberately generic row for the mild, firm, boneless white fish these recipes slice thin — basa or pangasius, which is what a Chinese supermarket freezer has and what a suan cai yu is made with here, and which these figures are for. Tilapia is within a few per cent of it. Sea bass and cod are leaner and rather more expensive and would each read a little lower in fat. Grass carp, the traditional fish, is not sold in Britain in any form. The row is generic because the dish is: what matters is that the fillet is thick enough to slice on the diagonal and firm enough to hold together in a boiling broth. mu 150 g is one fillet.",
     "keeping": "One day in the fridge on the bottom shelf if fresh, and most white fish sold as fresh was frozen at sea and thawed for display, in which case it must not be refrozen and should be cooked the day it is bought. Frozen fillets keep six months and are genuinely better than tired fresh ones for this — defrost overnight in the fridge, then press between kitchen paper, because a wet fillet will not take a cornflour coating. Fish that smells of anything beyond the sea is finished."
@@ -4213,6 +4287,7 @@
     "densityGPerMl": null,
     "gramsPerUnit": 6,
     "unitName": "wrapper",
+    "excludes": ["egg", "gluten"],
     "source": "USDA",
     "sourceNote": "USDA record for wonton wrappers, including egg roll wrappers — the square yellow sheets sold fresh or frozen in every Asian supermarket. mu 6 g is one 8 cm square; a standard pack of 250 g is about forty. The sodium is in the dough and is why a wonton needs less salt in its filling than it looks like it should. Thicker dumpling and gyoza wrappers are the same composition in a heavier sheet.",
     "keeping": "A week in the fridge in the packet, sealed — the top sheet dries out and cracks within an hour of being opened, so keep the stack under a damp cloth while you work and re-wrap what is left. Three months in the freezer, and thaw them in the fridge rather than on the counter, which sweats them into a solid block. Wrapped wontons freeze better than wrappers do: freeze them apart on a tray, then bag them, and boil from frozen."

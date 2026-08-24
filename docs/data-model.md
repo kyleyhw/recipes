@@ -82,6 +82,37 @@ the totals.
 `sourceNote` records where a number came from, satisfying the magic-number
 standard for values like flour's $\rho \approx 0.53\ \mathrm{g\,ml^{-1}}$.
 
+### What an ingredient rules out
+
+`excludes` is a list of tags — `meat`, `pork`, `fish`, `shellfish`, `dairy`,
+`egg`, `peanut`, `nuts`, `sesame`, `soy`, `gluten`, `alcohol` — saying what the
+substance carries. Absent means it carries none, which is the answer for most of
+the library.
+
+The tags are about the **substance**, never about a diet: a row says `pork`, not
+`not-halal`. The diets are assembled from them in `lib/content/diet.ts`, so
+"vegetarian" is defined once rather than restated on 166 rows, and adding a diet
+is a line in that file rather than a pass over the library.
+
+A recipe's diets are then **derived at build time** from its ingredients. No
+recipe file carries a `vegetarian: true` field, because a field like that is a
+claim somebody typed once and nobody checks again — add oyster sauce to a
+stir-fry two months later and the field still says vegetarian. This way the
+answer changes when the ingredient list does, which is the only version that
+stays true. It is also what catches the traps: dashi is a fish stock, oyster
+sauce is shellfish, gelatine is boiled from hide, and Parmigiano Reggiano is
+made with calf rennet, none of which is visible in a recipe's title.
+
+An unresolved ingredient line makes a recipe satisfy **no** diet rather than all
+of them. The absence of evidence about an ingredient is not evidence that the
+ingredient is fine, and a filter that treated it as such would hide exactly the
+recipe somebody needed to check by hand.
+
+None of this is an allergen guarantee, and the site says so wherever it shows
+one. It reads a Markdown ingredient list, not a label: brands differ, factories
+are invisible to it, and an accompaniment a final step names — rice, toast — is
+not on the list at all.
+
 ### Reading $\mu$ backwards
 
 $\mu$ exists so a count can become a mass — "2 eggs" is 100 g only because a

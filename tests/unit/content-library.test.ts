@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadCollection } from "@/lib/content/library";
-import { usedInIndex } from "@/lib/content/prepare";
+import { dietTags, usedInIndex } from "@/lib/content/prepare";
+import { dietsFor, isDietTag } from "@/lib/content/diet";
 import { parseRecipeFile, serialiseRecipeFile } from "@/lib/content/format";
 import { matchIngredient } from "@/lib/content/prepare";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
@@ -314,5 +315,89 @@ describe("what uses each ingredient", () => {
       recipe.ingredients.some((line) => /\bgarlic\b/.test(line) && !/powder/.test(line)),
     );
     expect(garlic.length).toBe(counted.length);
+  });
+});
+
+/**
+ * The dietary tags, against the collection they describe.
+ *
+ * The unit tests in `diet.test.ts` prove the arithmetic; these prove the data,
+ * which is where this feature can actually be wrong. A tag that is missing does
+ * not throw and does not fail a build — it produces a recipe cheerfully
+ * offered to somebody who cannot eat it, which is the one failure mode worth
+ * building a test around.
+ */
+describe("what the ingredients rule out", () => {
+  const { recipes, ingredients } = loadCollection();
+
+  it("uses only tags the diet module knows", () => {
+    const unknown = ingredients.flatMap((ingredient) =>
+      (ingredient.excludes ?? [])
+        .filter((tag) => !isDietTag(tag))
+        .map((tag) => `${ingredient.name}: ${tag}`),
+    );
+    expect(unknown).toEqual([]);
+  });
+
+  it("lists no tag twice on one ingredient", () => {
+    for (const ingredient of ingredients) {
+      const tags = ingredient.excludes ?? [];
+      expect(new Set(tags).size, ingredient.name).toBe(tags.length);
+    }
+  });
+
+  /** Pork is a kind of meat, and a row that says one must say the other. */
+  it("tags anything porcine as meat as well", () => {
+    const inconsistent = ingredients
+      .filter((i) => (i.excludes ?? []).includes("pork"))
+      .filter((i) => !(i.excludes ?? []).includes("meat"))
+      .map((i) => i.name);
+    expect(inconsistent).toEqual([]);
+  });
+
+  /**
+   * Every recipe can be answered. This holds only because every ingredient line
+   * resolves — the test above this one — and it is stated separately because
+   * the two would fail for different reasons: that one means a missing row,
+   * this one means the diet code stopped being able to say anything.
+   */
+  it("can answer for every recipe in the collection", () => {
+    for (const recipe of recipes) {
+      const { unknown } = dietTags(recipe, ingredients);
+      expect(unknown, recipe.slug).toBe(false);
+    }
+  });
+
+  /**
+   * Anchors, and the reason the tags are on ingredients rather than on
+   * recipes. Each of these is a dish nothing in its title or its description
+   * marks as unsuitable, and each would be wrong by hand within a month of
+   * somebody editing it.
+   */
+  it("catches the vegetarian traps this collection is full of", () => {
+    const diets = (slug: string) => {
+      const recipe = recipes.find((entry) => entry.slug === slug);
+      if (!recipe) throw new Error(`no recipe ${slug}`);
+      const { tags, unknown } = dietTags(recipe, ingredients);
+      return dietsFor(tags, { unknown });
+    };
+
+    // Dashi is a fish stock, and the bowl is otherwise vegetables and noodles.
+    expect(diets("kitsune-udon")).not.toContain("vegetarian");
+    expect(diets("goma-ae")).not.toContain("vegetarian");
+    // Oyster sauce, in a plate of greens and garlic.
+    expect(diets("garlic-stir-fried-greens")).not.toContain("vegetarian");
+    // And the control: a dish that really is.
+    expect(diets("smashed-cucumber-salad")).toContain("vegan");
+  });
+
+  /** Gluten hides in the seasoning here far more than in the flour. */
+  it("knows that soy sauce is brewed with wheat", () => {
+    const soy = ingredients.find((i) => i.name === "light soy sauce");
+    expect(soy?.excludes).toContain("gluten");
+    const recipe = recipes.find((entry) => entry.slug === "tomato-and-egg");
+    if (!recipe) throw new Error("no tomato-and-egg");
+    const { tags } = dietTags(recipe, ingredients);
+    expect(tags).toContain("gluten");
   });
 });

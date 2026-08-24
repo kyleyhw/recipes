@@ -34,6 +34,7 @@ function recipe(overrides: Partial<RecipeSummary> & { title: string }): RecipeSu
     addedBy: null,
     addedAt: null,
     updatedAt: null,
+    diets: [],
     tags: [],
     prepMinutes: 10,
     cookMinutes: 20,
@@ -299,24 +300,32 @@ describe("filters", () => {
 
   it("narrows to one cuisine", () => {
     expect(
-      filterRecipes(LISTING, { cuisine: "Thai", addedBy: null }).map((r) => r.title),
+      filterRecipes(LISTING, { cuisine: "Thai", addedBy: null, diets: [] }).map(
+        (r) => r.title,
+      ),
     ).toEqual(["Larb", "Curry"]);
   });
 
   it("narrows to one contributor", () => {
     expect(
-      filterRecipes(LISTING, { cuisine: null, addedBy: "ada" }).map((r) => r.title),
+      filterRecipes(LISTING, { cuisine: null, addedBy: "ada", diets: [] }).map(
+        (r) => r.title,
+      ),
     ).toEqual(["Larb", "Loaf"]);
   });
 
   it("combines the two", () => {
     expect(
-      filterRecipes(LISTING, { cuisine: "Thai", addedBy: "ada" }).map((r) => r.title),
+      filterRecipes(LISTING, { cuisine: "Thai", addedBy: "ada", diets: [] }).map(
+        (r) => r.title,
+      ),
     ).toEqual(["Larb"]);
   });
 
   it("returns everything when nothing is set", () => {
-    expect(filterRecipes(LISTING, { cuisine: null, addedBy: null })).toHaveLength(4);
+    expect(
+      filterRecipes(LISTING, { cuisine: null, addedBy: null, diets: [] }),
+    ).toHaveLength(4);
   });
 
   /**
@@ -331,9 +340,11 @@ describe("filters", () => {
       { value: UNATTRIBUTED_SHELF, count: 1 },
     ]);
     expect(
-      filterRecipes(LISTING, { cuisine: UNATTRIBUTED_SHELF, addedBy: null }).map(
-        (r) => r.title,
-      ),
+      filterRecipes(LISTING, {
+        cuisine: UNATTRIBUTED_SHELF,
+        addedBy: null,
+        diets: [],
+      }).map((r) => r.title),
     ).toEqual(["Orphan"]);
   });
 

@@ -1,5 +1,6 @@
 import type { RecipeFile } from "@/lib/content/format";
 import type { LibraryIngredient } from "@/lib/content/library";
+import { isDietTag, type DietTag } from "@/lib/content/diet";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
 import { nutrientVector, type NutrientVector } from "@/lib/nutrition/nutrients";
@@ -158,6 +159,8 @@ function vectorFor(entry: LibraryIngredient): NutrientVector {
 export interface LineLibrary {
   /** The library row's own name — the key that opens the drawer at it. */
   name: string;
+  /** What this line rules out. Empty for most ingredients. */
+  excludes: DietTag[];
   /** rho, for turning the line's volume into grams. */
   densityGPerMl: number | null;
   /** mu, for turning grams back into a count. */
@@ -230,6 +233,9 @@ export function prepareRecipe(
       match
         ? {
             name: match.name,
+            // Unknown strings are dropped rather than carried: a typo in the
+            // library must not become a tag nothing can ever satisfy.
+            excludes: (match.excludes ?? []).filter(isDietTag),
             densityGPerMl: match.densityGPerMl ?? null,
             gramsPerUnit: match.gramsPerUnit ?? null,
             unitName: match.unitName ?? null,
@@ -321,4 +327,37 @@ export function usedInIndex(
     }
   }
   return index;
+}
+
+/**
+ * What a recipe rules out, and whether it is sure.
+ *
+ * `unknown` is true when any ingredient line failed to resolve against the
+ * library, and it is the load-bearing half: an unresolved line is an ingredient
+ * nothing knows anything about, so no claim can be made about the recipe at
+ * all. `dietsFor` turns that into an empty list rather than into a clean bill
+ * of health.
+ *
+ * Optional ingredients count. "Optional" describes whether the cook adds it,
+ * not whether it is in the dish, and a recipe whose optional garnish is dried
+ * shrimp is not a recipe to offer somebody filtering out shellfish.
+ */
+export function dietTags(
+  recipe: RecipeFile,
+  library: readonly LibraryIngredient[],
+): { tags: DietTag[]; unknown: boolean } {
+  const tags = new Set<DietTag>();
+  let unknown = false;
+
+  for (const line of recipe.ingredients) {
+    const match = matchIngredient(parseIngredientLine(line).name, library);
+    if (!match) {
+      unknown = true;
+      continue;
+    }
+    for (const tag of match.excludes ?? []) {
+      if (isDietTag(tag)) tags.add(tag);
+    }
+  }
+  return { tags: [...tags], unknown };
 }

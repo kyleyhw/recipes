@@ -1,7 +1,8 @@
 import type { RecipeFile } from "@/lib/content/format";
 import type { LibraryIngredient } from "@/lib/content/library";
 import type { Attribution } from "@/lib/content/attribution";
-import { prepareRecipe } from "@/lib/content/prepare";
+import { dietTags, prepareRecipe } from "@/lib/content/prepare";
+import { dietsFor, DIET_KEYS, type DietKey } from "@/lib/content/diet";
 import type { StringKey } from "@/lib/i18n/strings";
 import { computeNutrition } from "@/lib/nutrition/compute";
 import { totalMinutes } from "@/lib/duration";
@@ -46,6 +47,12 @@ export interface RecipeSummary {
    */
   addedAt: number | null;
   updatedAt: number | null;
+  /**
+   * The dietary filters this recipe passes, worked out from what its
+   * ingredients rule out — see lib/content/diet.ts. Empty where any ingredient
+   * failed to resolve, because an unknown ingredient is not a safe one.
+   */
+  diets: DietKey[];
   tags: string[];
   prepMinutes: number | null;
   cookMinutes: number | null;
@@ -79,6 +86,7 @@ export function summarise(
 ): RecipeSummary {
   const prepared = prepareRecipe(recipe, library);
   const nutrition = computeNutrition(prepared.nutrition, recipe.servings);
+  const diet = dietTags(recipe, library);
   const resolved = nutrition.coverage > 0;
 
   return {
@@ -97,6 +105,7 @@ export function summarise(
     addedBy: attribution?.addedBy.name ?? null,
     addedAt: attribution?.addedAt ?? null,
     updatedAt: attribution?.updatedAt ?? null,
+    diets: dietsFor(diet.tags, { unknown: diet.unknown }),
     tags: recipe.tags,
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
@@ -249,9 +258,17 @@ export function nextSort(row: SortRow, current: SortKey): SortKey {
 export interface Filters {
   cuisine: string | null;
   addedBy: string | null;
+  /**
+   * Dietary filters, all of which must hold. Empty means no dietary filter at
+   * all — a list rather than a single value because these are the one narrowing
+   * a reader combines: no pork *and* no shellfish is a normal thing to want,
+   * and asking them to pick one would make the control useless to the people
+   * who need it most.
+   */
+  diets: DietKey[];
 }
 
-export const NO_FILTERS: Filters = { cuisine: null, addedBy: null };
+export const NO_FILTERS: Filters = { cuisine: null, addedBy: null, diets: [] };
 
 export function filterRecipes(
   recipes: readonly RecipeSummary[],
@@ -262,8 +279,27 @@ export function filterRecipes(
       (filters.cuisine === null ||
         (recipe.cuisine ?? UNATTRIBUTED_SHELF) === filters.cuisine) &&
       (filters.addedBy === null ||
-        (recipe.addedBy ?? UNATTRIBUTED_SHELF) === filters.addedBy),
+        (recipe.addedBy ?? UNATTRIBUTED_SHELF) === filters.addedBy) &&
+      filters.diets.every((diet) => recipe.diets.includes(diet)),
   );
+}
+
+/**
+ * How many recipes in a listing satisfy each diet.
+ *
+ * Every diet is offered whatever its count, unlike the cuisine and contributor
+ * filters, which are gathered from what the collection happens to contain. The
+ * difference is that a cuisine nobody has cooked is not a question anyone is
+ * asking, whereas "is there anything here I can eat?" is — and the honest
+ * answer to it, when it is none, is a zero rather than a missing row.
+ */
+export function dietCounts(
+  recipes: readonly RecipeSummary[],
+): Array<{ value: DietKey; count: number }> {
+  return DIET_KEYS.map((key) => ({
+    value: key,
+    count: recipes.filter((recipe) => recipe.diets.includes(key)).length,
+  }));
 }
 
 /**

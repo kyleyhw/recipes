@@ -4,7 +4,9 @@ import { useMemo, useState } from "react";
 import { useLanguage, useT } from "@/components/language";
 import { RecipeCard } from "@/components/recipe-card";
 import { SortMenu } from "@/components/sort-menu";
+import { DietMenu } from "@/components/diet-menu";
 import {
+  dietCounts,
   filterOptions,
   filterRecipes,
   NO_FILTERS,
@@ -15,7 +17,8 @@ import {
   type RecipeSummary,
   type SortKey,
 } from "@/lib/content/summary";
-import { translateCategory } from "@/lib/i18n/strings";
+import { translate, translateCategory, type StringKey } from "@/lib/i18n/strings";
+import type { DietKey } from "@/lib/content/diet";
 
 /**
  * Browsing, searching and arranging the collection.
@@ -79,6 +82,8 @@ export function Browse({
     [recipes],
   );
 
+  const diets = useMemo(() => dietCounts(recipes), [recipes]);
+
   const shelves = useMemo(
     () => shelveRecipes(narrowed, sort, categoryOrder),
     [narrowed, sort, categoryOrder],
@@ -88,6 +93,13 @@ export function Browse({
     const value = filters[field];
     return value === null ? [] : [{ field, value }];
   });
+
+  function dropDiet(key: DietKey): void {
+    setFilters((current) => ({
+      ...current,
+      diets: current.diets.filter((diet) => diet !== key),
+    }));
+  }
 
   function setFilter(field: FilterField, value: string | null): void {
     setFilters((current) => ({ ...current, [field]: value }));
@@ -115,6 +127,11 @@ export function Browse({
           onFilter={setFilter}
           options={options}
         />
+        <DietMenu
+          value={filters.diets}
+          onChange={(next) => setFilters((current) => ({ ...current, diets: next }))}
+          counts={diets}
+        />
         {trimmed.length > 0 ? (
           <button
             type="button"
@@ -134,8 +151,25 @@ export function Browse({
           removable without going back into it. A listing quietly showing a
           third of itself is the same failure as a search box you cannot see
           the contents of. */}
-      {active.length > 0 ? (
+      {active.length > 0 || filters.diets.length > 0 ? (
         <div className="mb-4 flex flex-wrap items-center gap-2">
+          {/* A dietary filter has to be visible outside the menu even more than
+              a cuisine does: it is the one that can hide most of the
+              collection, and someone who set it three pages ago will otherwise
+              read the gap as the collection being small. */}
+          {filters.diets.map((diet) => (
+            <button
+              key={diet}
+              type="button"
+              onClick={() => dropDiet(diet)}
+              className="rounded-full bg-surface-2 px-3 py-1 text-xs text-text-muted hover:text-text"
+            >
+              {translate(language, `diet.${diet}` as StringKey)}
+              <span aria-hidden="true" className="ml-2">
+                ×
+              </span>
+            </button>
+          ))}
           {active.map(({ field, value }) => (
             <button
               key={`${field}-${value}`}
