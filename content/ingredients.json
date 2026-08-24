@@ -390,6 +390,23 @@
     "sourceNote": "USDA SR Legacy 173227, beverages, tea, black, brewed, prepared with tap water — the brewed drink, not the leaf, which is the same convention this library uses for espresso. A recipe therefore lists millilitres of tea and says in its method how much leaf made them. Nutritionally it is water; the row exists so that a recipe using 400 ml of it resolves rather than reading as a coverage gap. Brewing it four times as strong as this record assumes changes nothing that shows up in a panel, only the caffeine, which the panel does not carry."
   },
   {
+    "name": "black vinegar",
+    "kcal100g": 50,
+    "protein100g": 1.0,
+    "carbs100g": 10.0,
+    "sugar100g": 3.0,
+    "fiber100g": 0,
+    "fat100g": 0,
+    "satFat100g": 0,
+    "cholesterolMg100g": 0,
+    "sodiumMg100g": 900,
+    "densityGPerMl": 1.01,
+    "gramsPerUnit": null,
+    "source": "MANUAL",
+    "sourceNote": "Chinkiang black vinegar. FoodData Central has no record of it, and it is nothing like the balsamic and red wine vinegars it does hold, so these are the declared values from a typical bottle rather than a measurement. Energy and sodium vary noticeably between brands; the rest are unknown and left so. Removed from this library in August 2026 when no recipe used it, and restored when the dry tantanmen wanted it — the note about buyability rather than presence in memories.md is exactly this case. The figures are the ones it had before, unchanged.",
+    "keeping": "Indefinitely in the cupboard, tightly capped. It is already an acid and there is nothing in it to spoil; what it loses over a year or two is aroma rather than safety. Sediment at the bottom of an aged bottle is normal and is worth not pouring in. Do not refrigerate — cold flattens it."
+  },
+  {
     "name": "bone-in chicken thighs",
     "usdaFdcId": "171076",
     "kcal100g": 154.7,
