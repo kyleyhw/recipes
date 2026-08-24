@@ -2,7 +2,7 @@
 title: Mapo Tofu
 description: Silken tofu in a red, numbing sauce of fermented broad bean paste and black beans. The pork version — what most kitchens outside Sichuan actually cook.
 category: Mains
-cuisine: Chinese
+cuisine: Sichuan
 tags:
   - quick
 servings: 4
@@ -116,3 +116,4 @@ as sponge.
 
 - 2026-08-17: Added as a draft, as the pork version. The recipe sites could not be reached from the machine this file was written on, so the quantities are the standard proportions for the dish rather than a transcription of any one version. What is beyond doubt is the beef question: the Chengdu original and the Sichuan school recipes use beef, and this is knowingly the other one.
 - 2026-08-21: Checked against the published Sichuan versions — Red House Spice, Omnivore's Cookbook and China Sichuan Food — now that the machine can search again. They agree with what is written here on every point that matters: doubanjiang fried in the oil until it colours it red, chilli powder and fermented black beans in after it, stock and tofu braised together, the starch added in more than one go, and the ground Sichuan pepper dusted over at the end rather than cooked in. No change to the recipe. Pixian doubanjiang is what all three specify, and it is worth seeking out.
+- 2026-08-24: Refiled from `Chinese` to `Sichuan`. It was the one recipe the note about naming the region was written against, and it was still the wrong side of it.

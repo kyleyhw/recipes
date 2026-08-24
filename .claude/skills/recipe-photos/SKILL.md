@@ -149,7 +149,7 @@ A picture that fails 1 or 2 is wrong and should be regenerated. Failing 3, 4 or
 ## Filling gaps without redrawing the book
 
 Editing the prompt changes every recipe's fingerprint at once, so the ordinary
-staleness rule immediately declares all 77 due. That is right when you mean to
+staleness rule immediately declares the whole collection due. That is right when you mean to
 regenerate and expensive when you do not.
 
     npm run photos -- --missing
