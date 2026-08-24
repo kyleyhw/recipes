@@ -10,6 +10,10 @@ servings: 4
 prepMinutes: 5
 cookMinutes: 6
 cookLabel: boil
+photo: /photos/kongnamul-muchim.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: d98bf74b87b25e42
 ---
 
 ## Ingredients

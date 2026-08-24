@@ -10,6 +10,10 @@ servings: 4
 prepMinutes: 5
 cookMinutes: 3
 cookLabel: blanch
+photo: /photos/goma-ae.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: eaf8cec26b5463ff
 ---
 
 ## Ingredients

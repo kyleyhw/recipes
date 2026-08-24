@@ -12,6 +12,10 @@ cookMinutes: 2
 cookLabel: blanch
 waitMinutes: 40
 waitLabel: soak
+photo: /photos/wood-ear-salad.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: fa8188e4167ed4b3
 ---
 
 ## Ingredients

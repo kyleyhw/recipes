@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 10
 waitMinutes: 15
 waitLabel: drain
+photo: /photos/smashed-cucumber-salad.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 6b93e242b51bc6bd
 ---
 
 ## Ingredients

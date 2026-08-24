@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 10
 waitMinutes: 10
 waitLabel: salt
+photo: /photos/sunomono.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: f3a7a6af5026323a
 ---
 
 ## Ingredients

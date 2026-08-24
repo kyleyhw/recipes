@@ -7,6 +7,10 @@ tags:
   - quick
 servings: 4
 prepMinutes: 10
+photo: /photos/oi-muchim.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 4561053d7969b4d3
 ---
 
 ## Ingredients

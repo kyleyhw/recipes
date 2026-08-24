@@ -10,6 +10,10 @@ prepMinutes: 15
 cookMinutes: 45
 cookLabel: simmer
 waitMinutes: 90
+photo: /photos/garlic-pork-with-cucumber.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 95e2e75d6076eb14
 ---
 
 ## Ingredients
