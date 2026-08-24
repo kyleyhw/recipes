@@ -1,6 +1,6 @@
 ---
 title: Tori Nanban Udon
-description: Chicken and leek seared until both are properly charred, then simmered five minutes into a soy broth and poured over udon. One pan, one bowl, no dashi.
+description: Chicken and leek seared until both are properly charred, then simmered five minutes into a dashi and soy broth and poured over udon. One pan, one bowl.
 category: Soups & Stews
 cuisine: Japanese
 tags:
@@ -14,44 +14,43 @@ cookLabel: simmer
 
 ## Ingredients
 
-- 120 g chicken thigh, in 3 cm pieces
-- 0.25 tsp salt
+- 120 g chicken thigh, skin on, in 3 cm pieces
+- 1/8 tsp salt
 - 60 g leek, in 3-4 cm lengths
 - 1 tbsp neutral oil
-- 400 ml water
-- 1.25 tbsp light soy sauce
-- 1 tbsp dry white wine
-- 0.5 tbsp granulated sugar
+- 400 ml dashi
+- 1 1/4 tbsp light soy sauce
+- 1 tbsp mirin
 - 150 g udon noodles
 
 ## Method
 
-1. Cut the chicken into 3 cm pieces and season it with the salt. Cut the leek into lengths of 3 to 4 cm — short enough to eat with chopsticks, long enough to sit flat in the pan.
+1. Cut the chicken into 3 cm pieces, keeping the skin on every piece you can, and season it with the salt. Cut the leek into lengths of 3 to 4 cm — short enough to eat with chopsticks, long enough to sit flat in the pan.
 2. Heat the oil in a small saucepan or a 20 cm frying pan over medium-high heat until it shimmers and moves in one sheet. Lay the chicken in skin side down and stand the leek pieces on their cut faces beside it.
-3. Sear for 3 minutes without moving anything. The chicken should release from the pan on its own with a deep brown crust, and the cut faces of the leek should be blackened at the edges rather than merely golden. Turn both and give them 2 minutes more.
-4. Pour in the water, soy sauce, white wine and sugar. Bring to a simmer over medium-low heat and cook for 5 minutes, skimming off the grey foam as it rises. It is done when the chicken is opaque all the way through, the leek has slumped and gone sweet, and the broth is clear rather than cloudy.
+3. Sear for 3 minutes without moving anything. The chicken should release from the pan on its own with a deep brown crust and a good spoonful of its fat rendered out, and the cut faces of the leek should be blackened at the edges rather than merely golden. Turn both and give them 2 minutes more.
+4. Pour in the dashi, soy sauce and mirin. Bring to a simmer over medium-low heat and cook for 5 minutes, skimming off the grey foam as it rises. It is done when the chicken is opaque all the way through, the leek has slumped and gone sweet, and the broth is clear rather than cloudy.
 5. While that simmers, cook the udon. Frozen or vacuum-packed noodles need 1 to 2 minutes in boiling water, dried ones 8 to 10 — go by the packet. Drain them well; water clinging to them thins the soup.
-6. Put the udon in a deep bowl, pour the soup over, and arrange the chicken and leek on top. Eat it at once, while the noodles still have bite.
+6. Warm the bowl with hot water from the tap and tip it out. Put the udon in, pour the soup over, and arrange the chicken and leek on top. Eat it at once, while the noodles still have bite.
 
 ## Notes
 
 The char is the dish and it is the only difficult thing here. Nanban means the
-leek, and the whole point is that both it and the chicken go into the broth
-already blackened at the edges — that is where the savour comes from in a soup
-made with plain water. Three minutes without touching anything, in a pan hot
-enough that it hurts to hold your hand over. Stirring it about gives you pale
+leek, and the point is that both it and the chicken go into the broth already
+blackened at the edges. Three minutes without touching anything, in a pan hot
+enough that it hurts to hold a hand over. Stirring it about gives you pale
 chicken in soy water.
 
-No dashi, which is unusual for a Japanese noodle soup and is why this works as a
-weeknight bowl: the browned chicken is the stock. If you have dashi, use it in
-place of the water and you get the fuller, more conventional version — Gyudon
-and Chawanmushi on this site both use it and the row is in the library.
+Skin on, and skin side down first. It renders a spoonful of chicken fat into
+the pan, which is what the leek then chars in, and it is free flavour that a
+skinless thigh simply does not have. It will not stay crisp once the broth goes
+in and it is not supposed to.
 
-White wine is what the source specifies, where a Japanese kitchen would almost
-certainly reach for sake. This collection stocks both, they swap one for one,
-and sake is the more traditional and slightly rounder of the two. Half a
-tablespoon of sugar plus the wine is standing in for the tablespoon of mirin
-this would otherwise have.
+Dashi rather than water. The source this came from used plain water and it does
+work — the seared chicken carries it — but a Japanese noodle broth without dashi
+is a compromise, and this collection has the row. Instant dashi powder stirred
+into hot water takes thirty seconds and is the sensible weeknight answer; a
+proper kombu and katsuobushi dashi is better and takes twenty minutes. Plain
+water remains the fallback and the original.
 
 A UK leek is not quite naganegi. The Japanese long onion is milder and more
 tender, somewhere between a leek and an oversized spring onion. Use the white
@@ -66,14 +65,23 @@ noodles weigh cooked, so 150 g of dried is three portions rather than one.
 Cook the noodles separately and combine at the last second. Udon left standing
 in hot soup goes soft and then to paste, and it takes about an hour.
 
-The panel reads 1978 mg of sodium, which is one bowl and most of a day's
-allowance. That is what a soy-broth noodle soup costs and it is worth knowing
-rather than discovering. The soy sauce is about two thirds of it; the noodles
-carry 180 mg of their own, since udon dough is salted and that salt is what
-gives it the bite. The honest reduction is to drink less of the soup — leave a
-third in the bowl and you leave a few hundred milligrams with it, which is
-what most people do with a noodle soup anyway. Cutting the soy to 1 tbsp takes
-off about 250 mg and costs the broth its backbone.
+Shichimi togarashi at the table is the standard finish and the only thing this
+bowl is missing. A raw egg yolk dropped in is the other one.
+
+The salt is an eighth of a teaspoon and that is deliberate. The source says "a
+pinch", which is not a quantity a recipe here can use, and a quarter teaspoon —
+the obvious reading — turned out to be 551 mg, a quarter of the whole bowl's
+sodium, for chicken that is about to sit in a salty broth anyway. An eighth is
+enough to season the surface and get a crust, which is all it is for.
+
+Even so the panel reads about 1800 mg of sodium, which is one bowl and most of
+a day's allowance. That is what a soy broth costs and it is worth knowing
+rather than discovering. The soy sauce alone is 1112 mg of it; the noodles
+carry 180 mg, since udon dough is salted and that salt is what gives it the
+bite, and the dashi another 130. The honest reduction is to drink less of the
+soup — leave a third in the bowl and you leave a few hundred milligrams with
+it, which is what most people do with a noodle soup anyway. Cutting the soy to
+1 tbsp takes off about 220 mg and costs the broth its backbone.
 
 ## Storage
 
@@ -97,13 +105,15 @@ which takes two minutes.
         - salt
       - leek
       - neutral oil
-    - water
+    - dashi
     - light soy sauce
-    - dry white wine
-    - granulated sugar
+    - mirin
   - cook
     - udon noodles
 
 ## Log
 
-- 2026-08-22: Added from a screenshot sent over, quantities transcribed as given. Two changes, both small: the oil the method calls for was not in the list and is now, and "a pinch" of salt is written as 0.25 tsp, since a recipe here has to be followable without guessing. The last step was cut off in the screenshot, so the noodle cooking and assembly are the standard ones rather than a transcription.
+- 2026-08-22: Added from a screenshot sent over, quantities transcribed as given. Two changes, both small: the oil the method calls for was not in the list and is now, and "a pinch" of salt is given a number, since a recipe here has to be followable without guessing. The last step was cut off in the screenshot, so the noodle cooking and assembly are the standard ones rather than a transcription.
+- 2026-08-22: One tablespoon of mirin in place of the source's tablespoon of white wine and half tablespoon of sugar. That is very nearly an exact swap rather than a change of character — a tablespoon of mirin is 17 g carrying 7.3 g of sugar against the 6.2 g the sugar gave, at a similar strength of alcohol — and it is what the dish is made with, so the broth gains the glossy body and the amino acids that sugar and wine between them do not have.
+- 2026-08-22: Dashi in place of the water, with water kept in the notes as the fallback. Also skin-on chicken, so there is rendered fat in the pan for the leek to char in.
+- 2026-08-22: Salt cut from a quarter teaspoon to an eighth. A quarter was the obvious reading of the source's "a pinch" and it was wrong by weight: at 1.4 g it was contributing 551 mg of sodium, a quarter of the bowl, to chicken that goes straight into a broth carrying three times that.
