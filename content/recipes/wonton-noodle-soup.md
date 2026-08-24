@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 35
 cookMinutes: 15
 cookLabel: boil
+photo: /photos/wonton-noodle-soup.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 032d18cde1c277cf
 ---
 
 ## Ingredients

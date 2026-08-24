@@ -9,6 +9,10 @@ servings: 1
 prepMinutes: 5
 cookMinutes: 8
 cookLabel: simmer
+photo: /photos/tsukimi-udon.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 2509c4ec6b384abf
 ---
 
 ## Ingredients

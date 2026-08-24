@@ -10,6 +10,10 @@ prepMinutes: 10
 cookMinutes: 10
 cookLabel: boil
 waitMinutes: 60
+photo: /photos/zaru-udon.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: ca862dfb45ed148b
 ---
 
 ## Ingredients

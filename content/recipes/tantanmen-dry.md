@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 15
 cookLabel: fry
+photo: /photos/tantanmen-dry.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: f5fe334eba10ef69
 ---
 
 ## Ingredients

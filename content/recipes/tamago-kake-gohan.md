@@ -7,6 +7,10 @@ tags:
   - quick
 servings: 1
 prepMinutes: 2
+photo: /photos/tamago-kake-gohan.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: a8335a7f16d9d398
 ---
 
 ## Ingredients

@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 15
 cookMinutes: 10
 cookLabel: steam
+photo: /photos/steamed-egg-tofu-with-dried-shrimp.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 9507ed602cc7912b
 ---
 
 ## Ingredients

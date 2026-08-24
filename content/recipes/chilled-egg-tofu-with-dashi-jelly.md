@@ -10,6 +10,10 @@ prepMinutes: 15
 cookMinutes: 5
 cookLabel: heat
 waitMinutes: 180
+photo: /photos/chilled-egg-tofu-with-dashi-jelly.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 337f6d478de08532
 ---
 
 ## Ingredients

@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 15
 cookMinutes: 15
 cookLabel: fry
+photo: /photos/salted-egg-yolk-egg-tofu.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 517ca51a3cb34ffa
 ---
 
 ## Ingredients

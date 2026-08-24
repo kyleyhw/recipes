@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 20
 cookMinutes: 20
 cookLabel: simmer
+photo: /photos/suan-cai-yu.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: c9b764e15a3929c0
 ---
 
 ## Ingredients

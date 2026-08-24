@@ -10,6 +10,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 12
 cookLabel: steam
+photo: /photos/steamed-egg-tofu-with-preserved-egg-and-pork.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 7fab74d7438a0964
 ---
 
 ## Ingredients

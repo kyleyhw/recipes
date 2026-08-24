@@ -10,6 +10,10 @@ servings: 1
 prepMinutes: 10
 cookMinutes: 15
 cookLabel: simmer
+photo: /photos/tori-nanban-udon.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 5cd173e46cd57129
 ---
 
 ## Ingredients

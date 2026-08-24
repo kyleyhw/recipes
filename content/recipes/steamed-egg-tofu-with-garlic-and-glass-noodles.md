@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 15
 cookMinutes: 10
 cookLabel: steam
+photo: /photos/steamed-egg-tofu-with-garlic-and-glass-noodles.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 08b435b502ad6ddf
 ---
 
 ## Ingredients

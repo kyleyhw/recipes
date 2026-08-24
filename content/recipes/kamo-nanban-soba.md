@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 20
 cookLabel: simmer
+photo: /photos/kamo-nanban-soba.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 526eefb40744b2cf
 ---
 
 ## Ingredients

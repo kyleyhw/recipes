@@ -9,6 +9,10 @@ servings: 1
 prepMinutes: 3
 cookMinutes: 2
 cookLabel: boil
+photo: /photos/kamatama-udon.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 6061aae8f659fb6b
 ---
 
 ## Ingredients

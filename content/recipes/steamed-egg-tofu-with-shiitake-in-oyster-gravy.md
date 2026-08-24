@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 20
 cookMinutes: 12
 cookLabel: steam
+photo: /photos/steamed-egg-tofu-with-shiitake-in-oyster-gravy.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: b3a1d78467f79b0c
 ---
 
 ## Ingredients

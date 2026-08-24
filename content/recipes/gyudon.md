@@ -11,6 +11,10 @@ cookMinutes: 15
 cookLabel: simmer
 waitMinutes: 30
 waitLabel: freeze
+photo: /photos/gyudon.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 2941c235fb8eabae
 ---
 
 ## Ingredients

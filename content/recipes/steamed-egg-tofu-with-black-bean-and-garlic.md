@@ -10,6 +10,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 10
 cookLabel: steam
+photo: /photos/steamed-egg-tofu-with-black-bean-and-garlic.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: e3d1bb4923ef8d0e
 ---
 
 ## Ingredients

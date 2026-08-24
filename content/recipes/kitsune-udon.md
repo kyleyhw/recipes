@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 15
 cookMinutes: 25
 cookLabel: simmer
+photo: /photos/kitsune-udon.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: c1630d821a060f0f
 ---
 
 ## Ingredients

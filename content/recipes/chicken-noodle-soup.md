@@ -9,6 +9,10 @@ servings: 4
 prepMinutes: 15
 cookMinutes: 40
 cookLabel: simmer
+photo: /photos/chicken-noodle-soup.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: ccb4b114ce3cffdb
 ---
 
 ## Ingredients

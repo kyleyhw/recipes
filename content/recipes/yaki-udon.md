@@ -10,6 +10,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 12
 cookLabel: fry
+photo: /photos/yaki-udon.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 1f4273ef48274c75
 ---
 
 ## Ingredients
