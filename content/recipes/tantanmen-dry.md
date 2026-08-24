@@ -1,5 +1,5 @@
 ---
-title: Dry Tantanmen
+title: Tantanmen (Dry)
 description: Shirunashi tantanmen — the same sauce concentrated at the bottom of the bowl instead of let down into soup, with a raw yolk on top and no broth at all. You toss it yourself.
 category: Mains
 cuisine: Japanese
@@ -44,8 +44,9 @@ cookLabel: fry
 ## Notes
 
 Three tablespoons of liquid, not seven hundred millilitres. That is the whole
-difference between this and Tantanmen: the same sauce, concentrated into a
-dressing that sits at the bottom of the bowl, rather than let down into a soup.
+difference between this and Tantanmen (Soup): the same sauce, concentrated into
+a dressing that sits at the bottom of the bowl, rather than let down into a
+soup.
 Everything else about the two is nearly identical and they eat nothing alike.
 
 Use the noodle water. Starchy water off the boil emulsifies the sesame paste and
@@ -72,7 +73,7 @@ Black vinegar is the other thing the soup version does not have. In a bowl with
 no broth the sesame paste and the chilli oil are heavy on their own, and a
 tablespoon of Chinkiang cuts straight through them.
 
-The panel says 2810 mg of sodium against the soup version's 3132, and the
+The panel says 2810 mg of sodium against Tantanmen (Soup)'s 3132, and the
 comparison is backwards in practice. Nobody drinks all of a bowl of soup —
 leave a third of that broth and the two dishes cross over — whereas here the
 sauce is at the bottom of the bowl and the whole point is to toss it through
@@ -125,5 +126,6 @@ it will not emulsify.
 
 ## Log
 
-- 2026-08-22: Added as the soupless counterpart to Tantanmen. Three tablespoons of the noodle cooking water in place of 700 ml of stock is the entire structural difference; the sichuan pepper doubles because there is no broth to dilute it, and the vinegar and raw yolk are Hiroshima's.
+- 2026-08-22: Added as the soupless counterpart to Tantanmen (Soup). Three tablespoons of the noodle cooking water in place of 700 ml of stock is the entire structural difference; the sichuan pepper doubles because there is no broth to dilute it, and the vinegar and raw yolk are Hiroshima's.
 - 2026-08-22: Black vinegar came back into the library for this. It was pruned in August when nothing used it, which is what the buyability note in memories.md is about — the row was never wrong, it was just idle.
+- 2026-08-22: Renamed from Dry Tantanmen to Tantanmen (Dry), so the pair sorts together and neither name has to carry the distinction on its own.
