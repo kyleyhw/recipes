@@ -247,15 +247,16 @@ and thirty pictures that do not match the book.
 
 ## Filling gaps without redrawing the book
 
-Editing the prompt changes every recipe's fingerprint at once, so the ordinary
-staleness rule immediately declares the whole collection due. That is right when you mean to
-regenerate and expensive when you do not.
+**A plain run draws only what has no picture.** That is the default, not a flag:
 
-    npm run photos -- --missing
+    npm run photos
 
-draws only recipes that have no picture file at all and leaves everything else
-alone, whatever the prompt now says. Use it for every batch until there is a
-deliberate decision to redraw the whole collection.
+Nothing is ever redrawn on the script's own initiative. Editing the prompt in
+`scripts/photos.ts` changes every recipe's fingerprint at once, so a rule that
+redrew whatever no longer matched would redraw the whole collection on the
+strength of one improved sentence — right when you mean to regenerate, and
+expensive when you do not. `--missing` still exists and now means the default,
+said out loud.
 
 The consequence to accept: for a while the book contains photographs made under
 two versions of the prompt. That is the right trade — a missing picture is worse
@@ -263,10 +264,43 @@ than a slightly inconsistent one — but it is also why the style sentences must
 not change between versions. Content rules may improve batch to batch; the look
 may not.
 
+## Recipes that have changed since their picture was drawn
+
+Every run prints them, before it does anything:
+
+    3 recipes have changed since their picture was drawn:
+      mapo-tofu
+      steamed-egg-custard
+      tantanmen-soup
+    Not redrawn. `npm run photos -- --changed` would, at about $0.40.
+
+This is a **report and not a trigger**, and that is the rule: do not add these
+to a generation batch unless the person running it asks for them. What it
+catches is a picture that has quietly stopped describing its recipe — a dish
+renamed, an ingredient added, a garnish dropped — which is worth knowing and is
+not worth four pence a time to fix without being asked.
+
+Both dates come from git: the last commit touching `content/recipes/<slug>.md`
+against the last commit touching `public/photos/<slug>.webp`. A photo run
+commits the image and the recipe's `photo:` line together, so equal timestamps
+are the normal state and only a later edit to the recipe counts. A recipe with
+uncommitted changes counts as newer than any commit, which is what it is.
+Outside a git checkout the list is simply empty — a staleness warning that
+cannot be computed must not be guessed at.
+
+    npm run photos -- --changed     # draws them, and says what it will cost
+
+Judgement, since the list is deliberately broad. A Log line added to a recipe
+does not change the dish and its picture is still true; a renamed dish or a
+changed garnish does. Read the diff before spending anything.
+
 ## Cost and pacing
 
 Regenerating is cheap enough not to agonise over — see `docs/photos.md` for
-current prices and the spend ceiling — but **editing the prompt changes every
-recipe's fingerprint and re-draws the whole book.** Test a change with
-`--only <slug>` or `--limit 3` before running it across the collection, and
-check `--dry-run` output first, which costs nothing.
+current prices and the spend ceiling — but nothing here regenerates by
+accident, and nothing should start to. A plain run draws gaps; `--changed` and
+`--force` are the two ways to spend money on pictures that already exist, and
+both are explicit and both print an estimate first.
+
+Test a prompt change with `--only <slug>` or `--limit 3` before running it
+across the collection, and read `--dry-run` output first, which costs nothing.

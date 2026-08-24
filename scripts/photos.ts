@@ -26,9 +26,20 @@
  * ## Not regenerating what has not changed
  *
  * Each recipe records a `photoPrompt` hash beside its photo. A run skips any
- * recipe whose hash still matches, so editing one recipe regenerates one
- * picture and a run that dies halfway can simply be run again. `--force`
- * overrides it when the prompt itself has improved.
+ * recipe whose hash still matches, so a run that dies halfway can simply be run
+ * again.
+ *
+ * A plain run draws only recipes with **no picture at all**, and that is the
+ * default rather than a flag. Nothing is redrawn on its own initiative: not a
+ * recipe whose text has changed since its picture was made, and not the whole
+ * book when the prompt in this file is edited. Both of those are *reported* —
+ * see `reportChanged` — because a picture that no longer matches its recipe is
+ * worth knowing about, and neither is acted on, because redrawing eighty-six
+ * images is a decision with a price on it and it belongs to the person running
+ * this, not to the script.
+ *
+ * `--changed` draws the recipes whose text has moved on. `--force` draws
+ * everything. Both are explicit and both print what they are about to cost.
  *
  * ## Two ways to pay for the same pictures
  *
@@ -39,8 +50,9 @@
  * earlier, so a killed process loses nothing that was paid for.
  *
  * Usage:
- *   npm run photos                          # every stale recipe, interactive
- *   npm run photos -- --missing             # only recipes with no picture yet
+ *   npm run photos                          # only recipes with no picture yet
+ *   npm run photos -- --changed             # also the ones edited since drawing
+ *   npm run photos -- --missing             # the default, said out loud
  *   npm run photos -- --batch               # the same images at half price
  *   npm run photos -- --harvest batches/…   # collect an earlier --batch run
  *   npm run photos -- --only mango-pudding
@@ -52,6 +64,7 @@
  */
 
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
@@ -61,6 +74,7 @@ import {
   type RecipeFile,
 } from "../src/lib/content/format";
 import { parseIngredientLine } from "../src/lib/ingredient-parser";
+import { changedSince, parseTouched, RECORD } from "../src/lib/photos/staleness";
 
 const RECIPES_DIR = join("content", "recipes");
 const PHOTOS_DIR = join("public", "photos");
@@ -175,8 +189,13 @@ interface Args {
   throttle: number;
   /** Dollars this run refuses to exceed. */
   maxSpend: number;
-  /** Only draw recipes with no picture at all, whatever the prompt now says. */
+  /**
+   * Only draw recipes with no picture at all, whatever the prompt now says.
+   * This is the default; the flag exists so a script can say so explicitly.
+   */
   missing: boolean;
+  /** Also draw recipes whose text has changed since their picture was made. */
+  changed: boolean;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -206,6 +225,7 @@ function parseArgs(argv: string[]): Args {
     // differently than expected or a loop that is not stopping.
     maxSpend: maxSpend === null ? 5 : Number(maxSpend),
     missing: at("--missing") !== -1,
+    changed: at("--changed") !== -1,
   };
 }
 
@@ -421,6 +441,63 @@ async function generate(prompt: string, key: string): Promise<Buffer> {
   }
 }
 
+/**
+ * When each tracked file was last committed, in seconds since the epoch.
+ *
+ * One `git log` over both directories rather than one per file: the collection
+ * is eighty-six recipes and as many pictures, and a call each would be three
+ * hundred processes to answer a question nobody asked for.
+ *
+ * Returns an empty map where git cannot answer — a tarball, no git at all —
+ * and the caller then reports nothing, which is the right failure: a staleness
+ * warning that cannot be computed must not be guessed at.
+ *
+ * The parse itself is in lib/photos/staleness.ts, where it can be tested
+ * without a repository.
+ */
+function lastTouched(): Map<string, number> {
+  const git = (args: string[]): string =>
+    execFileSync("git", args, { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 });
+
+  let log: string;
+  try {
+    log = git([
+      "log",
+      `--format=${RECORD}%at`,
+      "--name-only",
+      "--find-renames",
+      "--diff-filter=AMR",
+      "--",
+      RECIPES_DIR,
+      PHOTOS_DIR,
+    ]);
+  } catch {
+    return new Map();
+  }
+
+  let status = "";
+  try {
+    status = git(["status", "--porcelain", "--", RECIPES_DIR, PHOTOS_DIR]);
+  } catch {
+    // A working tree git will not describe is still a history it described.
+  }
+
+  return parseTouched(log, status);
+}
+
+/**
+ * Recipes whose text has moved on since their picture was drawn.
+ *
+ * A report and not a trigger — see lib/photos/staleness.ts for why, and for
+ * everything about this that is worth testing.
+ */
+function changedSinceDrawn(slugs: readonly string[]): string[] {
+  return changedSince(slugs, lastTouched(), {
+    recipe: (slug) => join(RECIPES_DIR, `${slug}.md`),
+    photo: (slug) => join(PHOTOS_DIR, `${slug}.webp`),
+  });
+}
+
 /** A recipe whose picture is stale, with everything a generation needs. */
 interface Due {
   slug: string;
@@ -624,8 +701,12 @@ async function main(): Promise<void> {
     .filter((name) => name.endsWith(".md") && name.split(".").length === 2)
     .sort();
 
-  // First pass: decide what is stale, without generating anything.
+  // First pass: decide what to draw, without generating anything.
   const due: Due[] = [];
+  const drawn: string[] = [];
+  const stale = new Set(
+    changedSinceDrawn(files.map((file) => file.replace(/\.md$/, ""))),
+  );
   let skipped = 0;
   let failed = 0;
   for (const file of files) {
@@ -652,19 +733,44 @@ async function main(): Promise<void> {
     const prompt = promptFor(recipe);
     const fingerprint = hash(prompt);
     const out = join(PHOTOS_DIR, `${slug}.webp`);
-    // --missing fills the gaps and touches nothing else. It exists because
-    // editing the prompt changes every recipe's fingerprint at once, so the
-    // ordinary staleness rule then declares the whole book due — which is
-    // right when you mean to regenerate and expensive when you do not.
-    if (args.missing && existsSync(out)) {
-      skipped += 1;
-      continue;
-    }
-    if (!args.force && recipe.photoPrompt === fingerprint && existsSync(out)) {
+    drawn.push(slug);
+    // Gaps only, unless asked otherwise. Editing the prompt in this file
+    // changes every recipe's fingerprint at once, so a rule that redrew
+    // whatever no longer matches would redraw the whole book on the strength
+    // of one improved sentence. A picture that already exists is left alone
+    // and, if its recipe has moved on, said out loud at the end instead.
+    if (existsSync(out)) {
+      if (args.force) {
+        due.push({ slug, path, recipe, prompt, fingerprint, out });
+        continue;
+      }
+      if (args.changed && stale.has(slug)) {
+        due.push({ slug, path, recipe, prompt, fingerprint, out });
+        continue;
+      }
       skipped += 1;
       continue;
     }
     due.push({ slug, path, recipe, prompt, fingerprint, out });
+  }
+
+  // Reported whatever the run does, including a dry run and a run with nothing
+  // to draw: the point of the list is that somebody sees it.
+  if (stale.size > 0) {
+    const drawnAndStale = drawn.filter((slug) => stale.has(slug));
+    if (drawnAndStale.length > 0) {
+      console.log(
+        `${drawnAndStale.length} recipe${drawnAndStale.length === 1 ? " has" : "s have"} ` +
+          `changed since ${drawnAndStale.length === 1 ? "its" : "their"} picture was drawn:`,
+      );
+      for (const slug of drawnAndStale) console.log(`  ${slug}`);
+      console.log(
+        args.changed || args.force
+          ? ""
+          : `Not redrawn. \`npm run photos -- --changed\` would, at about ` +
+              `$${((PRICE_PER_IMAGE[MODEL] ?? 0) * drawnAndStale.length).toFixed(2)}.\n`,
+      );
+    }
   }
 
   if (args.dryRun) {
@@ -682,7 +788,7 @@ async function main(): Promise<void> {
   if (args.harvest === null) {
     const estimate = rate === undefined ? null : due.length * rate;
     console.log(
-      `${MODEL}: ${due.length} stale of ${files.length} recipes, about ` +
+      `${MODEL}: ${due.length} to draw of ${files.length} recipes, about ` +
         `${estimate === null ? "an unknown amount" : `$${estimate.toFixed(2)}`} at ` +
         `${args.batch ? "the batch rate" : "list price"}.\n`,
     );

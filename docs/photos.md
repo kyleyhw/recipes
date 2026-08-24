@@ -45,8 +45,8 @@ default model, and as little as $0.79 batched on Nano Banana 2 Lite.**
 
 The Batch API runs the identical requests for exactly half price; the only
 cost is patience — "within 24 hours" nominally, in practice usually minutes
-for a run this size. `npm run photos -- --batch` submits everything stale as
-one job and waits, printing a `--harvest` command that can collect the job
+for a run this size. `npm run photos -- --batch` submits whatever the run would
+have drawn as one job and waits, printing a `--harvest` command that can collect the job
 later if the wait is interrupted. 1K and 2K resolution bill the same $0.134,
 so the script asks for 1K at 16:9, which is already wider than the 1200 px it
 stores.
@@ -71,8 +71,9 @@ dollars for them.
 - That default sits deliberately between the two full-collection prices: a
   $3.15 batch run passes, a $6.30 interactive one stops until someone types
   `--max-spend 7` on purpose.
-- Recipes already carrying a current picture are skipped, so re-running costs
-  nothing.
+- A plain run draws only recipes with **no picture at all**, so re-running costs
+  nothing. Nothing is redrawn on the script's own initiative — see *What the
+  script will not do by itself* below.
 - A model with no recorded price refuses to run at all rather than spending an
   unknown amount.
 
@@ -81,6 +82,28 @@ npm run photos -- --max-spend 2      # refuse to go over $2
 npm run photos -- --limit 5          # five recipes, to see what they look like
 npm run photos -- --dry-run          # the prompts, no key and no cost
 ```
+
+### What the script will not do by itself
+
+Two things make a picture out of date, and neither of them makes the script
+redraw it:
+
+- **The recipe changed.** Every run compares the last commit touching
+  `content/recipes/<slug>.md` against the last one touching
+  `public/photos/<slug>.webp`, and prints the recipes whose text has moved on
+  since their picture was made — a dish renamed, an ingredient added, a garnish
+  dropped. It prints them and stops there. `--changed` draws them, with an
+  estimate first. A recipe with uncommitted changes counts as changed, since it
+  is newer than any commit; outside a git checkout the list is empty rather
+  than guessed at.
+- **The prompt changed.** Editing the prompt in `scripts/photos.ts` changes
+  every recipe's fingerprint at once, so a rule that redrew whatever no longer
+  matched would redraw the whole collection on the strength of one improved
+  sentence. `--force` does that, deliberately and at full price.
+
+The reasoning is the same in both cases: redrawing eighty-six images is a
+decision with a price on it, and it belongs to the person running the script
+rather than to the script.
 
 ### Free tier
 
