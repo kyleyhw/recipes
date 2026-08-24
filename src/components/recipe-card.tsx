@@ -54,11 +54,16 @@ export function RecipeCard({
         })
       : null,
   ].filter(Boolean);
-  // Only worth printing when it is not just one of the parts said again.
+  // Only worth printing when it is not just one of the parts said again — and
+  // kept apart from the parts, because the two are joined differently. The
+  // stretches add up and the total is their sum, so they are written as a sum:
+  // "10 min prep + 15 min drain = 25 min total". A row of middots says the same
+  // three numbers and leaves the reader to work out that the third is the other
+  // two, which is exactly the arithmetic `formatDuration` refuses to round for.
   const times =
     parts.length > 1 && total !== null
-      ? [...parts, t("minTotal", { d: formatDuration(total, t) })]
-      : parts;
+      ? `${parts.join(" + ")} = ${t("minTotal", { d: formatDuration(total, t) })}`
+      : parts.join(" + ");
 
   return (
     <Link
@@ -91,7 +96,7 @@ export function RecipeCard({
           <TContent en={recipe.title} translated={recipe.titles} />
         </h3>
         <p className="numeric mt-1 text-xs text-text-muted">
-          {times.join(" · ")}
+          {times}
           {recipe.draft ? (
             <span className="ml-2 rounded bg-warn-soft px-1.5 py-0.5 text-warn">
               {t("draft")}

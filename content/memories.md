@@ -117,6 +117,29 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   between brands than a single ingredient does. Scratch versions go in the notes
   for anyone who wants them.
 
+- **Counts are derived, never written.** "400 g white cabbage" is what the
+  recipe says; "(about 1 head)" is what the page adds, from mu and the row's
+  `unitName`. Do not type the count into the ingredient line, because a typed
+  one is right at four servings and a lie at eight, while a derived one moves
+  with the stepper. The same goes for the packets a reconstituted liquid takes:
+  dashi and stock carry a `madeUp` rate — how far one sachet or cube goes — and
+  the line works out how many and how much water from there.
+
+  Two rules follow. A `unitName` is only ever added where mu is real, since a
+  noun with no number behind it shows nothing; and a line that already carries
+  a bracket keeps it and gets no derived count, because "2 short ones" says
+  something mu cannot and two brackets disagreeing is worse than either alone.
+
+  The count is also a check on the data. Udon was recorded at 150 g a portion
+  until the bracket read "2½ portions" on a two-portion dish and gave itself
+  away; the pack is 200 g. A figure nobody looks at is a figure nobody
+  corrects.
+
+- **Time is written as a sum**: `10 min prep + 15 min drain = 25 min total`,
+  not a row of middots. The parts add up to the total, so the line says so, and
+  the equals sign invites the reader to check it — which is why
+  `formatDuration` never rounds. See `lib/duration.ts`.
+
 - **A perishable ingredient carries a `keeping` note.** The recipe says how to
   store the dish; the library says how to store what the dish did not use, which
   is the part that actually gets thrown away — three quarters of a cabbage, half

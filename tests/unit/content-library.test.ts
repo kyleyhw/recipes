@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadCollection } from "@/lib/content/library";
+import { usedInIndex } from "@/lib/content/prepare";
 import { parseRecipeFile, serialiseRecipeFile } from "@/lib/content/format";
 import { matchIngredient } from "@/lib/content/prepare";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
@@ -217,5 +218,101 @@ describe("the ingredient library", () => {
         expect(value).toBeGreaterThanOrEqual(0);
       }
     }
+  });
+});
+
+/**
+ * The two derived figures a recipe line now shows: the count in brackets after
+ * a weight, and the packet note under a volume.
+ *
+ * Both are computed from the library rather than written into the recipe, which
+ * is what keeps them right when the stepper moves — and which is also why a
+ * half-filled row is dangerous. A `unitName` with no mu produces a noun with no
+ * number behind it; a `madeUp` with no rho produces a packet count for a volume
+ * that cannot be weighed. Neither would throw. Both would be silently absent
+ * from the page, which is the failure this collection is worst at noticing.
+ */
+describe("the countable units", () => {
+  const { ingredients } = loadCollection();
+
+  it("names a unit only where there is a mass for one of them", () => {
+    const orphaned = ingredients
+      .filter((ingredient) => ingredient.unitName && !ingredient.gramsPerUnit)
+      .map((ingredient) => ingredient.name);
+    expect(orphaned).toEqual([]);
+  });
+
+  it("gives an explicit plural only alongside the singular it replaces", () => {
+    const orphaned = ingredients
+      .filter((ingredient) => ingredient.unitNamePlural && !ingredient.unitName)
+      .map((ingredient) => ingredient.name);
+    expect(orphaned).toEqual([]);
+  });
+
+  /**
+   * A packet count is derived from a volume, and a volume is only a volume if
+   * the row carries a density. Without one the line is measured in millilitres
+   * that resolve to nothing and the note never appears.
+   */
+  it("reconstitutes only liquids that have a density", () => {
+    for (const ingredient of ingredients) {
+      if (!ingredient.madeUp) continue;
+      expect(ingredient.densityGPerMl, ingredient.name).toBeTruthy();
+      expect(ingredient.madeUp.perMl, ingredient.name).toBeGreaterThan(0);
+    }
+  });
+
+  /**
+   * The number in brackets has to be plausible against the weight beside it.
+   * A mu that is out by a factor — udon recorded at 150 g a portion when the
+   * pack is 200 g — shows up as a fractional count on a whole-pack recipe, and
+   * that is exactly how the udon figure was caught. This is the general form:
+   * no ingredient may be so heavy per item that a recipe using it by weight
+   * could not contain even a quarter of one.
+   */
+  it("has no per-item mass a recipe could not reach", () => {
+    const tooHeavy = ingredients
+      .filter((ingredient) => (ingredient.gramsPerUnit ?? 0) > 2000)
+      .map((ingredient) => ingredient.name);
+    expect(tooHeavy).toEqual([]);
+  });
+});
+
+describe("what uses each ingredient", () => {
+  const { recipes, ingredients } = loadCollection();
+  const index = usedInIndex(recipes, ingredients);
+
+  it("has an entry for every ingredient in the library", () => {
+    expect(Object.keys(index).sort()).toEqual(
+      ingredients.map((ingredient) => ingredient.name).sort(),
+    );
+  });
+
+  /**
+   * The same claim the library's own pruning rule makes, from the other side.
+   * If an ingredient is in the library, something uses it — so no list here is
+   * empty, and the expandable section on the ingredients page never opens onto
+   * nothing.
+   */
+  it("finds at least one recipe for every ingredient", () => {
+    const unused = Object.entries(index)
+      .filter(([, uses]) => uses.length === 0)
+      .map(([name]) => name);
+    expect(unused).toEqual([]);
+  });
+
+  /** An ingredient listed twice in one recipe is that recipe once. */
+  it("counts a recipe once however many lines mention the ingredient", () => {
+    for (const uses of Object.values(index)) {
+      expect(new Set(uses.map((use) => use.slug)).size).toBe(uses.length);
+    }
+  });
+
+  it("agrees with the recipes about how many use a given ingredient", () => {
+    const garlic = index["garlic"] ?? [];
+    const counted = recipes.filter((recipe) =>
+      recipe.ingredients.some((line) => /\bgarlic\b/.test(line) && !/powder/.test(line)),
+    );
+    expect(garlic.length).toBe(counted.length);
   });
 });

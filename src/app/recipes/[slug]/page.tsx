@@ -102,9 +102,13 @@ export default async function RecipePage({
       />
     ) : null,
   ].filter(Boolean);
-  if (timeParts.length > 1 && total !== null) {
-    timeParts.push(<TDuration k="minTotal" minutes={total} />);
-  }
+  // Held apart from the parts rather than appended to them, because the two are
+  // joined differently: the stretches add up, and the total is what they add up
+  // to. See the note in components/recipe-card.tsx.
+  const totalPart =
+    timeParts.length > 1 && total !== null ? (
+      <TDuration k="minTotal" minutes={total} />
+    ) : null;
 
   const tagAt = (index: number) =>
     Object.fromEntries(
@@ -182,10 +186,11 @@ export default async function RecipePage({
           <p className="numeric mt-3 text-sm text-text-muted">
             {timeParts.map((part, index) => (
               <span key={index}>
-                {index > 0 ? " · " : null}
+                {index > 0 ? " + " : null}
                 {part}
               </span>
             ))}
+            {totalPart ? <span> = {totalPart}</span> : null}
           </p>
         ) : null}
 
@@ -209,6 +214,7 @@ export default async function RecipePage({
         servingLabel={recipe.servingLabel}
         scalable={prepared.scalable}
         nutrition={prepared.nutrition}
+        library={prepared.library}
         steps={recipe.steps}
         tin={recipe.tin}
         translations={recipe.translations}

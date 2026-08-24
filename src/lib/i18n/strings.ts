@@ -183,6 +183,13 @@ const en = {
     "Per 100 g, shared by every recipe — so a correction here fixes every recipe at once.",
   noIngredientMatched:
     "Nothing matched. Ingredients are added by editing content/ingredients.json.",
+  madeUp: "From a packet",
+  madeUpRate: "1 {unit} to {ml} ml of water.",
+  madeUpLine: "{n} in {amount} of water",
+  usedIn: "Used in {n} recipe(s)",
+  usedInNothing: "Nothing uses this.",
+  approximately: "about {text}",
+  openInLibrary: "{name} in the ingredient library",
 
   // Categories the collection ships with. A category not listed here falls
   // back to the name in the file, which is the right answer for one invented
@@ -374,6 +381,13 @@ const zhHant: Dict = {
   closeLibrary: "關閉食材庫",
   per100Note: "以每 100 公克計，所有食譜共用 — 在這裡更正一次，全部食譜同時修正。",
   noIngredientMatched: "沒有符合的結果。食材請透過編輯 content/ingredients.json 新增。",
+  madeUp: "沖泡方式",
+  madeUpRate: "1 {unit} 兌 {ml} 毫升水。",
+  madeUpLine: "{n}，加 {amount} 水",
+  usedIn: "{n} 道食譜用到",
+  usedInNothing: "目前沒有食譜用到。",
+  approximately: "約 {text}",
+  openInLibrary: "在食材庫中查看{name}",
 
   "category.Mains": "主菜",
   "category.Sides": "配菜",
@@ -551,6 +565,13 @@ const zhHans: Dict = {
   closeLibrary: "关闭食材库",
   per100Note: "以每 100 克计，所有食谱共用 — 在这里更正一次，全部食谱同时修正。",
   noIngredientMatched: "没有匹配的结果。食材请通过编辑 content/ingredients.json 新增。",
+  madeUp: "冲泡方式",
+  madeUpRate: "1 {unit} 兑 {ml} 毫升水。",
+  madeUpLine: "{n}，加 {amount} 水",
+  usedIn: "{n} 道食谱用到",
+  usedInNothing: "目前没有食谱用到。",
+  approximately: "约 {text}",
+  openInLibrary: "在食材库中查看{name}",
 
   "category.Mains": "主菜",
   "category.Sides": "配菜",
@@ -737,6 +758,13 @@ const ru: Dict = {
     "На 100 г, общее для всех рецептов — исправление здесь чинит сразу все рецепты.",
   noIngredientMatched:
     "Ничего не найдено. Ингредиенты добавляются правкой content/ingredients.json.",
+  madeUp: "Из пакетика",
+  madeUpRate: "1 {unit} на {ml} мл воды.",
+  madeUpLine: "{n} на {amount} воды",
+  usedIn: "Рецептов с этим: {n}",
+  usedInNothing: "Пока ни в одном рецепте.",
+  approximately: "около {text}",
+  openInLibrary: "{name} в справочнике ингредиентов",
 
   "category.Mains": "Основные блюда",
   "category.Sides": "Гарниры",

@@ -82,6 +82,32 @@ the totals.
 `sourceNote` records where a number came from, satisfying the magic-number
 standard for values like flour's $\rho \approx 0.53\ \mathrm{g\,ml^{-1}}$.
 
+### Reading $\mu$ backwards
+
+$\mu$ exists so a count can become a mass — "2 eggs" is 100 g only because a
+row says an egg is 50 g. `unitName` is what makes the inverse readable. Given a
+line's mass $g$, the page shows
+
+$$n = \operatorname{round}_{1/2}\!\left(\frac{g}{\mu}\right)$$
+
+items, named by `unitName` (pluralised by `unitNamePlural` where an -s is
+wrong). The rounding is to halves below three and to whole numbers above it,
+because the output is an instruction about physical objects rather than a
+measurement: kitchen equipment realises eighths, vegetables do not. Below a
+quarter of an item nothing is shown at all, and a figure the rounding moved by
+more than a tenth is marked *about*. See `lib/count.ts`.
+
+`unitName` is opt-in per row rather than derived from the name, because English
+pluralisation is not derivable — a rule that singularises "bird's eye chillies"
+produces "1 bird's eye chillie" on every recipe that uses one.
+
+`madeUp` is the same idea for a liquid nobody brews from scratch. It holds a
+rate — millilitres of finished liquid one sachet or cube makes — so a line
+asking for 900 ml of dashi can say how many packets and how much water, and can
+keep saying it correctly when the recipe is scaled. Its `note` carries what the
+arithmetic cannot: an Oxo cube is 190 ml where a Knorr one is 500, and a row
+that quoted only the number would silently mean one of them.
+
 ## `RecipeEntry` and `RecipeRevision`
 
 The per-recipe log and its history, added in phase 8 and documented in full in

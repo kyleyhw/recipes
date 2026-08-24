@@ -144,11 +144,40 @@ function vectorFor(entry: LibraryIngredient): NutrientVector {
   });
 }
 
+/**
+ * What the library knows about one ingredient line, for the page to use.
+ *
+ * A narrow projection rather than the whole `LibraryIngredient`, because this
+ * crosses into a client component and the full row carries two paragraphs of
+ * prose per ingredient. The drawer already ships those once; a recipe page does
+ * not need a second copy of them, one per line.
+ *
+ * Null for a line that matched nothing, which is the same set of lines the
+ * coverage figure counts as a gap.
+ */
+export interface LineLibrary {
+  /** The library row's own name — the key that opens the drawer at it. */
+  name: string;
+  /** rho, for turning the line's volume into grams. */
+  densityGPerMl: number | null;
+  /** mu, for turning grams back into a count. */
+  gramsPerUnit: number | null;
+  unitName: string | null;
+  unitNamePlural: string | null;
+  madeUp: {
+    unitName: string;
+    unitNamePlural: string | null;
+    perMl: number;
+  } | null;
+}
+
 export interface PreparedRecipe {
   /** Ingredients in the shape `scaleRecipe` takes. */
   scalable: ScalableIngredient[];
   /** Ingredients in the shape `computeNutrition` takes. */
   nutrition: NutritionInput[];
+  /** What each line resolved to, index by index with the two above. */
+  library: Array<LineLibrary | null>;
 }
 
 /**
@@ -164,6 +193,7 @@ export function prepareRecipe(
 ): PreparedRecipe {
   const scalable: ScalableIngredient[] = [];
   const nutrition: NutritionInput[] = [];
+  const resolved: Array<LineLibrary | null> = [];
 
   recipe.ingredients.forEach((line, index) => {
     const parsed = parseIngredientLine(line);
@@ -195,9 +225,28 @@ export function prepareRecipe(
       densityGPerMl: match?.densityGPerMl ?? null,
       gramsPerUnit: match?.gramsPerUnit ?? null,
     });
+
+    resolved.push(
+      match
+        ? {
+            name: match.name,
+            densityGPerMl: match.densityGPerMl ?? null,
+            gramsPerUnit: match.gramsPerUnit ?? null,
+            unitName: match.unitName ?? null,
+            unitNamePlural: match.unitNamePlural ?? null,
+            madeUp: match.madeUp
+              ? {
+                  unitName: match.madeUp.unitName,
+                  unitNamePlural: match.madeUp.unitNamePlural ?? null,
+                  perMl: match.madeUp.perMl,
+                }
+              : null,
+          }
+        : null,
+    );
   });
 
-  return { scalable, nutrition };
+  return { scalable, nutrition, library: resolved };
 }
 
 /**
@@ -231,4 +280,45 @@ export function keepingNotes(
 /** Nutrition for a recipe at its base serving count. */
 export function nutritionFor(recipe: RecipeFile, library: readonly LibraryIngredient[]) {
   return computeNutrition(prepareRecipe(recipe, library).nutrition, recipe.servings);
+}
+
+/** One recipe that uses an ingredient. */
+export interface IngredientUse {
+  slug: string;
+  title: string;
+}
+
+/**
+ * Which recipes use each ingredient, keyed by library name.
+ *
+ * The reverse of what every other part of this pipeline computes, and the
+ * question a cook asks in the other direction: not "what is in this dish" but
+ * "I have a jar of doubanjiang — what is it for?". It is also how the library
+ * proves it is honest, since an ingredient with an empty list is one nothing
+ * uses, and content/memories.md says the library holds only what is buyable and
+ * shows what it is for.
+ *
+ * Built once at load and passed down, rather than recomputed per row: matching
+ * is 163 rows against 84 recipes and would otherwise run once per row per page.
+ *
+ * A recipe listing the same ingredient twice — dashi in the broth and dashi in
+ * the dressing — appears once.
+ */
+export function usedInIndex(
+  recipes: readonly RecipeFile[],
+  library: readonly LibraryIngredient[],
+): Record<string, IngredientUse[]> {
+  const index: Record<string, IngredientUse[]> = {};
+  for (const ingredient of library) index[ingredient.name] = [];
+
+  for (const recipe of recipes) {
+    const seen = new Set<string>();
+    for (const line of recipe.ingredients) {
+      const match = matchIngredient(parseIngredientLine(line).name, library);
+      if (!match || seen.has(match.name)) continue;
+      seen.add(match.name);
+      index[match.name]?.push({ slug: recipe.slug, title: recipe.title });
+    }
+  }
+  return index;
 }

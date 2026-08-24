@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import { loadCollection } from "@/lib/content/library";
+import { usedInIndex } from "@/lib/content/prepare";
+import { UsedIn } from "@/components/ingredient-library";
 import { decimal, decimalOrDash } from "@/lib/format";
 
 /**
@@ -15,7 +17,8 @@ import { decimal, decimalOrDash } from "@/lib/format";
  * commit and a wrong one shows up in a diff.
  */
 export default function IngredientsPage() {
-  const { ingredients } = loadCollection();
+  const { recipes, ingredients } = loadCollection();
+  const usedIn = usedInIndex(recipes, ingredients);
 
   return (
     <div>
@@ -38,15 +41,14 @@ export default function IngredientsPage() {
               <th className="py-2 pr-3 text-right font-medium">Fat</th>
               <th className="py-2 pr-3 text-right font-medium">ρ g/ml</th>
               <th className="py-2 pr-3 text-right font-medium">μ g</th>
+              <th className="py-2 pr-3 font-medium">Per</th>
               <th className="py-2 font-medium">Source</th>
             </tr>
           </thead>
           <tbody>
             {ingredients.map((ingredient) => (
               <Fragment key={ingredient.name}>
-                <tr
-                  className={`align-top ${ingredient.keeping ? "" : "border-b border-border/60"}`}
-                >
+                <tr className="align-top">
                   <td className="py-2 pr-3">{ingredient.name}</td>
                   <td className="numeric py-2 pr-3 text-right">
                     {decimal(ingredient.kcal100g, 1)}
@@ -66,6 +68,12 @@ export default function IngredientsPage() {
                   <td className="numeric py-2 pr-3 text-right">
                     {decimalOrDash(ingredient.gramsPerUnit, 1)}
                   </td>
+                  {/* What one μ is called. Without it the column is a mass
+                      with nothing to attach to, and a recipe cannot turn
+                      400 g of cabbage back into a head. */}
+                  <td className="py-2 pr-3 text-xs text-text-muted">
+                    {ingredient.unitName ?? "—"}
+                  </td>
                   <td className="py-2 text-xs text-text-muted">
                     {ingredient.sourceNote ?? ingredient.usdaFdcId ?? "—"}
                   </td>
@@ -75,12 +83,20 @@ export default function IngredientsPage() {
                   ninth column of prose would set the width of the whole table
                   and push the numbers off the side of the screen. */}
                 {ingredient.keeping ? (
-                  <tr className="border-b border-border/60">
-                    <td colSpan={8} className="pb-2 text-xs text-text-muted">
+                  <tr>
+                    <td colSpan={9} className="pb-2 text-xs text-text-muted">
                       <span className="font-medium">Keeping</span> — {ingredient.keeping}
                     </td>
                   </tr>
                 ) : null}
+                {/* What it is for, folded away. A `<details>` and not a
+                    control: it opens with no JavaScript, which matters on a
+                    page whose entire purpose is to be checkable. */}
+                <tr className="border-b border-border/60">
+                  <td colSpan={9} className="pb-2">
+                    <UsedIn uses={usedIn[ingredient.name] ?? []} />
+                  </td>
+                </tr>
               </Fragment>
             ))}
           </tbody>

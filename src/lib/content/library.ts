@@ -72,6 +72,52 @@ const ingredientSchema = z.object({
   densityGPerMl: z.number().nullish(),
   /** mu, grams per countable item. */
   gramsPerUnit: z.number().nullish(),
+
+  /**
+   * What one mu is *called*, singular — "clove", "head", "sheet", "stick".
+   *
+   * mu on its own answers a question nobody asked. It says a clove of garlic
+   * weighs 3 g, which lets a count become a mass; what a cook standing at a
+   * shelf wants is the other direction, and "20 g garlic" is not a number of
+   * cloves until something names the unit. With this, a line measured by weight
+   * can carry the count that buys it.
+   *
+   * Opt-in per row rather than derived from the name, deliberately. A rule that
+   * singularises "bird's eye chillies" produces "1 bird's eye chillie", and a
+   * wrong noun in brackets on every recipe is worse than no noun at all. A row
+   * without one shows no count, which is the right answer for the ingredients
+   * where counting is meaningless — dried shrimp are not bought by the shrimp.
+   */
+  unitName: z.string().nullish(),
+  /**
+   * The plural, where adding an -s is wrong: leaf/leaves, chilli/chillies.
+   * Absent means the -s rule is correct.
+   */
+  unitNamePlural: z.string().nullish(),
+
+  /**
+   * For a liquid a cook reconstitutes rather than buys: what makes it.
+   *
+   * Dashi and stock are listed in millilitres because that is what a recipe
+   * uses, and the library's figures are for the brewed liquid. But nobody in
+   * this kitchen brews a litre of dashi from kombu on a Tuesday — they drop a
+   * sachet in a pan of water. `perMl` is how far one of them goes, so a recipe
+   * asking for 600 ml can say how many packets and how much water, and can keep
+   * saying it correctly when the recipe is scaled.
+   *
+   * `note` carries what the arithmetic cannot: which brands disagree, and by
+   * how much.
+   */
+  madeUp: z
+    .object({
+      unitName: z.string(),
+      unitNamePlural: z.string().nullish(),
+      /** Millilitres of finished liquid one unit makes. */
+      perMl: z.number().positive(),
+      note: z.string().nullish(),
+    })
+    .nullish(),
+
   usdaFdcId: z.string().nullish(),
   source: z.enum(["USDA", "CLAUDE", "MANUAL"]).default("USDA"),
   sourceNote: z.string().nullish(),

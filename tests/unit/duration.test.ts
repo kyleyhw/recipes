@@ -35,8 +35,9 @@ describe("formatting a duration", () => {
 
   /**
    * The one that has to hold, because a card prints the parts and their sum on
-   * the same line. Rounding 260 to "4 h 30 min" beside "15 min · 5 min · 4 h"
-   * is an addition anybody can check and find wrong.
+   * the same line, written as a sum: "15 min prep + 5 min fry + 4 h chill =
+   * 4 h 20 min total". Rounding 260 to "4 h 30 min" there is an addition
+   * anybody can check and find wrong, and the equals sign invites them to.
    */
   it("stays exact past two hours, so the parts add up to the total", () => {
     expect(formatDuration(250, t)).toBe("4 h 10 min");

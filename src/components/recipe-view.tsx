@@ -8,6 +8,10 @@ import { MacroPanel } from "@/components/macro-panel";
 import { RecipeDiagram } from "@/components/recipe-diagram";
 import type { Diagram } from "@/lib/content/diagram";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
+import type { LineLibrary } from "@/lib/content/prepare";
+import { useIngredientLibrary } from "@/components/ingredient-library";
+import { renderCount, renderMadeUp } from "@/lib/count";
+import { getUnit, toBase, toGrams } from "@/lib/units";
 import { renderQuantity } from "@/lib/quantity";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
 import {
@@ -44,6 +48,7 @@ export function RecipeView({
   servingLabel,
   scalable,
   nutrition,
+  library = [],
   steps,
   tin = null,
   translations = {},
@@ -54,6 +59,13 @@ export function RecipeView({
   servingLabel: string;
   scalable: ScalableIngredient[];
   nutrition: NutritionInput[];
+  /**
+   * What each ingredient line resolved to in the library, index by index with
+   * `scalable`. Null for a line that matched nothing — the same lines the
+   * coverage figure counts as a gap — and empty when the caller has no library
+   * to hand, in which case the lines are plain text and nothing is clickable.
+   */
+  library?: Array<LineLibrary | null>;
   steps: string[];
   tin?: Tin | null;
   /**
@@ -84,6 +96,9 @@ export function RecipeView({
   }>({ shape: "", diameter: "", length: "", width: "", depth: "" });
   const t = useT();
   const language = useLanguage();
+  // Null when this view is rendered outside the provider, in which case the
+  // ingredient lines stay plain text.
+  const openLibrary = useIngredientLibrary();
   const translated = translations[language] ?? null;
 
   /**
@@ -186,6 +201,84 @@ export function RecipeView({
       ? translate(language, `unit.${ingredient.rendered.unitKey}` as StringKey)
       : "";
     return [ingredient.rendered.amount, unit, name].filter(Boolean).join(" ");
+  }
+
+  /**
+   * What the ingredient library adds to one line, at the current scale.
+   *
+   * Both figures are derived rather than written into the recipe, and that is
+   * the point: a hand-typed "(1 head)" is right at four servings and a lie at
+   * eight, whereas this is recomputed from mu every time the stepper moves.
+   *
+   * The count is suppressed where the line already carries a bracket of its
+   * own. "400 g cucumber (2 short ones)" says something mu cannot — which
+   * cucumber to buy — and two brackets on one line, disagreeing about the
+   * count, is worse than either alone.
+   *
+   * The noun is English wherever the reader is, like `keeping` and the
+   * ingredient names in the library drawer. A number and an English noun is
+   * still a useful thing to carry to a shop; a translated noun this table does
+   * not have would be a blank.
+   */
+  function lineExtras(
+    ingredient: (typeof scaled.ingredients)[number],
+    index: number,
+  ): { count: string | null; madeUp: string | null } {
+    const nothing = { count: null, madeUp: null };
+    const entry = library[index] ?? null;
+    const quantity = ingredient.scaledQuantity;
+    if (!entry || quantity === null) return nothing;
+
+    // A line with no unit is already a count — "4 eggs" — and saying "(4 eggs)"
+    // after it helps nobody.
+    const dimension = ingredient.unit
+      ? (getUnit(ingredient.unit)?.dimension ?? null)
+      : null;
+    if (dimension !== "mass" && dimension !== "volume") return nothing;
+
+    let count: string | null = null;
+    if (entry.gramsPerUnit && entry.unitName && !ingredient.rawText.includes("(")) {
+      const grams = toGrams(quantity, ingredient.unit, {
+        densityGPerMl: entry.densityGPerMl,
+        gramsPerUnit: entry.gramsPerUnit,
+      });
+      const rendered =
+        grams === null
+          ? null
+          : renderCount(grams, {
+              gramsPerUnit: entry.gramsPerUnit,
+              unitName: entry.unitName,
+              unitNamePlural: entry.unitNamePlural,
+            });
+      if (rendered) {
+        count = rendered.approximate
+          ? t("approximately", { text: rendered.text })
+          : rendered.text;
+      }
+    }
+
+    let madeUp: string | null = null;
+    if (entry.madeUp && dimension === "volume") {
+      const ml = toBase(quantity, ingredient.unit ?? "");
+      const rendered = ml === null ? null : renderMadeUp(ml, entry.madeUp);
+      // The water is quoted in the unit the line itself is quoted in. Scaled up,
+      // 900 ml of dashi becomes "1.8 l" on the line, and telling the same cook
+      // to boil "1800 ml" underneath it is two units for one pan of water.
+      const unitKey = ingredient.rendered?.unitKey;
+      const amount = ingredient.rendered
+        ? [
+            ingredient.rendered.amount,
+            unitKey ? translate(language, `unit.${unitKey}` as StringKey) : "",
+          ]
+            .filter(Boolean)
+            .join(" ")
+        : null;
+      if (rendered && amount) {
+        madeUp = t("madeUpLine", { n: rendered.text, amount });
+      }
+    }
+
+    return { count, madeUp };
   }
 
   function clearTin(): void {
@@ -332,29 +425,65 @@ export function RecipeView({
           {t("ingredients")}
         </h2>
         <ul className="flex flex-col gap-1.5">
-          {scaled.ingredients.map((ingredient, index) => (
-            <li key={ingredient.id} className="text-sm">
-              <div className="flex items-baseline gap-2">
-                {/* Unscaled, the line as written is authoritative and is shown
-                    verbatim. The reconstructed parse appears only once scaled,
-                    which is the only case where the stored text would be wrong. */}
-                <span>{ingredientLine(ingredient, index)}</span>
-                {ingredient.passedThrough && isScaled ? (
-                  <span
-                    className="shrink-0 text-xs text-text-muted"
-                    title={t("notScaledTitle")}
-                  >
-                    {t("notScaled")}
-                  </span>
+          {scaled.ingredients.map((ingredient, index) => {
+            const entry = library[index] ?? null;
+            const extras = lineExtras(ingredient, index);
+            // Unscaled, the line as written is authoritative and is shown
+            // verbatim. The reconstructed parse appears only once scaled,
+            // which is the only case where the stored text would be wrong.
+            const text = ingredientLine(ingredient, index);
+            const count = extras.count ? (
+              <span className="text-text-muted"> ({extras.count})</span>
+            ) : null;
+
+            return (
+              <li key={ingredient.id} className="text-sm">
+                <div className="flex items-baseline gap-2">
+                  {/* A line that resolved to the library opens it. Every macro
+                      figure on the page is built out of these rows, so the
+                      question "where did that number come from?" is asked at
+                      the line, and this is the shortest path from asking it to
+                      the answer. A line that resolved to nothing is not a
+                      button, because there would be nothing to show. */}
+                  {entry && openLibrary ? (
+                    <button
+                      type="button"
+                      onClick={() => openLibrary.open(entry.name)}
+                      title={t("openInLibrary", { name: entry.name })}
+                      className="cursor-pointer text-left underline decoration-border decoration-dotted underline-offset-4 hover:decoration-accent"
+                    >
+                      {text}
+                      {count}
+                    </button>
+                  ) : (
+                    <span>
+                      {text}
+                      {count}
+                    </span>
+                  )}
+                  {ingredient.passedThrough && isScaled ? (
+                    <span
+                      className="shrink-0 text-xs text-text-muted"
+                      title={t("notScaledTitle")}
+                    >
+                      {t("notScaled")}
+                    </span>
+                  ) : null}
+                </div>
+                {/* How to make the thing the line asks for, for the ones nobody
+                    makes from scratch. Under the line rather than in brackets
+                    after it: it is an instruction, not a quantity. */}
+                {extras.madeUp ? (
+                  <p className="mt-0.5 text-xs text-text-muted">{extras.madeUp}</p>
                 ) : null}
-              </div>
-              {ingredient.advisory ? (
-                <p className="mt-1 rounded-card bg-warn-soft px-2 py-1 text-xs text-warn">
-                  {ingredient.advisory}
-                </p>
-              ) : null}
-            </li>
-          ))}
+                {ingredient.advisory ? (
+                  <p className="mt-1 rounded-card bg-warn-soft px-2 py-1 text-xs text-warn">
+                    {ingredient.advisory}
+                  </p>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
 
         {scaled.advisories.length > 0 ? (
