@@ -48,10 +48,23 @@ export interface Attribution {
   addedBy: Person;
   /** ISO day the recipe was committed. */
   addedOn: string;
+  /**
+   * The same moment as `addedOn`, to the second, as milliseconds since the
+   * epoch — and `updatedAt` likewise.
+   *
+   * The day is what a page shows and the moment is what an ordering needs. Two
+   * thirds of this collection was committed on one afternoon, so a "recently
+   * added" sort keyed on the day alone falls back to the title for sixty
+   * recipes at once and reports alphabetical order as recency. The timestamp is
+   * already in the log — `%aI` carries it, and the day was being cut out of it
+   * — so this costs nothing to keep.
+   */
+  addedAt: number;
   /** The commit that added it, so the page can link to exactly that change. */
   addedCommit: string;
   /** ISO day of the most recent commit touching the recipe or a translation. */
   updatedOn: string;
+  updatedAt: number;
   /** Everyone who has touched it since, in the order they first did. */
   editedBy: Person[];
 }
@@ -129,8 +142,10 @@ function identity(person: Person): string {
 interface Building {
   addedBy: Person | null;
   addedOn: string | null;
+  addedAt: number;
   addedCommit: string | null;
   updatedOn: string;
+  updatedAt: number;
   people: Person[];
 }
 
@@ -146,6 +161,7 @@ export function parseAttribution(log: string): Record<string, Attribution> {
   let author: Person | null = null;
   let commit = "";
   let day = "";
+  let at = 0;
 
   const touch = (slug: string, by: Person): Building => {
     let record = building.get(slug);
@@ -153,13 +169,16 @@ export function parseAttribution(log: string): Record<string, Attribution> {
       record = {
         addedBy: null,
         addedOn: null,
+        addedAt: 0,
         addedCommit: null,
         updatedOn: day,
+        updatedAt: at,
         people: [],
       };
       building.set(slug, record);
     }
     record.updatedOn = day;
+    record.updatedAt = at;
     if (!record.people.some((person) => identity(person) === identity(by))) {
       record.people.push(by);
     }
@@ -172,6 +191,12 @@ export function parseAttribution(log: string): Record<string, Attribution> {
       commit = hash;
       author = personFrom(name, email);
       day = date.slice(0, 10);
+      // `%aI` is offset-bearing, so parsing it is what makes two commits from
+      // different timezones comparable. A log line git did not write — a
+      // malformed fixture — parses to NaN and is taken as the epoch, which puts
+      // it last in a recency sort rather than first.
+      const parsed = Date.parse(date);
+      at = Number.isFinite(parsed) ? parsed : 0;
       continue;
     }
     if (line.length === 0 || !author) continue;
@@ -206,6 +231,7 @@ export function parseAttribution(log: string): Record<string, Attribution> {
     if (status.startsWith("A") && file.language === null && !record.addedBy) {
       record.addedBy = by;
       record.addedOn = day;
+      record.addedAt = at;
       record.addedCommit = commit;
     }
   }
@@ -217,8 +243,10 @@ export function parseAttribution(log: string): Record<string, Attribution> {
     attribution[slug] = {
       addedBy: record.addedBy,
       addedOn: record.addedOn,
+      addedAt: record.addedAt,
       addedCommit: record.addedCommit,
       updatedOn: record.updatedOn,
+      updatedAt: record.updatedAt,
       editedBy: record.people.filter((person) => identity(person) !== adder),
     };
   }

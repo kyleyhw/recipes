@@ -32,6 +32,8 @@ function recipe(overrides: Partial<RecipeSummary> & { title: string }): RecipeSu
     category: "Mains",
     cuisine: null,
     addedBy: null,
+    addedAt: null,
+    updatedAt: null,
     tags: [],
     prepMinutes: 10,
     cookMinutes: 20,
@@ -342,5 +344,75 @@ describe("filters", () => {
       // Last, wherever the alphabet would have put it.
       { value: UNATTRIBUTED_SHELF, count: 1 },
     ]);
+  });
+});
+
+/**
+ * Ordering by when a recipe entered the collection, or was last touched.
+ *
+ * Both dates come from git rather than from the file, so both are missing on a
+ * shallow clone — which makes the unknown handling the thing worth testing.
+ * Unknowns go last in *both* directions, and the reverse of a sort is not the
+ * same as reversing its array.
+ */
+describe("ordering by date", () => {
+  const day = (iso: string) => Date.parse(`${iso}T09:00:00Z`);
+  const dated = [
+    recipe({ title: "Old", addedAt: day("2026-01-04"), updatedAt: day("2026-08-20") }),
+    recipe({ title: "New", addedAt: day("2026-08-01"), updatedAt: day("2026-08-02") }),
+    recipe({ title: "Undated" }),
+  ];
+
+  it("puts the most recently added first", () => {
+    expect(sortRecipes(dated, "added-desc").map((r) => r.title)).toEqual([
+      "New",
+      "Old",
+      "Undated",
+    ]);
+  });
+
+  it("reverses without bringing the unknowns to the top", () => {
+    expect(sortRecipes(dated, "added-asc").map((r) => r.title)).toEqual([
+      "Old",
+      "New",
+      "Undated",
+    ]);
+  });
+
+  /** Added and edited are different questions and can disagree completely. */
+  it("orders by the last edit independently of when it was added", () => {
+    expect(sortRecipes(dated, "edited-desc").map((r) => r.title)).toEqual([
+      "Old",
+      "New",
+      "Undated",
+    ]);
+    expect(sortRecipes(dated, "edited-asc").map((r) => r.title)).toEqual([
+      "New",
+      "Old",
+      "Undated",
+    ]);
+  });
+
+  /**
+   * Sorting to the second is what makes this useful in a repository where most
+   * of the collection landed on one afternoon — but two commits can still share
+   * a moment, and then the order has to come from somewhere stable.
+   */
+  it("falls back to the title when two were committed at the same moment", () => {
+    const sameDay = [
+      recipe({ title: "Beta", addedAt: day("2026-08-24") }),
+      recipe({ title: "Alpha", addedAt: day("2026-08-24") }),
+    ];
+    expect(sortRecipes(sameDay, "added-desc").map((r) => r.title)).toEqual([
+      "Alpha",
+      "Beta",
+    ]);
+  });
+
+  /** These are orderings, not groupings: one shelf, no headings. */
+  it("does not shelve", () => {
+    const shelves = shelveRecipes(dated, "added-desc");
+    expect(shelves).toHaveLength(1);
+    expect(shelves[0]?.name).toBe("");
   });
 });

@@ -126,10 +126,44 @@ describe("parseAttribution", () => {
     expect(parseAttribution(log)["stew"]).toEqual({
       addedBy: { name: "Ada Lovelace", handle: "ada" },
       addedOn: "2026-01-04",
+      addedAt: Date.parse("2026-01-04T09:00:00Z"),
       addedCommit: "aaa",
       updatedOn: "2026-01-04",
+      updatedAt: Date.parse("2026-01-04T09:00:00Z"),
       editedBy: [],
     });
+  });
+
+  /**
+   * The day is what a page prints; the moment is what a "recently added" sort
+   * needs, and it is the same field parsed rather than a second call to git.
+   * Offsets are the reason it is parsed at all: two commits an hour apart from
+   * different timezones compare correctly as instants and not as strings.
+   */
+  it("keeps the moment as well as the day, offsets and all", () => {
+    const log = [
+      commit(
+        ...["aaa", ...ADA, "2026-01-04T09:00:00+09:00"],
+        "A\tcontent/recipes/stew.md",
+      ),
+      commit(
+        ...["bbb", ...BOB, "2026-01-04T09:00:00-05:00"],
+        "M\tcontent/recipes/stew.md",
+      ),
+    ].join("\n");
+
+    const stew = parseAttribution(log)["stew"];
+    expect(stew?.addedOn).toBe("2026-01-04");
+    expect(stew?.updatedOn).toBe("2026-01-04");
+    // Same wall-clock day, fourteen hours apart, and the later one wins.
+    expect(stew?.updatedAt).toBeGreaterThan(stew?.addedAt ?? 0);
+    expect((stew?.updatedAt ?? 0) - (stew?.addedAt ?? 0)).toBe(14 * 60 * 60 * 1000);
+  });
+
+  /** A date git did not write sorts last rather than first. */
+  it("takes an unparseable date as the epoch", () => {
+    const log = commit(...["aaa", ...ADA, "not a date"], "A\tcontent/recipes/stew.md");
+    expect(parseAttribution(log)["stew"]?.addedAt).toBe(0);
   });
 
   it("keeps the author when someone else edits it, and records the editor", () => {

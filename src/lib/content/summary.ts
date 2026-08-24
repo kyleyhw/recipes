@@ -1,5 +1,6 @@
 import type { RecipeFile } from "@/lib/content/format";
 import type { LibraryIngredient } from "@/lib/content/library";
+import type { Attribution } from "@/lib/content/attribution";
 import { prepareRecipe } from "@/lib/content/prepare";
 import type { StringKey } from "@/lib/i18n/strings";
 import { computeNutrition } from "@/lib/nutrition/compute";
@@ -32,6 +33,19 @@ export interface RecipeSummary {
    * see the history — see lib/content/attribution.ts.
    */
   addedBy: string | null;
+  /**
+   * When the recipe was committed, and when it was last touched — milliseconds
+   * since the epoch. From git rather than from the file, for the reason
+   * `addedBy` is (see lib/content/attribution.ts), and null on a shallow clone
+   * where the history the build would read is not there.
+   *
+   * To the second rather than to the day, which the pages display. Two thirds
+   * of this collection was committed on one afternoon; a recency sort keyed on
+   * the day falls back to the title for sixty recipes at once, and reports
+   * alphabetical order as recency.
+   */
+  addedAt: number | null;
+  updatedAt: number | null;
   tags: string[];
   prepMinutes: number | null;
   cookMinutes: number | null;
@@ -61,7 +75,7 @@ export interface RecipeSummary {
 export function summarise(
   recipe: RecipeFile,
   library: readonly LibraryIngredient[],
-  addedBy: string | null = null,
+  attribution: Attribution | null = null,
 ): RecipeSummary {
   const prepared = prepareRecipe(recipe, library);
   const nutrition = computeNutrition(prepared.nutrition, recipe.servings);
@@ -80,7 +94,9 @@ export function summarise(
     ),
     category: recipe.category,
     cuisine: recipe.cuisine,
-    addedBy,
+    addedBy: attribution?.addedBy.name ?? null,
+    addedAt: attribution?.addedAt ?? null,
+    updatedAt: attribution?.updatedAt ?? null,
     tags: recipe.tags,
     prepMinutes: recipe.prepMinutes,
     cookMinutes: recipe.cookMinutes,
@@ -133,7 +149,11 @@ export type SortKey =
   | "prep-asc"
   | "prep-desc"
   | "protein-desc"
-  | "protein-asc";
+  | "protein-asc"
+  | "added-desc"
+  | "added-asc"
+  | "edited-desc"
+  | "edited-asc";
 
 export const SORT_STRING_KEYS: Record<SortKey, StringKey> = {
   category: "sortCategory",
@@ -145,6 +165,10 @@ export const SORT_STRING_KEYS: Record<SortKey, StringKey> = {
   "prep-desc": "sortLongest",
   "protein-desc": "sortProtein",
   "protein-asc": "sortLeastProtein",
+  "added-desc": "sortRecentlyAdded",
+  "added-asc": "sortOldest",
+  "edited-desc": "sortRecentlyEdited",
+  "edited-asc": "sortLongestUntouched",
 };
 
 /**
@@ -167,6 +191,10 @@ export const SORT_DIRECTIONS: Record<SortKey, SortDirection | null> = {
   "prep-desc": "desc",
   "protein-desc": "desc",
   "protein-asc": "asc",
+  "added-desc": "desc",
+  "added-asc": "asc",
+  "edited-desc": "desc",
+  "edited-asc": "asc",
 };
 
 /**
@@ -202,6 +230,8 @@ export const SORT_ROWS: readonly SortRow[] = [
   { primary: "alphabetical", reverse: "alphabetical-desc", filter: null },
   { primary: "prep-asc", reverse: "prep-desc", filter: null },
   { primary: "protein-desc", reverse: "protein-asc", filter: null },
+  { primary: "added-desc", reverse: "added-asc", filter: null },
+  { primary: "edited-desc", reverse: "edited-asc", filter: null },
 ];
 
 /** The arrangement a row moves to when it is clicked, given the current one. */
@@ -341,7 +371,39 @@ export function sortRecipes(
           withUnknownsLast(a.proteinPerServing, b.proteinPerServing, (x, y) => x - y) ||
           byTitle(a, b),
       );
+    // Dates are ISO days, so they compare as strings and need no parsing. A
+    // recipe with no date is one the build could not attribute, and it goes
+    // last in both directions like every other unknown here.
+    case "added-desc":
+      return sorted.sort((a, b) => byMoment(a.addedAt, b.addedAt, -1) || byTitle(a, b));
+    case "added-asc":
+      return sorted.sort((a, b) => byMoment(a.addedAt, b.addedAt, 1) || byTitle(a, b));
+    case "edited-desc":
+      return sorted.sort(
+        (a, b) => byMoment(a.updatedAt, b.updatedAt, -1) || byTitle(a, b),
+      );
+    case "edited-asc":
+      return sorted.sort(
+        (a, b) => byMoment(a.updatedAt, b.updatedAt, 1) || byTitle(a, b),
+      );
   }
+}
+
+/**
+ * Two moments, with the direction passed in rather than applied by swapping the
+ * arguments.
+ *
+ * The swap is how every other reversal in this file works and it is wrong here.
+ * Unknowns have to sink in *both* directions, so the comparator must be able to
+ * tell "b is later than a" from "a is unknown" — and it cannot, once the caller
+ * has already exchanged them. Passing -1 reverses the comparison and leaves the
+ * null handling alone, which is the only part that must not reverse.
+ */
+function byMoment(a: number | null, b: number | null, direction: 1 | -1): number {
+  if (a === null && b === null) return 0;
+  if (a === null) return 1;
+  if (b === null) return -1;
+  return (a - b) * direction;
 }
 
 /**

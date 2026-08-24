@@ -35,9 +35,7 @@ export default async function CategoryPage({
 
   const summaries = recipes
     .filter((recipe) => recipe.category === category.name)
-    .map((recipe) =>
-      summarise(recipe, ingredients, attribution[recipe.slug]?.addedBy.name ?? null),
-    );
+    .map((recipe) => summarise(recipe, ingredients, attribution[recipe.slug] ?? null));
 
   return (
     <Browse
