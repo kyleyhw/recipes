@@ -74,6 +74,7 @@ below is what makes a recipe good rather than merely valid.
 | `prepMinutes` / `cookMinutes` | Hands-on time, and time at the stove. Neither includes waiting. |
 | `cookLabel` | The verb for `cookMinutes`: `bake`, `simmer`, `steam`, `roast`, `fry`. Defaults to `bake` when a tin is set and `cook` otherwise. |
 | `waitMinutes` | Time the recipe takes while you are not in the kitchen: chilling, proving, marinating, drying, resting. It is counted in the total the card advertises, because a pudding that needs four hours in the fridge is a four-hour pudding to anyone deciding what to make tonight. Count only waiting that makes you wait — a marinade that sits while something else simmers costs no wall-clock time and belongs in the method alone. |
+| — | **Sourcing.** An ingredient belongs in the list if an ordinary supermarket or Asian supermarket sells it. Whether `content/ingredients.json` already has a row is not the test — add the row. Ready-made packets (curry roux, suan cai yu kits, hot pot base) count as ingredients and should be used where that is what people actually cook with. |
 | `waitLabel` | The verb for `waitMinutes`: `chill`, `prove`, `marinate`, `dry`, `soak`, `rest`, `set`, `cool`. Defaults to `chill`. |
 | `source` | The address a web recipe came from. A recipe from a person goes in the Notes instead. |
 | `tin` | Required for anything baked. `shape` is `round`, `square`, `rectangular` or `loaf`, with `diameter` or `length`/`width`, and `depth`, in centimetres. |

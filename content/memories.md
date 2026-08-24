@@ -95,6 +95,28 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   sourced claim nobody will ever check again, so the tests fail on one. Delete a
   recipe and its private ingredients go with it.
 
+- **An ingredient has to be buyable, not already listed.** The test for putting
+  something in a recipe is whether it can be got from an ordinary supermarket or
+  an ordinary Asian supermarket — not whether `content/ingredients.json` happens
+  to have a row for it. Adding a row is half an hour of sourcing; a recipe bent
+  out of shape to avoid adding one is wrong forever, and it is the more
+  tempting mistake because the tests notice the missing row and cannot notice
+  the compromised dish.
+
+  What this rules out is the genuinely specialist: an ingredient that needs a
+  trip to one shop in one city, or an online order, belongs in the notes as a
+  variation and not in the ingredient list. Where a dish is defined by something
+  like that, say so and give the version that can actually be cooked.
+
+- **A packet is an ingredient.** Japanese curry roux, suan cai yu kits, hot pot
+  base, laksa paste, instant dashi: where a ready-made packet is what people
+  actually use — and for several dishes it is what the dish *is*, since nobody
+  is blending twelve spices on a Tuesday — the recipe calls for the packet.
+  Write it as the thing on the shelf, name the sort of brand, and let the row's
+  `sourceNote` carry the uncertainty, because composition varies far more
+  between brands than a single ingredient does. Scratch versions go in the notes
+  for anyone who wants them.
+
 - **A perishable ingredient carries a `keeping` note.** The recipe says how to
   store the dish; the library says how to store what the dish did not use, which
   is the part that actually gets thrown away — three quarters of a cabbage, half
