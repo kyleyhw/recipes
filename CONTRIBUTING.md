@@ -18,14 +18,17 @@ voice note you typed out badly — along with this:
 
 > Write this as a recipe file for the collection at
 > `https://github.com/kyleyhw/recipes`, following its rules exactly. Read all
-> three of these first:
+> four of these first:
 >
 > - https://raw.githubusercontent.com/kyleyhw/recipes/main/content/memories.md
+> - https://raw.githubusercontent.com/kyleyhw/recipes/main/docs/recipe-template.md
 > - https://raw.githubusercontent.com/kyleyhw/recipes/main/docs/contributing-by-hand.md
 > - https://raw.githubusercontent.com/kyleyhw/recipes/main/docs/diagram.md
 >
 > Give me the complete file, and a JSON row for every ingredient that is not
-> already in `content/ingredients.json`.
+> already in `content/ingredients.json`. An ingredient belongs in the recipe if
+> an ordinary supermarket or Asian supermarket sells it — whether the library
+> already has a row for it is not the test.
 
 Then put the file in `content/recipes/<slug>.md`, put any new ingredient rows in
 `content/ingredients.json`, and open a pull request. **Those two files are the
@@ -45,7 +48,7 @@ prompt.
 ## What you still have to do yourself
 
 A model will produce a file that parses. It will not reliably produce a file
-that is *true*, and three things are worth your own eyes:
+that is *true*, and four things are worth your own eyes:
 
 - **The numbers.** Times, temperatures and quantities are where a model will
   quietly smooth your recipe into the average of every similar recipe it has
@@ -56,6 +59,13 @@ that is *true*, and three things are worth your own eyes:
   [FoodData Central](https://fdc.nal.usda.gov/), or against the packet, and say
   which in the note. A wrong figure is worse than a missing one, because a gap
   is visible on the page and a wrong number is not.
+- **The dietary tags.** A new ingredient row can carry an `excludes` list, and
+  the site's vegetarian, vegan, no-pork and allergen filters are built entirely
+  out of those tags — a missing one does not fail anything, it offers the recipe
+  to somebody who cannot eat it. The ones a model forgets are the ones nobody
+  sees coming: **dashi is a fish stock**, oyster sauce is shellfish, gelatine is
+  boiled from hide, soy sauce is brewed with wheat, and crisp chilli oil has
+  peanuts in it. Anything porcine carries `pork` *and* `meat`.
 - **The diagram, rendered.** Run `npm run dev`, open the recipe, and read the
   table against your method. An outline that looks obviously right in the file
   is regularly wrong in the table — indentation reads as grouping, and the
