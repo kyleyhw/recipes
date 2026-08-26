@@ -55,7 +55,7 @@ a frying pan is the honest domestic compromise: it crisps all six faces and uses
 a fifth of the oil. Dry-frying it in butter alone makes French toast, which is a
 different and lesser thing here.
 
-Peanut butter is the standard filling and kaya, the coconut and egg jam, is the
+Peanut butter is the standard filling and Kaya, the coconut and egg jam, is the
 other one. Condensed milk drizzled over instead of golden syrup is common and
 sweeter still. Do not use all three at once, however much the menu photograph
 suggests it.
