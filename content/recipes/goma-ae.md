@@ -57,6 +57,10 @@ substitute, and the salad is 90% as good.
 Green beans, tenderstem broccoli and blanched carrot batons all take the same
 dressing. Beans want three minutes rather than one and no squeezing at all.
 
+Ohitashi is the other half of this. Same spinach, same blanch and squeeze, and
+then a thin seasoned dashi it steeps in overnight instead of a thick paste it is
+coated in — the two look nearly identical on the plate and eat nothing alike.
+
 ## Storage
 
 Two days in the fridge in a closed box. It is one of the few salads here that is
@@ -88,3 +92,4 @@ months, which is a useful thing to know independently of this recipe.
 ## Log
 
 - 2026-08-24: Added. The dressing is on the sweet side of the usual range, at two teaspoons of sugar for 300 g of spinach; a teaspoon less is more restrained and probably more correct.
+- 2026-08-24: Note added pointing at Ohitashi, which is this recipe with the dressing taken away. No change to the dish.
