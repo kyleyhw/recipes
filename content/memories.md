@@ -103,10 +103,27 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   tempting mistake because the tests notice the missing row and cannot notice
   the compromised dish.
 
+  **Buyability is the only test.** Not how many rows the library already has,
+  not how many a recipe would add, not whether a near-enough row exists. A
+  dish that needs nine new ingredients gets nine new ingredients. The sourcing
+  is work; bending the dish is damage.
+
   What this rules out is the genuinely specialist: an ingredient that needs a
   trip to one shop in one city, or an online order, belongs in the notes as a
   variation and not in the ingredient list. Where a dish is defined by something
   like that, say so and give the version that can actually be cooked.
+
+  **When something is refused, the recipe says so.** Never substitute silently.
+  Name what is missing, name what stands in for it, and say how the two differ —
+  a reader who can get the real thing should be able to tell from the notes what
+  to do with it. Worked examples, all from the Yunnan recipes:
+
+  | Added, because it is on a shelf | Refused, and named in the notes instead |
+  |---|---|
+  | mixian, chinese chives, pea shoots | Yunnan ham (宣威火腿) — left out, not substituted |
+  | quail eggs, roasted peanuts, tofu puffs | fresh douhua — warmed silken tofu instead |
+  | laksa paste, sour soup base, kecap manis | Yunnan sweet soy (甜酱油) — kecap manis instead |
+  | chicken fat | laksa leaf (daun kesum) — left out |
 
 - **A packet is an ingredient.** Japanese curry roux, suan cai yu kits, hot pot
   base, laksa paste, instant dashi: where a ready-made packet is what people
