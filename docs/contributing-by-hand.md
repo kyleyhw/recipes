@@ -8,6 +8,29 @@ A recipe is one file: `content/recipes/<slug>.md`. The filename becomes the URL,
 so `chilli-garlic-noodles.md` is `/recipes/chilli-garlic-noodles/`. Lower case,
 hyphens, no spaces.
 
+**Two files is the whole of it** — that Markdown file, and a row in
+`content/ingredients.json` for anything the library does not already have.
+Nothing else needs touching: the photograph, the nutrition panel, the
+attribution and the diagram table are all generated.
+
+Two things to have open beside this:
+
+- **[recipe-template.md](recipe-template.md)** — a complete file and a complete
+  ingredient row, to copy and overwrite.
+- **`npm run validate`** — reads the real `content/` directory and says in
+  sentences what is wrong with it, naming the file, the line, and where it can,
+  the library row you probably meant. It runs on your pull request too, and puts
+  each problem on the line that caused it in the diff, so it works even if you
+  never clone anything.
+
+```
+content/recipes/chilli-garlic-noodles.md
+  line 11  Nothing in the ingredient library matches "soy sauce", so it will be
+           missing from the nutrition panel.
+           Did you mean "light soy sauce", "dark soy sauce"? If not, add a row
+           for it to content/ingredients.json.
+```
+
 ---
 
 ## The shape of the file
@@ -129,19 +152,42 @@ is the backstop.
   "sodiumMg100g": 65,
   "densityGPerMl": null,
   "gramsPerUnit": null,
+  "excludes": ["meat", "pork"],
   "source": "USDA",
   "sourceNote": "Interpolated between USDA SR Legacy 168318 and 168333 to 10% fat.",
   "keeping": "Two days in the fridge. Freeze it flat in a bag for 3 months."
 }
 ```
 
-- **Per 100 g, always**, whatever unit the recipe uses.
+- **Per 100 g, always**, whatever unit the recipe uses. The four energy-bearing
+  figures are required; everything else is optional, and absent means *unknown*
+  rather than zero.
 - **`sourceNote` is required in practice.** Every figure is a magic number and
   has to be traceable: USDA FoodData Central where it exists, a jar label where
   it does not, and say which. If a figure is a guess, say that it is a guess.
 - **`densityGPerMl`** where the ingredient is measured by volume, and
   **`gramsPerUnit`** where it is measured by count. Without them a tablespoon
   or a clove cannot be weighed, and the ingredient becomes a coverage gap.
+- **`unitName`** is what one `gramsPerUnit` is *called* — `clove`, `head`,
+  `sheet`, `portion`, `tin`. It is what turns mu round the other way: with it,
+  a line reading `400 g white cabbage` shows `(about 1 head)`, derived every
+  build and correct at every serving count. Add **`unitNamePlural`** only where
+  an -s is wrong: `leaf` → `leaves`, `chilli` → `chillies`.
+- **`excludes`** is what the ingredient rules out, for the dietary filters:
+  `meat`, `pork`, `fish`, `shellfish`, `dairy`, `egg`, `peanut`, `nuts`,
+  `sesame`, `soy`, `gluten`, `alcohol`. Most rows need none — vegetables,
+  spices, sugar, water. The ones worth thinking about are the ones nobody sees
+  coming: **dashi is a fish stock**, oyster sauce is shellfish, gelatine is
+  boiled from hide, soy sauce is brewed with wheat, Parmigiano Reggiano is made
+  with calf rennet, and crisp chilli oil has peanuts in it. Anything porcine
+  carries `pork` *and* `meat`. Where a tag depends on the brand, take the common
+  case and say so in the `sourceNote` — none of this is an allergen guarantee
+  and the site says as much wherever it shows one.
+- **`madeUp`** for a liquid reconstituted from a packet rather than bought:
+  `{"unitName": "sachet", "perMl": 500, "note": "…"}` says how far one goes, so
+  a recipe asking for 600 ml of dashi can print how many packets and how much
+  water, and keep printing it correctly when the recipe is scaled. Needs a
+  `densityGPerMl`.
 - **`keeping`** for anything perishable: how to store what the recipe does not
   use. A place, a time, and the trick that extends it.
 
@@ -195,13 +241,25 @@ It is a cook's log, and it is public.
 ## Before you open the pull request
 
 ```bash
-npm run check     # typecheck, lint, format, tests
+npm run validate  # the content, in sentences, with the file and the line
+npm run check     # the above, plus typecheck, lint, format and the tests
 npm run dev       # then look at the recipe page, and at its diagram
 ```
 
-`npm run check` reads the real `content/` directory, so it catches broken front
-matter, an ingredient that matches no library row, a diagram whose shares do not
-add up, and a stub `keeping` note. The same checks run on your pull request.
+`npm run validate` is the one to run while you are writing: it reads the real
+`content/` directory and reports broken front matter, a category that does not
+exist, an ingredient matching no library row (with the row you probably meant),
+a diagram whose shares do not add up or that has forgotten an ingredient, a
+missing Storage section, and a library row with no `sourceNote` or a stub
+`keeping` note. `npm run validate -- content/recipes/your-file.md` checks one
+file, and `npm run validate -- --write` rewrites files into the collection's
+canonical form, which is the one problem it can fix for you.
+
+**You do not need a checkout.** The same validation runs on your pull request
+and annotates the diff, so a recipe added through the GitHub web interface gets
+the same messages on the same lines.
+
+`npm run check` runs it first and then everything else.
 
 What it cannot check is whether the diagram is *right*, whether the steps are
 unambiguous, and whether the seasoning is enough. Open the page and read the

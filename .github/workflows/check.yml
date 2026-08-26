@@ -38,6 +38,18 @@ jobs:
 
       - run: npm ci
 
+      # Content first, and as annotations rather than as a log.
+      #
+      # Everything this catches is caught again by `npm run check` below, as a
+      # failed assertion in a wall of vitest output. That is the right report
+      # for someone changing the parser and the wrong one for someone who has
+      # added a single Markdown file — especially through the GitHub web
+      # interface, where there is no checkout to run anything in and the diff
+      # is the only place a message will be seen. `--github` puts each problem
+      # on the line that caused it.
+      - name: Validate the content
+        run: npm run validate -- --github
+
       # Types, lint, formatting and the tests. The tests read the real content/
       # directory, so a recipe with broken front matter, an ingredient missing
       # from the library, or a diagram whose shares do not add up fails here,

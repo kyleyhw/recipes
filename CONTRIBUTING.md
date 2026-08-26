@@ -27,8 +27,15 @@ voice note you typed out badly — along with this:
 > Give me the complete file, and a JSON row for every ingredient that is not
 > already in `content/ingredients.json`.
 
-Then put the file in `content/recipes/<slug>.md`, run `npm run check`, and open
-a pull request.
+Then put the file in `content/recipes/<slug>.md`, put any new ingredient rows in
+`content/ingredients.json`, and open a pull request. **Those two files are the
+whole of a contribution** — the photograph, the nutrition panel, the attribution
+and the diagram table are all generated.
+
+`npm run validate` says in sentences what is still wrong with it, naming the
+file, the line, and where it can, the library row you probably meant. **If you
+have no checkout, open the pull request anyway**: the same validation runs on it
+and writes each problem onto the line that caused it in the diff.
 
 If you are working in a checkout with Claude Code or a similar agent, the rules
 are already in the repository — `content/memories.md` is loaded as project
@@ -55,6 +62,9 @@ that is *true*, and three things are worth your own eyes:
   table reads as geometry.
 
 ## Doing it by hand
+
+[docs/recipe-template.md](docs/recipe-template.md) is a complete file and a
+complete ingredient row to copy and overwrite, which is the fastest start.
 
 [docs/contributing-by-hand.md](docs/contributing-by-hand.md) is the whole of it:
 every section of the file, every front-matter field, the ingredient library, and
