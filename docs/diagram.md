@@ -83,7 +83,7 @@ keep in step with the first.
 | A line **without** children | An **ingredient**, or a piece of plain text if it matches no ingredient |
 | A top-level line **above** the root | A **banner**: an operation that takes nothing in, like heating an oven. It spans the full width above the table |
 | `- 1/3 peanut oil` | A **share** of an ingredient used in more than one place. Renders as that fraction of the scaled quantity |
-| `- ⅓ peanut oil` | The same. `½ ⅓ ⅔ ¼ ¾ ⅛` are accepted alongside `1/2`, `1/3` and so on |
+| `- ⅓ peanut oil` | The same. `½ ⅓ ⅔ ¼ ¾ ⅛` are accepted alongside `1/2`, `1/3` and so on. Unicode's other fourteen vulgar fractions — `⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅜ ⅝ ⅞` and the rest — are **not**, and look identical in an editor; `validateDiagram` reports one rather than letting the leaf degrade quietly into a line of words with no quantity |
 
 Any consistent indent width works — two spaces, four, a tab — because a line is
 a child of the nearest line above it with less indentation, not of a line a

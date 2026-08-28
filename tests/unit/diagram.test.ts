@@ -165,6 +165,39 @@ describe("building the whole thing", () => {
   });
 });
 
+describe("fraction glyphs", () => {
+  /**
+   * Six of Unicode's twenty vulgar fractions are readable as shares and the
+   * other fourteen are not, and the two sets are indistinguishable by eye. A
+   * leaf carrying an unsupported one degrades into plain text — no quantity, no
+   * link, and every other check still green — so it has to be reported.
+   */
+  it("reads the six it accepts as shares", async () => {
+    const { validateDiagram } = await import("@/lib/content/diagram");
+    const names = ["peanut oil"];
+    const diagram = buildDiagram(
+      ["- fry", "  - \u00BD peanut oil", "  - \u00BD peanut oil"],
+      names,
+    );
+    expect(validateDiagram(diagram!, names)).toEqual([]);
+  });
+
+  it("reports one it does not, instead of silently dropping the quantity", async () => {
+    const { validateDiagram } = await import("@/lib/content/diagram");
+    const names = ["peanut oil"];
+    const diagram = buildDiagram(
+      ["- fry", "  - \u2158 peanut oil", "  - 1/5 peanut oil"],
+      names,
+    );
+    const problems = validateDiagram(diagram!, names);
+    // Two reports, and both are wanted: the glyph itself, and the shortfall it
+    // causes — with four fifths unread, the fifth that was read is all the oil
+    // the diagram now accounts for.
+    expect(problems.some((p) => p.includes("\u2158"))).toBe(true);
+    expect(problems.some((p) => p.includes("add up to 0.20"))).toBe(true);
+  });
+});
+
 describe("the shipped collection", () => {
   /**
    * The rules in docs/diagram.md that a program can check, checked against the

@@ -58,6 +58,17 @@ export interface DiagramNode {
 /** `1/3 `, `½ `, `2/3 ` at the head of a leaf. */
 const SHARE = /^(?:(\d+)\s*\/\s*(\d+)|([½⅓⅔¼¾⅛]))\s+/;
 
+/**
+ * A vulgar fraction at the head of a leaf that `SHARE` does not accept.
+ *
+ * Unicode has twenty of these and this format reads six of them, which is a
+ * trap: the six that work and the fourteen that do not look identical in an
+ * editor, and a leaf carrying one of the fourteen degrades silently into plain
+ * text rather than failing.
+ */
+const UNSUPPORTED_GLYPH =
+  /^([\u00BC-\u00BE\u2150-\u215E])(?![\u00BC-\u00BE\u2150-\u215E])(?=\s)/;
+
 const GLYPH_SHARES: Record<string, number> = {
   "½": 1 / 2,
   "⅓": 1 / 3,
@@ -371,6 +382,22 @@ export function validateDiagram(
     if (Math.abs(total - 1) > 1e-6) {
       problems.push(
         `shares of ${ingredientNames[index]} add up to ${total.toFixed(2)}, not 1`,
+      );
+    }
+  }
+
+  // A fraction glyph the parser does not know is the quietest failure in the
+  // format. `- 4/5 flour` splits into a share and an ingredient; `- ⅘ flour`
+  // matches no share, so the whole string is treated as a leaf's text, links to
+  // no ingredient, and renders as a line of words with no quantity beside it —
+  // while every other check still passes, because the text does contain the
+  // ingredient's name. Only six glyphs are accepted; the rest of the Unicode
+  // vulgar fractions have to be written out.
+  for (const leaf of leaves) {
+    const glyph = leaf.text.match(UNSUPPORTED_GLYPH)?.[1];
+    if (glyph) {
+      problems.push(
+        `${glyph} is not a share this format reads — write it as a fraction, like 4/5`,
       );
     }
   }
