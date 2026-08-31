@@ -15,7 +15,7 @@ page works with JavaScript switched off.
 
 ---
 
-## What it does
+## Features
 
 **Scales to any number of servings.** The stepper re-renders every quantity as
 a measurement a kitchen can actually make — halves, thirds, quarters, sixths
@@ -96,7 +96,7 @@ npx serve out          # or any static file server
 
 ---
 
-## How to use it
+## Usage
 
 ### Adding a recipe
 
@@ -295,7 +295,7 @@ and overwrite.
 
 ---
 
-## Make your own
+## Your own copy
 
 1. **Fork or clone this repository.** Delete the recipes in
    `content/recipes/` and add your own.

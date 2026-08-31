@@ -268,13 +268,23 @@ export default async function RecipePage({
         <details className="mt-3 text-xs text-text-muted">
           <summary className="cursor-pointer marker:text-text-muted/60 hover:text-accent">
             {diets.length === 0 ? (
-              <T k="dietUnknown" />
+              <T k="dietNotWorkedOut" />
             ) : (
               <>
                 <T k="dietSuits" /> <span className="numeric">{diets.length}</span>
               </>
             )}
           </summary>
+          {/* The summary names the answer — "Suits 13", or "Diet not worked
+              out" — and the reason it could not be worked out goes inside with
+              the rest of the explaining. It used to be the summary itself, a
+              whole sentence sitting where a name belongs and longer than the
+              note it opened. */}
+          {diets.length === 0 ? (
+            <p className="mt-2 max-w-prose">
+              <T k="dietUnknown" />
+            </p>
+          ) : null}
           {diets.length > 0 ? (
             <ul className="mt-2 flex flex-wrap gap-1.5">
               {diets.map((key) => (

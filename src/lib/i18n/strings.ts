@@ -66,7 +66,6 @@ const en = {
   noRecipes: "No recipes yet",
   noRecipesNote:
     "Recipes are Markdown files in content/recipes/. Add one and push; the site rebuilds itself.",
-  seeLibrary: "See the ingredient library",
 
   // Arrangements
   sortCategory: "Category",
@@ -87,7 +86,9 @@ const en = {
   dietLabel: "Diet",
   dietNone: "Any",
   dietSuits: "Suits",
-  dietUnknown: "Not worked out — one of the ingredients did not resolve.",
+  dietNotWorkedOut: "Diet not worked out",
+  dietUnknown:
+    "One of the ingredients did not resolve against the library, so no diet is claimed.",
   dietNote:
     "Read off the ingredient list, not off a label. Three things it therefore misses: brands differ, so soy sauce is brewed with wheat and a curry roux often declares milk; nothing here knows what else was in the factory; and something a final step names to serve it with — rice, toast, a bowl of noodles — is not on the list. Check the packet if it matters medically.",
   "diet.vegetarian": "Vegetarian",
@@ -132,7 +133,7 @@ const en = {
   editedBy: "Edited since by {who}.",
   listAnd: "and",
   exportLabel: "Export",
-  forTracker: "For a tracker",
+  forTracker: "Plain text",
 
   // Scaling
   fewerServings: "Fewer servings",
@@ -311,7 +312,6 @@ const zhHant: Dict = {
   noRecipes: "尚無食譜",
   noRecipesNote:
     "食譜是 content/recipes/ 裡的 Markdown 檔案。新增一個並推送，網站會自行重建。",
-  seeLibrary: "查看食材庫",
 
   sortCategory: "分類",
   sortCuisine: "菜系",
@@ -330,7 +330,8 @@ const zhHant: Dict = {
   dietLabel: "飲食",
   dietNone: "不限",
   dietSuits: "適合",
-  dietUnknown: "無法判定 — 有食材未能對應食材庫。",
+  dietNotWorkedOut: "無法判定飲食",
+  dietUnknown: "有食材未能對應食材庫，因此不作任何判定。",
   dietNote:
     "依食材清單推算，並非依包裝標示，因此有三處看不到：品牌差異很大，醬油以小麥釀造，咖哩塊多半含乳製品；工廠裡還有什麼，這裡一概不知；最後一步提到的配食 — 白飯、吐司、麵 — 並不在清單上。若涉及過敏，請以包裝為準。",
   "diet.vegetarian": "蛋奶素",
@@ -374,7 +375,7 @@ const zhHant: Dict = {
   editedBy: "之後由 {who} 修改。",
   listAnd: "和",
   exportLabel: "匯出",
-  forTracker: "給記錄工具",
+  forTracker: "純文字",
 
   fewerServings: "減少份數",
   moreServings: "增加份數",
@@ -521,7 +522,6 @@ const zhHans: Dict = {
   noRecipes: "尚无食谱",
   noRecipesNote:
     "食谱是 content/recipes/ 里的 Markdown 文件。新增一个并推送，网站会自行重建。",
-  seeLibrary: "查看食材库",
 
   sortCategory: "分类",
   sortCuisine: "菜系",
@@ -540,7 +540,8 @@ const zhHans: Dict = {
   dietLabel: "饮食",
   dietNone: "不限",
   dietSuits: "适合",
-  dietUnknown: "无法判定 — 有食材未能对应食材库。",
+  dietNotWorkedOut: "无法判定饮食",
+  dietUnknown: "有食材未能对应食材库，因此不作任何判定。",
   dietNote:
     "依食材清单推算，并非依包装标示，因此有三处看不到：品牌差异很大，酱油以小麦酿造，咖喱块多半含乳制品；工厂里还有什么，这里一概不知；最后一步提到的配食 — 米饭、吐司、面 — 并不在清单上。若涉及过敏，请以包装为准。",
   "diet.vegetarian": "蛋奶素",
@@ -584,7 +585,7 @@ const zhHans: Dict = {
   editedBy: "之后由 {who} 修改。",
   listAnd: "和",
   exportLabel: "导出",
-  forTracker: "给记录工具",
+  forTracker: "纯文本",
 
   fewerServings: "减少份数",
   moreServings: "增加份数",
@@ -733,7 +734,6 @@ const ru: Dict = {
   noRecipes: "Рецептов пока нет",
   noRecipesNote:
     "Рецепты — это файлы Markdown в content/recipes/. Добавьте один и запушьте; сайт пересоберётся сам.",
-  seeLibrary: "Открыть справочник ингредиентов",
 
   sortCategory: "Категория",
   sortCuisine: "Кухня",
@@ -752,7 +752,8 @@ const ru: Dict = {
   dietLabel: "Диета",
   dietNone: "Любая",
   dietSuits: "Подходит",
-  dietUnknown: "Не определено — один из ингредиентов не распознан.",
+  dietNotWorkedOut: "Диета не определена",
+  dietUnknown: "Один из ингредиентов не распознан, поэтому диета не указана.",
   dietNote:
     "Выведено из списка ингредиентов, а не с этикетки, и потому не видит трёх вещей: марки различаются — соевый соус варят с пшеницей, карри-брикет часто содержит молоко; о том, что ещё было на производстве, здесь ничего не известно; и гарнир, названный в последнем шаге — рис, тост, лапша — в список не входит. При аллергии смотрите упаковку.",
   "diet.vegetarian": "Вегетарианское",
@@ -796,7 +797,7 @@ const ru: Dict = {
   editedBy: "Позже правили: {who}.",
   listAnd: "и",
   exportLabel: "Экспорт",
-  forTracker: "Для трекера",
+  forTracker: "Простой текст",
 
   fewerServings: "Меньше порций",
   moreServings: "Больше порций",

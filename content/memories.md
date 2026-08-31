@@ -288,6 +288,11 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   A number in a label is data rather than explanation and stays: "Used in 16
   recipes" and "(11 of 11 known)" are names with a count in them.
 
+  **A button is named for what it does**, because it names an action rather
+  than a thing: Clear, Close, Export. And an accessible name is not a visible
+  label — a screen reader announces "button" and then reads it, so "Switch to
+  the light theme" is right there and would be wrong on the page.
+
   **The other three languages are a second opinion worth asking.** Both Chinese
   tables had said 數據來源 — sources — from the day the string was written, and
   only English and Russian had drifted into a sentence. A label that is a noun
