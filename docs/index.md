@@ -18,9 +18,11 @@ Design and rationale for the recipe management application. Start with
 | [log-and-history.md](log-and-history.md) | Per-recipe notes, revising by message, snapshots and restore |
 
 How to add a recipe by pull request — and how the site works out whose it is —
-is in [`CONTRIBUTING.md`](../CONTRIBUTING.md), which assumes you are handing the
-job to a model; [contributing-by-hand.md](contributing-by-hand.md) is the same
-ground for a person typing it themselves. Project status and the phase
+is in [`CONTRIBUTING.md`](../CONTRIBUTING.md). That page is the model-assisted
+path and nothing else: five steps, one prompt, no checkout required.
+[contributing-by-hand.md](contributing-by-hand.md) is the same ground for a
+person typing it themselves, and is where CONTRIBUTING.md sends anyone who would
+rather. Project status and the phase
 breakdown live in [`PROJECT_PLAN.md`](../PROJECT_PLAN.md).
 
 ## Reading order

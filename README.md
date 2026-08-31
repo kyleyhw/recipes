@@ -2,14 +2,64 @@
 
 **→ [kyleyhw.github.io/recipes](https://kyleyhw.github.io/recipes/)**
 
-A personal recipe collection that lives in a git repository. One Markdown file
-per recipe; the site is generated from those files and hosted on GitHub Pages.
+A cooking collection that lives in a git repository. One Markdown file per
+recipe; the site is generated from those files and published to GitHub Pages.
+121 recipes and counting, mostly Cantonese, Japanese and Chinese, with the
+British baking that gets made alongside them.
 
-It scales portions to any number of servings, computes macros per serving for
-export into a tracker, and keeps every version of every recipe — because the
-files are in git, so the history is the file's history.
+No database, no server, no account, no sign-up, and nothing to pay for. Every
+page works with JavaScript switched off.
 
-No database, no server, no account, and nothing to pay for.
+**Adding a recipe is adding a file, and you can hand the writing to a model —
+[CONTRIBUTING.md](CONTRIBUTING.md) is five steps and needs no checkout.**
+
+---
+
+## What it does
+
+**Scales to any number of servings.** The stepper re-renders every quantity as
+a measurement a kitchen can actually make — halves, thirds, quarters, sixths
+and eighths, never sevenths. `salt to taste` and `oil for frying` are left
+alone, because multiplying them produces confident nonsense.
+
+**Scales the tin with it.** Doubling a cake batter into the same tin makes a
+layer twice as deep and a burnt edge around a raw seam. A baked recipe states
+its tin, and the site works out what tin the scaled batter wants — area with
+the serving count, so the width goes as its square root — then names the
+nearest one you are likely to own and what that does to the depth.
+
+**Says what scaling does to the clock, which is mostly nothing.** Cooking and
+waiting are set by how far heat has to travel through what is in the pan, so a
+doubled recipe in a scaled tin bakes for exactly as long. Off a tin the claim
+is conditional and says so, because a wok is a tin that cannot be scaled.
+
+**Draws the method as a tree.** Every recipe carries a diagram: a table of
+ingredients down the left and the operations that combine them to the right,
+each operation standing exactly as tall as what it takes in. It is the only
+view on the page that answers *what meets what* rather than *what next*.
+
+**Computes macros per serving**, from a shared ingredient library — so
+correcting a figure once fixes every recipe that uses it. Coverage is reported
+by mass rather than by count, and an unmatched ingredient is a gap and never a
+zero: "contains no fat" and "we do not know its fat content" are different
+claims.
+
+**Works out the dietary filters from the ingredients**, never from a field
+somebody typed. Each ingredient row says what it rules out — dashi is a fish
+stock, gelatine is boiled from hide, soy sauce is brewed with wheat — and
+vegetarian, vegan, no-pork and the allergen filters fall out of that. Add
+oyster sauce to a stir-fry two months later and the answer changes with it.
+
+**Tells you how to keep what the recipe did not use.** Three quarters of a
+cabbage, half a bunch of coriander, the rest of the packet of mince. It lives
+on the ingredient rather than the recipe, because ginger is in ten recipes and
+ten copies of the same paragraph would be ten paragraphs to keep in step.
+
+**Speaks four languages** — English, 繁體中文, 简体中文 and Русский — and
+**exports to four formats**, so a recipe can go straight into a tracker.
+
+**Credits contributors from the git history.** Nobody fills anything in, and
+nobody can get it wrong.
 
 ---
 
@@ -218,17 +268,30 @@ the ones a tracker wants regardless of how much you cooked.
 
 ## Contributing a recipe
 
-Recipes are welcome by pull request. Fork, add
-`content/recipes/<slug>.md`, run `npm run check`, and open it —
-[CONTRIBUTING.md](CONTRIBUTING.md) has what makes a recipe good rather than
-merely valid, and the checks that run on your pull request are the same ones
-that run before a deploy.
+**Please do, and it is easier than the rest of this page makes it look.** A
+contribution is one Markdown file — plus a row in the ingredient library if your
+recipe uses something the collection does not already have — and you are meant
+to hand the writing of it to a model.
+
+[**CONTRIBUTING.md**](CONTRIBUTING.md) is that path in five steps: gather the
+recipe in whatever shape you have it, paste one prompt, read the result back
+against what you actually cook, create the file on github.com, open the pull
+request. **No checkout required** — the same validation that runs locally runs
+on your pull request and writes each problem onto the line that caused it.
+
+**Don't worry about the photograph.** You are not expected to supply one.
+Pictures are drawn from the recipe's own text, in a batch, later.
 
 **Your name goes on it automatically.** Each recipe page says who added it and
 links to the commit that did, taken from the git history rather than from a
 field in the file — so there is nothing to fill in, and nothing that can drift
 out of date. Later edits are credited too, beneath the author. Email addresses
 are read to find a GitHub handle and are never published.
+
+Would rather type it out yourself? [docs/contributing-by-hand.md](docs/contributing-by-hand.md)
+is every section, every field and every check, and
+[docs/recipe-template.md](docs/recipe-template.md) is a complete file to copy
+and overwrite.
 
 ---
 
