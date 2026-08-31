@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: simmer
 photo: /photos/curry-udon.webp
+photoDescription: Thick udon noodles in a glossy brown curry sauce with thin-sliced pork and softened onion in one deep bowl, scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: f4971ace770ef7c1

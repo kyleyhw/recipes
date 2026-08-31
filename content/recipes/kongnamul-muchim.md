@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 6
 cookLabel: boil
 photo: /photos/kongnamul-muchim.webp
+photoDescription: A tangle of yellow-headed soybean sprouts dressed with chilli flakes, toasted sesame seeds, garlic and sliced spring onions, in one shallow bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: d98bf74b87b25e42

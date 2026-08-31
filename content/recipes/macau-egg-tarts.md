@@ -11,6 +11,7 @@ prepMinutes: 30
 cookMinutes: 20
 cookLabel: bake
 photo: /photos/macau-egg-tarts.webp
+photoDescription: Little puff-pastry egg tarts with deeply scorched caramel tops, dusted with cinnamon, set on a wire rack over one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 3dd04337ea4e5aa8

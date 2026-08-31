@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: steam
 photo: /photos/steamed-pork-patty-with-zha-cai.webp
+photoDescription: A steamed pork patty flecked with chopped zha cai in a shallow bowl of its own brown juices, topped with sliced spring onions; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 698d037ca58989cf

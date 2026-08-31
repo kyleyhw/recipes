@@ -12,6 +12,7 @@ cookMinutes: 45
 waitMinutes: 60
 waitLabel: cool
 photo: /photos/shortbread.webp
+photoDescription: A pale round of shortbread with a fluted edge and a caster sugar dusting on one plate, one wedge cut and set apart.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 7254f8466f31866e

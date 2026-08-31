@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 3
 cookLabel: heat
 photo: /photos/ginger-scallion-oil.webp
+photoDescription: A small bowl of ginger scallion oil, minced ginger and sliced spring onions steeped in golden oil.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 6cdc2a2b844d2238

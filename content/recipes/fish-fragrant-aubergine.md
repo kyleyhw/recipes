@@ -9,6 +9,7 @@ servings: 2
 prepMinutes: 15
 cookMinutes: 15
 photo: /photos/fish-fragrant-aubergine.webp
+photoDescription: Collapsed batons of fried aubergine glossed in a dark sweet-sour sauce with pickled chilli on one plate, scattered with sliced spring onions; a small bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: cb80f5c018d5aeba

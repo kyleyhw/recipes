@@ -11,6 +11,7 @@ cookMinutes: 45
 cookLabel: simmer
 waitMinutes: 90
 photo: /photos/garlic-pork-with-cucumber.webp
+photoDescription: Thin slices of poached pork draped over a pile of cucumber batons on one plate, dressed with chopped garlic, chilli oil, toasted sesame seeds and sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 95e2e75d6076eb14

@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 20
 cookLabel: simmer
 photo: /photos/kamo-nanban-soba.webp
+photoDescription: A deep bowl of dark broth with soba noodles, seared slices of pink duck breast and charred lengths of leek, topped with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 526eefb40744b2cf

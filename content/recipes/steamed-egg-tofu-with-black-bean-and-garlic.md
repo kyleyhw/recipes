@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 10
 cookLabel: steam
 photo: /photos/steamed-egg-tofu-with-black-bean-and-garlic.webp
+photoDescription: Discs of pale egg tofu arranged in a ring on one plate under a black bean and garlic sauce, scattered with spring onions; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: e3d1bb4923ef8d0e

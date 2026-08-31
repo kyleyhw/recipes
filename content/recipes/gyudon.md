@@ -12,6 +12,7 @@ cookLabel: simmer
 waitMinutes: 30
 waitLabel: freeze
 photo: /photos/gyudon.webp
+photoDescription: Thin-sliced beef and softened onion in a dark broth over white rice in one shallow bowl, scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 2941c235fb8eabae

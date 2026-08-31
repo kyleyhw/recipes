@@ -9,6 +9,7 @@ servings: 4
 prepMinutes: 10
 cookMinutes: 25
 photo: /photos/three-cup-chicken.webp
+photoDescription: Chicken pieces glazed dark with soy and sesame oil, tossed with whole garlic cloves, ginger coins and basil leaves, over rice on one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 2d481bb66fe96b71

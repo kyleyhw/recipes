@@ -11,6 +11,7 @@ prepMinutes: 15
 cookMinutes: 12
 cookLabel: bake
 photo: /photos/scones.webp
+photoDescription: A tall golden scone on one plate beside a second one split open to show the soft crumb.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: dce06264a3a96f7d

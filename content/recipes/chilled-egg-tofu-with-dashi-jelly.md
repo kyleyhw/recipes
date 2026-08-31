@@ -11,6 +11,7 @@ cookMinutes: 5
 cookLabel: heat
 waitMinutes: 180
 photo: /photos/chilled-egg-tofu-with-dashi-jelly.webp
+photoDescription: Chilled blocks of egg tofu heaped with amber cubes of dashi jelly in one shallow bowl, topped with grated ginger and sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 337f6d478de08532

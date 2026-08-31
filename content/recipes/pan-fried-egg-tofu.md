@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 10
 cookLabel: fry
 photo: /photos/pan-fried-egg-tofu.webp
+photoDescription: Golden pan-fried discs of egg tofu on one plate, glossed with a garlicky soy dressing and scattered with sliced spring onion.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 9cc22495174559c1

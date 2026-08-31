@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 10
 cookLabel: fry
 photo: /photos/douhua-mixian.webp
+photoDescription: Thick round rice noodles tossed with pork mince, silken tofu, dark kecap manis, sesame paste and chilli oil in one shallow bowl, topped with crushed roasted peanuts and chopped chinese chives.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 8376cd33cdb6c08a

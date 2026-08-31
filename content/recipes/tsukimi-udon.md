@@ -10,6 +10,7 @@ prepMinutes: 5
 cookMinutes: 8
 cookLabel: simmer
 photo: /photos/tsukimi-udon.webp
+photoDescription: Thick udon in pale broth with a raw egg yolk sitting in its white at the centre, sliced spring onions beside, in one deep bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 2509c4ec6b384abf

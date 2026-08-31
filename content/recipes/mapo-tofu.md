@@ -9,6 +9,7 @@ servings: 4
 prepMinutes: 10
 cookMinutes: 15
 photo: /photos/mapo-tofu.webp
+photoDescription: Cubes of soft tofu and browned pork mince in a deep red chilli-bean sauce dusted with ground sichuan pepper, on one plate; a small bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 8c6b2e14da662e9f

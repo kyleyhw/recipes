@@ -8,6 +8,7 @@ tags:
 servings: 4
 prepMinutes: 10
 photo: /photos/oi-muchim.webp
+photoDescription: Cucumber half-moons dressed with chilli flakes, toasted sesame seeds, garlic and spring onion, piled on one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 4561053d7969b4d3

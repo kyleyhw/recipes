@@ -12,6 +12,7 @@ waitMinutes: 10
 waitLabel: marinate
 source: 菠萝精呀 (Xiaohongshu)
 photo: /photos/beef-with-pickled-and-fresh-chillies.webp
+photoDescription: Glossy slices of stir-fried beef tossed with whole red chillies, chopped pickled green chillies and coriander sprigs on one plate; a small bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: e4e2d889a2d98472

@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 10
 cookLabel: steam
 photo: /photos/steamed-egg-tofu-with-garlic-and-glass-noodles.webp
+photoDescription: Discs of egg tofu over a bed of glass noodles in one shallow bowl, heaped with golden fried garlic and spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 08b435b502ad6ddf

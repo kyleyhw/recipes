@@ -12,6 +12,7 @@ prepMinutes: 2
 cookMinutes: 2
 cookLabel: simmer
 photo: /photos/roast-meat-soy-dressing.webp
+photoDescription: A ring of white rice on one plate with glossy dark soy dressing spooned into its centre, the small pan it was made in sitting behind.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 0c11a34db32a4659

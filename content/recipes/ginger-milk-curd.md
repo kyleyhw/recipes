@@ -12,6 +12,7 @@ cookLabel: heat
 waitMinutes: 10
 waitLabel: set
 photo: /photos/ginger-milk-curd.webp
+photoDescription: A bowl of smooth, just-set white ginger milk curd with a spoon resting on its surface.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 7a0bbb8eb9d7900e

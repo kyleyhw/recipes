@@ -10,6 +10,7 @@ prepMinutes: 5
 cookMinutes: 10
 cookLabel: brew
 photo: /photos/yuenyeung.webp
+photoDescription: Silky tan yuenyeung, coffee cut with milk tea, filling a mug with a handle on its saucer.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 29f29dec3cd41045

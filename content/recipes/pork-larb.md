@@ -9,6 +9,7 @@ servings: 3
 prepMinutes: 10
 cookMinutes: 10
 photo: /photos/pork-larb.webp
+photoDescription: Crumbled pork larb tossed with mint, coriander and spring onion in one shallow bowl, with lettuce leaves and a mound of sticky rice at its side.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: d24f4f288c006ad2

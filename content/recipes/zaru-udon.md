@@ -11,6 +11,7 @@ cookMinutes: 10
 cookLabel: boil
 waitMinutes: 60
 photo: /photos/zaru-udon.webp
+photoDescription: Cold white udon coiled on one plate with sliced spring onions and grated ginger on top, a small bowl of dark dipping sauce beside it.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: ca862dfb45ed148b

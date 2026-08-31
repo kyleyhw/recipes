@@ -12,6 +12,7 @@ cookLabel: simmer
 waitMinutes: 40
 waitLabel: soak
 photo: /photos/takikomi-gohan.webp
+photoDescription: Soy-seasoned rice mounded in one shallow bowl with chicken, shiitake, carrot and strips of aburaage, scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 8aa877d8bcd659eb

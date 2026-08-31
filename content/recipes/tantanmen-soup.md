@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: simmer
 photo: /photos/tantanmen-soup.webp
+photoDescription: A deep bowl of creamy sesame tantanmen broth with thin noodles, topped with a heap of crisp fried pork mince and sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 04a0d3cd0d2546d9

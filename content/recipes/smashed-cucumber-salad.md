@@ -10,6 +10,7 @@ prepMinutes: 10
 waitMinutes: 15
 waitLabel: drain
 photo: /photos/smashed-cucumber-salad.webp
+photoDescription: Smashed cucumber pieces in a dark soy and vinegar dressing in one shallow bowl, scattered thickly with toasted sesame seeds and chopped garlic.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 6b93e242b51bc6bd

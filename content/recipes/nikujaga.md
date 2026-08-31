@@ -11,6 +11,7 @@ prepMinutes: 15
 cookMinutes: 35
 cookLabel: simmer
 photo: /photos/nikujaga.webp
+photoDescription: Chunks of potato, thin-sliced beef, carrot and softened onion in a shallow pool of glossy brown broth in one shallow bowl, scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 9127e9da2ab89c27

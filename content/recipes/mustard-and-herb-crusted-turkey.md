@@ -10,6 +10,7 @@ prepMinutes: 5
 cookMinutes: 20
 cookLabel: bake
 photo: /photos/mustard-and-herb-crusted-turkey.webp
+photoDescription: A roasted turkey breast crusted with grain mustard and herbs on one plate, two thick slices carved and leaning against it.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: cf9822d9a8a4a1c8

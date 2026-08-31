@@ -10,6 +10,7 @@ prepMinutes: 10
 waitMinutes: 10
 waitLabel: salt
 photo: /photos/sunomono.webp
+photoDescription: Thin cucumber rounds and wakame in a shallow pool of clear rice vinegar dressing in one shallow bowl, with slivers of ginger and toasted sesame seeds.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: f3a7a6af5026323a

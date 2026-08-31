@@ -12,6 +12,7 @@ cookLabel: fry
 waitMinutes: 30
 waitLabel: press
 photo: /photos/agedashi-tofu.webp
+photoDescription: Golden cubes of fried tofu sitting in a shallow pool of pale dashi in one shallow bowl, topped with grated ginger, sliced spring onions and a tuft of katsuobushi flakes.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 0c1a925d1324e08e

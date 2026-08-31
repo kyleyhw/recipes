@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: steam
 photo: /photos/steamed-pork-patty-with-preserved-bean-curd.webp
+photoDescription: A steamed pork patty in a rimmed clay dish in a pool of its juices, sliced spring onions in the middle; a bowl of white rice with a spoon sits at the top right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 4b56a456e3f03b57

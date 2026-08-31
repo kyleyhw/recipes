@@ -12,6 +12,7 @@ cookMinutes: 30
 waitMinutes: 150
 waitLabel: prove
 photo: /photos/shokupan.webp
+photoDescription: A tall white shokupan loaf with a golden crust on one plate, one thick slice cut and laid in front.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 9282e9e40c01365e

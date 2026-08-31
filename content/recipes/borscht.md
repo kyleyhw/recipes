@@ -11,6 +11,7 @@ prepMinutes: 30
 cookMinutes: 130
 cookLabel: simmer
 photo: /photos/borscht.webp
+photoDescription: A deep bowl of ruby-red borscht with chunks of beef, cabbage and potato, a spoonful of soured cream melting in the middle.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 7a5f8e3d8a6da222

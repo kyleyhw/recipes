@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: steam
 photo: /photos/steamed-pork-patty-with-salted-fish.webp
+photoDescription: A steamed pork patty topped with a piece of salted fish and slivers of spring onion in one shallow bowl in a pool of pale juices; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 0dae92548b8b06d0

@@ -10,6 +10,7 @@ prepMinutes: 5
 cookMinutes: 12
 cookLabel: toast
 photo: /photos/kaya-toast.webp
+photoDescription: A slice of white toast spread with kaya and topped with thick slabs of cold butter, beside two soft-cooked eggs seasoned with dark soy and white pepper, on one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 606fc776dbe1bc55

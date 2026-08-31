@@ -11,6 +11,7 @@ cookMinutes: 5
 cookLabel: heat
 waitMinutes: 240
 photo: /photos/mango-pudding.webp
+photoDescription: A pale-gold mango pudding, its surface dimpled, in a small dish set on one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 6ffd33616e40cb6e

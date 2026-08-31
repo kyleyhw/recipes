@@ -12,6 +12,7 @@ cookMinutes: 60
 waitMinutes: 75
 waitLabel: cool
 photo: /photos/banana-bread.webp
+photoDescription: A dark banana bread loaf on parchment over a wire rack on one plate, one slice cut and leaning against the loaf.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 1de81bee557b21db

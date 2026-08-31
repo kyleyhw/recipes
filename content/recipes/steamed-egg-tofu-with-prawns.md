@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 10
 cookLabel: steam
 photo: /photos/steamed-egg-tofu-with-prawns.webp
+photoDescription: Discs of egg tofu and curled pink prawns on one plate in a dark soy dressing with softened spring onion and ginger; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: d6a833a086c215de

@@ -11,6 +11,7 @@ cookLabel: bake
 waitMinutes: 120
 waitLabel: prove
 photo: /photos/cocktail-buns.webp
+photoDescription: Four glazed golden cocktail buns scattered with sesame seeds on one plate, one cut to show the shredded coconut filling.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: c8c25dbf143e63e2

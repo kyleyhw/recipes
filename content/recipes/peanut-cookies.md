@@ -11,6 +11,7 @@ prepMinutes: 25
 cookMinutes: 18
 cookLabel: bake
 photo: /photos/peanut-cookies.webp
+photoDescription: Crumbly rounded peanut cookies dusted with icing sugar on one plate, one broken open beside a scatter of crumbs.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: be70f16ae102dd4f

@@ -9,6 +9,7 @@ prepMinutes: 30
 cookMinutes: 75
 waitMinutes: 240
 photo: /photos/japanese-cheesecake.webp
+photoDescription: A whole souffle-light cheesecake with a golden top on one plate, one wedge cut and set beside it showing the pale cotton crumb.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 55ae0554f6a2af0a

@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: steam
 photo: /photos/steamed-pork-patty-with-salted-egg.webp
+photoDescription: A wide steamed pork patty studded with rounds of orange salted egg yolk and sliced spring onions in one shallow bowl; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 86c39d072caf029a

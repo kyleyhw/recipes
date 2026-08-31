@@ -8,6 +8,7 @@ tags:
 servings: 1
 prepMinutes: 2
 photo: /photos/tamago-kake-gohan.webp
+photoDescription: Warm white rice in one bowl folded with raw egg into a pale cream, a drizzle of soy sinking in, topped with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: a8335a7f16d9d398

@@ -12,6 +12,7 @@ cookLabel: simmer
 waitMinutes: 30
 waitLabel: soak
 photo: /photos/walnut-soup.webp
+photoDescription: A bowl of smooth tan walnut soup, thick enough to hold a few slow bubbles.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 600816c4e6f69210

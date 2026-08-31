@@ -11,6 +11,7 @@ prepMinutes: 15
 cookMinutes: 25
 cookLabel: simmer
 photo: /photos/laksa.webp
+photoDescription: A deep bowl of orange coconut laksa broth with thick rice noodles, prawns, tofu puffs, halved boiled eggs, bean sprouts and a lime half.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 9fb52fffdba87fdc

@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 15
 cookLabel: fry
 photo: /photos/salted-egg-yolk-egg-tofu.webp
+photoDescription: Golden discs of fried egg tofu coated in frothy salted egg yolk sauce in one shallow bowl, flecked with red chilli rings and spring onion; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 517ca51a3cb34ffa

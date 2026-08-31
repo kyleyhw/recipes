@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 6
 cookLabel: fry
 photo: /photos/hong-kong-french-toast.webp
+photoDescription: A deep-fried french toast sandwich cut into triangles and stacked on one plate, a melting slab of butter and a pour of golden syrup on top.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 618473e911629eea

@@ -12,6 +12,7 @@ cookMinutes: 5
 cookLabel: stir-fry
 source: https://www.madewithlau.com/recipes/choy-sum-with-garlic
 photo: /photos/garlic-stir-fried-greens.webp
+photoDescription: Glossy dark-green stems and leaves stir-fried with whole golden garlic cloves in a light brown sauce, in one shallow bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 5e946b65096d3dbb

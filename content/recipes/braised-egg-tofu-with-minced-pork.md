@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 20
 cookLabel: braise
 photo: /photos/braised-egg-tofu-with-minced-pork.webp
+photoDescription: Golden discs of fried egg tofu braised with pork mince and sliced garlic in a glossy brown gravy in one shallow bowl, scattered with sliced spring onions; a small bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 96d55a37fd3d7dfe

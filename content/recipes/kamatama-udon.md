@@ -10,6 +10,7 @@ prepMinutes: 3
 cookMinutes: 2
 cookLabel: boil
 photo: /photos/kamatama-udon.webp
+photoDescription: Thick udon noodles slicked with raw egg and dashi in one shallow bowl, a pile of sliced spring onions in the centre.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 6061aae8f659fb6b

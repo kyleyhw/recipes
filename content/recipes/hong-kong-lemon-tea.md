@@ -13,6 +13,7 @@ cookMinutes: 8
 cookLabel: brew
 waitMinutes: 60
 photo: /photos/hong-kong-lemon-tea.webp
+photoDescription: A cup of dark black tea with three lemon slices pressed into it.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: cb9c2619fce17b15

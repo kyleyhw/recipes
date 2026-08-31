@@ -10,6 +10,7 @@ prepMinutes: 25
 cookMinutes: 60
 cookLabel: simmer
 photo: /photos/guoqiao-mixian.webp
+photoDescription: A deep bowl of pale chicken broth with rice noodles, poached chicken, slices of white fish, quail eggs, pea shoots, chinese chives and bean sprouts arranged over the surface.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 2d4850c27d282787

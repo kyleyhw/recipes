@@ -13,6 +13,7 @@ cookMinutes: 12
 cookLabel: bake
 waitMinutes: 720
 photo: /photos/miso-chocolate-chip-cookies.webp
+photoDescription: Deeply golden cookies studded with dark chocolate chunks piled on one plate, one broken in half.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: d6d40b81b7e25eea

@@ -12,6 +12,7 @@ cookMinutes: 8
 cookLabel: stir-fry
 source: https://thewoksoflife.com/stir-fried-tomato-and-egg/
 photo: /photos/tomato-and-egg.webp
+photoDescription: Soft scrambled eggs folded through glossy stewed tomatoes flecked with spring onion in one shallow bowl on its plate; a small bowl of white rice with a spoonful of the sauce sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: ac0fd33c84a29122

@@ -13,6 +13,7 @@ cookMinutes: 25
 waitMinutes: 90
 waitLabel: cool
 photo: /photos/flapjacks.webp
+photoDescription: A slab of golden oat flapjack cut into squares on one plate, one square set apart on its side.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: ea9c24b2bf3bcf5a

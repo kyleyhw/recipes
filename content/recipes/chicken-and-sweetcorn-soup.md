@@ -9,6 +9,7 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 10
 photo: /photos/chicken-and-sweetcorn-soup.webp
+photoDescription: A deep bowl of golden sweetcorn soup ribboned with egg, scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 3af55184c4a55157

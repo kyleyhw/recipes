@@ -10,6 +10,7 @@ servings: 1
 prepMinutes: 10
 cookMinutes: 15
 photo: /photos/spicy-and-sour-rice-noodles.webp
+photoDescription: A deep bowl of dark red-brown spicy and sour broth with slippery rice noodles, chopped pickles and chilli flakes.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: aba6f74b50cc7f46

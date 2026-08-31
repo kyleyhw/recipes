@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 12
 cookLabel: steam
 photo: /photos/steamed-egg-custard.webp
+photoDescription: A pale gold steamed egg custard in one bowl, its glassy surface pooled with soy and scattered with spring onions and toasted sesame seeds; a bowl of white rice with a spoon sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 89750d758c35554a

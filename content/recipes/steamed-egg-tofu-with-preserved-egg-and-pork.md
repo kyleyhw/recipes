@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 12
 cookLabel: steam
 photo: /photos/steamed-egg-tofu-with-preserved-egg-and-pork.webp
+photoDescription: Cubes of egg tofu, wedges of preserved egg and minced pork tossed together in one shallow bowl, topped with spring onions and toasted sesame seeds; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 7fab74d7438a0964

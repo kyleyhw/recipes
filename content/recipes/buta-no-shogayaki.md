@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 10
 cookLabel: fry
 photo: /photos/buta-no-shogayaki.webp
+photoDescription: Thin pork slices glazed dark with ginger sauce and tangled with softened onion on one plate beside a mound of finely shredded raw cabbage; a small bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 39183818a4ee5076

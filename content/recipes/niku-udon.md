@@ -12,6 +12,7 @@ cookLabel: simmer
 waitMinutes: 30
 waitLabel: freeze
 photo: /photos/niku-udon.webp
+photoDescription: Thick udon in pale broth with thin-sliced beef and softened onion, topped with sliced spring onions, in one deep bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 7dbd7b4739aee121

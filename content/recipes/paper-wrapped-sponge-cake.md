@@ -11,6 +11,7 @@ cookLabel: bake
 waitMinutes: 45
 waitLabel: cool
 photo: /photos/paper-wrapped-sponge-cake.webp
+photoDescription: A tall golden sponge cake still in its brown paper wrapper on one plate, one wedge cut and set beside it.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 668218262532a35a

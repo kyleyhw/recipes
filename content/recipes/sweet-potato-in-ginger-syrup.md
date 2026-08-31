@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 35
 cookLabel: simmer
 photo: /photos/sweet-potato-in-ginger-syrup.webp
+photoDescription: Chunks of golden sweet potato and a thick slice of ginger in a clear amber syrup, in one bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: b4632bf1ae64671b

@@ -9,6 +9,7 @@ prepMinutes: 10
 cookMinutes: 30
 cookLabel: simmer
 photo: /photos/tteokbokki.webp
+photoDescription: Chubby rice cakes and slices of fish cake in glossy red gochujang sauce in one shallow bowl, with a soft-boiled egg, sliced spring onions and toasted sesame seeds.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: c70ff29ffad4e13e

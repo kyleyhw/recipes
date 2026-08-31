@@ -12,6 +12,7 @@ cookMinutes: 25
 cookLabel: bake
 waitMinutes: 30
 photo: /photos/hong-kong-egg-tarts-cookie-crust.webp
+photoDescription: Twelve little egg tarts with sandy cookie crusts and glassy pale-yellow custard on one plate, one cut in half to show the custard against the crust.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: a12958ab8e2ecd18

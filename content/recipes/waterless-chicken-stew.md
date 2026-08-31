@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 90
 cookLabel: simmer
 photo: /photos/waterless-chicken-stew.webp
+photoDescription: Chicken pieces and collapsed cabbage in a rich brown broth in one wide shallow bowl; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: c6bb62a1ffb0908e

@@ -11,6 +11,7 @@ prepMinutes: 20
 cookMinutes: 12
 cookLabel: simmer
 photo: /photos/mushroom-and-glass-noodle-soup.webp
+photoDescription: A deep bowl of dark mushroom broth with glass noodles, whole shiitake, slices of ginger, greens and sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: e01dd8a83c18692d

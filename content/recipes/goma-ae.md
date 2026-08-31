@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 3
 cookLabel: blanch
 photo: /photos/goma-ae.webp
+photoDescription: Blanched spinach tossed in a pale, crumbly sesame dressing and scattered thickly with toasted sesame seeds, in one shallow bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: eaf8cec26b5463ff

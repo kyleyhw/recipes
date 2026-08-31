@@ -12,6 +12,7 @@ cookLabel: blanch
 waitMinutes: 30
 waitLabel: steep
 photo: /photos/ohitashi.webp
+photoDescription: Deep green spinach leaves and stems steeped in pale amber dashi in one shallow bowl, topped with a tuft of katsuobushi flakes.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: d5af0762084818ec

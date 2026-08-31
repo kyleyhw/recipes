@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 12
 cookLabel: fry
 photo: /photos/yaki-udon.webp
+photoDescription: Fried udon tossed with pork belly, cabbage and onion in a dark sauce, piled on one plate and scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 1f4273ef48274c75

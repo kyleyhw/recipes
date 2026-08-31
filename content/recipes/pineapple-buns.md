@@ -11,6 +11,7 @@ cookLabel: bake
 waitMinutes: 120
 waitLabel: prove
 photo: /photos/pineapple-buns.webp
+photoDescription: A golden pineapple bun with a crackled sweet crust on one plate, one piece cut away and laid beside it.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 732053a8a8d2ee5f

@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 20
 cookLabel: simmer
 photo: /photos/suantang-mixian.webp
+photoDescription: A deep bowl of red-orange sour soup with rice noodles, pork mince and tomato, topped with chopped chinese chives, coriander and a slick of chilli oil.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: d8b3d25fb9deee06

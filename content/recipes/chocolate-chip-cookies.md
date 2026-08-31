@@ -13,6 +13,7 @@ cookMinutes: 12
 cookLabel: bake
 waitMinutes: 60
 photo: /photos/chocolate-chip-cookies.webp
+photoDescription: Chocolate chip cookies with molten dark chocolate chunks and a scatter of salt flakes piled on one plate, one broken in half.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 845d6eee8dc1a64e

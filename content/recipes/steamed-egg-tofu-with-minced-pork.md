@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 12
 cookLabel: steam
 photo: /photos/steamed-egg-tofu-with-minced-pork.webp
+photoDescription: Discs of egg tofu ringing one shallow bowl under a heap of seasoned minced pork and spring onions in a light gravy; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: ba95e9b06a5af0df

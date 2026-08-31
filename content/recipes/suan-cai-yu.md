@@ -10,6 +10,7 @@ prepMinutes: 20
 cookMinutes: 20
 cookLabel: simmer
 photo: /photos/suan-cai-yu.webp
+photoDescription: A wide bowl of pale gold sour broth with slices of white fish and pickled mustard greens, heaped with coriander, spring onion, red chilli rings and sichuan peppercorns; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: c9b764e15a3929c0

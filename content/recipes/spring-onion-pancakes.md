@@ -11,6 +11,7 @@ cookLabel: fry
 waitMinutes: 60
 waitLabel: rest
 photo: /photos/spring-onion-pancakes.webp
+photoDescription: A coiled, flaky spring onion pancake fried gold and blistered on one plate, its laminated spiral showing flecks of spring onion.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 96bba868c89878d4

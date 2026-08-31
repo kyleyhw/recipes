@@ -12,6 +12,7 @@ cookMinutes: 18
 cookLabel: bake
 waitMinutes: 900
 photo: /photos/croissants.webp
+photoDescription: Four deeply golden croissants piled on one plate, one cut in half to show the open honeycomb crumb.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: e7410cf2c7b65b00

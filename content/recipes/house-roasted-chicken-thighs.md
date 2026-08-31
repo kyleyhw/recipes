@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 30
 cookLabel: roast
 photo: /photos/house-roasted-chicken-thighs.webp
+photoDescription: Three roasted chicken thighs with blistered golden skin on one plate, their juices pooling, scattered with salt and coarse pepper.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: ccc55d7c4d38a11e

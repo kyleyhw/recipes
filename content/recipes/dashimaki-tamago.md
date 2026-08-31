@@ -12,6 +12,7 @@ cookLabel: fry
 waitMinutes: 5
 waitLabel: rest
 photo: /photos/dashimaki-tamago.webp
+photoDescription: A rolled Japanese omelette in pale gold layers, sliced into thick pieces and laid on one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 258d6bc986f643d2

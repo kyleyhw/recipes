@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 10
 cookLabel: simmer
 photo: /photos/xiaoguo-mixian.webp
+photoDescription: A deep bowl of savoury broth with rice noodles, pork mince and pickled mustard greens, topped with cut chinese chives, pea shoots and chilli oil.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 3f9de7200462a546

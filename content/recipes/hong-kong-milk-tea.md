@@ -10,6 +10,7 @@ prepMinutes: 5
 cookMinutes: 10
 cookLabel: brew
 photo: /photos/hong-kong-milk-tea.webp
+photoDescription: Smooth hong kong milk tea the colour of pale caramel filling a mug with a handle.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 75d60c83c9576c94

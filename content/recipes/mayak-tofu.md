@@ -13,6 +13,7 @@ cookLabel: simmer
 waitMinutes: 720
 waitLabel: marinate
 photo: /photos/mayak-tofu.webp
+photoDescription: Cubes of glazed tofu over white rice in one bowl, with sliced garlic, green chilli rings, red chilli and toasted sesame seeds.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 07a2e33e978a26a6

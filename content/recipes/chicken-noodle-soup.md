@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 40
 cookLabel: simmer
 photo: /photos/chicken-noodle-soup.webp
+photoDescription: A deep bowl of chicken noodle soup with ribbon egg noodles, shredded chicken, carrot and celery, topped with chopped parsley and a slice of lemon.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: ccb4b114ce3cffdb

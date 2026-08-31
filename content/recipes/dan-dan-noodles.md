@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: fry
 photo: /photos/dan-dan-noodles.webp
+photoDescription: A tangle of thin wheat noodles over a dark chilli-oil and sesame sauce in one shallow bowl, topped with crisp pork mince, ya cai and sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 9be61a84dc5f74fc

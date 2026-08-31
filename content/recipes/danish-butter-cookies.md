@@ -12,6 +12,7 @@ cookMinutes: 12
 cookLabel: bake
 waitMinutes: 30
 photo: /photos/danish-butter-cookies.webp
+photoDescription: Piped butter-cookie swirls on one plate, one broken in half beside a scatter of crumbs.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: d2ded3f768e103fc

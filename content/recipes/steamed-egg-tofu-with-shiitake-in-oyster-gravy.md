@@ -10,6 +10,7 @@ prepMinutes: 20
 cookMinutes: 12
 cookLabel: steam
 photo: /photos/steamed-egg-tofu-with-shiitake-in-oyster-gravy.webp
+photoDescription: Discs of egg tofu arranged around a swirl of shiitake in glossy oyster gravy in one shallow bowl, scattered with spring onions; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: b3a1d78467f79b0c

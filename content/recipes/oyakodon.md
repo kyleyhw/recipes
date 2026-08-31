@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 12
 cookLabel: simmer
 photo: /photos/oyakodon.webp
+photoDescription: Simmered chicken thigh, softened onion and barely-set egg draped over white rice in one shallow bowl, scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 41985bdd164e4ac2

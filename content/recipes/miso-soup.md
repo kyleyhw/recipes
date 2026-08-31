@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 5
 cookLabel: heat
 photo: /photos/miso-soup.webp
+photoDescription: A deep bowl of cloudy miso broth with cubes of silken tofu, ribbons of wakame and sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 6893b10138366681

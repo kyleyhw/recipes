@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 35
 cookLabel: simmer
 photo: /photos/coconut-taro-sago.webp
+photoDescription: A bowl of pale coconut soup thick with translucent sago pearls and chunks of purple-grey taro.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: b2e50f037939e06a

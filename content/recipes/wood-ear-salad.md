@@ -13,6 +13,7 @@ cookLabel: blanch
 waitMinutes: 40
 waitLabel: soak
 photo: /photos/wood-ear-salad.webp
+photoDescription: Glossy dark wood ear mushrooms dressed with chilli oil, garlic, red chilli rings, coriander and toasted sesame seeds, piled on one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: fa8188e4167ed4b3

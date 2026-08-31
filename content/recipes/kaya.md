@@ -14,6 +14,7 @@ cookLabel: stir
 waitMinutes: 60
 waitLabel: cool
 photo: /photos/kaya.webp
+photoDescription: A small bowl of pale green-gold kaya, its surface rippled, with two pieces of pandan leaf laid on top.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: fe393c38c68ac69e

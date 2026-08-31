@@ -12,6 +12,7 @@ cookLabel: roast
 waitMinutes: 740
 waitLabel: dry
 photo: /photos/crispy-roast-pork-belly.webp
+photoDescription: Cubes of crispy roast pork belly with blistered golden crackling arranged on one plate, with small dishes of dark dipping sauce, mustard and sugar beside it.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: e21ded7845af3935

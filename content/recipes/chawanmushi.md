@@ -10,6 +10,7 @@ prepMinutes: 20
 cookMinutes: 15
 cookLabel: steam
 photo: /photos/chawanmushi.webp
+photoDescription: A pale, just-set savoury egg custard in one bowl on its saucer, pieces of chicken and shiitake sunk at the surface, scattered with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 4f817aa16b79929b

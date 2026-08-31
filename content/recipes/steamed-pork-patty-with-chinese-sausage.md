@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: steam
 photo: /photos/steamed-pork-patty-with-chinese-sausage.webp
+photoDescription: A wide steamed pork patty laid with slices of chinese sausage and spring onions in its shallow clay dish, one spoonful taken to show the juices; a bowl of white rice with juices spooned over sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 8ef94a8bf9f7f8db

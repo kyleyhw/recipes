@@ -13,6 +13,7 @@ cookLabel: steam
 waitMinutes: 10
 waitLabel: cool
 photo: /photos/ma-lai-gao.webp
+photoDescription: A round of golden-brown steamed ma lai gao on parchment on one plate, cut into wedges with one pulled out to show the open crumb.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 128d0f433da1d4ab

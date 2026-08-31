@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 30
 cookLabel: bake
 photo: /photos/yoghurt-baked-chicken-with-chilli-broccoli.webp
+photoDescription: Two yoghurt-crusted baked chicken thighs beside charred broccoli scattered with chilli flakes and half a roasted lemon, on one plate.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 748c82ac172ce0c0

@@ -12,6 +12,7 @@ cookLabel: steam
 waitMinutes: 120
 waitLabel: soak
 photo: /photos/steamed-pork-patty-with-dried-squid.webp
+photoDescription: A steamed pork patty in a wide bowl of its own amber juices, strips of dried squid and spring onions on top, a spoon resting in it; a bowl of white rice sits at the left edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 6089be87c94a0d53

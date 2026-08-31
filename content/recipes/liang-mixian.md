@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 2
 cookLabel: blanch
 photo: /photos/liang-mixian.webp
+photoDescription: Cold white rice noodles under a dark soy and vinegar dressing in one shallow bowl, topped with cucumber batons, bean sprouts, coriander, mint, roasted peanuts and toasted sesame seeds.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 48bea6a0c1f06021

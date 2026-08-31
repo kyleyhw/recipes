@@ -11,6 +11,7 @@ cookMinutes: 15
 cookLabel: boil
 waitMinutes: 120
 photo: /photos/mango-pomelo-sago.webp
+photoDescription: A bowl of pale mango cream thick with sago pearls, topped with cubes of mango and pink pomelo vesicles.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: dcab91faa225e4e7

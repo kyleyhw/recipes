@@ -10,6 +10,7 @@ prepMinutes: 35
 cookMinutes: 15
 cookLabel: boil
 photo: /photos/wonton-noodle-soup.webp
+photoDescription: A deep bowl of clear broth with fine egg noodles, plump prawn wontons and stems of choy sum, topped with sliced spring onions.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 032d18cde1c277cf

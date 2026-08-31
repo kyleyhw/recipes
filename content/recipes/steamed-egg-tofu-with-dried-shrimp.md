@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 10
 cookLabel: steam
 photo: /photos/steamed-egg-tofu-with-dried-shrimp.webp
+photoDescription: Blocks of silky steamed tofu in one shallow bowl heaped with golden dried shrimp, fried garlic and spring onions in a light dressing; a bowl of white rice sits at the right edge of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 9507ed602cc7912b

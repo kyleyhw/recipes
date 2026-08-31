@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 30
 cookLabel: bake
 photo: /photos/chicken-thigh-fajitas.webp
+photoDescription: Charred, spice-crusted chicken thighs over strips of red, green and yellow pepper and onion in an oval earthenware dish with lime wedges; a stack of flour tortillas and a small dish of blistered green chillies sit at the edges of the frame.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 522a104d58fe79cc

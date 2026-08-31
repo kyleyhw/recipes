@@ -10,6 +10,7 @@ prepMinutes: 10
 cookMinutes: 35
 cookLabel: bake
 photo: /photos/ginger-and-wine-chicken-with-rice.webp
+photoDescription: Chicken pieces braised with ginger matchsticks in a dark wine sauce piled over white rice on one plate, the opened foil parcel it cooked in sitting beside with sauce pooled inside.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: a0bf331ecb5de6fb

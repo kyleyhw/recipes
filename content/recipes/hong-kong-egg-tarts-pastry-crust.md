@@ -12,6 +12,7 @@ cookMinutes: 25
 cookLabel: bake
 waitMinutes: 20
 photo: /photos/hong-kong-egg-tarts-pastry-crust.webp
+photoDescription: Little egg tarts with flaky layered pastry shells and yellow custard piled on one plate, one cut in half to show the laminated crust.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 6dcb3dc5e61b8288

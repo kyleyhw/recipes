@@ -11,6 +11,7 @@ prepMinutes: 10
 cookMinutes: 15
 cookLabel: simmer
 photo: /photos/tori-nanban-udon.webp
+photoDescription: Seared chicken thigh pieces and charred lengths of leek over thick udon in dark broth, in one deep bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 5cd173e46cd57129

@@ -11,6 +11,7 @@ prepMinutes: 20
 cookMinutes: 18
 cookLabel: bake
 photo: /photos/almond-croissants.webp
+photoDescription: Two almond croissants dusted with icing sugar and scattered with toasted flaked almonds on one plate, one cut in half to show the frangipane inside.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 7accdf8b23c667ea

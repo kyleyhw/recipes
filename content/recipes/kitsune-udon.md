@@ -10,6 +10,7 @@ prepMinutes: 15
 cookMinutes: 25
 cookLabel: simmer
 photo: /photos/kitsune-udon.webp
+photoDescription: Thick white udon in pale dashi broth under two slabs of golden simmered aburaage, topped with sliced spring onions, in one deep bowl.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: c1630d821a060f0f

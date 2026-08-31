@@ -11,6 +11,7 @@ prepMinutes: 5
 cookMinutes: 15
 cookLabel: roast
 photo: /photos/roasted-broccoli-and-baby-corn.webp
+photoDescription: Charred broccoli florets and grill-striped baby corn tumbled on one plate with toasted garlic crumbs.
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: 2954a530b6fd6109
