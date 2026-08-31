@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { DIETS, DIET_KEYS, DIET_TAGS, dietsFor, isDietTag } from "@/lib/content/diet";
+import {
+  containsFor,
+  DIETS,
+  DIET_KEYS,
+  DIET_TAGS,
+  dietsFor,
+  isDietTag,
+} from "@/lib/content/diet";
 
 /**
  * Tests for working out who can eat a recipe.
@@ -93,5 +100,34 @@ describe("working out a recipe's diets", () => {
 
   it("takes any iterable of tags, including a set", () => {
     expect(dietsFor(new Set(["meat" as const]))).toEqual(dietsFor(["meat"]));
+  });
+});
+
+describe("what a recipe contains, said out loud", () => {
+  it("names alcohol and caffeine when they are there", () => {
+    expect(containsFor(["alcohol"])).toEqual(["alcohol"]);
+    expect(containsFor(["caffeine"])).toEqual(["caffeine"]);
+    expect(containsFor(["alcohol", "caffeine"])).toEqual(["alcohol", "caffeine"]);
+  });
+
+  it("names nothing for a recipe with neither", () => {
+    expect(containsFor(["fish", "gluten", "soy"])).toEqual([]);
+  });
+
+  it("names only these two, not every tag a recipe carries", () => {
+    // A positive label for "contains fish" would be a second, louder copy of
+    // the diet list, which is not what these are for.
+    expect(containsFor(["fish", "dairy", "peanut", "alcohol"])).toEqual(["alcohol"]);
+  });
+
+  it("still names alcohol when another ingredient did not resolve", () => {
+    // The asymmetry with dietsFor, and the reason containsFor takes no
+    // `unknown` option at all: a diet claim is about everything a recipe does
+    // not contain, so one unresolved line destroys it. This is a claim about
+    // something that is there, and an unrelated unresolved line does not make
+    // the wine in the jug any less real. Getting this backwards would serve
+    // someone a drink they were avoiding.
+    expect(dietsFor(["alcohol"], { unknown: true })).toEqual([]);
+    expect(containsFor(["alcohol"])).toEqual(["alcohol"]);
   });
 });

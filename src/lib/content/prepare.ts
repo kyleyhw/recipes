@@ -161,6 +161,9 @@ export interface LineLibrary {
   name: string;
   /** What this line rules out. Empty for most ingredients. */
   excludes: DietTag[];
+  /** How strong it is, and how caffeinated — for the "contains" labels. */
+  abvPercent: number | null;
+  caffeineMg100g: number | null;
   /** rho, for turning the line's volume into grams. */
   densityGPerMl: number | null;
   /** mu, for turning grams back into a count. */
@@ -236,6 +239,8 @@ export function prepareRecipe(
             // Unknown strings are dropped rather than carried: a typo in the
             // library must not become a tag nothing can ever satisfy.
             excludes: (match.excludes ?? []).filter(isDietTag),
+            abvPercent: match.abvPercent ?? null,
+            caffeineMg100g: match.caffeineMg100g ?? null,
             densityGPerMl: match.densityGPerMl ?? null,
             gramsPerUnit: match.gramsPerUnit ?? null,
             unitName: match.unitName ?? null,

@@ -52,6 +52,7 @@ export const DIET_TAGS = [
   "soy",
   "gluten",
   "alcohol",
+  "caffeine",
 ] as const;
 
 export type DietTag = (typeof DIET_TAGS)[number];
@@ -80,7 +81,8 @@ export type DietKey =
   | "no-sesame"
   | "no-soy"
   | "no-gluten"
-  | "no-alcohol";
+  | "no-alcohol"
+  | "no-caffeine";
 
 /**
  * The diets offered, in the order they are offered.
@@ -110,6 +112,7 @@ export const DIETS: readonly Diet[] = [
   { key: "no-soy", excludes: ["soy"] },
   { key: "no-gluten", excludes: ["gluten"] },
   { key: "no-alcohol", excludes: ["alcohol"] },
+  { key: "no-caffeine", excludes: ["caffeine"] },
 ];
 
 export const DIET_KEYS: readonly DietKey[] = DIETS.map((diet) => diet.key);
@@ -133,4 +136,44 @@ export function dietsFor(
   return DIETS.filter((diet) => diet.excludes.every((tag) => !present.has(tag))).map(
     (diet) => diet.key,
   );
+}
+
+/**
+ * The tags worth stating positively, rather than only as something to filter
+ * out.
+ *
+ * Every other tag answers "can I eat this?", and the honest place for that
+ * answer is the folded list of diets a recipe suits — a reader who avoids
+ * shellfish knows to look. These two answer a different question, asked by
+ * people who are not filtering at all: whether to give this to a child, whether
+ * to drink it at ten at night, whether the driver can have one. That question is
+ * only answered by something you see without looking for it, so these are shown
+ * as a label on the recipe rather than as an entry in a list you have to open.
+ *
+ * They keep their `no-alcohol` and `no-caffeine` filters as well. The label and
+ * the filter are the same fact read by two different people.
+ */
+export const CONTAINS_TAGS = ["alcohol", "caffeine"] as const;
+
+export type ContainsTag = (typeof CONTAINS_TAGS)[number];
+
+/**
+ * What a recipe contains, of the two things worth saying out loud.
+ *
+ * **Deliberately not suppressed by `unknown`, which is the opposite of what
+ * `dietsFor` does, and the asymmetry is the point.** A diet claim is a claim
+ * about everything a recipe does *not* contain, so one unresolved ingredient
+ * destroys it — the absence of evidence is not evidence of absence. This is a
+ * claim about something that *is* there, resting on an ingredient that did
+ * resolve, and an unrelated unresolved line does not make the wine in the pan
+ * any less real.
+ *
+ * The failure the two rules guard against are mirror images. Suppressing a diet
+ * on unknown evidence hides a recipe from someone who could have eaten it, and
+ * that is a nuisance. Suppressing this on unknown evidence would serve someone
+ * a glass of wine they were avoiding, and that is not.
+ */
+export function containsFor(tags: Iterable<DietTag>): ContainsTag[] {
+  const present = new Set(tags);
+  return CONTAINS_TAGS.filter((tag) => present.has(tag));
 }

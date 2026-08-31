@@ -11,7 +11,9 @@ import { loadCollection } from "@/lib/content/library";
 import { buildDiagram } from "@/lib/content/diagram";
 import { parseIngredientLine } from "@/lib/ingredient-parser";
 import { dietTags, keepingNotes, prepareRecipe } from "@/lib/content/prepare";
-import { dietsFor } from "@/lib/content/diet";
+import { containsFor, dietsFor } from "@/lib/content/diet";
+import { labelsFor } from "@/lib/contains";
+import { computeNutrition } from "@/lib/nutrition/compute";
 import { placeholderStyle } from "@/lib/photos/placeholder";
 import { assetUrl, repoUrl } from "@/lib/site";
 import { totalMinutes } from "@/lib/duration";
@@ -51,6 +53,31 @@ export default async function RecipePage({
   // file. See lib/content/diet.ts for why, and for what this is not.
   const diet = dietTags(recipe, ingredients);
   const diets = dietsFor(diet.tags, { unknown: diet.unknown });
+  // Not gated on `diet.unknown`: see the note on `containsFor`. An unresolved
+  // ingredient elsewhere in the list does not make the wine in the jug less real.
+  //
+  // Then filtered by how much of it there is, which is the whole difference
+  // between a label and the tag underneath it. `containsFor` says the tag is
+  // present; `labelsFor` says a serving carries enough of it to be worth a line
+  // on the page. Without the second half, half a teaspoon of vanilla extract
+  // shared between twenty-four cookies puts "Contains alcohol" on a biscuit,
+  // and a label that fires on a biscuit is one nobody reads on a jug of
+  // sangria. Optional ingredients count, for the same reason `dietTags` counts
+  // them: optional describes whether the cook adds it, not whether it is in the
+  // glass.
+  const contributions = computeNutrition(prepared.nutrition, recipe.servings, {
+    includeOptional: true,
+  }).contributions;
+  const measured = labelsFor(
+    prepared.library.map((entry, index) => ({
+      grams: contributions[index]?.grams ?? null,
+      densityGPerMl: entry?.densityGPerMl ?? null,
+      abvPercent: entry?.abvPercent ?? null,
+      caffeineMg100g: entry?.caffeineMg100g ?? null,
+    })),
+    recipe.servings,
+  );
+  const contains = containsFor(diet.tags).filter((tag) => measured[tag]);
   // Every recipe's name, in every language it has one in, so that a note naming
   // another recipe links to it — see lib/content/cross-links.ts. This recipe is
   // left out: a page that links to itself is a page that looks broken.
@@ -208,6 +235,24 @@ export default async function RecipePage({
                 className="rounded-full bg-surface-2 px-2 py-0.5 text-xs text-text-muted"
               >
                 <TContent en={tag} translated={tagAt(index)} />
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {/* Not folded, which is the whole difference between these and the
+            diets below. A diet is looked up by someone already filtering for
+            it; "contains alcohol" is for the person who was not looking — the
+            one deciding whether a child, a driver or a guest who does not drink
+            can have this, and who will not open a disclosure to find out. */}
+        {contains.length > 0 ? (
+          <ul className="mt-3 flex flex-wrap gap-1.5">
+            {contains.map((tag) => (
+              <li
+                key={tag}
+                className="rounded-full bg-warn-soft px-2 py-0.5 text-xs text-warn"
+              >
+                <T k={`contains.${tag}` as StringKey} />
               </li>
             ))}
           </ul>

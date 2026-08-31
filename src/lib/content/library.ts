@@ -68,6 +68,31 @@ const ingredientSchema = z.object({
   vitaminB12Ug100g: z.number().nullish(),
   folateUg100g: z.number().nullish(),
 
+  /**
+   * Alcohol by volume, as a percentage, for the rows that carry any.
+   *
+   * Separate from the `alcohol` entry in `excludes`, and the two answer
+   * different questions. The tag is *any at all*, which is the right answer for
+   * a filter: somebody avoiding alcohol strictly wants to know that vanilla
+   * extract is 35% ethanol, even in a cookie. This is *how much*, which is what
+   * the "contains alcohol" label on a recipe needs, because half a teaspoon of
+   * extract in twenty-four cookies and a bottle of wine in a jug are not the
+   * same fact, and a label that fires on both says nothing about either.
+   *
+   * Nothing here knows what survives cooking. It does not need to: the
+   * quantities that get boiled — a tablespoon of shaoxing in a wok — are small
+   * enough to fall under the threshold on volume alone. See `contains.ts`.
+   */
+  abvPercent: z.number().nullish(),
+  /**
+   * Milligrams of caffeine per 100 g, for the rows that carry any.
+   *
+   * Same split as `abvPercent`: `excludes: ["caffeine"]` says there is some,
+   * this says how much, and only the second can tell a mug of coffee from a
+   * dusting of cocoa.
+   */
+  caffeineMg100g: z.number().nullish(),
+
   /** rho, g/ml. Null where the ingredient is never measured by volume. */
   densityGPerMl: z.number().nullish(),
   /** mu, grams per countable item. */

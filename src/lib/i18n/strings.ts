@@ -103,6 +103,9 @@ const en = {
   "diet.no-soy": "No soy",
   "diet.no-gluten": "No gluten",
   "diet.no-alcohol": "No alcohol",
+  "diet.no-caffeine": "No caffeine",
+  "contains.alcohol": "Contains alcohol",
+  "contains.caffeine": "Contains caffeine",
   filterShowAll: "All",
 
   // A recipe
@@ -338,6 +341,9 @@ const zhHant: Dict = {
   "diet.no-soy": "不含大豆",
   "diet.no-gluten": "不含麩質",
   "diet.no-alcohol": "不含酒精",
+  "diet.no-caffeine": "不含咖啡因",
+  "contains.alcohol": "含酒精",
+  "contains.caffeine": "含咖啡因",
   filterShowAll: "全部",
 
   method: "做法",
@@ -547,6 +553,9 @@ const zhHans: Dict = {
   "diet.no-soy": "不含大豆",
   "diet.no-gluten": "不含麸质",
   "diet.no-alcohol": "不含酒精",
+  "diet.no-caffeine": "不含咖啡因",
+  "contains.alcohol": "含酒精",
+  "contains.caffeine": "含咖啡因",
   filterShowAll: "全部",
 
   method: "做法",
@@ -758,6 +767,9 @@ const ru: Dict = {
   "diet.no-soy": "Без сои",
   "diet.no-gluten": "Без глютена",
   "diet.no-alcohol": "Без алкоголя",
+  "diet.no-caffeine": "Без кофеина",
+  "contains.alcohol": "Содержит алкоголь",
+  "contains.caffeine": "Содержит кофеин",
   filterShowAll: "Все",
 
   method: "Приготовление",
