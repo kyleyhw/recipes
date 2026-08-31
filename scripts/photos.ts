@@ -74,7 +74,12 @@ import {
   type RecipeFile,
 } from "../src/lib/content/format";
 import { parseIngredientLine } from "../src/lib/ingredient-parser";
-import { changedSince, parseTouched, RECORD } from "../src/lib/photos/staleness";
+import {
+  changedSince,
+  outdatedPhotos,
+  parseTouched,
+  RECORD,
+} from "../src/lib/photos/staleness";
 
 const RECIPES_DIR = join("content", "recipes");
 const PHOTOS_DIR = join("public", "photos");
@@ -515,6 +520,71 @@ function changedSinceDrawn(slugs: readonly string[]): string[] {
   });
 }
 
+/**
+ * The recipe as it stood when its picture was drawn, or null.
+ *
+ * Read out of git rather than remembered anywhere: the commit that last touched
+ * the image is the state of the world the image came from, so the recipe at
+ * that commit is the text the prompt was built from.
+ *
+ * This exists so the two prompts being compared are both rendered by *today's*
+ * template. Comparing against the fingerprint stored in `photoPrompt` would
+ * answer a different and much less useful question — that hash was taken under
+ * whatever the template said at the time, so improving one sentence in this
+ * file makes every picture in the collection differ from its record at once.
+ * Rendering the old recipe through the new template cancels the template out
+ * and leaves only what this recipe changed about itself.
+ *
+ * Null where git cannot answer: no commit for the picture, no file at that
+ * commit (the recipe has been renamed since), or no repository at all. The
+ * caller treats that as "cannot tell" rather than as either answer.
+ */
+const whenDrawn = new Map<string, RecipeFile | null>();
+
+function recipeWhenDrawn(slug: string): RecipeFile | null {
+  // Memoised: a `--changed` run asks once while deciding what to draw and again
+  // while writing the report, and each miss is two git subprocesses.
+  const cached = whenDrawn.get(slug);
+  if (cached !== undefined) return cached;
+  const found = readRecipeWhenDrawn(slug);
+  whenDrawn.set(slug, found);
+  return found;
+}
+
+function readRecipeWhenDrawn(slug: string): RecipeFile | null {
+  const git = (args: string[]): string =>
+    execFileSync("git", args, { encoding: "utf8", maxBuffer: 8 * 1024 * 1024 });
+
+  try {
+    const commit = git([
+      "log",
+      "-1",
+      "--format=%H",
+      "--",
+      join(PHOTOS_DIR, `${slug}.webp`),
+    ]).trim();
+    if (!commit) return null;
+    const text = git(["show", `${commit}:${join(RECIPES_DIR, `${slug}.md`)}`]);
+    const parsed = parseRecipeFile(slug, text);
+    return parsed.ok ? parsed.recipe : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Whether the recipe's own text has changed the prompt since the picture.
+ *
+ * "Cannot tell" counts as changed. A recipe git has lost sight of — renamed
+ * since its picture was drawn, most often — is the one case where a person
+ * should be looking, so it is left on the list rather than quietly cleared.
+ */
+function movedThePrompt(slug: string, fingerprint: string): boolean {
+  const before = recipeWhenDrawn(slug);
+  if (before === null) return true;
+  return hash(promptFor(before)) !== fingerprint;
+}
+
 /** A recipe whose picture is stale, with everything a generation needs. */
 interface Due {
   slug: string;
@@ -721,6 +791,10 @@ async function main(): Promise<void> {
   // First pass: decide what to draw, without generating anything.
   const due: Due[] = [];
   const drawn: string[] = [];
+  // Kept so the staleness report can ask, of a recipe that has changed, whether
+  // the change reached the picture: what its prompt hashes to now, against what
+  // the picture on disk was actually drawn from. See `outdatedPhotos`.
+  const fingerprints = new Map<string, string>();
   const stale = new Set(
     changedSinceDrawn(files.map((file) => file.replace(/\.md$/, ""))),
   );
@@ -751,6 +825,7 @@ async function main(): Promise<void> {
     const fingerprint = hash(prompt);
     const out = join(PHOTOS_DIR, `${slug}.webp`);
     drawn.push(slug);
+    fingerprints.set(slug, fingerprint);
     // Gaps only, unless asked otherwise. Editing the prompt in this file
     // changes every recipe's fingerprint at once, so a rule that redrew
     // whatever no longer matches would redraw the whole book on the strength
@@ -761,7 +836,10 @@ async function main(): Promise<void> {
         due.push({ slug, path, recipe, prompt, fingerprint, out });
         continue;
       }
-      if (args.changed && stale.has(slug)) {
+      // `--changed` spends money, so it takes the fine test rather than the
+      // coarse one: a recipe edited in a way the prompt does not see is not
+      // worth a second image of the same thing.
+      if (args.changed && stale.has(slug) && movedThePrompt(slug, fingerprint)) {
         due.push({ slug, path, recipe, prompt, fingerprint, out });
         continue;
       }
@@ -774,18 +852,43 @@ async function main(): Promise<void> {
   // Reported whatever the run does, including a dry run and a run with nothing
   // to draw: the point of the list is that somebody sees it.
   if (stale.size > 0) {
-    const drawnAndStale = drawn.filter((slug) => stale.has(slug));
-    if (drawnAndStale.length > 0) {
+    const { outdated, unaffected } = outdatedPhotos(
+      drawn.filter((slug) => stale.has(slug)),
+      {
+        now: (slug) => fingerprints.get(slug) ?? null,
+        // Rendered through today's template, so that what is left when the two
+        // are compared is what the recipe itself changed. Git is asked once per
+        // recipe on the list, which is a handful of recipes in the usual case
+        // and the whole collection after a bulk edit — the case this is for.
+        drawnFrom: (slug) => {
+          const before = recipeWhenDrawn(slug);
+          return before === null ? null : hash(promptFor(before));
+        },
+      },
+    );
+    if (outdated.length > 0) {
       console.log(
-        `${drawnAndStale.length} recipe${drawnAndStale.length === 1 ? " has" : "s have"} ` +
-          `changed since ${drawnAndStale.length === 1 ? "its" : "their"} picture was drawn:`,
+        `${outdated.length} recipe${outdated.length === 1 ? " has" : "s have"} ` +
+          `changed since ${outdated.length === 1 ? "its" : "their"} picture was drawn, ` +
+          `in a way the picture would show:`,
       );
-      for (const slug of drawnAndStale) console.log(`  ${slug}`);
+      for (const slug of outdated) console.log(`  ${slug}`);
       console.log(
         args.changed || args.force
           ? ""
           : `Not redrawn. \`npm run photos -- --changed\` would, at about ` +
-              `$${((PRICE_PER_IMAGE[MODEL] ?? 0) * drawnAndStale.length).toFixed(2)}.\n`,
+              `$${((PRICE_PER_IMAGE[MODEL] ?? 0) * outdated.length).toFixed(2)}.\n`,
+      );
+    }
+    // Said out loud rather than left silent. The check ran over these and
+    // cleared them, and a reader who has just refiled the whole collection
+    // wants to know that the absence of a list is an answer and not an
+    // oversight.
+    if (unaffected.length > 0) {
+      console.log(
+        `${unaffected.length} other${unaffected.length === 1 ? "" : "s"} changed ` +
+          `since being drawn but not in anything the picture depends on, so ` +
+          `${unaffected.length === 1 ? "it is" : "they are"} not listed.\n`,
       );
     }
   }

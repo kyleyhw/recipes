@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { changedSince, parseTouched, RECORD } from "@/lib/photos/staleness";
+import {
+  changedSince,
+  outdatedPhotos,
+  parseTouched,
+  RECORD,
+} from "@/lib/photos/staleness";
 
 /**
  * Tests for noticing that a picture no longer describes its recipe.
@@ -115,5 +120,69 @@ describe("deciding what has changed since it was drawn", () => {
   /** Outside a checkout there is no answer, and no answer is not "all of them". */
   it("reports nothing when git said nothing", () => {
     expect(changedSince(["mapo-tofu", "borscht"], new Map(), PATHS)).toEqual([]);
+  });
+});
+
+describe("splitting the changed set by whether the picture would show it", () => {
+  /**
+   * The date says a recipe was edited; only the prompt says whether the edit
+   * reached the picture. Refiling the whole collection under new categories put
+   * a hundred and twenty recipes on the date-based list and changed what
+   * seventeen of the pictures should look like, which is the case this exists
+   * for.
+   */
+  const prompts = (
+    now: Record<string, string | null>,
+    drawnFrom: Record<string, string | null>,
+  ) => ({
+    now: (slug: string) => now[slug] ?? null,
+    drawnFrom: (slug: string) => drawnFrom[slug] ?? null,
+  });
+
+  it("clears an edit the prompt does not see", () => {
+    const split = outdatedPhotos(
+      ["mapo-tofu"],
+      prompts({ "mapo-tofu": "abc" }, { "mapo-tofu": "abc" }),
+    );
+    expect(split).toEqual({ outdated: [], unaffected: ["mapo-tofu"] });
+  });
+
+  it("keeps an edit the prompt does see", () => {
+    const split = outdatedPhotos(
+      ["mapo-tofu"],
+      prompts({ "mapo-tofu": "abc" }, { "mapo-tofu": "def" }),
+    );
+    expect(split).toEqual({ outdated: ["mapo-tofu"], unaffected: [] });
+  });
+
+  it("keeps the two apart in one pass, in the order given", () => {
+    const split = outdatedPhotos(
+      ["borscht", "mapo-tofu", "tiramisu"],
+      prompts(
+        { borscht: "a", "mapo-tofu": "b", tiramisu: "c" },
+        { borscht: "a", "mapo-tofu": "B", tiramisu: "c" },
+      ),
+    );
+    expect(split).toEqual({
+      outdated: ["mapo-tofu"],
+      unaffected: ["borscht", "tiramisu"],
+    });
+  });
+
+  /**
+   * A photograph a person took has no prompt behind it, and a recipe renamed
+   * since its picture was drawn cannot be read back out of git under its new
+   * name. Neither can be answered, and an unanswerable question belongs in
+   * neither column rather than being guessed into one.
+   */
+  it("leaves out a slug it cannot answer for", () => {
+    const split = outdatedPhotos(
+      ["hand-photographed", "renamed"],
+      prompts(
+        { "hand-photographed": "a", renamed: "a" },
+        { "hand-photographed": null, renamed: null },
+      ),
+    );
+    expect(split).toEqual({ outdated: [], unaffected: [] });
   });
 });

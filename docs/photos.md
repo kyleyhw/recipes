@@ -96,6 +96,25 @@ redraw it:
   estimate first. A recipe with uncommitted changes counts as changed, since it
   is newer than any commit; outside a git checkout the list is empty rather
   than guessed at.
+
+  **A date alone over-reports badly**, so it is only the first half of the
+  test. Most edits to a recipe cannot change its picture: refiling it under a
+  new category, fixing a note, adding a line to the log. Every one of those
+  moves the recipe's timestamp past its photo's, and the day the collection was
+  refiled by composition that put a hundred and twenty recipes on the list, of
+  which seventeen had actually changed.
+
+  So each candidate is checked a second time. The recipe is read back out of
+  git as it stood at the commit that last touched the picture, that old text is
+  put through **today's** prompt, and the result is compared with the prompt
+  the recipe produces now. Same prompt, same picture — the edit was to
+  something the camera never saw, and the run says so in one line instead of
+  naming it. Both sides go through the same template on purpose: comparing
+  against the fingerprint stored in `photoPrompt` would be free and would
+  answer the wrong question, because that hash was taken under whatever the
+  prompt said at the time. A recipe git cannot reconstruct — renamed since its
+  picture was drawn — stays on the list, because that is exactly the case
+  somebody should look at.
 - **The prompt changed.** Editing the prompt in `scripts/photos.ts` changes
   every recipe's fingerprint at once, so a rule that redrew whatever no longer
   matched would redraw the whole collection on the strength of one improved
