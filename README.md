@@ -84,15 +84,15 @@ npm run build:static   # writes out/
 npx serve out          # or any static file server
 ```
 
-| Command | Does |
+| Command | Purpose |
 | --- | --- |
 | `npm run dev` | Local development server |
 | `npm run build:static` | The static site, into `out/` |
 | `npm test` | Unit tests, including a check that every recipe file parses |
 | `npm run check` | Typecheck, lint, format check, tests |
-| `npm run photos` | Draws a picture for every recipe. Needs a key — [docs/photos.md](docs/photos.md) |
-| `npm run photo:add` | Puts a photograph you took on a recipe. No key |
-| `uvx pre-commit install` | Installs the hooks, including the one that blocks committing an API key. **Once per clone** |
+| `npm run photos` | A picture for every recipe. Needs a key — [docs/photos.md](docs/photos.md) |
+| `npm run photo:add` | Your own photograph on a recipe. No key |
+| `uvx pre-commit install` | The commit hooks, including the one that blocks an API key. **Once per clone** |
 
 ---
 
