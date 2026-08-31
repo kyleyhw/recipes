@@ -11,6 +11,10 @@ cookMinutes: 25
 cookLabel: simmer
 waitMinutes: 40
 waitLabel: soak
+photo: /photos/takikomi-gohan.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 8aa877d8bcd659eb
 ---
 
 ## Ingredients

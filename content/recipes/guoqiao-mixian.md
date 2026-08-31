@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 25
 cookMinutes: 60
 cookLabel: simmer
+photo: /photos/guoqiao-mixian.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 2d4850c27d282787
 ---
 
 ## Ingredients

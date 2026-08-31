@@ -12,6 +12,10 @@ prepMinutes: 10
 cookMinutes: 25
 waitMinutes: 90
 waitLabel: cool
+photo: /photos/flapjacks.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: ea9c24b2bf3bcf5a
 tin:
   shape: square
   length: 20

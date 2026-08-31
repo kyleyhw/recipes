@@ -8,6 +8,10 @@ servingLabel: bowl
 prepMinutes: 10
 cookMinutes: 30
 cookLabel: simmer
+photo: /photos/tteokbokki.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: c70ff29ffad4e13e
 ---
 
 ## Ingredients

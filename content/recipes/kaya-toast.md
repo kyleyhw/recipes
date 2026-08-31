@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 5
 cookMinutes: 12
 cookLabel: toast
+photo: /photos/kaya-toast.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 606fc776dbe1bc55
 ---
 
 ## Ingredients

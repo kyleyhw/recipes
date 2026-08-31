@@ -10,6 +10,10 @@ cookMinutes: 24
 cookLabel: fry
 waitMinutes: 60
 waitLabel: rest
+photo: /photos/spring-onion-pancakes.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 96bba868c89878d4
 ---
 
 ## Ingredients

@@ -13,6 +13,10 @@ cookMinutes: 45
 cookLabel: stir
 waitMinutes: 60
 waitLabel: cool
+photo: /photos/kaya.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: fe393c38c68ac69e
 ---
 
 ## Ingredients

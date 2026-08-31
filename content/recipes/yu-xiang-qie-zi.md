@@ -8,6 +8,10 @@ tags:
 servings: 2
 prepMinutes: 15
 cookMinutes: 15
+photo: /photos/yu-xiang-qie-zi.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: cb80f5c018d5aeba
 ---
 
 ## Ingredients

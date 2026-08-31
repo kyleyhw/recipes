@@ -11,6 +11,10 @@ prepMinutes: 20
 cookMinutes: 50
 waitMinutes: 90
 waitLabel: cool
+photo: /photos/lemon-drizzle-cake.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 8ba0b15f73bfce3e
 tin:
   shape: loaf
   length: 23

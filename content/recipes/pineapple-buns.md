@@ -10,6 +10,10 @@ cookMinutes: 16
 cookLabel: bake
 waitMinutes: 120
 waitLabel: prove
+photo: /photos/pineapple-buns.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 732053a8a8d2ee5f
 ---
 
 ## Ingredients

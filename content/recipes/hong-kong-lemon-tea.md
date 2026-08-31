@@ -12,6 +12,10 @@ prepMinutes: 5
 cookMinutes: 8
 cookLabel: brew
 waitMinutes: 60
+photo: /photos/hong-kong-lemon-tea.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: cb9c2619fce17b15
 ---
 
 ## Ingredients

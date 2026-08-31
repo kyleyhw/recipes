@@ -10,6 +10,10 @@ servingLabel: croissant
 prepMinutes: 20
 cookMinutes: 18
 cookLabel: bake
+photo: /photos/almond-croissants.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 7accdf8b23c667ea
 ---
 
 ## Ingredients

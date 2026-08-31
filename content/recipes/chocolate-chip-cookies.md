@@ -12,6 +12,10 @@ prepMinutes: 25
 cookMinutes: 12
 cookLabel: bake
 waitMinutes: 60
+photo: /photos/chocolate-chip-cookies.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 845d6eee8dc1a64e
 ---
 
 ## Ingredients

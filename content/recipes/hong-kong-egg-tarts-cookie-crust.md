@@ -11,6 +11,10 @@ prepMinutes: 30
 cookMinutes: 25
 cookLabel: bake
 waitMinutes: 30
+photo: /photos/hong-kong-egg-tarts-cookie-crust.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 169fb8eafd0646e0
 ---
 
 ## Ingredients

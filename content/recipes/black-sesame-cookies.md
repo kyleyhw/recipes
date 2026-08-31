@@ -11,6 +11,10 @@ prepMinutes: 25
 cookMinutes: 13
 cookLabel: bake
 waitMinutes: 60
+photo: /photos/black-sesame-cookies.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 2d45c690f2b000d8
 ---
 
 ## Ingredients

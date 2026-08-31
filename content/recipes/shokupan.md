@@ -11,6 +11,10 @@ prepMinutes: 35
 cookMinutes: 30
 waitMinutes: 150
 waitLabel: prove
+photo: /photos/shokupan.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 9282e9e40c01365e
 tin:
   shape: loaf
   length: 23

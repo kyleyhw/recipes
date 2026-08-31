@@ -10,6 +10,10 @@ servingLabel: bowl
 prepMinutes: 10
 cookMinutes: 15
 cookLabel: fry
+photo: /photos/dan-dan-noodles.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 9be61a84dc5f74fc
 ---
 
 ## Ingredients

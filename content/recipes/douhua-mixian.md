@@ -9,6 +9,10 @@ servings: 2
 prepMinutes: 10
 cookMinutes: 10
 cookLabel: fry
+photo: /photos/douhua-mixian.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 8376cd33cdb6c08a
 ---
 
 ## Ingredients

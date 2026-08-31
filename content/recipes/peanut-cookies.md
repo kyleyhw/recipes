@@ -10,6 +10,10 @@ servingLabel: cookie
 prepMinutes: 25
 cookMinutes: 18
 cookLabel: bake
+photo: /photos/peanut-cookies.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: be70f16ae102dd4f
 ---
 
 ## Ingredients

@@ -11,6 +11,10 @@ prepMinutes: 30
 cookMinutes: 12
 cookLabel: bake
 waitMinutes: 30
+photo: /photos/danish-butter-cookies.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: d2ded3f768e103fc
 ---
 
 ## Ingredients

@@ -11,6 +11,10 @@ prepMinutes: 15
 cookMinutes: 45
 waitMinutes: 60
 waitLabel: cool
+photo: /photos/shortbread.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 7254f8466f31866e
 tin:
   shape: square
   length: 20

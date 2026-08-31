@@ -10,6 +10,10 @@ servingLabel: scone
 prepMinutes: 15
 cookMinutes: 12
 cookLabel: bake
+photo: /photos/scones.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: dce06264a3a96f7d
 ---
 
 ## Ingredients

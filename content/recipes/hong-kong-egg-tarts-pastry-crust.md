@@ -11,6 +11,10 @@ prepMinutes: 20
 cookMinutes: 25
 cookLabel: bake
 waitMinutes: 20
+photo: /photos/hong-kong-egg-tarts-pastry-crust.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 6dcb3dc5e61b8288
 ---
 
 ## Ingredients

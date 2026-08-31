@@ -11,6 +11,10 @@ prepMinutes: 90
 cookMinutes: 18
 cookLabel: bake
 waitMinutes: 900
+photo: /photos/croissants.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: e7410cf2c7b65b00
 ---
 
 ## Ingredients

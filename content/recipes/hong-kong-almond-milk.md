@@ -12,6 +12,10 @@ cookMinutes: 10
 cookLabel: simmer
 waitMinutes: 240
 waitLabel: soak
+photo: /photos/hong-kong-almond-milk.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: d63412769ec832e0
 ---
 
 ## Ingredients

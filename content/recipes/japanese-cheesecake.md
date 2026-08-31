@@ -8,6 +8,10 @@ servingLabel: slice
 prepMinutes: 30
 cookMinutes: 75
 waitMinutes: 240
+photo: /photos/japanese-cheesecake.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 55ae0554f6a2af0a
 tin:
   shape: round
   diameter: 18

@@ -11,6 +11,10 @@ cookMinutes: 12
 cookLabel: fry
 waitMinutes: 30
 waitLabel: press
+photo: /photos/agedashi-tofu.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 0c1a925d1324e08e
 ---
 
 ## Ingredients

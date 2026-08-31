@@ -10,6 +10,10 @@ servings: 2
 prepMinutes: 15
 cookMinutes: 25
 cookLabel: simmer
+photo: /photos/laksa.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 9fb52fffdba87fdc
 ---
 
 ## Ingredients

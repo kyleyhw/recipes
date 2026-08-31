@@ -10,6 +10,10 @@ servingLabel: glass
 prepMinutes: 15
 waitMinutes: 240
 waitLabel: macerate
+photo: /photos/sangria.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 557a99f6068f1555
 ---
 
 ## Ingredients

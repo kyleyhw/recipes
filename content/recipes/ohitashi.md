@@ -11,6 +11,10 @@ cookMinutes: 5
 cookLabel: blanch
 waitMinutes: 30
 waitLabel: steep
+photo: /photos/ohitashi.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: d5af0762084818ec
 ---
 
 ## Ingredients

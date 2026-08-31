@@ -11,6 +11,10 @@ cookMinutes: 8
 cookLabel: fry
 waitMinutes: 5
 waitLabel: rest
+photo: /photos/dashimaki-tamago.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 258d6bc986f643d2
 ---
 
 ## Ingredients

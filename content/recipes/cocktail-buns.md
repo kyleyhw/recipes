@@ -10,6 +10,10 @@ cookMinutes: 15
 cookLabel: bake
 waitMinutes: 120
 waitLabel: prove
+photo: /photos/cocktail-buns.webp
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: c8c25dbf143e63e2
 ---
 
 ## Ingredients
