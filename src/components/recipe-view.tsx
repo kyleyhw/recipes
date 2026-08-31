@@ -10,7 +10,7 @@ import type { Diagram } from "@/lib/content/diagram";
 import { computeNutrition, type NutritionInput } from "@/lib/nutrition/compute";
 import type { LineLibrary } from "@/lib/content/prepare";
 import { useIngredientLibrary } from "@/components/ingredient-library";
-import { renderCount, renderMadeUp } from "@/lib/count";
+import { pluralise, renderCount, renderMadeUp } from "@/lib/count";
 import { getUnit, toBase, toGrams } from "@/lib/units";
 import { renderQuantity } from "@/lib/quantity";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
@@ -309,10 +309,11 @@ export function RecipeView({
         </button>
         <span className="numeric min-w-28 text-center text-sm">
           {Number.isInteger(servings) ? servings : servings.toFixed(1)}{" "}
-          {shownServingLabel}
-          {/* Only English pluralises with an -s. The other three tables give a
+          {/* Only English pluralises at all. The other three tables give a
               serving label that reads correctly for any count. */}
-          {language === "en" && servings !== 1 ? "s" : ""}
+          {language === "en" && servings !== 1
+            ? pluralise(shownServingLabel)
+            : shownServingLabel}
         </span>
         <button
           type="button"
@@ -512,8 +513,10 @@ export function RecipeView({
         <RecipeDiagram
           diagram={diagram}
           title={translated?.title ?? title}
-          servings={`${Number.isInteger(servings) ? servings : servings.toFixed(1)} ${shownServingLabel}${
-            language === "en" && servings !== 1 ? "s" : ""
+          servings={`${Number.isInteger(servings) ? servings : servings.toFixed(1)} ${
+            language === "en" && servings !== 1
+              ? pluralise(shownServingLabel)
+              : shownServingLabel
           }`}
           line={(index, share) => {
             const ingredient = scaled.ingredients[index];

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { pluralise } from "@/lib/count";
 
 /**
  * Servings control.
@@ -49,8 +50,7 @@ export function ServingsStepper({
           −
         </Link>
         <span className="numeric min-w-[7ch] text-center text-sm font-medium">
-          {current} {servingLabel}
-          {current === 1 ? "" : "s"}
+          {current} {current === 1 ? servingLabel : pluralise(servingLabel)}
         </span>
         <Link
           href={href(up)}
