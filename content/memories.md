@@ -267,6 +267,33 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   disagree with its addends is an arithmetic error a reader can see, and
   `lib/duration.ts` is exact for that reason and no other.
 
+- **A label is a name, not a sentence.** The word you click, the heading over a
+  list, the word beside a form field: each of them names what is there, and the
+  explaining happens underneath it. "Where these figures come from" was a good
+  sentence in the wrong slot — it sat on a `<summary>` and was longer than the
+  note it opened. It is "Sources" now, and the sentence it used to be is still
+  on the page, one line down, where a reader who wants it will find it.
+
+  The test is whether it would work as a heading in a book. Method, Notes,
+  Storage, Diagram, Sources: all names. "What you did not use" and "The tin you
+  have" were captions that had wandered into the wrong slot, and both were
+  longer than the thing they labelled.
+
+  **This is about the chrome and not about the writing.** Notes, Storage and
+  the Log are prose and stay prose, and so does every tooltip, caveat and
+  footnote — the note under the nutrition panel, the one about what the diet
+  filters cannot see. Those exist to explain and should be exactly as long as
+  they need to be. The rule is only that the *name* of a thing is a name.
+
+  A number in a label is data rather than explanation and stays: "Used in 16
+  recipes" and "(11 of 11 known)" are names with a count in them.
+
+  **The other three languages are a second opinion worth asking.** Both Chinese
+  tables had said 數據來源 — sources — from the day the string was written, and
+  only English and Russian had drifted into a sentence. A label that is a noun
+  in three tables and a clause in the fourth is a label somebody explained
+  instead of naming.
+
 - **A category says what the dish is made of, not when it is eaten.** The
   shelves are Rice & Noodles, Meat & Fish, Tofu & Eggs, Vegetables, Soups &
   Stews, Snacks, Baked Goods, Desserts, Drinks and Sauces & Condiments, and
