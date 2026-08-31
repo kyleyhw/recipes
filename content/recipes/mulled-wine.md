@@ -10,6 +10,11 @@ servingLabel: glass
 prepMinutes: 5
 cookMinutes: 20
 cookLabel: heat
+photo: /photos/mulled-wine.webp
+photoDescription: Deep red mulled wine filling a mug with a handle, a slice of orange and a cinnamon stick standing in it and a star anise floating on the surface.
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 64b84f7ae10244b0
 ---
 
 ## Ingredients
