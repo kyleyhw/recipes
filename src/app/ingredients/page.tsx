@@ -15,6 +15,13 @@ import { decimal, decimalOrDash } from "@/lib/format";
  *
  * It is one file, `content/ingredients.json`, so correcting a figure is a
  * commit and a wrong one shows up in a diff.
+ *
+ * This is the unfolded view, and the drawer is the other half of the pair. In
+ * the drawer every note is a `<details>`, because a list of two hundred rows
+ * scrolled past with every source note open cannot be scanned. Here nothing is
+ * folded, because the page exists to be read against the numbers rather than
+ * scrolled past, and a figure whose provenance takes a click is a figure fewer
+ * people check.
  */
 export default function IngredientsPage() {
   const { recipes, ingredients } = loadCollection();

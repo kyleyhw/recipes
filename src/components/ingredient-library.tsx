@@ -196,7 +196,7 @@ function LibraryDrawer({
           <p className="mb-3 text-xs text-text-muted">{t("per100Note")}</p>
           <ul className="flex flex-col divide-y divide-border">
             {matching.map((ingredient) => (
-              <li key={ingredient.name} className="py-2">
+              <li key={ingredient.name} className="py-2.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-sm">{ingredient.name}</span>
                   <span className="numeric shrink-0 text-sm text-text-muted">
@@ -229,25 +229,38 @@ function LibraryDrawer({
                     {ingredient.madeUp.note ? ` ${ingredient.madeUp.note}` : ""}
                   </p>
                 ) : null}
-                {/* How to keep what the recipe did not use. First, and in
-                    the stronger colour: it is the thing you need while the
-                    rest of the bunch is still on the counter, whereas the
-                    provenance of a figure is something you look up later. */}
-                {ingredient.keeping ? (
-                  <p className="mt-1 text-xs text-text-muted">
-                    <span className="font-medium">{t("keeping")}</span>
-                    {" — "}
-                    {ingredient.keeping}
-                  </p>
-                ) : null}
-                {/* Every figure is a magic number, and must be traceable to
-                    where it came from. */}
-                {ingredient.sourceNote ? (
-                  <p className="mt-0.5 text-xs text-text-muted/70">
-                    {ingredient.sourceNote}
-                  </p>
-                ) : null}
-                <UsedIn uses={usedIn[ingredient.name] ?? []} />
+                {/* The three notes, all folded, all the same shape.
+                    They used to run open one under the other, and between them
+                    a keeping note and a source note came to twenty lines of
+                    prose a row: three ingredients filled the drawer and the
+                    list underneath could not be scanned at all. Worse, the two
+                    paragraphs were set almost identically, so the provenance
+                    of a figure read as a continuation of the storage advice.
+
+                    Folded, a row is its name, its figures and three labels, and
+                    the answer to any of them is one click away. `UsedIn` was
+                    already a `<details>` for exactly this argument; this is the
+                    same argument applied to the two paragraphs that were
+                    longer than it.
+
+                    Keeping stays first and in the stronger colour, which is
+                    what the note it replaces was protecting: it is the thing
+                    you need while the rest of the bunch is on the counter. The
+                    full page is the unfolded view — see the note there — and
+                    the link to it is in this drawer's header. */}
+                <div className="mt-1.5 flex flex-col gap-1">
+                  {ingredient.keeping ? (
+                    <FoldedNote label={t("keeping")} prominent>
+                      {ingredient.keeping}
+                    </FoldedNote>
+                  ) : null}
+                  {ingredient.sourceNote ? (
+                    <FoldedNote label={t("figuresFrom")}>
+                      {ingredient.sourceNote}
+                    </FoldedNote>
+                  ) : null}
+                  <UsedIn uses={usedIn[ingredient.name] ?? []} />
+                </div>
               </li>
             ))}
           </ul>
@@ -257,6 +270,40 @@ function LibraryDrawer({
         </div>
       </aside>
     </>
+  );
+}
+
+/**
+ * A labelled note that opens on click.
+ *
+ * The same markup as `UsedIn` below, so the three disclosures on a row line up
+ * and behave alike. A `<details>` rather than React state for the same reason:
+ * it works with no JavaScript, and a row is markup rather than a widget.
+ *
+ * `prominent` is the difference between the storage note and the provenance
+ * one. Both fold; the first is the one you want at the counter, so it keeps the
+ * stronger colour it had when it was the only one showing.
+ */
+function FoldedNote({
+  label,
+  prominent = false,
+  children,
+}: {
+  label: string;
+  prominent?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <details className="text-xs">
+      <summary
+        className={`cursor-pointer marker:text-text-muted/60 hover:text-accent ${
+          prominent ? "text-text-muted" : "text-text-muted/70"
+        }`}
+      >
+        {label}
+      </summary>
+      <p className="mt-1 ml-4 text-text-muted">{children}</p>
+    </details>
   );
 }
 
