@@ -85,14 +85,14 @@ export default function IngredientsPage() {
                     {ingredient.sourceNote ?? ingredient.usdaFdcId ?? "—"}
                   </td>
                 </tr>
-                {/* Keeping runs full width beneath its row rather than in a
+                {/* Storage runs full width beneath its row rather than in a
                   column of its own: it is a sentence or two of prose, and a
                   ninth column of prose would set the width of the whole table
                   and push the numbers off the side of the screen. */}
                 {ingredient.keeping ? (
                   <tr>
                     <td colSpan={9} className="pb-2 text-xs text-text-muted">
-                      <span className="font-medium">Keeping</span> — {ingredient.keeping}
+                      <span className="font-medium">Storage</span> — {ingredient.keeping}
                     </td>
                   </tr>
                 ) : null}

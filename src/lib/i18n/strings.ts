@@ -202,7 +202,14 @@ const en = {
 
   // The ingredient library
   findIngredient: "Find an ingredient",
-  keeping: "Keeping",
+  // "Storage", not "Keeping". The word on the ingredient is the same word as
+  // the one on the recipe, because it is the same question asked about a
+  // different thing: the recipe says how to keep the dish, the ingredient says
+  // how to keep the three quarters of a cabbage the dish did not use. The
+  // other three languages had already landed on their own word for storage and
+  // needed no change. The key stays `keeping`, after the field in
+  // content/ingredients.json, which is what it is a label for.
+  keeping: "Storage",
   keepingUnused: "What you did not use",
   fullPage: "Full page",
   close: "Close",

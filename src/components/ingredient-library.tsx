@@ -243,7 +243,7 @@ function LibraryDrawer({
                     same argument applied to the two paragraphs that were
                     longer than it.
 
-                    Keeping stays first and in the stronger colour, which is
+                    Storage stays first and in the stronger colour, which is
                     what the note it replaces was protecting: it is the thing
                     you need while the rest of the bunch is on the counter. The
                     full page is the unfolded view — see the note there — and
