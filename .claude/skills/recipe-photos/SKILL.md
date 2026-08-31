@@ -11,6 +11,8 @@ credited on the page as generated. The mechanics are in
 
 These rules were written after looking at the first 47 photographs and finding
 five repeatable faults. Each rule exists because something specific went wrong.
+The sixth arrived at 123, and moves the fix for a whole class of faults out of
+this file and into the recipe itself.
 
 ---
 
@@ -77,13 +79,40 @@ A sauce photographed as a plate of rice is a card that lies about what it is.
 > to say "this is a sauce".
 
 - **Sauces & Condiments** — a small bowl of the thing itself, nothing else
-- **Drinks** — one cup or glass
+- **Drinks** — one cup for a cold drink, one mug with a handle for a hot one
 - **Baked Goods** — whole, with one slice or piece cut and set beside it
 - **Soups & Stews** — one deep bowl
 - **everything else** — one plate or one shallow bowl
 
 An accompaniment (rice, bread) belongs in the frame only where a method step
-actually names one.
+actually names one. Whether a drink is hot is not in the data, so the mug
+rule lives in the recipe's `photoDescription` (rule 6): name the mug or the
+cup there, and the style line yields the noun while holding the material.
+
+## 6. The dish line is authored per recipe, and read before it is paid for
+
+Every recipe that has a generated photograph carries a `photoDescription` in
+its front matter: what the picture shows — plate contents, arrangement, scale
+— used verbatim as the prompt's dish line. Write it for the image model, never
+for a reader, and never describe the photography: the surface, the ceramic,
+the light and the angle belong to the style block in `scripts/photos.ts`, and
+a description that restates them competes with it.
+
+> Nikujaga's reader-facing description says the dish is simmered "under a lid
+> that floats on the food", and the model painted the lid — a wooden disc on
+> a plated dinner, in two draws out of two. The cookie-crust egg tarts came
+> back as one large tart in three draws out of three, because nothing said
+> "twelve little tarts". Each was fixed by one sentence of authored
+> description.
+
+A recipe due to draw that has no `photoDescription` is not drawn: `npm run
+photos` writes a proposal into the file — seeded from the recipe's own
+description, a starting point and not an endorsement — and stops, so the text
+is read and edited where it lives before the rerun that spends money on it.
+After a picture is accepted, the description stays committed beside it as the
+record of what the picture shows, and `npm run validate` fails a generated
+photo that has none. When reviewing a picture, read its `photoDescription`
+against it: the two claim to agree.
 
 ---
 

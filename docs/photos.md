@@ -250,22 +250,37 @@ line, which is right for your own photograph on your own site.
 
 ## How the prompt is built
 
-> The rules behind it, and the five faults in the first batch that produced
-> them, are in the repo-local skill at
+> The rules behind it, and the faults that produced them, are in the
+> repo-local skill at
 > [`.claude/skills/recipe-photos/SKILL.md`](../.claude/skills/recipe-photos/SKILL.md).
 > Read that before changing anything here.
 
+The prompt has three kinds of content, and the design keeps them apart:
 
-From the recipe's description and its **final step**, not its title. Six steamed
-pork patties differ by one ingredient and would otherwise all come back as the
-same photograph; the last step is where a recipe says what the dish looks like
-on the plate.
+- **The dish line is authored.** Every recipe with a generated photo carries a
+  `photoDescription:` in its front matter — what the picture shows: plate
+  contents, arrangement, scale — and the prompt uses it verbatim. It is a
+  separate field from `description` because the two have different readers: a
+  description written for a person leaks cooking process into pictures
+  (nikujaga's "under a lid that floats on the food" put a literal wooden lid
+  on the plated dish), and a photo fix should never require rewriting site
+  copy. `npm run validate` fails a generated photo with no description.
+- **The guards are derived.** The ingredient list ("it contains only…") comes
+  from the parsed ingredients and the finishing garnish from the diagram's
+  root leaves, mechanically, so they stay true when the recipe changes.
+- **The style block is invariant.** Angle, ceramic, surface, light, framing
+  and the negative list live in `scripts/photos.ts` and no recipe may vary
+  them — the collection's value is that it looks like one book. One seam: a
+  drink's description names its vessel noun (a mug with a handle when hot, a
+  cup when cold) and the style line then asserts only the material.
 
-The instructions after that are all negative — no text, no hands, no props, no
-artificial steam, no garnishes the recipe did not ask for — because left alone
-these models produce restaurant styling, and this is a book about what comes out
-of a domestic pan.
+**A recipe due to draw that has no `photoDescription` is proposed, not
+drawn.** The run writes a proposal into the file — seeded from the recipe's
+own description, a starting point and not an endorsement — and stops there,
+so the prompt is reviewed where it lives before the rerun that pays for it.
+This is the gate that keeps the nikujaga class of fault from reaching a
+picture again.
 
-Editing the prompt changes every recipe's fingerprint, so the next run redraws
-the whole collection. That is a deliberate $3.15 batched ($6.30 interactive)
-and worth checking `--dry-run` first.
+Editing the shared prompt in `scripts/photos.ts` changes every recipe's
+fingerprint but redraws nothing by itself — see *What the script will not do
+by itself* above. `--force` redraws deliberately, at a price it prints first.

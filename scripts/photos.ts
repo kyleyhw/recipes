@@ -41,6 +41,18 @@
  * `--changed` draws the recipes whose text has moved on. `--force` draws
  * everything. Both are explicit and both print what they are about to cost.
  *
+ * ## The dish line is authored, and reviewed before it is paid for
+ *
+ * Every recipe that has a photograph carries a `photoDescription`: what the
+ * picture shows — plate contents, arrangement, scale — written for the image
+ * model and used verbatim as the prompt's dish line. A recipe due to draw
+ * without one is not drawn: the run writes a proposal (seeded from the
+ * recipe's own `description`) into the file and stops there, so the prompt is
+ * read where it lives before the rerun that spends money on it. Site copy is
+ * written for a reader and leaks cooking process into pictures — "a lid that
+ * floats on the food" once drew a wooden drop lid on a plated nikujaga —
+ * which is the whole reason the two texts are separate fields.
+ *
  * ## Two ways to pay for the same pictures
  *
  * The interactive endpoint returns each image in seconds at list price. The
@@ -314,7 +326,10 @@ export function garnishesFrom(diagram: readonly string[]): string[] {
  * Built from the recipe rather than from its title alone, because a title is
  * not a description of a plate: "Steamed Pork Patty with Zha Cai" and "Steamed
  * Pork Patty with Salted Fish" differ by one ingredient and would otherwise
- * come back as the same picture.
+ * come back as the same picture. The description of the plate itself is the
+ * recipe's authored `photoDescription` — see the header — while everything
+ * else here is either derived truth (ingredients, garnish, browning) or the
+ * invariant house style, which no recipe may vary.
  *
  * The ingredient list is passed because without it the model invents plausible
  * contents — the first banana bread came back with chocolate chips in it. The
@@ -342,7 +357,16 @@ export function promptFor(recipe: RecipeFile): string {
     .map(clean)
     .filter((name) => !INVISIBLE_FINISH.has(name.toLowerCase()));
   const method = recipe.steps.join(" ");
-  const vessel = VESSEL[recipe.category] ?? DEFAULT_VESSEL;
+  // The house rule for drinks: a cold one sits in a cup, a hot one in a mug
+  // with a handle. The temperature is not in the data, so the authored
+  // photoDescription names the noun — and when it does, the style line asserts
+  // only the material, so the two cannot argue. "Glass" is deliberately not
+  // matched: the material never varies, and a description that says glass
+  // should lose the argument to the style line, not win it.
+  const vessel =
+    recipe.category === "Drinks" && /\b(mug|cup)\b/i.test(recipe.photoDescription ?? "")
+      ? `in ${CERAMIC}`
+      : (VESSEL[recipe.category] ?? DEFAULT_VESSEL);
   // Only where a step actually names one; otherwise the frame holds one dish.
   const accompaniment = /\bwith (plain |hot |steamed )?rice\b/i.test(method)
     ? "A small bowl of plain white rice may sit beside it."
@@ -351,7 +375,11 @@ export function promptFor(recipe: RecipeFile): string {
   const lines = [
     `A photograph of one dish: ${recipe.title}.`,
     recipe.cuisine ? `${recipe.cuisine} home cooking.` : "",
-    recipe.description ? `The dish: ${recipe.description}` : "",
+    // The dish line is `photoDescription`, never `description`: one is written
+    // for the image model and reviewed as the prompt, the other is written for
+    // a reader and once put a wooden drop lid on a plated nikujaga. A recipe
+    // without one is proposed-and-skipped before this function is reached.
+    recipe.photoDescription ? `The dish: ${recipe.photoDescription}` : "",
     `It contains only these things and nothing else: ${ingredients.join(", ")}.`,
     garnish.length > 0 ? `Finished at the last moment with: ${garnish.join(", ")}.` : "",
     // "it should look pale" gives the adjective no owner, and the model reads
@@ -573,16 +601,36 @@ function readRecipeWhenDrawn(slug: string): RecipeFile | null {
 }
 
 /**
+ * What the prompt hashed to when the picture was drawn, or null.
+ *
+ * One allowance, for the field's own arrival: a recipe from before
+ * `photoDescription` existed had its description written afterwards by
+ * looking at the picture, so the backfill is by construction not a change to
+ * the photograph. The old text is compared as if it had carried today's
+ * description all along. A *later* edit to the description is a respec of
+ * the picture — the old text then has its own description, and it counts.
+ */
+function drawnFingerprint(slug: string, nowDescription: string | null): string | null {
+  const before = recipeWhenDrawn(slug);
+  if (before === null) return null;
+  const photoDescription = before.photoDescription ?? nowDescription;
+  return hash(promptFor({ ...before, photoDescription }));
+}
+
+/**
  * Whether the recipe's own text has changed the prompt since the picture.
  *
  * "Cannot tell" counts as changed. A recipe git has lost sight of — renamed
  * since its picture was drawn, most often — is the one case where a person
  * should be looking, so it is left on the list rather than quietly cleared.
  */
-function movedThePrompt(slug: string, fingerprint: string): boolean {
-  const before = recipeWhenDrawn(slug);
-  if (before === null) return true;
-  return hash(promptFor(before)) !== fingerprint;
+function movedThePrompt(
+  slug: string,
+  nowDescription: string | null,
+  fingerprint: string,
+): boolean {
+  const drawn = drawnFingerprint(slug, nowDescription);
+  return drawn === null || drawn !== fingerprint;
 }
 
 /** A recipe whose picture is stale, with everything a generation needs. */
@@ -793,8 +841,12 @@ async function main(): Promise<void> {
   const drawn: string[] = [];
   // Kept so the staleness report can ask, of a recipe that has changed, whether
   // the change reached the picture: what its prompt hashes to now, against what
-  // the picture on disk was actually drawn from. See `outdatedPhotos`.
+  // the picture on disk was actually drawn from. See `outdatedPhotos`. The
+  // descriptions ride along for the same comparison's migration fallback.
   const fingerprints = new Map<string, string>();
+  const descriptions = new Map<string, string | null>();
+  /** Recipes due to draw that first got a photoDescription proposed instead. */
+  const proposed: string[] = [];
   const stale = new Set(
     changedSinceDrawn(files.map((file) => file.replace(/\.md$/, ""))),
   );
@@ -821,29 +873,50 @@ async function main(): Promise<void> {
       skipped += 1;
       continue;
     }
-    const prompt = promptFor(recipe);
-    const fingerprint = hash(prompt);
     const out = join(PHOTOS_DIR, `${slug}.webp`);
     drawn.push(slug);
+    // With no photoDescription the dish line simply drops out of the prompt;
+    // the hash is still what the staleness report compares against, and a
+    // recipe in that state is gated to a proposal before anything draws.
+    const prompt = promptFor(recipe);
+    const fingerprint = hash(prompt);
     fingerprints.set(slug, fingerprint);
+    descriptions.set(slug, recipe.photoDescription);
     // Gaps only, unless asked otherwise. Editing the prompt in this file
     // changes every recipe's fingerprint at once, so a rule that redrew
     // whatever no longer matches would redraw the whole book on the strength
     // of one improved sentence. A picture that already exists is left alone
     // and, if its recipe has moved on, said out loud at the end instead.
-    if (existsSync(out)) {
-      if (args.force) {
-        due.push({ slug, path, recipe, prompt, fingerprint, out });
-        continue;
-      }
+    const wants =
+      !existsSync(out) ||
+      args.force ||
       // `--changed` spends money, so it takes the fine test rather than the
       // coarse one: a recipe edited in a way the prompt does not see is not
       // worth a second image of the same thing.
-      if (args.changed && stale.has(slug) && movedThePrompt(slug, fingerprint)) {
-        due.push({ slug, path, recipe, prompt, fingerprint, out });
-        continue;
-      }
+      (args.changed &&
+        stale.has(slug) &&
+        movedThePrompt(slug, recipe.photoDescription, fingerprint));
+    if (!wants) {
       skipped += 1;
+      continue;
+    }
+    // Nothing is drawn from a prompt nobody has read. A recipe due to draw
+    // without a photoDescription gets one proposed — seeded from its own
+    // description, which is a starting point and not an endorsement — written
+    // into the file and skipped, so the text is reviewed where it lives before
+    // the run that spends money on it. This gate exists because prose written
+    // for a reader once put a wooden drop lid on a plated nikujaga.
+    if (recipe.photoDescription === null) {
+      if (!args.dryRun) {
+        writeFileSync(
+          path,
+          serialiseRecipeFile({
+            ...recipe,
+            photoDescription: recipe.description ?? recipe.title,
+          }),
+        );
+      }
+      proposed.push(slug);
       continue;
     }
     due.push({ slug, path, recipe, prompt, fingerprint, out });
@@ -860,10 +933,7 @@ async function main(): Promise<void> {
         // are compared is what the recipe itself changed. Git is asked once per
         // recipe on the list, which is a handful of recipes in the usual case
         // and the whole collection after a bulk edit — the case this is for.
-        drawnFrom: (slug) => {
-          const before = recipeWhenDrawn(slug);
-          return before === null ? null : hash(promptFor(before));
-        },
+        drawnFrom: (slug) => drawnFingerprint(slug, descriptions.get(slug) ?? null),
       },
     );
     if (outdated.length > 0) {
@@ -891,6 +961,21 @@ async function main(): Promise<void> {
           `${unaffected.length === 1 ? "it is" : "they are"} not listed.\n`,
       );
     }
+  }
+
+  // Reported before anything is priced or drawn, in dry and real runs alike:
+  // the proposals are the next thing a person should read.
+  if (proposed.length > 0) {
+    console.log(
+      `${proposed.length} recipe${proposed.length === 1 ? " has" : "s have"} no ` +
+        `photoDescription, so nothing was drawn for ${proposed.length === 1 ? "it" : "them"}. ` +
+        (args.dryRun
+          ? `A run would write a proposal into each file:`
+          : `A proposal has been written into each file — read it, edit it,\n` +
+            `and run again to draw from it:`),
+    );
+    for (const slug of proposed) console.log(`  ${slug}`);
+    console.log("");
   }
 
   if (args.dryRun) {

@@ -134,6 +134,23 @@ function checkRecipe(
     });
   }
 
+  // A generated photo's dish line is its `photoDescription`, and a redraw of a
+  // picture with no description would fall back to nothing. Human-supplied
+  // photos (photo with no photoPrompt) never regenerate, so they are exempt.
+  if (
+    recipe.photo !== null &&
+    recipe.photoPrompt !== null &&
+    recipe.photoDescription === null
+  ) {
+    problems.push({
+      file: path,
+      line: at(`photo: ${recipe.photo}`),
+      message:
+        "This recipe has a generated photo but no photoDescription, so nothing records what the picture shows or what a redraw should draw.",
+      fix: "Add a `photoDescription:` line saying what is on the plate — contents, arrangement, scale — never the photography. `npm run photos` proposes one for recipes that have no picture yet.",
+    });
+  }
+
   const names = library.map((entry) => entry.name);
   for (const line of recipe.ingredients) {
     const parsedLine = parseIngredientLine(line);

@@ -79,6 +79,15 @@ const frontMatterSchema = z.object({
   /** The address a web-sourced recipe came from. */
   source: z.string().nullish(),
   photo: z.string().nullish(),
+  /**
+   * What the photograph shows, written for the image model: the plate's
+   * contents, arrangement and scale, never the photography. It exists so the
+   * per-recipe half of the prompt is authored and reviewable text rather than
+   * prose borrowed from `description` — which is written for a reader and once
+   * put a wooden drop lid on a plated nikujaga. Proposed by a photo run before
+   * anything is drawn; the run that draws uses it verbatim as the dish line.
+   */
+  photoDescription: z.string().nullish(),
   photoCredit: z
     .object({
       siteName: z.string().nullish(),
@@ -130,6 +139,8 @@ export interface RecipeFile {
   waitLabel: string;
   source: string | null;
   photo: string | null;
+  /** What the photograph shows — the dish line of the generation prompt. */
+  photoDescription: string | null;
   photoCredit: { siteName: string | null; pageUrl: string | null } | null;
   /** Prompt fingerprint, when the photo was generated. See scripts/photos.ts. */
   photoPrompt: string | null;
@@ -374,6 +385,7 @@ export function parseRecipeFile(slug: string, raw: string): ParseResult {
       waitLabel: parsed.data.waitLabel ?? "chill",
       source: parsed.data.source ?? null,
       photo: parsed.data.photo ?? null,
+      photoDescription: parsed.data.photoDescription ?? null,
       photoCredit: parsed.data.photoCredit
         ? {
             siteName: parsed.data.photoCredit.siteName ?? null,
@@ -527,6 +539,7 @@ export function serialiseRecipeFile(recipe: RecipeFile): string {
   }
   if (recipe.source) frontMatter["source"] = recipe.source;
   if (recipe.photo) frontMatter["photo"] = recipe.photo;
+  if (recipe.photoDescription) frontMatter["photoDescription"] = recipe.photoDescription;
   if (recipe.photoCredit?.pageUrl || recipe.photoCredit?.siteName) {
     frontMatter["photoCredit"] = {
       ...(recipe.photoCredit.siteName ? { siteName: recipe.photoCredit.siteName } : {}),

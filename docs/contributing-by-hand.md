@@ -102,6 +102,7 @@ below is what makes a recipe good rather than merely valid.
 | `source` | The address a web recipe came from. A recipe from a person goes in the Notes instead. |
 | `tin` | Required for anything baked. `shape` is `round`, `square`, `rectangular` or `loaf`, with `diameter` or `length`/`width`, and `depth`, in centimetres. |
 | `draft` | `true` while it is a proposal nobody has cooked. It shows a banner saying so. |
+| `photoDescription` | What the photograph shows — plate contents, arrangement, scale — written for the image model, which uses it verbatim as the prompt's dish line. Leave it out of a new recipe: the first `npm run photos` writes a proposal into the file and draws nothing until it has been read, because prose written for a reader leaks cooking process into pictures (see [photos.md](photos.md)). A hot drink names a mug with a handle here, a cold one a cup. Required once a generated photo exists. |
 
 There is no `addedBy` field and there must not be one: the site takes that from
 the commit that adds the file. See

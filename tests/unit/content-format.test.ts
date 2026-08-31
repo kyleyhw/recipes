@@ -43,6 +43,7 @@ function recipe(overrides: Partial<RecipeFile> = {}): RecipeFile {
     cookLabel: "cook",
     source: "https://www.bbcgoodfood.com/recipes/butter-loaf",
     photo: null,
+    photoDescription: null,
     photoCredit: null,
     photoPrompt: null,
     draft: false,
@@ -94,6 +95,12 @@ describe("round trip", () => {
       {
         photo: "/photos/butter-loaf.webp",
         photoCredit: { siteName: "bbcgoodfood.com", pageUrl: "https://example.com/p" },
+      },
+    ],
+    [
+      "a photo description",
+      {
+        photoDescription: "A whole loaf on one plate, one slice cut and laid beside it.",
       },
     ],
   ])("round-trips %s", (_label, overrides) => {
