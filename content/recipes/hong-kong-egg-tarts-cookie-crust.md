@@ -1,6 +1,6 @@
 ---
 title: Hong Kong Egg Tarts (Cookie Crust)
-description: Daan taat with a 曲奇皮 — a short, sandy butter crust that eats like shortbread, under a custard set just short of firm.
+description: Daan taat with a 曲奇皮 — twelve little tarts with a short, sandy butter crust that eats like shortbread, each under a custard set just short of firm.
 category: Baked Goods
 cuisine: Cantonese
 tags:
@@ -14,7 +14,7 @@ waitMinutes: 30
 photo: /photos/hong-kong-egg-tarts-cookie-crust.webp
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
-photoPrompt: 169fb8eafd0646e0
+photoPrompt: a12958ab8e2ecd18
 ---
 
 ## Ingredients

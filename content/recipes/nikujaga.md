@@ -1,6 +1,6 @@
 ---
 title: Nikujaga
-description: Meat and potatoes simmered in dashi, soy and mirin under a lid that floats on the food. The sugar goes in before the soy, and that order is the recipe.
+description: Meat and potatoes simmered in dashi, soy and mirin, then rested off the heat to drink the liquid back in. The sugar goes in before the soy, and that order is the recipe.
 category: Meat & Fish
 cuisine: Japanese
 tags:
@@ -13,7 +13,7 @@ cookLabel: simmer
 photo: /photos/nikujaga.webp
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
-photoPrompt: bccd0cf34cb7c386
+photoPrompt: 9127e9da2ab89c27
 ---
 
 ## Ingredients
