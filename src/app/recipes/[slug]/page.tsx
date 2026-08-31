@@ -257,6 +257,11 @@ export default async function RecipePage({
         library={prepared.library}
         steps={recipe.steps}
         tin={recipe.tin}
+        times={{
+          prepMinutes: recipe.prepMinutes,
+          cookMinutes: recipe.cookMinutes,
+          waitMinutes: recipe.waitMinutes,
+        }}
         translations={recipe.translations}
         diagram={diagram}
       />

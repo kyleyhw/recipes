@@ -14,6 +14,7 @@ import { pluralise, renderCount, renderMadeUp } from "@/lib/count";
 import { getUnit, toBase, toGrams } from "@/lib/units";
 import { renderQuantity } from "@/lib/quantity";
 import { scaleRecipe, type ScalableIngredient } from "@/lib/scaling";
+import { timeAdviceText, type Stretches } from "@/lib/scaling-time";
 import {
   describeTin,
   DIMENSIONS_FOR_SHAPE,
@@ -51,6 +52,7 @@ export function RecipeView({
   library = [],
   steps,
   tin = null,
+  times = null,
   translations = {},
   diagram = null,
 }: {
@@ -68,6 +70,12 @@ export function RecipeView({
   library?: Array<LineLibrary | null>;
   steps: string[];
   tin?: Tin | null;
+  /**
+   * The three stretches as the file states them, so that scaling can say which
+   * of them the scaling does not touch. Null where a recipe gives no times at
+   * all, which is the same case the header line omits.
+   */
+  times?: Stretches | null;
   /**
    * The recipe in other languages, keyed by code. Only the words: every
    * quantity, every unit and every macro is still computed from the English
@@ -290,6 +298,13 @@ export function RecipeView({
   // A cake batter doubled into the same tin is twice as deep and bakes wrongly.
   // The tin has to scale with the recipe, and by the square root of alpha.
   const tinNote = tin ? tinAdviceText(tin, scaled.factor) : null;
+  // And the clock, which mostly does not scale — the header line is rendered on
+  // the server from the file and cannot move, so what the stepper can say is
+  // which of its numbers still stand. A tin is the signal for "baked", the same
+  // signal content/format.ts reads to default the cook label.
+  const timeNote = times
+    ? timeAdviceText(times, scaled.factor, { baked: tin !== null })
+    : null;
   // A step of one serving is right for 4 people and absurd for 24 cookies.
   const step = baseServings >= 12 ? Math.round(baseServings / 12) : 1;
 
@@ -413,6 +428,17 @@ export function RecipeView({
                 })}
           </div>
         </div>
+      ) : null}
+
+      {/* Muted rather than the tin note's warning colour: this says which of
+          the printed times still apply, which is information, where the tin
+          note says the tin in your hand is the wrong one, which is a warning.
+          Above it, because it is true of every scaled recipe and the tin note
+          is true of some of them. */}
+      {timeNote ? (
+        <p className="mt-2 rounded-card bg-surface px-3 py-2 text-sm text-text-muted">
+          {timeNote}
+        </p>
       ) : null}
 
       {tinNote ? (
