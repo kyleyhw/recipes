@@ -4663,6 +4663,19 @@
     "keeping": "Two weeks in the fridge wrapped in a damp cloth inside a bag. Or stand them root-down in 2 cm of water on the windowsill, change the water every other day, and they keep growing — a bunch gives two or three cuttings before it gives up."
   },
   {
+    "name": "star anise",
+    "kcal100g": 370,
+    "protein100g": 4.0,
+    "carbs100g": 70.0,
+    "fat100g": 6.0,
+    "cholesterolMg100g": 0,
+    "densityGPerMl": null,
+    "gramsPerUnit": 2,
+    "source": "MANUAL",
+    "sourceNote": "The dried star of Illicium verum. FoodData Central has no record of it, and this is the row where that matters most: nearly every nutrition site that claims to have star anise is reprinting USDA's anise seed (170918), which is Pimpinella anisum — a different plant, in a different family, that happens to share a flavour compound. These figures are the middle of the published analyses of the actual spice, which run 359 to 386 kcal, 2 to 4 g of protein, 65 to 75 g of carbohydrate and 4 to 6 g of fat per 100 g. Only those four are recorded and the rest is left blank rather than borrowed from the wrong plant. It hardly matters either way: a star is steeped and lifted out, so what reaches the glass is the oil that came off it. mu 2 g is one whole star, and no count is shown against a line, because a recipe asking for three of them has already said three. Not the same as five-spice powder, which contains it ground along with four other things.",
+    "keeping": "Two years in a closed jar in the dark, and it is one of the longest-lived things in a spice rack — the anethole that makes it smell of aniseed sits in the woody star rather than on a cut surface. Snap a point off to test one: a live star is sharply fragrant at the break and a dead one smells of cardboard. Buy whole stars rather than the broken pieces sold cheaper, which are mostly the seeds and the least aromatic part."
+  },
+  {
     "name": "suan cai yu kit",
     "kcal100g": 108,
     "protein100g": 2.0,
@@ -5270,6 +5283,29 @@
     "gramsPerUnit": null,
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 173469, distilled vinegar, 5% acidity. Nutritionally it is water: it earns its place in a recipe for the acid, not for anything in this row."
+  },
+  {
+    "name": "whole cloves",
+    "usdaFdcId": "171321",
+    "kcal100g": 274,
+    "protein100g": 5.97,
+    "carbs100g": 65.53,
+    "sugar100g": 2.38,
+    "fiber100g": 33.9,
+    "fat100g": 13.0,
+    "satFat100g": 3.95,
+    "cholesterolMg100g": 0,
+    "sodiumMg100g": 277,
+    "potassiumMg100g": 1020,
+    "calciumMg100g": 632,
+    "ironMg100g": 11.83,
+    "magnesiumMg100g": 259,
+    "zincMg100g": 2.32,
+    "densityGPerMl": null,
+    "gramsPerUnit": 0.07,
+    "source": "USDA",
+    "sourceNote": "USDA SR Legacy 171321, spices, cloves, ground — the same dried flower bud, and FoodData Central has no separate record for the whole one. It is a separate entry from a ground clove for the same reason `cinnamon stick` is separate from `ground cinnamon`: whole cloves are steeped and fished out, and ground cloves are eaten, so they are not interchangeable. mu 0.07 g is one bud, which is what makes a recipe write `6 whole cloves` rather than a weight, and no count is shown against the line because the line has already counted them. The row is named `whole cloves` rather than `cloves` on purpose — a garlic clove is a unit in this collection, so `6 cloves` on a line parses as six of something rather than as this spice.",
+    "keeping": "Two years in a closed jar in the dark. Whole cloves are almost indestructible — the eugenol is locked in an unbroken bud — where ground cloves are stale within six months. A fresh one leaves an oily mark when pressed with a fingernail and floats head-up in water; one that lies flat has lost its oil."
   },
   {
     "name": "wonton wrappers",

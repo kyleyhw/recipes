@@ -1,7 +1,7 @@
 ---
 title: Chicken and Rice Soup
 description: Pao fan — seared chicken and ginger simmered into a broth, poured hot over cold rice, and buried under spring onions and fried shallots.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Chinese
 tags:
   - quick
@@ -71,3 +71,4 @@ To serve again, bring the broth back to a hard boil and pour it over fresh rice.
 ## Log
 
 - 2026-08-11: Added as given, with the splashes given as tablespoons and the chicken as 300 g.
+- 2026-08-31: Refiled from Soups & Stews to Rice & Noodles. It is built on the rice, the way the rest of that shelf is, and the broth is what the rice is cooked in rather than the dish itself.
