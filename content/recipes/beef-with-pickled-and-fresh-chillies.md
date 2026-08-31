@@ -1,7 +1,7 @@
 ---
 title: Beef with Pickled and Fresh Chillies
 description: Velveted beef through a wok of raw heat — bird's eye chillies for the sting, pickled ones for the sourness behind it, and a fistful of coriander thrown in at the end.
-category: Mains
+category: Meat & Fish
 cuisine: Chinese
 tags:
   - quick

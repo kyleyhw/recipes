@@ -1,23 +1,33 @@
 [
   {
-    "name": "Mains",
-    "slug": "mains",
-    "glyph": "🍽️"
+    "name": "Rice & Noodles",
+    "slug": "rice-and-noodles",
+    "glyph": "🍜"
   },
   {
-    "name": "Sides",
-    "slug": "sides",
-    "glyph": "🥗"
+    "name": "Meat & Fish",
+    "slug": "meat-and-fish",
+    "glyph": "🍖"
   },
   {
-    "name": "Breakfast",
-    "slug": "breakfast",
-    "glyph": "🍳"
+    "name": "Tofu & Eggs",
+    "slug": "tofu-and-eggs",
+    "glyph": "🥚"
+  },
+  {
+    "name": "Vegetables",
+    "slug": "vegetables",
+    "glyph": "🥬"
   },
   {
     "name": "Soups & Stews",
     "slug": "soups-and-stews",
     "glyph": "🍲"
+  },
+  {
+    "name": "Snacks",
+    "slug": "snacks",
+    "glyph": "🥜"
   },
   {
     "name": "Baked Goods",
@@ -30,18 +40,13 @@
     "glyph": "🍰"
   },
   {
-    "name": "Sauces & Condiments",
-    "slug": "sauces-and-condiments",
-    "glyph": "🥄"
-  },
-  {
-    "name": "Snacks",
-    "slug": "snacks",
-    "glyph": "🥜"
-  },
-  {
     "name": "Drinks",
     "slug": "drinks",
     "glyph": "🍵"
+  },
+  {
+    "name": "Sauces & Condiments",
+    "slug": "sauces-and-condiments",
+    "glyph": "🥄"
   }
 ]

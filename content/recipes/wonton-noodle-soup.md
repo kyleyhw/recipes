@@ -1,7 +1,7 @@
 ---
 title: Wonton Noodle Soup
 description: Prawn and pork wontons folded into shop-bought wrappers, boiled apart from everything else, and set on thin egg noodles in a clean broth.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Cantonese
 tags:
   - make ahead

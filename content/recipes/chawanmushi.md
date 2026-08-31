@@ -1,7 +1,7 @@
 ---
 title: Chawanmushi
 description: A savoury egg custard set with three times its volume of dashi — so soft it is nearly drunk rather than eaten, with chicken and shiitake at the bottom of the cup.
-category: Sides
+category: Tofu & Eggs
 cuisine: Japanese
 tags:
   - quick

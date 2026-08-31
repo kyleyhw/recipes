@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Tofu with Minced Pork
 description: Seasoned pork mince spread over egg tofu and steamed in one go — the same dish as the braise with the frying taken out, and lighter for it.
-category: Mains
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

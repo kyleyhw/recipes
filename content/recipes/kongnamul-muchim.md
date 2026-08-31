@@ -1,7 +1,7 @@
 ---
 title: Kongnamul Muchim
 description: Bean sprouts boiled, drained and dressed with sesame, garlic and spring onion. The banchan that appears on every Korean table.
-category: Sides
+category: Vegetables
 cuisine: Korean
 tags:
   - quick

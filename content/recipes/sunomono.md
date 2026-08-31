@@ -1,7 +1,7 @@
 ---
 title: Sunomono
 description: Cucumber and wakame in sweetened rice vinegar. The palate cleanser that sits beside everything else on a Japanese table.
-category: Sides
+category: Vegetables
 cuisine: Japanese
 tags:
   - quick

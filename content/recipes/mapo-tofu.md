@@ -1,7 +1,7 @@
 ---
 title: Mapo Tofu
 description: Silken tofu in a red, numbing sauce of fermented broad bean paste and black beans. The pork version — what most kitchens outside Sichuan actually cook.
-category: Mains
+category: Tofu & Eggs
 cuisine: Sichuan
 tags:
   - quick

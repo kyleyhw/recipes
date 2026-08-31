@@ -1,7 +1,7 @@
 ---
 title: Yaki Udon
 description: Udon fried hard in a dry pan until some strands catch and blister, with pork belly, cabbage and onion and a soy and oyster sauce that reduces onto them. No broth anywhere.
-category: Mains
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

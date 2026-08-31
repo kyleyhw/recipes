@@ -1,7 +1,7 @@
 ---
 title: House Roasted Chicken Thighs
 description: Oil, salt, pepper, garlic and onion granules. Two minutes of work and half an hour in the oven, and it is what most weeknights actually look like.
-category: Mains
+category: Meat & Fish
 cuisine: British
 tags:
   - quick

@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Tofu with Black Bean and Garlic
 description: Fermented black beans rinsed, mashed with garlic and bloomed in hot oil, then spooned over egg tofu and steamed. The best ten minutes this tube is capable of.
-category: Sides
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

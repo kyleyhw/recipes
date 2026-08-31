@@ -1,7 +1,7 @@
 ---
 title: Niku Udon
 description: The gyudon beef and onion, simmered in the same warishita but let down with more dashi, poured over udon instead of rice.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

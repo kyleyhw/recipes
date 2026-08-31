@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Tofu with Shiitake in Oyster Gravy
 description: Dried shiitake soaked and sliced over egg tofu, with the soaking water thickened into an oyster gravy and poured over at the end.
-category: Sides
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

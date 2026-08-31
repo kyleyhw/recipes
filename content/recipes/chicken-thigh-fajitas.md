@@ -1,7 +1,7 @@
 ---
 title: Chicken Thigh Fajitas
 description: Thighs, peppers and onion under a heavy spice rub on one tray, with a lime squeezed over the moment it leaves the oven.
-category: Mains
+category: Meat & Fish
 cuisine: Mexican
 tags:
   - one tray

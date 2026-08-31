@@ -1,7 +1,7 @@
 ---
 title: Mushroom and Glass Noodle Soup
 description: The shiitake soaking water is the entire broth. Twenty-five minutes, no stock, no meat, and it tastes like it took hours.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Chinese
 tags:
   - quick

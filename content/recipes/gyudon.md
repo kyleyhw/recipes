@@ -1,7 +1,7 @@
 ---
 title: Gyudon
 description: Paper-thin beef and onion simmered in dashi, soy, mirin and sake, and spooned over rice while the broth is still loose enough to soak in.
-category: Mains
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

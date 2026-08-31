@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Custard
 description: Zheng shui dan. Three eggs, half again their weight in warm water, strained and steamed over the lowest heat in the house until it sets like silk.
-category: Sides
+category: Tofu & Eggs
 cuisine: Cantonese
 tags:
   - quick

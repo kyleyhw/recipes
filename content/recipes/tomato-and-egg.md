@@ -1,7 +1,7 @@
 ---
 title: Tomato and Egg
 description: Fan qie chao dan. Eggs scrambled soft and taken out, tomatoes cooked down to a sauce, and the two folded back together. The dish every Chinese household cooks.
-category: Mains
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

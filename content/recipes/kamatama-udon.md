@@ -1,7 +1,7 @@
 ---
 title: Kamatama Udon
 description: Hot noodles straight from the pan into a raw egg and a splash of soy, stirred hard. Three minutes, no broth, and the heat of the udon is the only cooking that happens.
-category: Mains
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

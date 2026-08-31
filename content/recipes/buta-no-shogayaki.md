@@ -1,7 +1,7 @@
 ---
 title: Buta no Shogayaki
 description: Pork fried hard, then a soy, mirin and grated ginger sauce poured in at the end and reduced onto it. Fifteen minutes, and the cabbage beside it is not a garnish.
-category: Mains
+category: Meat & Fish
 cuisine: Japanese
 tags:
   - quick

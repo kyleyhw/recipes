@@ -1,7 +1,7 @@
 ---
 title: Roasted Broccoli and Baby Corn
 description: Hot oven, one layer, no crowding. Roasted until the broccoli tips are properly black rather than merely brown.
-category: Sides
+category: Vegetables
 cuisine: British
 tags:
   - quick

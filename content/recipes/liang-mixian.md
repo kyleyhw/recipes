@@ -1,7 +1,7 @@
 ---
 title: Liang Mixian
 description: Cold mixian with no broth at all, dressed with fermented bean curd, vinegar and chilli oil. The summer version, and the fastest thing in the collection.
-category: Mains
+category: Rice & Noodles
 cuisine: Yunnan
 tags:
   - quick

@@ -1,7 +1,7 @@
 ---
 title: Steamed Pork Patty with Salted Egg
 description: The Cantonese one. Salted egg whites beaten into the pork with three spoons of water, the yolks halved on top, and fifteen minutes over a rolling boil.
-category: Mains
+category: Meat & Fish
 cuisine: Cantonese
 tags:
   - quick

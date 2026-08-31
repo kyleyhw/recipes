@@ -1,7 +1,7 @@
 ---
 title: Waterless Chicken Stew
 description: A kilo of chicken over cabbage and apple, with no water in the pot at all. Lid on, ninety minutes, and the vegetables collapse into a broth of their own making.
-category: Mains
+category: Soups & Stews
 cuisine: Chinese
 tags:
   - one pot
@@ -92,3 +92,4 @@ Reheat gently in a covered pan over low heat for 12 minutes, stirring once. A ha
 
 - 2026-08-11: Added as given. Cook time recorded as 90 minutes, the long end of the range.
 - 2026-08-11: Switched to the strong-flavour version. The lid goes on from the start — the 5 minutes of open boiling is gone, so the alcohol no longer burns off before the simmer. Bouillon dropped in favour of msg alone; sugar kept.
+- 2026-08-31: Refiled from Mains to Soups & Stews, which is what a pot that simmers ninety minutes under a lid and makes its own broth is.

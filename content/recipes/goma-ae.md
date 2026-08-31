@@ -1,7 +1,7 @@
 ---
 title: Goma-ae
 description: Spinach blanched, squeezed hard, and dressed with ground toasted sesame, soy and a little sugar. Four ingredients and one technique.
-category: Sides
+category: Vegetables
 cuisine: Japanese
 tags:
   - quick

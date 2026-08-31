@@ -1,7 +1,7 @@
 ---
 title: Steamed Pork Patty with Salted Fish
 description: The pungent one. A thumb of salted fish laid on top, which perfumes the whole patty as it steams and is eaten in slivers rather than mouthfuls.
-category: Mains
+category: Meat & Fish
 cuisine: Cantonese
 tags:
   - quick

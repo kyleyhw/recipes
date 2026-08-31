@@ -1,7 +1,7 @@
 ---
 title: Mustard and Herb Crusted Turkey
 description: Mustard brushed on, herbs pressed into it, twenty minutes in a hot oven. Four ingredients and nothing to watch.
-category: Mains
+category: Meat & Fish
 cuisine: British
 tags:
   - quick

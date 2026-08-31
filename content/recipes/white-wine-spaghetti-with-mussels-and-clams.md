@@ -1,7 +1,7 @@
 ---
 title: White Wine Spaghetti with Mussels and Clams
 description: Two kinds of shellfish opened in wine, and their liquor turned into the sauce. Twenty minutes at the stove, most of it spent not browning the garlic.
-category: Mains
+category: Rice & Noodles
 cuisine: Italian
 tags:
   - seafood

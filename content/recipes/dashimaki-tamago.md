@@ -1,7 +1,7 @@
 ---
 title: Dashimaki Tamago
 description: A rolled omelette a third dashi by volume, cooked in thin layers and folded over itself. Custardy rather than fluffy, and eaten hot or cold.
-category: Breakfast
+category: Tofu & Eggs
 cuisine: Japanese
 tags:
   - quick

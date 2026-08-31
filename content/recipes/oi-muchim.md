@@ -1,7 +1,7 @@
 ---
 title: Oi Muchim
 description: Korean cucumber salad — sliced thin, dressed at the last second with gochugaru, garlic and vinegar, and eaten while it still snaps.
-category: Sides
+category: Vegetables
 cuisine: Korean
 tags:
   - quick

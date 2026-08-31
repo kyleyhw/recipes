@@ -1,7 +1,7 @@
 ---
 title: Laksa
 description: Curry laksa from a jar of paste, fried until the oil runs red before anything wet goes near it. Coconut milk in at the end and never boiled.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Malaysian
 tags:
   - quick

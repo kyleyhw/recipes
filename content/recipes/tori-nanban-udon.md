@@ -1,7 +1,7 @@
 ---
 title: Tori Nanban Udon
 description: Chicken and leek seared until both are properly charred, then simmered five minutes into a dashi and soy broth and poured over udon. One pan, one bowl.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

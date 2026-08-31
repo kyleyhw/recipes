@@ -18,7 +18,7 @@ not need — an empty field is worse than a missing one.
 ---
 title: Chilli Garlic Noodles
 description: One sentence. What the dish is and why you would make it, not that it is delicious.
-category: Mains
+category: Rice & Noodles
 cuisine: Sichuan
 tags:
   - quick

@@ -1,7 +1,7 @@
 ---
 title: Agedashi Tofu
 description: Tofu dusted in cornflour, fried until the outside crackles, and sat in warm dashi that immediately starts to soften it again. Eat it fast.
-category: Sides
+category: Tofu & Eggs
 cuisine: Japanese
 tags:
   - quick

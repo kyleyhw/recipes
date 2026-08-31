@@ -1,7 +1,7 @@
 ---
 title: Curry Udon
 description: A block of curry roux let down with dashi into a thick soup, thickened again with cornflour so it clings to the noodles instead of sliding off them.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

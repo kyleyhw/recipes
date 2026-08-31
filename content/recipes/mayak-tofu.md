@@ -1,7 +1,7 @@
 ---
 title: Mayak Tofu
 description: Cubed tofu left overnight in soy, garlic and chilli. Mayak means drug — the name is about how hard it is to stop eating it, and it is earned.
-category: Sides
+category: Tofu & Eggs
 cuisine: Korean
 tags:
   - make ahead

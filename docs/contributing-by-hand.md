@@ -39,7 +39,7 @@ content/recipes/chilli-garlic-noodles.md
 ---
 title: Chilli Garlic Noodles
 description: One line. What the dish is, and why you would make it.
-category: Mains
+category: Vegetables
 cuisine: Chinese
 tags:
   - quick
@@ -89,7 +89,7 @@ below is what makes a recipe good rather than merely valid.
 | --- | --- |
 | `title` | As you would say it out loud. Title case. |
 | `description` | One sentence, shown on the card and under the title. Say what it *is*, not that it is delicious. |
-| `category` | Must match one in `content/categories.json`, or the recipe appears on no shelf. Mains, Sides, Desserts, Baked Goods, Breakfast, Soups & Stews, Sauces & Condiments, Drinks, Snacks. |
+| `category` | **What the dish is made of**, not when it is eaten. Must match one in `content/categories.json`, or the recipe appears on no shelf: Rice & Noodles, Meat & Fish, Tofu & Eggs, Vegetables, Soups & Stews, Snacks, Baked Goods, Desserts, Drinks, Sauces & Condiments. Where two fit, the one the dish is *built on* wins — a bowl of udon with beef in it is Rice & Noodles, and a steamed pork patty eaten over rice is Meat & Fish, because the rice is not in the recipe. |
 | `cuisine` | Whose food it is. Free text, and it is what the cuisine filter offers. Be as specific as the dish honestly allows — `Cantonese` rather than `Chinese` for a dish that is one, and `Chinese` where it is genuinely pan-regional or you are not sure. |
 | `tags` | Cross-cutting labels a category cannot express: `quick`, `one pot`, `freezes well`, `make ahead`. |
 | `servings` | The number the quantities below are written for. Everything scales from it. |

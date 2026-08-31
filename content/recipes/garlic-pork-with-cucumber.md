@@ -1,7 +1,7 @@
 ---
 title: Garlic Pork with Cucumber
 description: Suan ni bai rou. Pork belly poached whole, chilled, sliced as thin as you can manage, and laid over cucumber under a garlic and chilli dressing.
-category: Sides
+category: Meat & Fish
 cuisine: Sichuan
 tags:
   - make ahead

@@ -1,7 +1,7 @@
 ---
 title: Yoghurt Baked Chicken with Chilli Broccoli
 description: Thighs under a thick yoghurt crust and broccoli charring beside them, on one tray, in half an hour.
-category: Mains
+category: Meat & Fish
 cuisine: British
 tags:
   - one tray

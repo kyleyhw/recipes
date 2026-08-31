@@ -1,7 +1,7 @@
 ---
 title: Tsukimi Udon
 description: A plain dashi and soy broth over udon with a raw egg dropped in, left alone so the white sets and the yolk does not. Moon-viewing udon, and the moon is the yolk.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Tofu with Preserved Egg and Pork
 description: Preserved egg cut into wedges and set among egg tofu and pork mince. Three kinds of egg on one plate, only one of them fresh.
-category: Mains
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

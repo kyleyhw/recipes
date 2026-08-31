@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Tofu with Prawns
 description: Rounds of egg tofu and butterflied prawns steamed on one plate, then hit with smoking oil over ginger and spring onion and a spoonful of soy.
-category: Sides
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

@@ -1,7 +1,7 @@
 ---
 title: Pork and Chinese Cabbage Stir-Fry
 description: Pork browned dry until it renders its own fat, aromatics fried in that fat, and cabbage stems in before leaves. Chilli crisp goes into the sauce rather than the pan, so it never burns.
-category: Mains
+category: Meat & Fish
 cuisine: Chinese
 tags:
   - quick

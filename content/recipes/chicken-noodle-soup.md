@@ -1,7 +1,7 @@
 ---
 title: Chicken Noodle Soup
 description: Thighs poached in their own stock with carrot, celery and onion, shredded back in, and egg noodles cooked separately so they never go to mush.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: British
 tags:
   - make ahead

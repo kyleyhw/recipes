@@ -248,6 +248,12 @@ const VESSEL: Record<string, string> = {
   Drinks: `in a ${CERAMIC} cup`,
   "Baked Goods": `whole on a ${CERAMIC} plate, with one slice or piece cut and set beside it`,
   "Soups & Stews": `in one deep ${CERAMIC} bowl`,
+  // The deep bowl follows the noodle soups here. They were filed under Soups &
+  // Stews until the collection was refiled by what a dish is made of, and
+  // without this line fifteen bowls of broth would have started being drawn on
+  // a flat plate. A donburi and a plate of carbonara take the same bowl well
+  // enough that the whole shelf can share one.
+  "Rice & Noodles": `in one deep ${CERAMIC} bowl`,
 };
 // Both nouns carry the material. Qualifying only the first one leaves "shallow
 // bowl" free to be any bowl, and the model picks a bright white glazed one.

@@ -1,7 +1,7 @@
 ---
 title: Takikomi Gohan
 description: Rice cooked in seasoned dashi with everything sitting on top of it, never stirred in. One pot, and the best thing a packet of dashi can become.
-category: Mains
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - one pot

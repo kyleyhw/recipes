@@ -1,7 +1,7 @@
 ---
 title: Kamo Nanban Soba
 description: Duck breast seared skin-side down until its fat runs, leek charred in that fat, and both simmered into a dashi broth over buckwheat noodles.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

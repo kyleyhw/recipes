@@ -1,7 +1,7 @@
 ---
 title: Three Cup Chicken
 description: San bei ji. Sesame oil, wine and soy reduced onto chicken until they are a dark syrup, with a fistful of Thai basil thrown in off the heat.
-category: Mains
+category: Meat & Fish
 cuisine: Taiwanese
 tags:
   - quick

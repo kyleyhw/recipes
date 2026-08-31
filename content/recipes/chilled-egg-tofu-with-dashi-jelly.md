@@ -1,7 +1,7 @@
 ---
 title: Chilled Egg Tofu with Dashi Jelly
 description: Cold egg tofu under a broken jelly of dashi and soy, with grated ginger. The original Japanese form of the ingredient, and the only cold thing here.
-category: Sides
+category: Tofu & Eggs
 cuisine: Japanese
 tags:
   - make ahead

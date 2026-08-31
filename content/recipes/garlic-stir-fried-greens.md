@@ -1,7 +1,7 @@
 ---
 title: Garlic Stir-Fried Greens
 description: Choy sum, a lot of garlic and a very hot wok. Six minutes from fridge to table, and the stems still snap.
-category: Sides
+category: Vegetables
 cuisine: Cantonese
 tags:
   - quick

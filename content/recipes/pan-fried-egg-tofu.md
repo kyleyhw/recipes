@@ -1,7 +1,7 @@
 ---
 title: Pan-Fried Egg Tofu
 description: A tube of egg tofu cut into rounds, dusted in cornflour and fried until the outside is crisp and the middle is still custard, with a soy dressing poured over.
-category: Sides
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

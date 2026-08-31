@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Tofu with Garlic and Glass Noodles
 description: A nest of soaked glass noodles under the tofu to catch everything that runs out of it, and a great deal of garlic on top — half fried, half raw.
-category: Sides
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

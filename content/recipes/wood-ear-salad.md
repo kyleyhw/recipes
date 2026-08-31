@@ -1,7 +1,7 @@
 ---
 title: Wood Ear Salad
 description: Liang ban mu er. Black fungus soaked, blanched, and dressed cold with garlic, black vinegar and chilli. All texture.
-category: Sides
+category: Vegetables
 cuisine: Chinese
 tags:
   - quick

@@ -1,7 +1,7 @@
 ---
 title: Suan Cai Yu
 description: Sichuan pickled cabbage fish, made from the packet — sliced white fish poached for three minutes in a sour, numbing broth, with hot oil poured over at the table.
-category: Mains
+category: Meat & Fish
 cuisine: Chinese
 tags:
   - quick

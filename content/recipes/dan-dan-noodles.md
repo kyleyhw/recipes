@@ -1,7 +1,7 @@
 ---
 title: Dan Dan Noodles
 description: Dan dan mian as Barshu serves it in Soho — a small bowl, no soup, sauce at the bottom under crisp pork and ya cai, and you toss it yourself.
-category: Mains
+category: Rice & Noodles
 cuisine: Sichuan
 tags:
   - quick

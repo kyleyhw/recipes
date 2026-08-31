@@ -1,7 +1,7 @@
 ---
 title: Kitsune Udon
 description: Fried tofu sheets blanched of their oil, then simmered in dashi, soy, mirin and sugar until they are sweet and dripping, laid whole over noodles in a plain broth.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

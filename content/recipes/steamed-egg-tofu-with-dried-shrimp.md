@@ -1,7 +1,7 @@
 ---
 title: Steamed Egg Tofu with Dried Shrimp
 description: A spoonful of dried shrimp soaked, chopped and fried until it smells of the sea, spread over egg tofu. Ten minutes, and the whole flavour comes out of a jar.
-category: Sides
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

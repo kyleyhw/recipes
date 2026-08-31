@@ -104,7 +104,7 @@ describe("interpolation", () => {
 describe("categories", () => {
   it("translates a category the collection ships with", () => {
     expect(translateCategory("ru", "Baked Goods")).toBe("Выпечка");
-    expect(translateCategory("zh-Hant", "Mains")).toBe("主菜");
+    expect(translateCategory("zh-Hant", "Rice & Noodles")).toBe("飯與麵");
   });
 
   /**

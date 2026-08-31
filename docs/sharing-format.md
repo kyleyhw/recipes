@@ -32,7 +32,7 @@ refusing outright, so the schema is permissive on the way in.
   "shareId": "…",                                       // so an importer can link back
   "recipe": {
     "title": "Dal Tarka",
-    "categoryName": "Mains",          // a name, not an id
+    "categoryName": "Soups & Stews",          // a name, not an id
     "tagNames": ["quick", "vegan"],
     "baseServings": 4,
     "servingLabel": "serving",

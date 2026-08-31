@@ -1,7 +1,7 @@
 ---
 title: Steamed Pork Patty with Zha Cai
 description: The everyday one. Preserved mustard stem rinsed, squeezed and chopped through the pork, which seasons the whole patty and gives it the crunch none of the others have.
-category: Mains
+category: Meat & Fish
 cuisine: Cantonese
 tags:
   - quick

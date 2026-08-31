@@ -1,7 +1,7 @@
 ---
 title: Tamago Kake Gohan
 description: A raw egg beaten into a bowl of rice hot enough to thicken it, with a spoonful of soy. Two minutes, three ingredients, and Japan's most-eaten breakfast.
-category: Breakfast
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

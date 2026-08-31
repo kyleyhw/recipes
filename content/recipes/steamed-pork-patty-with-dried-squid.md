@@ -1,7 +1,7 @@
 ---
 title: Steamed Pork Patty with Dried Squid
 description: The savoury one. Dried squid soaked and slivered through the mince, which turns the broth almost meaty and gives the patty something to chew on.
-category: Mains
+category: Meat & Fish
 cuisine: Cantonese
 tags:
   - one pot

@@ -1,14 +1,14 @@
 ---
-title: Yu Xiang Qie Zi
-description: Fish-fragrant aubergine. Batons fried until they collapse, then turned through the sweet, sour, garlicky sauce Sichuan invented for fish and now mostly puts on this.
-category: Mains
+title: Fish-Fragrant Aubergine
+description: Batons fried until they collapse, then turned through yu xiang — the pickled chilli, garlic and vinegar seasoning Sichuan invented for fish and now mostly puts on this.
+category: Vegetables
 cuisine: Sichuan
 tags:
   - quick
 servings: 2
 prepMinutes: 15
 cookMinutes: 15
-photo: /photos/yu-xiang-qie-zi.webp
+photo: /photos/fish-fragrant-aubergine.webp
 photoCredit:
   siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
 photoPrompt: cb80f5c018d5aeba
@@ -133,3 +133,4 @@ thaws watery and stringy, and the sauce separates.
 ## Log
 
 - 2026-08-31: Added, meatless, as the vegetable-section version. The proportions are the standard ones for the dish rather than a transcription of any single published recipe: sugar and vinegar equal, pickled chilli slightly ahead of the doubanjiang, and the aubergine shallow-fried in two batches rather than deep-fried, which is the one deliberate departure from how a restaurant makes it.
+- 2026-08-31: Renamed from Yu Xiang Qie Zi, and the file with it, so that the shelf reads in English like the rest of the collection. The Chinese name is in the notes, where the explanation of it already was. Nothing linked to the old title, and the old URL is gone rather than redirected — this site is files, not a server. The photograph was renamed with it: `npm run photos` finds a picture by the recipe's slug, so a picture left under the old name is a picture the script cannot see and would have paid to draw again.

@@ -1,7 +1,7 @@
 ---
 title: Tteokbokki
 description: Cylinders of rice cake simmered in gochujang and anchovy stock until the sauce is thick enough to coat them, with fish cakes and a boiled egg.
-category: Snacks
+category: Rice & Noodles
 cuisine: Korean
 servings: 2
 servingLabel: bowl

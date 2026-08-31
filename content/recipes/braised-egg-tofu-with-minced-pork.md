@@ -1,7 +1,7 @@
 ---
 title: Braised Egg Tofu with Minced Pork
 description: Egg tofu fried golden, then set back into a pork mince gravy just long enough to take it up. The Cantonese home dish the tube of tofu is bought for.
-category: Mains
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

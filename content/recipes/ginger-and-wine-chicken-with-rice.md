@@ -1,7 +1,7 @@
 ---
 title: Ginger and Wine Chicken with Rice
 description: A kilo of chicken sealed in foil with ginger and Shaoxing wine, and rice cooked underneath it in its own aromatics. The parcel keeps every drop of what comes out of the meat.
-category: Mains
+category: Rice & Noodles
 cuisine: Cantonese
 tags:
   - one tray

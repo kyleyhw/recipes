@@ -1,7 +1,7 @@
 ---
 title: Preserved Egg and Pork Congee
 description: Pei daan sau yuk juk. Rice boiled to nothing over an hour, with preserved egg stirred through it and lean pork poached in it at the last minute.
-category: Breakfast
+category: Rice & Noodles
 cuisine: Cantonese
 tags:
   - make ahead

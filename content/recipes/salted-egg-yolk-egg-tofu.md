@@ -1,7 +1,7 @@
 ---
 title: Salted Egg Yolk Egg Tofu
 description: Fried egg tofu turned through salted duck egg yolks foamed in butter. The yolk has to froth up in the pan — until it does, the sauce is not made.
-category: Sides
+category: Tofu & Eggs
 cuisine: Chinese
 tags:
   - quick

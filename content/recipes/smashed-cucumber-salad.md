@@ -1,7 +1,7 @@
 ---
 title: Smashed Cucumber Salad
 description: Pai huang gua. Cucumber broken open with the flat of a cleaver, salted, drained, and dressed with garlic, black vinegar and chilli oil.
-category: Sides
+category: Vegetables
 cuisine: Chinese
 tags:
   - quick

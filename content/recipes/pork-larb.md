@@ -1,7 +1,7 @@
 ---
 title: Pork Larb
 description: Larb moo. Pork browned dry in a hot pan, dressed off the heat with lime and fish sauce, and eaten in lettuce leaves before the herbs have finished wilting.
-category: Mains
+category: Meat & Fish
 cuisine: Thai
 tags:
   - quick

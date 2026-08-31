@@ -1,7 +1,7 @@
 ---
 title: Xiaoguo Mixian
 description: Kunming's everyday bowl — one small pot per person, pork, pickle and chives, and the noodles in for barely a minute at the end.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Yunnan
 tags:
   - quick

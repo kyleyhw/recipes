@@ -1,7 +1,7 @@
 ---
 title: Douhua Mixian
 description: Mixian buried under warm tofu pudding, with sweet soy, sesame paste and chilli oil poured over. Sweet, savoury, and tossed hard before the first mouthful.
-category: Mains
+category: Rice & Noodles
 cuisine: Yunnan
 tags:
   - quick

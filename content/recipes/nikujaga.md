@@ -1,7 +1,7 @@
 ---
 title: Nikujaga
 description: Meat and potatoes simmered in dashi, soy and mirin under a lid that floats on the food. The sugar goes in before the soy, and that order is the recipe.
-category: Mains
+category: Meat & Fish
 cuisine: Japanese
 tags:
   - one pot

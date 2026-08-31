@@ -1,7 +1,7 @@
 ---
 title: Guoqiao Mixian
 description: Crossing-the-bridge noodles. A bowl of broth under a lid of fat, hot enough to cook raw chicken dropped into it at the table.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Yunnan
 tags:
   - one pot

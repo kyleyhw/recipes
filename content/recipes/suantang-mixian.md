@@ -1,7 +1,7 @@
 ---
 title: Suantang Mixian
 description: Mixian in Guizhou red sour soup — fermented tomato and chilli out of a jar, cooked down with fresh tomatoes until the two are one thing.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Guizhou
 tags:
   - quick

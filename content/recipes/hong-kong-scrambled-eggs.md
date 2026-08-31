@@ -1,7 +1,7 @@
 ---
 title: Hong Kong Scrambled Eggs
 description: Wet, folded in slow sheets over the lowest heat, and pulled off the stove while a third of it is still liquid. Custard rather than curds.
-category: Breakfast
+category: Tofu & Eggs
 cuisine: Cantonese
 tags:
   - quick

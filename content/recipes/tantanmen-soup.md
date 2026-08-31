@@ -1,7 +1,7 @@
 ---
 title: Tantanmen (Soup)
 description: Sesame paste and chilli oil beaten into hot stock until the broth turns opaque and nutty, with a spoonful of dry-fried pork mince on top and no clear soup anywhere.
-category: Soups & Stews
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

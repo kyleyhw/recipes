@@ -1,7 +1,7 @@
 ---
 title: Zaru Udon
 description: Noodles boiled, then rinsed and iced until they squeak, eaten cold out of one bowl and dipped into a strong cold tsuyu in another.
-category: Mains
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick

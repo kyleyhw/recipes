@@ -1,7 +1,7 @@
 ---
 title: Spaghetti alla Carbonara
 description: Egg, pecorino, guanciale and pepper, emulsified off the heat with starchy pasta water. No cream — the whole recipe is temperature control.
-category: Mains
+category: Rice & Noodles
 cuisine: Italian
 tags:
   - quick

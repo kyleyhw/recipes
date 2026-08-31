@@ -1,7 +1,7 @@
 ---
 title: Ohitashi
 description: Blanched greens steeped cold in seasoned dashi rather than dressed in anything. The liquid is the dish and you drink what is left in the bowl.
-category: Sides
+category: Vegetables
 cuisine: Japanese
 tags:
   - make ahead

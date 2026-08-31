@@ -267,6 +267,33 @@ it wrong. See [`src/lib/content/attribution.ts`](../src/lib/content/attribution.
   disagree with its addends is an arithmetic error a reader can see, and
   `lib/duration.ts` is exact for that reason and no other.
 
+- **A category says what the dish is made of, not when it is eaten.** The
+  shelves are Rice & Noodles, Meat & Fish, Tofu & Eggs, Vegetables, Soups &
+  Stews, Snacks, Baked Goods, Desserts, Drinks and Sauces & Condiments, and
+  they answer one question: what is this built on.
+
+  This replaced Mains, Sides and Breakfast, which answered three questions at
+  once and answered none of them well. Mains had grown to thirty-seven recipes
+  and most of them were 餸 — dishes eaten *with* rice rather than instead of it
+  — so the shelf a reader went to for "what shall I cook tonight" was mostly
+  things that are half a dinner. Sides held a steamed egg tofu next to a
+  cucumber salad on the grounds that neither was the main event. Breakfast held
+  four recipes on the grounds that they are eaten in the morning, which is not
+  a fact about the food.
+
+  **Where two shelves fit, the one the dish is built on wins.** A bowl of udon
+  with beef in it is Rice & Noodles, because the udon is what you are eating; a
+  steamed pork patty is Meat & Fish even though nobody eats one without rice,
+  because the rice is not in the recipe. Noodle soups are on the noodle shelf
+  rather than in Soups & Stews for the same reason, which leaves Soups & Stews
+  small and honest — five things you eat with a spoon.
+
+  Two shelves are deliberately not about composition and are kept anyway.
+  **Drinks** and **Desserts** are what anyone would look for, and **Snacks**
+  holds the three things — two toasts and a fried pancake — that have nowhere
+  else true to go. A taxonomy with three exceptions and a stated rule is worth
+  more than a pure one nobody can file against.
+
 - **Say which China.** `cuisine` is what the filter offers, so it should be as
   specific as the dish honestly allows — `Cantonese` for a dish that is one,
   `Chinese` where it is genuinely pan-regional or where the honest answer is

@@ -1,7 +1,7 @@
 ---
 title: Oyakodon
 description: Parent and child — chicken and egg over rice in one small pan, with the egg poured in twice so half of it is set and half is barely.
-category: Mains
+category: Rice & Noodles
 cuisine: Japanese
 tags:
   - quick
