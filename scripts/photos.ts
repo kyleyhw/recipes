@@ -347,9 +347,13 @@ export function promptFor(recipe: RecipeFile): string {
     // it as governing the picture: the surface goes pale flat tan, the ceramic
     // goes white and the side light flattens out. Binding "pale" to the food as
     // its subject keeps the instruction on the plate, where rule 4 wants it.
-    BROWNING.test(method)
-      ? ""
-      : "The food itself is pale — nothing in it is browned, charred or coloured by heat.",
+    // "The food itself is pale" overreached: it is true of a custard and false
+    // of anything cold and coloured — it bleached sangria's red wine to amber
+    // and ohitashi's spinach to lettuce-green in one batch. What rule 4
+    // actually needs said is the browning half, which is true of every dish
+    // this line fires for. The subject stays bound ("nothing in it") so the
+    // instruction cannot leak onto the surface, the ceramic or the light.
+    BROWNING.test(method) ? "" : "Nothing in it is browned, charred or coloured by heat.",
     "",
     // "wooden or stone" offered a branch none of the first 47 ever took, and a
     // pale flat stone slab is exactly the surface that came back when the model
@@ -360,7 +364,14 @@ export function promptFor(recipe: RecipeFile): string {
     // It must stay "surface". "Board" reads as a chopping board: an object with
     // edges, sitting on a white counter that then shows at the frame's edge. Two
     // of three test pictures came back that way before this word went back.
-    `Shot from a slight overhead angle, ${vessel},`,
+    // "Slight overhead angle" alone held for plated dishes and stopped holding
+    // for baked goods: cookies and croissants came back dead top-down, the
+    // flat-lay convention for that subject winning over a phrase with no number
+    // in it. Thirty to forty-five degrees is not a new look — it is what the
+    // first 47 already measure — and "never straight down" closes the door the
+    // way "surface" and "from the left" close theirs.
+    `Shot from a slight overhead angle, thirty to forty-five degrees above the`,
+    `horizontal and never straight down, ${vessel},`,
     "on a weathered warm-brown wooden surface with visible grain, filling the",
     "background, in soft daylight from the left.",
     "Photographed as it would look cooked at home, not styled for a restaurant.",
