@@ -12,6 +12,11 @@ prepMinutes: 20
 cookMinutes: 160
 cookLabel: simmer
 source: https://www.ubereats.com/ca/store/bao-housedundas/RQ6CFeR2VVmndq718IX33g
+photo: /photos/beef-brisket-and-daikon-casserole.webp
+photoDescription: Chunks of tender beef brisket and translucent daikon in a completely clear pale golden broth, thin and light, not dark and not thickened; nothing in the bowl is browned or seared, and the bottom of the bowl shows through the liquid. Chopped coriander scattered over; a small bowl of white rice sits at the right edge of the frame.
+photoCredit:
+  siteName: Generated image · Google gemini-3-pro-image (Nano Banana Pro)
+photoPrompt: 2763461f6c28a26f
 ---
 
 ## Ingredients
