@@ -154,6 +154,37 @@ the picture and the method must agree, and the `photoDescription` is where that
 agreement gets written down — so if the picture is to show it, the method is
 what needs changing.
 
+### What would enforce this, and why nothing does yet
+
+Rule 7 is a rule and not a mechanism. The proposal a run writes for a new
+recipe is its `description`, copied verbatim; nothing asks for the negative
+clause and nothing downstream notices its absence. This will come back the
+first time somebody writes a description without having read this page.
+
+**Rewording the ceiling line in `scripts/photos.ts`** so it cannot read as a
+manifest is a one-line change that would help every recipe at once. It is also
+an unverified prompt edit, and all four accidents in *Four ways the prompt has
+broken this style* were unverified prompt edits that read perfectly until a
+picture came back. It might not even win — the model's prior for whole spices
+in a beef stew is strong, and a better-worded ceiling still has to beat it. If
+it is ever tried, it is tried with `--limit 3`.
+
+**Deriving the removals from the method** is the better idea in the wrong
+place. As a silent prompt input it is unsafe: carbonara's "lift the guanciale
+out onto a plate" and chicken and rice soup's "lift the chicken out … return it
+to the pot" both read as removals and are not, and the failure direction is the
+worse one — telling the model to leave out something that is in the bowl.
+
+**The version worth building puts that detection in the proposal.** When a run
+seeds a new `photoDescription`, it could append a draft clause naming what the
+method looks like it takes out. The proposal is read by a person before any
+money is spent, so a false positive costs one keystroke to delete: parsing
+prose is unsafe when it silently drives a prompt and safe when it drafts text
+somebody has to approve. It would also put the reminder at the moment of the
+work rather than in a file someone has to remember to open. **Not built.**
+Written down so the next person to hit this does not have to work it out
+again.
+
 ---
 
 ## New photographs must match the 47 that already exist
