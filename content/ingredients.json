@@ -1345,6 +1345,31 @@
     "keeping": "Two years in the tin in a dry cupboard, and the enemy is damp rather than time: it is starch, so a tin left open in a steamy kitchen sets into lumps that will not whisk out. It does not spoil in any way that could hurt you; it goes stale-tasting and pale."
   },
   {
+    "name": "daikon",
+    "usdaFdcId": "169276",
+    "kcal100g": 18,
+    "protein100g": 0.6,
+    "carbs100g": 4.1,
+    "sugar100g": 2.5,
+    "fiber100g": 1.6,
+    "fat100g": 0.1,
+    "satFat100g": 0.03,
+    "cholesterolMg100g": 0,
+    "sodiumMg100g": 21,
+    "potassiumMg100g": 227,
+    "calciumMg100g": 27,
+    "ironMg100g": 0.4,
+    "magnesiumMg100g": 16,
+    "zincMg100g": 0.15,
+    "vitaminCMg100g": 22,
+    "folateUg100g": 28,
+    "densityGPerMl": null,
+    "gramsPerUnit": null,
+    "source": "USDA",
+    "sourceNote": "USDA SR Legacy 169276, radishes, oriental, raw — the long white radish sold as daikon, mooli or 白蘿蔔, and the same vegetable under all three names. Eighteen kcal per 100 g and 95% water, which is why a kilo of it in a pot adds almost nothing to a serving except the beef fat it has soaked up. No per-item count is carried, because the size is not standard enough to be worth one: a British supermarket mooli is 300 to 500 g and the ones stacked in a Chinese supermarket run to a kilo and a half, so weigh it rather than counting it. Not interchangeable with a red radish, which is peppery raw and stays peppery cooked.",
+    "keeping": "Two weeks in the fridge in a bag, and cut the leafy top off before it goes in — left on, the leaves keep drinking from the root and it goes limp and hollow in days. A limp one can be firmed up by standing the cut end in cold water for an hour. Once peeled and cut it is three days, and it will take on the smell of everything else in the fridge, so keep it covered. It does not freeze raw; cooked in a broth it comes back spongy."
+  },
+  {
     "name": "dark chocolate",
     "usdaFdcId": "170271",
     "kcal100g": 598,
@@ -1724,6 +1749,20 @@
     "excludes": ["shellfish"],
     "source": "MANUAL",
     "sourceNote": "You you gan, from the Chinese food composition table. These are the figures for the dry squid as weighed, which is how a recipe measures it — it takes up about three times its weight in water on soaking, so a soaked figure would be a third of these. The cholesterol is genuinely that high; squid is one of the densest sources of it in any kitchen."
+  },
+  {
+    "name": "dried tangerine peel",
+    "kcal100g": 330,
+    "protein100g": 5.0,
+    "carbs100g": 85.0,
+    "fiber100g": 36.0,
+    "fat100g": 0.7,
+    "cholesterolMg100g": 0,
+    "densityGPerMl": null,
+    "gramsPerUnit": 3,
+    "source": "MANUAL",
+    "sourceNote": "陳皮 — tangerine peel dried and aged, sold in flat curled pieces in any Chinese supermarket and priced by how old it is. FoodData Central has no record of it; these are USDA's raw orange peel (169098: 97 kcal, 1.5 g protein, 25 g carbohydrate, 10.6 g fibre per 100 g) scaled for water, raw peel being about 72% moisture against roughly 10% dried. The figures are for eating it, which nobody does — a piece is soaked, scraped, simmered for two hours and thrown away, so what reaches the bowl is the oil that came off it. mu 3 g is one piece of the size a recipe means. The older it is the darker, thinner and less bitter, and a very old one costs more than the beef it goes in with; a cheap young piece is the right thing for a soup. Soak it for 20 minutes and scrape the white pith off the inside with a spoon before it goes in — the pith is where the bitterness is, and leaving it on is the single commonest way this ingredient ruins a pot.",
+    "keeping": "Indefinitely in a sealed jar in the dark, and it improves rather than fading — this is one of the few things in a kitchen that is worth more the longer you leave it, which is the whole basis of the trade in it. Damp is the only enemy: a piece that has taken up moisture goes mouldy where a dry one never will. Air it in the sun for an hour if the jar has been opened in a steamy kitchen."
   },
   {
     "name": "dried thyme",
@@ -4092,6 +4131,24 @@
     "source": "USDA",
     "sourceNote": "USDA SR Legacy 172433, peanuts dry-roasted without salt. Salted roasted peanuts carry around 400 mg of sodium per 100 g on top of this — enough to matter in a dish that uses a handful, so buy unsalted where the recipe already has salt in it. Crushed rather than chopped for a topping: a peanut cut with a knife stays a smooth cube, and one crushed under the flat of a cleaver shatters into faces that catch dressing. rho 0.62 g/ml whole.",
     "keeping": "Three months in a sealed jar in a cupboard, a year in the freezer. Half fat and already roasted, so rancidity is what ends them and it announces itself as a sharp paint-like smell. Buying them raw and roasting them yourself at 160 degrees for 15 minutes costs nothing extra and is noticeably better, because the shop ones have usually been in the bag a while."
+  },
+  {
+    "name": "rock sugar",
+    "usdaFdcId": "169655",
+    "kcal100g": 387,
+    "protein100g": 0,
+    "carbs100g": 99.98,
+    "sugar100g": 99.8,
+    "fiber100g": 0,
+    "fat100g": 0,
+    "satFat100g": 0,
+    "cholesterolMg100g": 0,
+    "sodiumMg100g": 1,
+    "densityGPerMl": null,
+    "gramsPerUnit": null,
+    "source": "USDA",
+    "sourceNote": "冰糖. Chemically it is the granulated sugar already in this library — USDA SR Legacy 169655 — grown into large crystals instead of milled into small ones, so the figures are identical and only the behaviour differs. It dissolves slowly, which is the point in a two-hour braise or a slow syrup: it sweetens the liquid at the end rather than at the start, and it does not scorch on the bottom of a pan the way fine sugar does. It also tastes rounder and less sharply sweet, which is why a clear Cantonese broth uses it and a cake does not. No density is recorded, because the lumps are 5 to 30 mm and a spoonful of them measures whatever the lumps happen to be — weigh it. Yellow rock sugar is the unrefined kind and carries a faint caramel note; either works here.",
+    "keeping": "Indefinitely in a jar. It is sugar, and it takes up damp rather than spoiling — a humid cupboard welds the lumps into one and a sharp knock breaks them apart again."
   },
   {
     "name": "rolled oats",
