@@ -12,7 +12,8 @@ credited on the page as generated. The mechanics are in
 These rules were written after looking at the first 47 photographs and finding
 five repeatable faults. Each rule exists because something specific went wrong.
 The sixth arrived at 123, and moves the fix for a whole class of faults out of
-this file and into the recipe itself.
+this file and into the recipe itself. The seventh arrived at 125, and is what
+the sixth is for.
 
 ---
 
@@ -113,6 +114,45 @@ After a picture is accepted, the description stays committed beside it as the
 record of what the picture shows, and `npm run validate` fails a generated
 photo that has none. When reviewing a picture, read its `photoDescription`
 against it: the two claim to agree.
+
+## 7. Say what has been taken out
+
+The ingredient list is a **ceiling**, not a manifest. Rule 1's *"it contains
+only …"* exists so the model cannot invent chocolate chips into the banana
+bread, and an image model reads a list of nouns as things it may draw. Water,
+wine, salt and sugar it ignores, because they are not depictable. A whole spice
+is very depictable, and where the model already expects to see one, the list
+licenses it.
+
+> The brisket and daikon casserole says, at step 8, *"fish out the ginger,
+> spring onion whites, star anise, cinnamon, bay and tangerine peel"*. Its
+> photograph has every one of them in the bowl. Nothing was wrong with the
+> prompt: the spices are on the ingredient list, the model has a strong prior
+> for whole aromatics floating in a beef stew, and the authored description
+> said what was in the bowl without ever saying what had been lifted out of it.
+
+The review checklist could not catch it either. *"Is anything in it that is not
+in the ingredient list?"* passes — everything in the picture is on the list.
+This fault is the mirror of the one that question was written for, which is why
+it survived to picture 125.
+
+**Where the method removes something depictable before serving, the description
+says so, as a negative.** Aromatics fished out of a broth, a spice bag, kombu
+and anchovies lifted from a stock, bones pulled from a soup, a marinade poured
+away, blanching water, frying oil. One clause does it: *"the whole spices have
+been lifted out — no star anise, cinnamon stick, tangerine peel or ginger in
+the bowl."* Tteokbokki, whose stock is strained of kelp and anchovies, came
+back clean without one, and that is luck rather than a counter-example: the
+model had no reason to draw an anchovy and every reason to draw a cinnamon
+stick.
+
+**The other way round is equally allowed and must be equally deliberate.** The
+cinnamon stick in the glass of sangria and the pandan leaves on the kaya are
+both good pictures, and both contradict a method step that throws the thing
+away. The rule is not that a removed ingredient may never appear. It is that
+the picture and the method must agree, and the `photoDescription` is where that
+agreement gets written down — so if the picture is to show it, the method is
+what needs changing.
 
 ---
 
@@ -258,15 +298,18 @@ dish, `spicy-and-sour-rice-noodles` for a noodle bowl. Then ask, in this order:
    30–45° overhead, warm grade. This is first because it is the one fault that
    makes the collection worse rather than just making one picture worse.
 2. **Is anything in it that is not in the ingredient list?**
-3. **Is anything missing that the diagram says goes on at the end?**
-4. **Would it survive being cropped to 4:3?** Cover the outer eighth of each
+3. **Is anything in it that the method takes out before serving?** Being on the
+   ingredient list is not enough — the aromatics in a broth are on the list and
+   are lifted out of it.
+4. **Is anything missing that the diagram says goes on at the end?**
+5. **Would it survive being cropped to 4:3?** Cover the outer eighth of each
    side with your thumbs and see what is lost.
-5. **Is anything browned that the method never browns?**
-6. **Does it look like the category** — a sauce like a sauce, a drink like a
+6. **Is anything browned that the method never browns?**
+7. **Does it look like the category** — a sauce like a sauce, a drink like a
    drink?
 
-A picture that fails 1, 2 or 3 is wrong and should be regenerated. Failing 4, 5
-or 6 is a judgement call at about seven pence an image.
+A picture that fails 1, 2, 3 or 4 is wrong and should be regenerated. Failing
+5, 6 or 7 is a judgement call at about seven pence an image.
 
 **Check the first three of any batch before releasing the rest.** `--limit 3`
 costs about twenty pence and is the only thing standing between a prompt edit
