@@ -975,6 +975,18 @@ async function main(): Promise<void> {
             `and run again to draw from it:`),
     );
     for (const slug of proposed) console.log(`  ${slug}`);
+    // The one question a description most often gets wrong, asked where the
+    // work is rather than in a file somebody has to remember to open. It is a
+    // fixed line and not a derived one on purpose: deriving what a method takes
+    // out was built and measured and got three of nineteen right, and its
+    // mistakes were of the kind that tell the model to leave the noodles out of
+    // a bowl of noodles. See rule 7 in the recipe-photos skill.
+    console.log(
+      `  Whatever else it says, a description should say what the method takes\n` +
+        `  out before serving — aromatics fished from a broth, a spice bag, kombu\n` +
+        `  and anchovies lifted from a stock. Everything on the ingredient list is\n` +
+        `  something the model may draw.`,
+    );
     console.log("");
   }
 

@@ -175,15 +175,40 @@ out onto a plate" and chicken and rice soup's "lift the chicken out … return i
 to the pot" both read as removals and are not, and the failure direction is the
 worse one — telling the model to leave out something that is in the bowl.
 
-**The version worth building puts that detection in the proposal.** When a run
-seeds a new `photoDescription`, it could append a draft clause naming what the
-method looks like it takes out. The proposal is read by a person before any
-money is spent, so a false positive costs one keystroke to delete: parsing
+**Putting that detection in the proposal was the version worth building, and
+it does not work.** The reasoning was sound — the proposal is read by a person
+before any money is spent, so a false positive costs one keystroke, and parsing
 prose is unsafe when it silently drives a prompt and safe when it drafts text
-somebody has to approve. It would also put the reminder at the moment of the
-work rather than in a file someone has to remember to open. **Not built.**
-Written down so the next person to hit this does not have to work it out
-again.
+somebody has to approve. It was built, run over all 127 recipes, and got
+**three right out of nineteen**.
+
+The three were the brisket casserole, the sangria and the army stew's kelp.
+The other sixteen were wrong in the worse direction:
+
+> *The mixian has been taken out and is not in the dish.* — douhua mixian,
+> from "lift the noodles out into the bowl".
+>
+> *The spinach has been taken out and is not in the dish.* — ohitashi.
+>
+> *The gochujang, gochugaru, granulated sugar, light soy sauce and garlic have
+> been taken out.* — tteokbokki, from "whisk them into the **strained** stock".
+
+The cause is not a tunable threshold. *Strain*, *lift out* and *drain* are
+used as often to **move** something as to discard it — the noodles are lifted
+out into the bowl, the custard is strained into the tin — and English does not
+mark which. The obvious guard, dropping anything named again later, does not
+help: once the custard is strained into the tin nobody names it again, they
+bake *it*. Any rule tight enough to exclude the mixian also excludes "fish out
+the ginger, spring onion whites, star anise, cinnamon, bay and tangerine peel",
+which is the sentence the whole idea existed to catch.
+
+**What was built instead is a fixed line.** A run that writes proposals now
+prints the question underneath the list of them — say what the method takes out
+before serving, because everything on the ingredient list is something the
+model may draw. It cannot be wrong, it costs nothing, and it lands at the
+moment of the work rather than in a file somebody has to remember to open. It
+is a reminder and not a mechanism, and that is now a deliberate choice with a
+measurement behind it rather than a gap.
 
 ---
 
