@@ -2989,6 +2989,25 @@
     "sourceNote": "USDA SR Legacy 168878, raw long-grain white rice; jasmine is the same composition. rho 0.8 g/ml, from a 200 g cup."
   },
   {
+    "name": "jellyfish",
+    "usdaFdcId": "174216",
+    "kcal100g": 36,
+    "protein100g": 5.5,
+    "carbs100g": 0,
+    "sugar100g": 0,
+    "fiber100g": 0,
+    "fat100g": 1.4,
+    "satFat100g": 0.4,
+    "cholesterolMg100g": 5,
+    "sodiumMg100g": 9690,
+    "densityGPerMl": null,
+    "gramsPerUnit": null,
+    "excludes": ["shellfish"],
+    "source": "USDA",
+    "sourceNote": "USDA SR Legacy 174216, jellyfish, dried and salted — 海蜇, sold shredded (海蜇絲) or in sheets (海蜇皮) in a vacuum pack in any Chinese supermarket, packed in salt and alum. Two things about this row need saying. **The sodium figure is the pack and not the dish.** 9,690 mg per 100 g is nearly a tenth of its weight in salt, and the first thing any recipe does is soak most of it out over an hour with five changes of water — so a nutrition panel that counts it as weighed will overstate the sodium by something like a factor of ten, and a recipe using this must say so. USDA's record is also for the dried product where the packs sold here are wet, which makes every figure in this row an upper bound; nothing turns on it, because 36 kcal is nothing either way. Tagged `shellfish`, which is not true and is the least wrong option available: a jellyfish is a cnidarian, neither a fish nor a mollusc nor a crustacean, and it falls outside both allergen categories in British and American labelling law. Left untagged it would make a jellyfish salad come up as vegetarian, which is worse than being imprecise about which kind of sea animal it is.",
+    "keeping": "The unopened vacuum pack keeps a year in the fridge and the salt is why. Once opened and desalted it is a different ingredient with two days in it, covered, in the fridge — and it weeps, so drain it again before use. Do not freeze it at any stage: the texture is the entire point of this ingredient and freezing collapses it into something limp. Jellyfish that has gone slimy rather than slippery, or smells of anything beyond faint sea, goes out."
+  },
+  {
     "name": "katsuobushi",
     "kcal100g": 356,
     "protein100g": 77.0,
